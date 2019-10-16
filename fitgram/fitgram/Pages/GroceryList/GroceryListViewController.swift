@@ -12,6 +12,7 @@ class GroceryListViewController: UIViewController {
     
     var groceryList = [GroceryItem]()
     var rootView:GroceryListView! = nil
+    var isSelectAll = true
     
     func initMockUpGroceryListData(){
         var ingredientList = [IngredientModel]()
@@ -50,6 +51,7 @@ class GroceryListViewController: UIViewController {
         self.initMockUpGroceryListData()
         self.navigationItem.leftBarButtonItem  = UIBarButtonItem(image: UIImage(imageLiteralResourceName: "backbutton_black"), style: .plain, target: self, action: #selector(onBackPressed))
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor.black
+        self.rootView.allIngredientBtn.addTarget(self, action: #selector(navigateToSelectedRecipeIngredientPage), for: .touchUpInside)
         self.countRecipeNumber()
         on("INJECTION_BUNDLE_NOTIFICATION") {
             self.loadView()
@@ -58,6 +60,18 @@ class GroceryListViewController: UIViewController {
     
     @objc func onBackPressed(){
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func navigateToSelectedRecipeIngredientPage(){
+        let targetVC = GroceryDetailViewController()
+        var selectedIngredientList = [IngredientModel]()
+        for groceryItem in groceryList {
+            if groceryItem.isChecked {
+                selectedIngredientList.append(contentsOf: groceryItem.ingredientList)
+            }
+        }
+        targetVC.ingredientList = selectedIngredientList
+        self.navigationController?.pushViewController(targetVC, animated: true)
     }
     
 }
@@ -91,6 +105,7 @@ extension GroceryListViewController: UITableViewDataSource, UITableViewDelegate 
         headerLabel.font = UIFont(name: "PingFangSC-Regular", size: 17)
         headerView.addSubview(headerCheckBox)
         headerView.addSubview(headerLabel)
+        headerCheckBox.isSelected = isSelectAll
         headerCheckBox.addTarget(self, action: #selector(selectAllItem), for: .touchUpInside)
         return headerView
     }
@@ -115,6 +130,12 @@ extension GroceryListViewController: UITableViewDataSource, UITableViewDelegate 
     
     @objc func selectAllItem(sender:UIButton){
 //      self.rootView.groceryTableView.headerView(forSection: 0)
+        isSelectAll = !isSelectAll
+        for index in 0...groceryList.count-1 {
+            groceryList[index].isChecked = isSelectAll
+        }
+        self.countRecipeNumber()
+        self.rootView.groceryTableView.reloadData()
     }
     
     func countRecipeNumber(){

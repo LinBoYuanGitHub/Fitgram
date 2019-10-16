@@ -33,6 +33,8 @@ class GroceryTableCell: UITableViewCell {
         arrowImage.width(8)
         arrowImage.height(13)
         //checkbox setting
+        checkBox.width(50)
+        checkBox.height(50)
         checkBox.setImage(UIImage(named: "checkbox_selected_yellow"), for: .selected)
         checkBox.setImage(UIImage(named: "checkbox_unselected"), for: .normal)
         sv(
@@ -42,7 +44,7 @@ class GroceryTableCell: UITableViewCell {
             arrowImage
         )
         layout(
-            |-40-checkBox-10-dishImage-10-dishLabel-13-arrowImage-16-|
+            |-10-checkBox-10-dishImage-10-dishLabel-13-arrowImage-16-|
         )
     }
     

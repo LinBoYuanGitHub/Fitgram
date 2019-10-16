@@ -1,0 +1,24 @@
+PODS:
+  - ASPCircleChart (3.0.0)
+  - Kingfisher (5.7.1)
+  - SteviaLayout (4.5.0)
+
+DEPENDENCIES:
+  - ASPCircleChart
+  - Kingfisher
+  - SteviaLayout
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - ASPCircleChart
+    - Kingfisher
+    - SteviaLayout
+
+SPEC CHECKSUMS:
+  ASPCircleChart: c1437eb07adffcf66aa04a666e3849e6fc5f3f71
+  Kingfisher: 176d377ad339113c99ad4980cbae687f807e20fe
+  SteviaLayout: aa64a62810544348c9e328a6521cb9160fa82ec6
+
+PODFILE CHECKSUM: a4e8a4b5d170f78d64fbd1a83b1f186bc1cdd249
+
+COCOAPODS: 1.5.3
