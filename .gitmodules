@@ -1,0 +1,3 @@
+[submodule "fitgram/fitgram/Networking/protobuffer"]
+	path = fitgram/fitgram/Networking/protobuffer
+	url = https://gitlab.com/fitgramer/server/protobuffer.git
