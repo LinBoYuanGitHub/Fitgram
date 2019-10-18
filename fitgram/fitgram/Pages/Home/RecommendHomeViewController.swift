@@ -18,6 +18,8 @@ class RecommendHomeViewController:UIViewController{
     var recommendationList = [RecommendationModel]()
     let mealList = ["早餐","午餐","晚餐"]
     
+    var datasource = RecommendationDataManager()
+    
     
     func initMockUpData() {
         for index in 0...2 {
@@ -49,11 +51,20 @@ class RecommendHomeViewController:UIViewController{
             recommendationList.append(recModel)
         }
     }
+    
+    func requestDataTest(){
+        datasource.RetrieveRecommendationList(dateStr: "") {recommendationList in
+            print("request finish")
+            self.recommendationList = recommendationList
+            self.rootView.recommendationMainTableView.reloadData()
+        }
+    }
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.initMockUpData()
+        self.requestDataTest()
       
         on("INJECTION_BUNDLE_NOTIFICATION") {
             self.loadView()

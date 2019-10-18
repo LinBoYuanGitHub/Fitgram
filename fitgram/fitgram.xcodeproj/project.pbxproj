@@ -11,7 +11,6 @@
 		2CD9F66E5FB62E76983F9856 /* Pods_fitgram.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2350F7B9E6CC8CA91E259263 /* Pods_fitgram.framework */; };
 		33C5B433F0FAA4CBDB6F699A /* Pods_fitgramUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EDAA5CB49F608E8519E04FD /* Pods_fitgramUITests.framework */; };
 		3F4FC7B42355D0CD00E119E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4FC7B32355D0CD00E119E3 /* AppDelegate.swift */; };
-		3F4FC7B62355D0CD00E119E3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4FC7B52355D0CD00E119E3 /* ViewController.swift */; };
 		3F4FC7B92355D0CD00E119E3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F4FC7B72355D0CD00E119E3 /* Main.storyboard */; };
 		3F4FC7BB2355D0CF00E119E3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F4FC7BA2355D0CF00E119E3 /* Assets.xcassets */; };
 		3F4FC7BE2355D0CF00E119E3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F4FC7BC2355D0CF00E119E3 /* LaunchScreen.storyboard */; };
@@ -52,6 +51,19 @@
 		3F4FC8302355D57D00E119E3 /* RecipeFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4FC82A2355D57D00E119E3 /* RecipeFooterView.swift */; };
 		3F4FC8312355D57D00E119E3 /* RecipeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4FC82B2355D57D00E119E3 /* RecipeHeaderView.swift */; };
 		3F4FC8342355D59700E119E3 /* CustomAVController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4FC8332355D59700E119E3 /* CustomAVController.swift */; };
+		3F4FC83C23570D9A00E119E3 /* protobuffer in Resources */ = {isa = PBXBuildFile; fileRef = 3F4FC83B23570D9A00E119E3 /* protobuffer */; };
+		3F4FC83F235811FD00E119E3 /* RecommendationDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4FC83E235811FD00E119E3 /* RecommendationDataManager.swift */; };
+		3F4FC844235861FC00E119E3 /* user_info.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4FC842235861FC00E119E3 /* user_info.pb.swift */; };
+		3F4FC845235861FC00E119E3 /* login.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4FC843235861FC00E119E3 /* login.pb.swift */; };
+		3F4FC8482358620800E119E3 /* login.grpc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4FC8462358620800E119E3 /* login.grpc.swift */; };
+		3F4FC8492358620800E119E3 /* user_info.grpc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4FC8472358620800E119E3 /* user_info.grpc.swift */; };
+		3F4FC84B23595DE400E119E3 /* LoginDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4FC84A23595DE400E119E3 /* LoginDataManager.swift */; };
+		3F4FC84D23596B3300E119E3 /* recommendation.grpc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4FC84C23596B3300E119E3 /* recommendation.grpc.swift */; };
+		3F4FC84F23596B3A00E119E3 /* recommendation.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4FC84E23596B3A00E119E3 /* recommendation.pb.swift */; };
+		3F4FC8532359A2AA00E119E3 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4FC8522359A2AA00E119E3 /* ProfileViewController.swift */; };
+		3F4FC8552359A2B300E119E3 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4FC8542359A2B300E119E3 /* ProfileView.swift */; };
+		3F4FC8572359A56100E119E3 /* ProfileTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4FC8562359A56100E119E3 /* ProfileTableCell.swift */; };
+		3F4FC8592359A9A200E119E3 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4FC8582359A9A200E119E3 /* ProfileModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,7 +93,6 @@
 		335E2D42D00A90EC15280EFB /* Pods-fitgramUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fitgramUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-fitgramUITests/Pods-fitgramUITests.release.xcconfig"; sourceTree = "<group>"; };
 		3F4FC7B02355D0CD00E119E3 /* fitgram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fitgram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F4FC7B32355D0CD00E119E3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3F4FC7B52355D0CD00E119E3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		3F4FC7B82355D0CD00E119E3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3F4FC7BA2355D0CF00E119E3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3F4FC7BD2355D0CF00E119E3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -127,6 +138,19 @@
 		3F4FC82A2355D57D00E119E3 /* RecipeFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeFooterView.swift; sourceTree = "<group>"; };
 		3F4FC82B2355D57D00E119E3 /* RecipeHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeHeaderView.swift; sourceTree = "<group>"; };
 		3F4FC8332355D59700E119E3 /* CustomAVController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAVController.swift; sourceTree = "<group>"; };
+		3F4FC83B23570D9A00E119E3 /* protobuffer */ = {isa = PBXFileReference; lastKnownFileType = folder; path = protobuffer; sourceTree = "<group>"; };
+		3F4FC83E235811FD00E119E3 /* RecommendationDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationDataManager.swift; sourceTree = "<group>"; };
+		3F4FC842235861FC00E119E3 /* user_info.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = user_info.pb.swift; sourceTree = "<group>"; };
+		3F4FC843235861FC00E119E3 /* login.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = login.pb.swift; sourceTree = "<group>"; };
+		3F4FC8462358620800E119E3 /* login.grpc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = login.grpc.swift; sourceTree = "<group>"; };
+		3F4FC8472358620800E119E3 /* user_info.grpc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = user_info.grpc.swift; sourceTree = "<group>"; };
+		3F4FC84A23595DE400E119E3 /* LoginDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDataManager.swift; sourceTree = "<group>"; };
+		3F4FC84C23596B3300E119E3 /* recommendation.grpc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = recommendation.grpc.swift; sourceTree = "<group>"; };
+		3F4FC84E23596B3A00E119E3 /* recommendation.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = recommendation.pb.swift; sourceTree = "<group>"; };
+		3F4FC8522359A2AA00E119E3 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		3F4FC8542359A2B300E119E3 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		3F4FC8562359A56100E119E3 /* ProfileTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableCell.swift; sourceTree = "<group>"; };
+		3F4FC8582359A9A200E119E3 /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		B35A9FBCB9C16941669597C0 /* Pods-fitgram.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fitgram.release.xcconfig"; path = "Pods/Target Support Files/Pods-fitgram/Pods-fitgram.release.xcconfig"; sourceTree = "<group>"; };
 		DF409EE695EEACE9BA276B2E /* Pods_fitgramTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_fitgramTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -184,11 +208,11 @@
 		3F4FC7B22355D0CD00E119E3 /* fitgram */ = {
 			isa = PBXGroup;
 			children = (
+				3F4FC83823570AB000E119E3 /* Networking */,
 				3F4FC7E32355D42E00E119E3 /* Utils */,
 				3F4FC7E22355D41B00E119E3 /* Model */,
 				3F4FC7E12355D40200E119E3 /* Pages */,
 				3F4FC7B32355D0CD00E119E3 /* AppDelegate.swift */,
-				3F4FC7B52355D0CD00E119E3 /* ViewController.swift */,
 				3F4FC7B72355D0CD00E119E3 /* Main.storyboard */,
 				3F4FC7BA2355D0CF00E119E3 /* Assets.xcassets */,
 				3F4FC7BC2355D0CF00E119E3 /* LaunchScreen.storyboard */,
@@ -218,6 +242,7 @@
 		3F4FC7E12355D40200E119E3 /* Pages */ = {
 			isa = PBXGroup;
 			children = (
+				3F4FC8502359A19600E119E3 /* More */,
 				3F4FC8322355D58B00E119E3 /* VideoPlay */,
 				3F4FC8252355D56C00E119E3 /* RecipeDetail */,
 				3F4FC8222355D55A00E119E3 /* Progress */,
@@ -226,7 +251,6 @@
 				3F4FC80A2355D4D700E119E3 /* CookingDetail */,
 				3F4FC7FF2355D4C100E119E3 /* Home */,
 				3F4FC7FB2355D4BA00E119E3 /* HomeTabViewController.swift */,
-				3F4FC7FC2355D4BA00E119E3 /* MoreViewController.swift */,
 			);
 			path = Pages;
 			sourceTree = "<group>";
@@ -240,6 +264,7 @@
 				3F4FC7EF2355D4AF00E119E3 /* RecipeModel.swift */,
 				3F4FC7F42355D4AF00E119E3 /* RecommendationModel.swift */,
 				3F4FC7F12355D4AF00E119E3 /* StepModel.swift */,
+				3F4FC8582359A9A200E119E3 /* ProfileModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -341,6 +366,65 @@
 				3F4FC8332355D59700E119E3 /* CustomAVController.swift */,
 			);
 			path = VideoPlay;
+			sourceTree = "<group>";
+		};
+		3F4FC83823570AB000E119E3 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				3F4FC841235861E400E119E3 /* Model */,
+				3F4FC840235861D200E119E3 /* Service */,
+				3F4FC83D2358116E00E119E3 /* DataManager */,
+				3F4FC83B23570D9A00E119E3 /* protobuffer */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		3F4FC83D2358116E00E119E3 /* DataManager */ = {
+			isa = PBXGroup;
+			children = (
+				3F4FC83E235811FD00E119E3 /* RecommendationDataManager.swift */,
+				3F4FC84A23595DE400E119E3 /* LoginDataManager.swift */,
+			);
+			path = DataManager;
+			sourceTree = "<group>";
+		};
+		3F4FC840235861D200E119E3 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				3F4FC84C23596B3300E119E3 /* recommendation.grpc.swift */,
+				3F4FC8462358620800E119E3 /* login.grpc.swift */,
+				3F4FC8472358620800E119E3 /* user_info.grpc.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		3F4FC841235861E400E119E3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3F4FC843235861FC00E119E3 /* login.pb.swift */,
+				3F4FC842235861FC00E119E3 /* user_info.pb.swift */,
+				3F4FC84E23596B3A00E119E3 /* recommendation.pb.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		3F4FC8502359A19600E119E3 /* More */ = {
+			isa = PBXGroup;
+			children = (
+				3F4FC8512359A29C00E119E3 /* Profile */,
+				3F4FC7FC2355D4BA00E119E3 /* MoreViewController.swift */,
+			);
+			path = More;
+			sourceTree = "<group>";
+		};
+		3F4FC8512359A29C00E119E3 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				3F4FC8522359A2AA00E119E3 /* ProfileViewController.swift */,
+				3F4FC8542359A2B300E119E3 /* ProfileView.swift */,
+				3F4FC8562359A56100E119E3 /* ProfileTableCell.swift */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		4F30D82CFF6C8131C8C7A926 /* Pods */ = {
@@ -475,6 +559,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3F4FC7BE2355D0CF00E119E3 /* LaunchScreen.storyboard in Resources */,
+				3F4FC83C23570D9A00E119E3 /* protobuffer in Resources */,
 				3F4FC7BB2355D0CF00E119E3 /* Assets.xcassets in Resources */,
 				3F4FC7B92355D0CD00E119E3 /* Main.storyboard in Resources */,
 			);
@@ -598,30 +683,38 @@
 			files = (
 				3F4FC7F52355D4AF00E119E3 /* RecipeModel.swift in Sources */,
 				3F4FC7F82355D4AF00E119E3 /* ImageDataModel.swift in Sources */,
+				3F4FC8492358620800E119E3 /* user_info.grpc.swift in Sources */,
 				3F4FC8062355D4D000E119E3 /* RecommendHomeTableCell.swift in Sources */,
+				3F4FC844235861FC00E119E3 /* user_info.pb.swift in Sources */,
 				3F4FC7F72355D4AF00E119E3 /* StepModel.swift in Sources */,
 				3F4FC8342355D59700E119E3 /* CustomAVController.swift in Sources */,
 				3F4FC7EB2355D49E00E119E3 /* ViewPagerTabView.swift in Sources */,
 				3F4FC7F62355D4AF00E119E3 /* IngredientModel.swift in Sources */,
-				3F4FC7B62355D0CD00E119E3 /* ViewController.swift in Sources */,
 				3F4FC82E2355D57D00E119E3 /* RecipeDetailViewController.swift in Sources */,
 				3F4FC80F2355D4EC00E119E3 /* CookingDetailViewController.swift in Sources */,
 				3F4FC8052355D4D000E119E3 /* RecommendHomeCollectionCell.swift in Sources */,
 				3F4FC82D2355D57D00E119E3 /* RecipeDetailTableCell.swift in Sources */,
 				3F4FC7EE2355D49E00E119E3 /* ViewPagerTab.swift in Sources */,
 				3F4FC81A2355D51200E119E3 /* GroceryListView.swift in Sources */,
+				3F4FC8592359A9A200E119E3 /* ProfileModel.swift in Sources */,
+				3F4FC84F23596B3A00E119E3 /* recommendation.pb.swift in Sources */,
+				3F4FC8482358620800E119E3 /* login.grpc.swift in Sources */,
 				3F4FC8072355D4D000E119E3 /* RecommendHomeView.swift in Sources */,
 				3F4FC7FE2355D4BA00E119E3 /* MoreViewController.swift in Sources */,
 				3F4FC8212355D52500E119E3 /* GroceryIngredientCell.swift in Sources */,
 				3F4FC8182355D51200E119E3 /* GroceryTableCell.swift in Sources */,
+				3F4FC8572359A56100E119E3 /* ProfileTableCell.swift in Sources */,
 				3F4FC8242355D56800E119E3 /* ProgressViewController.swift in Sources */,
 				3F4FC80E2355D4EC00E119E3 /* CookingStepViewController.swift in Sources */,
 				3F4FC82C2355D57D00E119E3 /* NutritionCardView.swift in Sources */,
 				3F4FC8202355D52500E119E3 /* GroceryDetailView.swift in Sources */,
+				3F4FC84D23596B3300E119E3 /* recommendation.grpc.swift in Sources */,
+				3F4FC84B23595DE400E119E3 /* LoginDataManager.swift in Sources */,
 				3F4FC7B42355D0CD00E119E3 /* AppDelegate.swift in Sources */,
 				3F4FC8192355D51200E119E3 /* GroceryListViewController.swift in Sources */,
 				3F4FC8082355D4D000E119E3 /* RecommendHomeViewController.swift in Sources */,
 				3F4FC7FD2355D4BA00E119E3 /* HomeTabViewController.swift in Sources */,
+				3F4FC845235861FC00E119E3 /* login.pb.swift in Sources */,
 				3F4FC7F92355D4AF00E119E3 /* GroceryItem.swift in Sources */,
 				3F4FC8102355D4EC00E119E3 /* CookinStepView.swift in Sources */,
 				3F4FC8092355D4D000E119E3 /* RecommendationCollectionFlowLayout.swift in Sources */,
@@ -630,7 +723,10 @@
 				3F4FC7FA2355D4AF00E119E3 /* RecommendationModel.swift in Sources */,
 				3F4FC8132355D4FF00E119E3 /* FoodDiaryViewController.swift in Sources */,
 				3F4FC7ED2355D49E00E119E3 /* ViewPager.swift in Sources */,
+				3F4FC8552359A2B300E119E3 /* ProfileView.swift in Sources */,
 				3F4FC8312355D57D00E119E3 /* RecipeHeaderView.swift in Sources */,
+				3F4FC83F235811FD00E119E3 /* RecommendationDataManager.swift in Sources */,
+				3F4FC8532359A2AA00E119E3 /* ProfileViewController.swift in Sources */,
 				3F4FC8302355D57D00E119E3 /* RecipeFooterView.swift in Sources */,
 				3F4FC82F2355D57D00E119E3 /* RecipeDetailView.swift in Sources */,
 			);

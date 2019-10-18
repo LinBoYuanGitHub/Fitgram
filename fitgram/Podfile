@@ -8,6 +8,7 @@ target 'fitgram' do
   pod 'SteviaLayout'
   pod 'Kingfisher'
   pod 'ASPCircleChart'
+  pod 'SwiftGRPC'
 
   # Pods for fitgram
 
