@@ -9,7 +9,7 @@
 import Foundation
 
 struct RecipeModel {
-    public var recipeIndex: Int = 0
+    public var recipeId: Int = 0
     public var recipeTitle: String = ""
     public var recipeCalorie: String = ""
     public var recipeCookingDuration: String = ""

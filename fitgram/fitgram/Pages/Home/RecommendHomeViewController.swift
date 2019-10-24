@@ -52,19 +52,21 @@ class RecommendHomeViewController:UIViewController{
         }
     }
     
-    func requestDataTest(){
-        datasource.RetrieveRecommendationList(dateStr: "") {recommendationList in
+    func retrieveRecommendationList(){
+        datasource.retrieveRecommendationList(dateStr: "") {recommendationList in
             print("request finish")
             self.recommendationList = recommendationList
-            self.rootView.recommendationMainTableView.reloadData()
+            DispatchQueue.main.async {
+                 self.rootView.recommendationMainTableView.reloadData()
+            }
         }
     }
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.initMockUpData()
-        self.requestDataTest()
+//        self.initMockUpData()
+        self.retrieveRecommendationList()
       
         on("INJECTION_BUNDLE_NOTIFICATION") {
             self.loadView()
@@ -82,7 +84,7 @@ class RecommendHomeViewController:UIViewController{
         self.navigationController?.navigationBar.isTranslucent = false
         self.navigationController?.navigationBar.alpha = 1
         self.navigationController?.navigationBar.barStyle = .default
-         self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layer.masksToBounds = false
         self.navigationController?.navigationBar.layer.shadowColor = UIColor.black.cgColor
         self.navigationController?.navigationBar.layer.shadowOffset = CGSize(width: 0.0, height: 0.1)

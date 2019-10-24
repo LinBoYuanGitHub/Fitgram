@@ -16,14 +16,15 @@ class RecipeDetailViewController:UIViewController{
     //data part
     var recipe = RecipeModel()
     //cache
+    var datasource = RecommendationDataManager()
     
     override func loadView() {
         rootView = RecipeDetailView()
         rootView.recipeDetailTable.delegate = self
         rootView.recipeDetailTable.dataSource = self
         rootView.recipeDetailTable.allowsSelection = false
-        rootView.contentView.ingredientDataList = recipe.ingredientList
-        rootView.contentView.assembleIngredientList()
+//        rootView.contentView.ingredientDataList = recipe.ingredientList
+//        rootView.contentView.assembleIngredientList()
         view = rootView
     }
     
@@ -34,12 +35,12 @@ class RecipeDetailViewController:UIViewController{
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationItem.hidesBackButton = true
-//        self.navigationController?.navigationBar.subviews[0].alpha = 0
-//        self.navigationController?.navigationBar.tintColor = UIColor.black
-//        self.navigationController?.navigationBar.topItem?.title = ""
+        //        self.navigationController?.navigationBar.subviews[0].alpha = 0
+        //        self.navigationController?.navigationBar.tintColor = UIColor.black
+        //        self.navigationController?.navigationBar.topItem?.title = ""
         self.navigationItem.leftBarButtonItem  = UIBarButtonItem(image: UIImage(imageLiteralResourceName: "backbutton_black"), style: .plain, target: self, action: #selector(onBackPressed))
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor.white
-//        self.rootView.customBackButton.addTarget(self, action: #selector(onBackPressed), for: .touchUpInside)
+        //        self.rootView.customBackButton.addTarget(self, action: #selector(onBackPressed), for: .touchUpInside)
         self.rootView.playButton.addTarget(self, action: #selector(playVideo), for: .touchUpInside)
         self.rootView.contentView.startCookBtn.addTarget(self, action: #selector(startCook), for: .touchUpInside)
         self.rootView.recipeTitle.text = recipe.recipeTitle
@@ -48,6 +49,8 @@ class RecipeDetailViewController:UIViewController{
         on("INJECTION_BUNDLE_NOTIFICATION") {
             self.loadView()
         }
+        //retrieve more recipe data
+        retrieveRecipeDetail()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -59,7 +62,7 @@ class RecipeDetailViewController:UIViewController{
         //dismiss the floating btn when exit
         self.rootView.contentView.dismissStartCookBtn()
     }
-
+    
     
     @objc func onBackPressed(){
         self.navigationController?.popViewController(animated: true)
@@ -67,10 +70,10 @@ class RecipeDetailViewController:UIViewController{
     
     @objc func playVideo(){
         let videoUrl = URL(fileURLWithPath: recipe.recipeVideoUrl)
-//        let videoUrl = URL(fileURLWithPath: "https://i4.chuimg.com/e655f0aeb0e311e8960402420a000135_720w_720h.mp4")
+        //        let videoUrl = URL(fileURLWithPath: "https://i4.chuimg.com/e655f0aeb0e311e8960402420a000135_720w_720h.mp4")
         let playerItem = AVPlayerItem(url: videoUrl)
         let player = AVPlayer(playerItem: playerItem)
-//        NotificationCenter.default.addObserver(self, selector: #selector(playerItemDidReachEndTime), name: .AVPlayerItemDidPlayToEndTime, object: player.currentItem)
+        //        NotificationCenter.default.addObserver(self, selector: #selector(playerItemDidReachEndTime), name: .AVPlayerItemDidPlayToEndTime, object: player.currentItem)
         vc.player = player
         self.present(vc, animated: true) {
             self.vc.player?.play()
@@ -89,6 +92,27 @@ class RecipeDetailViewController:UIViewController{
         self.rootView.contentView.dismissStartCookBtn()
     }
     
+    
+    func retrieveRecipeDetail(){
+        self.rootView.recipeDetailTable.isScrollEnabled = false
+        do{
+            try datasource.retrieveRecipeDetail(recipeId: recipe.recipeId) { (recipe) in
+                self.recipe = recipe
+                self.rootView.contentView.ingredientDataList = recipe.ingredientList
+                DispatchQueue.main.async {
+                    self.rootView.recipeDetailTable.reloadData()
+                    self.rootView.contentView.assembleIngredientList()
+                    self.rootView.contentView.createStartCookButton()
+                    self.rootView.bringSubviewToFront(self.rootView.recipeDetailTable)
+                    self.rootView.recipeDetailTable.isScrollEnabled = true
+                }
+            }
+        } catch {
+            print(error)
+        }
+        
+    }
+    
 }
 
 extension RecipeDetailViewController: UITableViewDelegate, UITableViewDataSource {
@@ -98,11 +122,11 @@ extension RecipeDetailViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return recipe.stepList.count
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let title = "步骤 "+String(section + 1) + "/3"
+        let title = "步骤 "+String(section + 1) + "/" + String(recipe.stepList.count)
         return title
     }
     
@@ -133,9 +157,9 @@ extension RecipeDetailViewController: UITableViewDelegate, UITableViewDataSource
         //change the navigation bar background alpha when scrolling over a certain distance
         if (y < 250 && y > 88) {
             self.rootView.naviCoverView.alpha = (250-y)/162 //gardient alpha changing
-//            self.rootView.customBackButton.tintColor = .black
+            //            self.rootView.customBackButton.tintColor = .black
             self.navigationItem.leftBarButtonItem?.tintColor = UIColor(red: (y-88)/162, green: (y-88)/162, blue: (y-88)/162, alpha: 1)
-//            self.navigationItem.leftBarButtonItem?.customView.alpha = (y-88)/162
+            //            self.navigationItem.leftBarButtonItem?.customView.alpha = (y-88)/162
         } else if(y <= 88) {
             self.rootView.naviCoverView.alpha = 1 //after navi bar fix on top
         } else {

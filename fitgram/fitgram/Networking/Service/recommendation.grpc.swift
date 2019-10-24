@@ -25,10 +25,10 @@ import Foundation
 import SwiftGRPC
 import SwiftProtobuf
 
-internal protocol Apisvr_RecommendationServiceGetRecommendedRecipeCall: ClientCallUnary {}
+internal protocol Apisvr_RecommendationServiceGetRecipeDetailCall: ClientCallUnary {}
 
-fileprivate final class Apisvr_RecommendationServiceGetRecommendedRecipeCallBase: ClientCallUnaryBase<Apisvr_GetRecommendedRecipeReq, Apisvr_GetRecommendedRecipeResp>, Apisvr_RecommendationServiceGetRecommendedRecipeCall {
-  override class var method: String { return "/apisvr.RecommendationService/GetRecommendedRecipe" }
+fileprivate final class Apisvr_RecommendationServiceGetRecipeDetailCallBase: ClientCallUnaryBase<Apisvr_GetRecipeDetailReq, Apisvr_GetRecipeDetailResp>, Apisvr_RecommendationServiceGetRecipeDetailCall {
+  override class var method: String { return "/apisvr.RecommendationService/GetRecipeDetail" }
 }
 
 internal protocol Apisvr_RecommendationServiceGetRecommendedMealPlanCall: ClientCallUnary {}
@@ -55,26 +55,26 @@ fileprivate final class Apisvr_RecommendationServiceIngredientCheckCallBase: Cli
   override class var method: String { return "/apisvr.RecommendationService/IngredientCheck" }
 }
 
-internal protocol Apisvr_RecommendationServiceIngredientUncheckCall: ClientCallUnary {}
-
-fileprivate final class Apisvr_RecommendationServiceIngredientUncheckCallBase: ClientCallUnaryBase<Apisvr_IngredientUncheckReq, Apisvr_IngredientUncheckResp>, Apisvr_RecommendationServiceIngredientUncheckCall {
-  override class var method: String { return "/apisvr.RecommendationService/IngredientUncheck" }
-}
-
 internal protocol Apisvr_RecommendationServiceGetAllIngredientsCall: ClientCallUnary {}
 
 fileprivate final class Apisvr_RecommendationServiceGetAllIngredientsCallBase: ClientCallUnaryBase<Apisvr_GetAllIngredientsReq, Apisvr_GetAllIngredientsResp>, Apisvr_RecommendationServiceGetAllIngredientsCall {
   override class var method: String { return "/apisvr.RecommendationService/GetAllIngredients" }
 }
 
+internal protocol Apisvr_RecommendationServiceAllIngredientCheckCall: ClientCallUnary {}
+
+fileprivate final class Apisvr_RecommendationServiceAllIngredientCheckCallBase: ClientCallUnaryBase<Apisvr_AllIngredientCheckReq, Apisvr_ALLIngredientCheckResp>, Apisvr_RecommendationServiceAllIngredientCheckCall {
+  override class var method: String { return "/apisvr.RecommendationService/AllIngredientCheck" }
+}
+
 
 /// Instantiate Apisvr_RecommendationServiceServiceClient, then call methods of this protocol to make API calls.
 internal protocol Apisvr_RecommendationServiceService: ServiceClient {
   /// Synchronous. Unary.
-  func getRecommendedRecipe(_ request: Apisvr_GetRecommendedRecipeReq, metadata customMetadata: Metadata) throws -> Apisvr_GetRecommendedRecipeResp
+  func getRecipeDetail(_ request: Apisvr_GetRecipeDetailReq, metadata customMetadata: Metadata) throws -> Apisvr_GetRecipeDetailResp
   /// Asynchronous. Unary.
   @discardableResult
-  func getRecommendedRecipe(_ request: Apisvr_GetRecommendedRecipeReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_GetRecommendedRecipeResp?, CallResult) -> Void) throws -> Apisvr_RecommendationServiceGetRecommendedRecipeCall
+  func getRecipeDetail(_ request: Apisvr_GetRecipeDetailReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_GetRecipeDetailResp?, CallResult) -> Void) throws -> Apisvr_RecommendationServiceGetRecipeDetailCall
 
   /// Synchronous. Unary.
   func getRecommendedMealPlan(_ request: Apisvr_GetRecommendedMealPlanReq, metadata customMetadata: Metadata) throws -> Apisvr_GetRecommendedMealPlanResp
@@ -101,28 +101,28 @@ internal protocol Apisvr_RecommendationServiceService: ServiceClient {
   func ingredientCheck(_ request: Apisvr_IngredientCheckReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_IngredientCheckResp?, CallResult) -> Void) throws -> Apisvr_RecommendationServiceIngredientCheckCall
 
   /// Synchronous. Unary.
-  func ingredientUncheck(_ request: Apisvr_IngredientUncheckReq, metadata customMetadata: Metadata) throws -> Apisvr_IngredientUncheckResp
-  /// Asynchronous. Unary.
-  @discardableResult
-  func ingredientUncheck(_ request: Apisvr_IngredientUncheckReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_IngredientUncheckResp?, CallResult) -> Void) throws -> Apisvr_RecommendationServiceIngredientUncheckCall
-
-  /// Synchronous. Unary.
   func getAllIngredients(_ request: Apisvr_GetAllIngredientsReq, metadata customMetadata: Metadata) throws -> Apisvr_GetAllIngredientsResp
   /// Asynchronous. Unary.
   @discardableResult
   func getAllIngredients(_ request: Apisvr_GetAllIngredientsReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_GetAllIngredientsResp?, CallResult) -> Void) throws -> Apisvr_RecommendationServiceGetAllIngredientsCall
 
+  /// Synchronous. Unary.
+  func allIngredientCheck(_ request: Apisvr_AllIngredientCheckReq, metadata customMetadata: Metadata) throws -> Apisvr_ALLIngredientCheckResp
+  /// Asynchronous. Unary.
+  @discardableResult
+  func allIngredientCheck(_ request: Apisvr_AllIngredientCheckReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_ALLIngredientCheckResp?, CallResult) -> Void) throws -> Apisvr_RecommendationServiceAllIngredientCheckCall
+
 }
 
 internal extension Apisvr_RecommendationServiceService {
   /// Synchronous. Unary.
-  func getRecommendedRecipe(_ request: Apisvr_GetRecommendedRecipeReq) throws -> Apisvr_GetRecommendedRecipeResp {
-    return try self.getRecommendedRecipe(request, metadata: self.metadata)
+  func getRecipeDetail(_ request: Apisvr_GetRecipeDetailReq) throws -> Apisvr_GetRecipeDetailResp {
+    return try self.getRecipeDetail(request, metadata: self.metadata)
   }
   /// Asynchronous. Unary.
   @discardableResult
-  func getRecommendedRecipe(_ request: Apisvr_GetRecommendedRecipeReq, completion: @escaping (Apisvr_GetRecommendedRecipeResp?, CallResult) -> Void) throws -> Apisvr_RecommendationServiceGetRecommendedRecipeCall {
-    return try self.getRecommendedRecipe(request, metadata: self.metadata, completion: completion)
+  func getRecipeDetail(_ request: Apisvr_GetRecipeDetailReq, completion: @escaping (Apisvr_GetRecipeDetailResp?, CallResult) -> Void) throws -> Apisvr_RecommendationServiceGetRecipeDetailCall {
+    return try self.getRecipeDetail(request, metadata: self.metadata, completion: completion)
   }
 
   /// Synchronous. Unary.
@@ -166,16 +166,6 @@ internal extension Apisvr_RecommendationServiceService {
   }
 
   /// Synchronous. Unary.
-  func ingredientUncheck(_ request: Apisvr_IngredientUncheckReq) throws -> Apisvr_IngredientUncheckResp {
-    return try self.ingredientUncheck(request, metadata: self.metadata)
-  }
-  /// Asynchronous. Unary.
-  @discardableResult
-  func ingredientUncheck(_ request: Apisvr_IngredientUncheckReq, completion: @escaping (Apisvr_IngredientUncheckResp?, CallResult) -> Void) throws -> Apisvr_RecommendationServiceIngredientUncheckCall {
-    return try self.ingredientUncheck(request, metadata: self.metadata, completion: completion)
-  }
-
-  /// Synchronous. Unary.
   func getAllIngredients(_ request: Apisvr_GetAllIngredientsReq) throws -> Apisvr_GetAllIngredientsResp {
     return try self.getAllIngredients(request, metadata: self.metadata)
   }
@@ -185,18 +175,28 @@ internal extension Apisvr_RecommendationServiceService {
     return try self.getAllIngredients(request, metadata: self.metadata, completion: completion)
   }
 
+  /// Synchronous. Unary.
+  func allIngredientCheck(_ request: Apisvr_AllIngredientCheckReq) throws -> Apisvr_ALLIngredientCheckResp {
+    return try self.allIngredientCheck(request, metadata: self.metadata)
+  }
+  /// Asynchronous. Unary.
+  @discardableResult
+  func allIngredientCheck(_ request: Apisvr_AllIngredientCheckReq, completion: @escaping (Apisvr_ALLIngredientCheckResp?, CallResult) -> Void) throws -> Apisvr_RecommendationServiceAllIngredientCheckCall {
+    return try self.allIngredientCheck(request, metadata: self.metadata, completion: completion)
+  }
+
 }
 
 internal final class Apisvr_RecommendationServiceServiceClient: ServiceClientBase, Apisvr_RecommendationServiceService {
   /// Synchronous. Unary.
-  internal func getRecommendedRecipe(_ request: Apisvr_GetRecommendedRecipeReq, metadata customMetadata: Metadata) throws -> Apisvr_GetRecommendedRecipeResp {
-    return try Apisvr_RecommendationServiceGetRecommendedRecipeCallBase(channel)
+  internal func getRecipeDetail(_ request: Apisvr_GetRecipeDetailReq, metadata customMetadata: Metadata) throws -> Apisvr_GetRecipeDetailResp {
+    return try Apisvr_RecommendationServiceGetRecipeDetailCallBase(channel)
       .run(request: request, metadata: customMetadata)
   }
   /// Asynchronous. Unary.
   @discardableResult
-  internal func getRecommendedRecipe(_ request: Apisvr_GetRecommendedRecipeReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_GetRecommendedRecipeResp?, CallResult) -> Void) throws -> Apisvr_RecommendationServiceGetRecommendedRecipeCall {
-    return try Apisvr_RecommendationServiceGetRecommendedRecipeCallBase(channel)
+  internal func getRecipeDetail(_ request: Apisvr_GetRecipeDetailReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_GetRecipeDetailResp?, CallResult) -> Void) throws -> Apisvr_RecommendationServiceGetRecipeDetailCall {
+    return try Apisvr_RecommendationServiceGetRecipeDetailCallBase(channel)
       .start(request: request, metadata: customMetadata, completion: completion)
   }
 
@@ -249,18 +249,6 @@ internal final class Apisvr_RecommendationServiceServiceClient: ServiceClientBas
   }
 
   /// Synchronous. Unary.
-  internal func ingredientUncheck(_ request: Apisvr_IngredientUncheckReq, metadata customMetadata: Metadata) throws -> Apisvr_IngredientUncheckResp {
-    return try Apisvr_RecommendationServiceIngredientUncheckCallBase(channel)
-      .run(request: request, metadata: customMetadata)
-  }
-  /// Asynchronous. Unary.
-  @discardableResult
-  internal func ingredientUncheck(_ request: Apisvr_IngredientUncheckReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_IngredientUncheckResp?, CallResult) -> Void) throws -> Apisvr_RecommendationServiceIngredientUncheckCall {
-    return try Apisvr_RecommendationServiceIngredientUncheckCallBase(channel)
-      .start(request: request, metadata: customMetadata, completion: completion)
-  }
-
-  /// Synchronous. Unary.
   internal func getAllIngredients(_ request: Apisvr_GetAllIngredientsReq, metadata customMetadata: Metadata) throws -> Apisvr_GetAllIngredientsResp {
     return try Apisvr_RecommendationServiceGetAllIngredientsCallBase(channel)
       .run(request: request, metadata: customMetadata)
@@ -272,19 +260,31 @@ internal final class Apisvr_RecommendationServiceServiceClient: ServiceClientBas
       .start(request: request, metadata: customMetadata, completion: completion)
   }
 
+  /// Synchronous. Unary.
+  internal func allIngredientCheck(_ request: Apisvr_AllIngredientCheckReq, metadata customMetadata: Metadata) throws -> Apisvr_ALLIngredientCheckResp {
+    return try Apisvr_RecommendationServiceAllIngredientCheckCallBase(channel)
+      .run(request: request, metadata: customMetadata)
+  }
+  /// Asynchronous. Unary.
+  @discardableResult
+  internal func allIngredientCheck(_ request: Apisvr_AllIngredientCheckReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_ALLIngredientCheckResp?, CallResult) -> Void) throws -> Apisvr_RecommendationServiceAllIngredientCheckCall {
+    return try Apisvr_RecommendationServiceAllIngredientCheckCallBase(channel)
+      .start(request: request, metadata: customMetadata, completion: completion)
+  }
+
 }
 
 /// To build a server, implement a class that conforms to this protocol.
 /// If one of the methods returning `ServerStatus?` returns nil,
 /// it is expected that you have already returned a status to the client by means of `session.close`.
 internal protocol Apisvr_RecommendationServiceProvider: ServiceProvider {
-  func getRecommendedRecipe(request: Apisvr_GetRecommendedRecipeReq, session: Apisvr_RecommendationServiceGetRecommendedRecipeSession) throws -> Apisvr_GetRecommendedRecipeResp
+  func getRecipeDetail(request: Apisvr_GetRecipeDetailReq, session: Apisvr_RecommendationServiceGetRecipeDetailSession) throws -> Apisvr_GetRecipeDetailResp
   func getRecommendedMealPlan(request: Apisvr_GetRecommendedMealPlanReq, session: Apisvr_RecommendationServiceGetRecommendedMealPlanSession) throws -> Apisvr_GetRecommendedMealPlanResp
   func addCheckListItem(request: Apisvr_AddCheckListItemReq, session: Apisvr_RecommendationServiceAddCheckListItemSession) throws -> Apisvr_AddCheckListItemResp
   func getCheckListItem(request: Apisvr_GetCheckListItemReq, session: Apisvr_RecommendationServiceGetCheckListItemSession) throws -> Apisvr_GetCheckListItemResp
   func ingredientCheck(request: Apisvr_IngredientCheckReq, session: Apisvr_RecommendationServiceIngredientCheckSession) throws -> Apisvr_IngredientCheckResp
-  func ingredientUncheck(request: Apisvr_IngredientUncheckReq, session: Apisvr_RecommendationServiceIngredientUncheckSession) throws -> Apisvr_IngredientUncheckResp
   func getAllIngredients(request: Apisvr_GetAllIngredientsReq, session: Apisvr_RecommendationServiceGetAllIngredientsSession) throws -> Apisvr_GetAllIngredientsResp
+  func allIngredientCheck(request: Apisvr_AllIngredientCheckReq, session: Apisvr_RecommendationServiceAllIngredientCheckSession) throws -> Apisvr_ALLIngredientCheckResp
 }
 
 extension Apisvr_RecommendationServiceProvider {
@@ -294,10 +294,10 @@ extension Apisvr_RecommendationServiceProvider {
   /// Throws `HandleMethodError.unknownMethod` for methods not handled by this service.
   internal func handleMethod(_ method: String, handler: Handler) throws -> ServerStatus? {
     switch method {
-    case "/apisvr.RecommendationService/GetRecommendedRecipe":
-      return try Apisvr_RecommendationServiceGetRecommendedRecipeSessionBase(
+    case "/apisvr.RecommendationService/GetRecipeDetail":
+      return try Apisvr_RecommendationServiceGetRecipeDetailSessionBase(
         handler: handler,
-        providerBlock: { try self.getRecommendedRecipe(request: $0, session: $1 as! Apisvr_RecommendationServiceGetRecommendedRecipeSessionBase) })
+        providerBlock: { try self.getRecipeDetail(request: $0, session: $1 as! Apisvr_RecommendationServiceGetRecipeDetailSessionBase) })
           .run()
     case "/apisvr.RecommendationService/GetRecommendedMealPlan":
       return try Apisvr_RecommendationServiceGetRecommendedMealPlanSessionBase(
@@ -319,15 +319,15 @@ extension Apisvr_RecommendationServiceProvider {
         handler: handler,
         providerBlock: { try self.ingredientCheck(request: $0, session: $1 as! Apisvr_RecommendationServiceIngredientCheckSessionBase) })
           .run()
-    case "/apisvr.RecommendationService/IngredientUncheck":
-      return try Apisvr_RecommendationServiceIngredientUncheckSessionBase(
-        handler: handler,
-        providerBlock: { try self.ingredientUncheck(request: $0, session: $1 as! Apisvr_RecommendationServiceIngredientUncheckSessionBase) })
-          .run()
     case "/apisvr.RecommendationService/GetAllIngredients":
       return try Apisvr_RecommendationServiceGetAllIngredientsSessionBase(
         handler: handler,
         providerBlock: { try self.getAllIngredients(request: $0, session: $1 as! Apisvr_RecommendationServiceGetAllIngredientsSessionBase) })
+          .run()
+    case "/apisvr.RecommendationService/AllIngredientCheck":
+      return try Apisvr_RecommendationServiceAllIngredientCheckSessionBase(
+        handler: handler,
+        providerBlock: { try self.allIngredientCheck(request: $0, session: $1 as! Apisvr_RecommendationServiceAllIngredientCheckSessionBase) })
           .run()
     default:
       throw HandleMethodError.unknownMethod
@@ -335,9 +335,9 @@ extension Apisvr_RecommendationServiceProvider {
   }
 }
 
-internal protocol Apisvr_RecommendationServiceGetRecommendedRecipeSession: ServerSessionUnary {}
+internal protocol Apisvr_RecommendationServiceGetRecipeDetailSession: ServerSessionUnary {}
 
-fileprivate final class Apisvr_RecommendationServiceGetRecommendedRecipeSessionBase: ServerSessionUnaryBase<Apisvr_GetRecommendedRecipeReq, Apisvr_GetRecommendedRecipeResp>, Apisvr_RecommendationServiceGetRecommendedRecipeSession {}
+fileprivate final class Apisvr_RecommendationServiceGetRecipeDetailSessionBase: ServerSessionUnaryBase<Apisvr_GetRecipeDetailReq, Apisvr_GetRecipeDetailResp>, Apisvr_RecommendationServiceGetRecipeDetailSession {}
 
 internal protocol Apisvr_RecommendationServiceGetRecommendedMealPlanSession: ServerSessionUnary {}
 
@@ -355,11 +355,11 @@ internal protocol Apisvr_RecommendationServiceIngredientCheckSession: ServerSess
 
 fileprivate final class Apisvr_RecommendationServiceIngredientCheckSessionBase: ServerSessionUnaryBase<Apisvr_IngredientCheckReq, Apisvr_IngredientCheckResp>, Apisvr_RecommendationServiceIngredientCheckSession {}
 
-internal protocol Apisvr_RecommendationServiceIngredientUncheckSession: ServerSessionUnary {}
-
-fileprivate final class Apisvr_RecommendationServiceIngredientUncheckSessionBase: ServerSessionUnaryBase<Apisvr_IngredientUncheckReq, Apisvr_IngredientUncheckResp>, Apisvr_RecommendationServiceIngredientUncheckSession {}
-
 internal protocol Apisvr_RecommendationServiceGetAllIngredientsSession: ServerSessionUnary {}
 
 fileprivate final class Apisvr_RecommendationServiceGetAllIngredientsSessionBase: ServerSessionUnaryBase<Apisvr_GetAllIngredientsReq, Apisvr_GetAllIngredientsResp>, Apisvr_RecommendationServiceGetAllIngredientsSession {}
+
+internal protocol Apisvr_RecommendationServiceAllIngredientCheckSession: ServerSessionUnary {}
+
+fileprivate final class Apisvr_RecommendationServiceAllIngredientCheckSessionBase: ServerSessionUnaryBase<Apisvr_AllIngredientCheckReq, Apisvr_ALLIngredientCheckResp>, Apisvr_RecommendationServiceAllIngredientCheckSession {}
 

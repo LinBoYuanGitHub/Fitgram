@@ -19,27 +19,26 @@ class LoginDataManager {
         print("GRPC version \(gRPC.version) - endpoint: \(address)")
     }
     
-    func anonymousLogin (completition: @escaping (Bool) -> Void){
+    func anonymousLogin (completition: @escaping (Bool) -> Void) throws{
         self.client = Apisvr_LoginServiceServiceClient(address: address, secure: false)
         var request = Apisvr_AnonymousLoginReq()
-        request.userID = ""
-        do{
-            try self.client.anonymousLogin(request, completion: { (resp, result) in
-                if(result.statusCode == .ok){
-                    guard let token = resp?.token else {
-                        return
-                    }
-                    UserDefaults.standard.set(token, forKey: "token")
-                    completition(true)
-                } else {
-                    //status code error flow
-                    completition(false)
+        request.userID = UserDefaults.standard.string(forKey: Constants.userIdKey) ?? ""
+        try self.client.anonymousLogin(request, completion: { (resp, result) in
+            if(result.statusCode == .ok){
+                guard let token = resp?.token else {
+                    return
                 }
-            })
-        } catch {
-            print(error)
-            completition(false)
-        }
+                UserDefaults.standard.set(token, forKey: Constants.tokenKey)
+                guard let userId = resp?.userID else {
+                    return
+                }
+                UserDefaults.standard.set(userId, forKey: Constants.userIdKey)
+                completition(true)
+            } else {
+                //status code error flow
+                completition(false)
+            }
+        })
     }
     
     

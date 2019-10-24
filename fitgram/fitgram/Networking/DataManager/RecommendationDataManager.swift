@@ -19,15 +19,16 @@ class RecommendationDataManager {
         address = Bundle.main.object(forInfoDictionaryKey: "GRPC_Address") as! String
         gRPC.initialize()
         print("GRPC version \(gRPC.version) - endpoint: \(address)")
+        self.client = Apisvr_RecommendationServiceServiceClient(address: address, secure: false)
     }
     
-    
-    func RetrieveRecommendationList (dateStr:String, completition: @escaping ([RecommendationModel]) -> Void){
-        self.client = Apisvr_RecommendationServiceServiceClient(address: address, secure: false)
+    func retrieveRecommendationList (dateStr:String, completition: @escaping ([RecommendationModel]) -> Void){
         var request = Apisvr_GetRecommendedMealPlanReq()
-        request.date = dateStr
+        request.date = 0
         do{
-            let token = UserDefaults.standard.string(forKey: "token")!
+            guard let token = UserDefaults.standard.string(forKey: Constants.tokenKey) else {
+                return
+            }
             let metaData = try Metadata(["authorization": "Token " + token])
             try self.client.getRecommendedMealPlan(request,metadata: metaData, completion: { (resp, result) in
                 if(result.statusCode == .ok){
@@ -61,11 +62,58 @@ class RecommendationDataManager {
     
     func mealPlanItem2RecipeItem(item:Apisvr_RecommendedRecipeInfo) -> RecipeModel{
         var recipe = RecipeModel()
+        recipe.recipeId = Int(item.recipeID)
         recipe.recipeCookingDuration =  "烹饪时间约\(item.cookingTime)分钟"
-        recipe.recipeCalorie = "\(item.energy)千卡"
+        recipe.recipeCalorie = "\(item.nutrient.energy)千卡"
         recipe.recipeTitle = item.recipeName
         recipe.videoCoverImageUrl = item.sampleImgURL
+        recipe.recipeVideoUrl = item.videoURL
         return recipe
+    }
+    
+    func retrieveRecipeDetail(recipeId: Int, completition: @escaping (RecipeModel) -> Void) throws {
+        var request = Apisvr_GetRecipeDetailReq()
+        request.recipeID = Int32(recipeId)
+        guard let token = UserDefaults.standard.string(forKey: Constants.tokenKey) else {
+            return
+        }
+        let metaData = try Metadata(["authorization": "Token " + token])
+        try self.client.getRecipeDetail(request, metadata: metaData, completion: { (resp, result) in
+            if(result.statusCode == .ok){
+                //ingredient convertsion
+                var recipe = RecipeModel()
+                recipe.recipeCookingDuration =  "烹饪时间约\(resp!.cookingTime)分钟"
+                recipe.recipeTitle = resp!.recipeName
+                recipe.videoCoverImageUrl = resp!.sampleImgURL
+                recipe.recipeVideoUrl = resp!.videoURL
+                //ingrdient part
+                for ingredient in resp!.ingredient {
+                    var ingredientModel = IngredientModel()
+                    ingredientModel.ingredientName = ingredient.name
+                    ingredientModel.portionDesc = String(ingredient.amount) + ingredient.unit
+                    recipe.ingredientList.append(ingredientModel)
+                }
+                //step convertsion
+                for step in resp!.step {
+                    var stepModel = StepModel()
+                    stepModel.stepImageUrl = step.sampleImgURL
+                    stepModel.stepText = step.instruction
+                    recipe.stepList.append(stepModel)
+                }
+                completition(recipe)
+            } else {
+                //return error message
+            }
+        })
+        
+    }
+    
+    func checkGroceryItem(){
+
+    }
+    
+    func unCheckGroceryItem(){
+        
     }
     
     

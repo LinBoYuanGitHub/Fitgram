@@ -19,38 +19,195 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
-struct Apisvr_GetRecommendedRecipeReq {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
+enum Apisvr_Difficulty: SwiftProtobuf.Enum {
+  typealias RawValue = Int
+  case none // = 0
+  case easy // = 1
+  case normal // = 2
+  case hard // = 3
+  case UNRECOGNIZED(Int)
 
-  var date: String = String()
+  init() {
+    self = .none
+  }
 
-  var dishType: Int32 = 0
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .none
+    case 1: self = .easy
+    case 2: self = .normal
+    case 3: self = .hard
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
 
-  var unknownFields = SwiftProtobuf.UnknownStorage()
+  var rawValue: Int {
+    switch self {
+    case .none: return 0
+    case .easy: return 1
+    case .normal: return 2
+    case .hard: return 3
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
 
-  init() {}
 }
 
-struct Apisvr_GetRecommendedRecipeResp {
+#if swift(>=4.2)
+
+extension Apisvr_Difficulty: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static var allCases: [Apisvr_Difficulty] = [
+    .none,
+    .easy,
+    .normal,
+    .hard,
+  ]
+}
+
+#endif  // swift(>=4.2)
+
+struct Apisvr_GetRecipeDetailReq {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
   var recipeID: Int32 = 0
 
-  var sampleImgURL: String = String()
+  var unknownFields = SwiftProtobuf.UnknownStorage()
 
-  var recipeName: String = String()
+  init() {}
+}
 
-  var cookingTime: Int32 = 0
+struct Apisvr_Ingredient {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
 
-  var energy: Double = 0
+  var name: String = String()
+
+  var amount: Double = 0
+
+  var unit: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
+}
+
+struct Apisvr_Step {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var stepID: Int32 = 0
+
+  var sampleImgURL: String = String()
+
+  var instruction: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct Apisvr_Nutrient {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var energy: Double = 0
+
+  var fat: Double = 0
+
+  var protein: Double = 0
+
+  var carbohydrate: Double = 0
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct Apisvr_GetRecipeDetailResp {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var recipeID: Int32 {
+    get {return _storage._recipeID}
+    set {_uniqueStorage()._recipeID = newValue}
+  }
+
+  var recipeName: String {
+    get {return _storage._recipeName}
+    set {_uniqueStorage()._recipeName = newValue}
+  }
+
+  var sampleImgURL: String {
+    get {return _storage._sampleImgURL}
+    set {_uniqueStorage()._sampleImgURL = newValue}
+  }
+
+  var videoURL: String {
+    get {return _storage._videoURL}
+    set {_uniqueStorage()._videoURL = newValue}
+  }
+
+  var nutrient: Apisvr_Nutrient {
+    get {return _storage._nutrient ?? Apisvr_Nutrient()}
+    set {_uniqueStorage()._nutrient = newValue}
+  }
+  /// Returns true if `nutrient` has been explicitly set.
+  var hasNutrient: Bool {return _storage._nutrient != nil}
+  /// Clears the value of `nutrient`. Subsequent reads from it will return its default value.
+  mutating func clearNutrient() {_uniqueStorage()._nutrient = nil}
+
+  var favouriteNum: Int32 {
+    get {return _storage._favouriteNum}
+    set {_uniqueStorage()._favouriteNum = newValue}
+  }
+
+  var isFavourite: Bool {
+    get {return _storage._isFavourite}
+    set {_uniqueStorage()._isFavourite = newValue}
+  }
+
+  var isChecked: Bool {
+    get {return _storage._isChecked}
+    set {_uniqueStorage()._isChecked = newValue}
+  }
+
+  var cookingTime: Int32 {
+    get {return _storage._cookingTime}
+    set {_uniqueStorage()._cookingTime = newValue}
+  }
+
+  var difficulty: Apisvr_Difficulty {
+    get {return _storage._difficulty}
+    set {_uniqueStorage()._difficulty = newValue}
+  }
+
+  var serving: Int32 {
+    get {return _storage._serving}
+    set {_uniqueStorage()._serving = newValue}
+  }
+
+  var ingredient: [Apisvr_Ingredient] {
+    get {return _storage._ingredient}
+    set {_uniqueStorage()._ingredient = newValue}
+  }
+
+  var step: [Apisvr_Step] {
+    get {return _storage._step}
+    set {_uniqueStorage()._step = newValue}
+  }
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _storage = _StorageClass.defaultInstance
 }
 
 struct Apisvr_GetRecommendedMealPlanReq {
@@ -58,7 +215,7 @@ struct Apisvr_GetRecommendedMealPlanReq {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var date: String = String()
+  var date: Int64 = 0
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -70,19 +227,60 @@ struct Apisvr_RecommendedRecipeInfo {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var recipeID: Int32 = 0
+  var recipeID: Int32 {
+    get {return _storage._recipeID}
+    set {_uniqueStorage()._recipeID = newValue}
+  }
 
-  var sampleImgURL: String = String()
+  var sampleImgURL: String {
+    get {return _storage._sampleImgURL}
+    set {_uniqueStorage()._sampleImgURL = newValue}
+  }
 
-  var recipeName: String = String()
+  var recipeName: String {
+    get {return _storage._recipeName}
+    set {_uniqueStorage()._recipeName = newValue}
+  }
 
-  var cookingTime: Int32 = 0
+  var cookingTime: Int32 {
+    get {return _storage._cookingTime}
+    set {_uniqueStorage()._cookingTime = newValue}
+  }
 
-  var energy: Double = 0
+  var difficulty: Apisvr_Difficulty {
+    get {return _storage._difficulty}
+    set {_uniqueStorage()._difficulty = newValue}
+  }
+
+  var nutrient: Apisvr_Nutrient {
+    get {return _storage._nutrient ?? Apisvr_Nutrient()}
+    set {_uniqueStorage()._nutrient = newValue}
+  }
+  /// Returns true if `nutrient` has been explicitly set.
+  var hasNutrient: Bool {return _storage._nutrient != nil}
+  /// Clears the value of `nutrient`. Subsequent reads from it will return its default value.
+  mutating func clearNutrient() {_uniqueStorage()._nutrient = nil}
+
+  var videoURL: String {
+    get {return _storage._videoURL}
+    set {_uniqueStorage()._videoURL = newValue}
+  }
+
+  var isFavourite: Bool {
+    get {return _storage._isFavourite}
+    set {_uniqueStorage()._isFavourite = newValue}
+  }
+
+  var isChecked: Bool {
+    get {return _storage._isChecked}
+    set {_uniqueStorage()._isChecked = newValue}
+  }
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
+
+  fileprivate var _storage = _StorageClass.defaultInstance
 }
 
 struct Apisvr_GetRecommendedMealPlanResp {
@@ -129,6 +327,8 @@ struct Apisvr_GetCheckListItemReq {
   // methods supported on all messages.
 
   var recommendedRecipeID: Int32 = 0
+
+  var date: Int64 = 0
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -182,36 +382,16 @@ struct Apisvr_IngredientCheckReq {
 
   var ingredientID: Int32 = 0
 
+  var date: Int64 = 0
+
+  var check: Bool = false
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 }
 
 struct Apisvr_IngredientCheckResp {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  init() {}
-}
-
-struct Apisvr_IngredientUncheckReq {
-  // SwiftProtobuf.Message conformance is added in an extension below. See the
-  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
-  // methods supported on all messages.
-
-  var recommendedRecipeID: Int32 = 0
-
-  var ingredientID: Int32 = 0
-
-  var unknownFields = SwiftProtobuf.UnknownStorage()
-
-  init() {}
-}
-
-struct Apisvr_IngredientUncheckResp {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -228,6 +408,8 @@ struct Apisvr_GetAllIngredientsReq {
 
   var recommendedRecipeIds: [Int32] = []
 
+  var date: Int64 = 0
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -242,7 +424,7 @@ struct Apisvr_AllIngredientsInfo {
 
   var name: String = String()
 
-  var mark: Bool = false
+  var isChecked: Bool = false
 
   var amount: Double = 0
 
@@ -267,63 +449,59 @@ struct Apisvr_GetAllIngredientsResp {
   init() {}
 }
 
+struct Apisvr_AllIngredientCheckReq {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var recommendedRecipeIds: [Int32] = []
+
+  var ingredientID: Int32 = 0
+
+  var date: Int64 = 0
+
+  var check: Bool = false
+
+  var unit: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct Apisvr_ALLIngredientCheckResp {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate let _protobuf_package = "apisvr"
 
-extension Apisvr_GetRecommendedRecipeReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".GetRecommendedRecipeReq"
+extension Apisvr_Difficulty: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "date"),
-    2: .standard(proto: "dish_type"),
+    0: .same(proto: "None"),
+    1: .same(proto: "EASY"),
+    2: .same(proto: "NORMAL"),
+    3: .same(proto: "HARD"),
   ]
-
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      switch fieldNumber {
-      case 1: try decoder.decodeSingularStringField(value: &self.date)
-      case 2: try decoder.decodeSingularInt32Field(value: &self.dishType)
-      default: break
-      }
-    }
-  }
-
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.date.isEmpty {
-      try visitor.visitSingularStringField(value: self.date, fieldNumber: 1)
-    }
-    if self.dishType != 0 {
-      try visitor.visitSingularInt32Field(value: self.dishType, fieldNumber: 2)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  static func ==(lhs: Apisvr_GetRecommendedRecipeReq, rhs: Apisvr_GetRecommendedRecipeReq) -> Bool {
-    if lhs.date != rhs.date {return false}
-    if lhs.dishType != rhs.dishType {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
 }
 
-extension Apisvr_GetRecommendedRecipeResp: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".GetRecommendedRecipeResp"
+extension Apisvr_GetRecipeDetailReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".GetRecipeDetailReq"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "recipe_id"),
-    2: .standard(proto: "sample_img_url"),
-    3: .standard(proto: "recipe_name"),
-    4: .standard(proto: "cooking_time"),
-    5: .same(proto: "energy"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       switch fieldNumber {
       case 1: try decoder.decodeSingularInt32Field(value: &self.recipeID)
-      case 2: try decoder.decodeSingularStringField(value: &self.sampleImgURL)
-      case 3: try decoder.decodeSingularStringField(value: &self.recipeName)
-      case 4: try decoder.decodeSingularInt32Field(value: &self.cookingTime)
-      case 5: try decoder.decodeSingularDoubleField(value: &self.energy)
       default: break
       }
     }
@@ -333,27 +511,297 @@ extension Apisvr_GetRecommendedRecipeResp: SwiftProtobuf.Message, SwiftProtobuf.
     if self.recipeID != 0 {
       try visitor.visitSingularInt32Field(value: self.recipeID, fieldNumber: 1)
     }
-    if !self.sampleImgURL.isEmpty {
-      try visitor.visitSingularStringField(value: self.sampleImgURL, fieldNumber: 2)
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Apisvr_GetRecipeDetailReq, rhs: Apisvr_GetRecipeDetailReq) -> Bool {
+    if lhs.recipeID != rhs.recipeID {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Apisvr_Ingredient: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".Ingredient"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "name"),
+    2: .same(proto: "amount"),
+    3: .same(proto: "unit"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      switch fieldNumber {
+      case 1: try decoder.decodeSingularStringField(value: &self.name)
+      case 2: try decoder.decodeSingularDoubleField(value: &self.amount)
+      case 3: try decoder.decodeSingularStringField(value: &self.unit)
+      default: break
+      }
     }
-    if !self.recipeName.isEmpty {
-      try visitor.visitSingularStringField(value: self.recipeName, fieldNumber: 3)
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.name.isEmpty {
+      try visitor.visitSingularStringField(value: self.name, fieldNumber: 1)
     }
-    if self.cookingTime != 0 {
-      try visitor.visitSingularInt32Field(value: self.cookingTime, fieldNumber: 4)
+    if self.amount != 0 {
+      try visitor.visitSingularDoubleField(value: self.amount, fieldNumber: 2)
     }
-    if self.energy != 0 {
-      try visitor.visitSingularDoubleField(value: self.energy, fieldNumber: 5)
+    if !self.unit.isEmpty {
+      try visitor.visitSingularStringField(value: self.unit, fieldNumber: 3)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: Apisvr_GetRecommendedRecipeResp, rhs: Apisvr_GetRecommendedRecipeResp) -> Bool {
-    if lhs.recipeID != rhs.recipeID {return false}
+  static func ==(lhs: Apisvr_Ingredient, rhs: Apisvr_Ingredient) -> Bool {
+    if lhs.name != rhs.name {return false}
+    if lhs.amount != rhs.amount {return false}
+    if lhs.unit != rhs.unit {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Apisvr_Step: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".Step"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "step_id"),
+    2: .standard(proto: "sample_img_url"),
+    3: .same(proto: "instruction"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      switch fieldNumber {
+      case 1: try decoder.decodeSingularInt32Field(value: &self.stepID)
+      case 2: try decoder.decodeSingularStringField(value: &self.sampleImgURL)
+      case 3: try decoder.decodeSingularStringField(value: &self.instruction)
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.stepID != 0 {
+      try visitor.visitSingularInt32Field(value: self.stepID, fieldNumber: 1)
+    }
+    if !self.sampleImgURL.isEmpty {
+      try visitor.visitSingularStringField(value: self.sampleImgURL, fieldNumber: 2)
+    }
+    if !self.instruction.isEmpty {
+      try visitor.visitSingularStringField(value: self.instruction, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Apisvr_Step, rhs: Apisvr_Step) -> Bool {
+    if lhs.stepID != rhs.stepID {return false}
     if lhs.sampleImgURL != rhs.sampleImgURL {return false}
-    if lhs.recipeName != rhs.recipeName {return false}
-    if lhs.cookingTime != rhs.cookingTime {return false}
+    if lhs.instruction != rhs.instruction {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Apisvr_Nutrient: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".Nutrient"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "energy"),
+    2: .same(proto: "fat"),
+    3: .same(proto: "protein"),
+    4: .same(proto: "carbohydrate"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      switch fieldNumber {
+      case 1: try decoder.decodeSingularDoubleField(value: &self.energy)
+      case 2: try decoder.decodeSingularDoubleField(value: &self.fat)
+      case 3: try decoder.decodeSingularDoubleField(value: &self.protein)
+      case 4: try decoder.decodeSingularDoubleField(value: &self.carbohydrate)
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.energy != 0 {
+      try visitor.visitSingularDoubleField(value: self.energy, fieldNumber: 1)
+    }
+    if self.fat != 0 {
+      try visitor.visitSingularDoubleField(value: self.fat, fieldNumber: 2)
+    }
+    if self.protein != 0 {
+      try visitor.visitSingularDoubleField(value: self.protein, fieldNumber: 3)
+    }
+    if self.carbohydrate != 0 {
+      try visitor.visitSingularDoubleField(value: self.carbohydrate, fieldNumber: 4)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Apisvr_Nutrient, rhs: Apisvr_Nutrient) -> Bool {
     if lhs.energy != rhs.energy {return false}
+    if lhs.fat != rhs.fat {return false}
+    if lhs.protein != rhs.protein {return false}
+    if lhs.carbohydrate != rhs.carbohydrate {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Apisvr_GetRecipeDetailResp: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".GetRecipeDetailResp"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "recipe_id"),
+    2: .standard(proto: "recipe_name"),
+    3: .standard(proto: "sample_img_url"),
+    4: .standard(proto: "video_url"),
+    5: .same(proto: "nutrient"),
+    6: .standard(proto: "favourite_num"),
+    7: .standard(proto: "is_favourite"),
+    8: .standard(proto: "is_checked"),
+    9: .standard(proto: "cooking_time"),
+    10: .same(proto: "difficulty"),
+    11: .same(proto: "serving"),
+    12: .same(proto: "ingredient"),
+    13: .same(proto: "step"),
+  ]
+
+  fileprivate class _StorageClass {
+    var _recipeID: Int32 = 0
+    var _recipeName: String = String()
+    var _sampleImgURL: String = String()
+    var _videoURL: String = String()
+    var _nutrient: Apisvr_Nutrient? = nil
+    var _favouriteNum: Int32 = 0
+    var _isFavourite: Bool = false
+    var _isChecked: Bool = false
+    var _cookingTime: Int32 = 0
+    var _difficulty: Apisvr_Difficulty = .none
+    var _serving: Int32 = 0
+    var _ingredient: [Apisvr_Ingredient] = []
+    var _step: [Apisvr_Step] = []
+
+    static let defaultInstance = _StorageClass()
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _recipeID = source._recipeID
+      _recipeName = source._recipeName
+      _sampleImgURL = source._sampleImgURL
+      _videoURL = source._videoURL
+      _nutrient = source._nutrient
+      _favouriteNum = source._favouriteNum
+      _isFavourite = source._isFavourite
+      _isChecked = source._isChecked
+      _cookingTime = source._cookingTime
+      _difficulty = source._difficulty
+      _serving = source._serving
+      _ingredient = source._ingredient
+      _step = source._step
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        switch fieldNumber {
+        case 1: try decoder.decodeSingularInt32Field(value: &_storage._recipeID)
+        case 2: try decoder.decodeSingularStringField(value: &_storage._recipeName)
+        case 3: try decoder.decodeSingularStringField(value: &_storage._sampleImgURL)
+        case 4: try decoder.decodeSingularStringField(value: &_storage._videoURL)
+        case 5: try decoder.decodeSingularMessageField(value: &_storage._nutrient)
+        case 6: try decoder.decodeSingularInt32Field(value: &_storage._favouriteNum)
+        case 7: try decoder.decodeSingularBoolField(value: &_storage._isFavourite)
+        case 8: try decoder.decodeSingularBoolField(value: &_storage._isChecked)
+        case 9: try decoder.decodeSingularInt32Field(value: &_storage._cookingTime)
+        case 10: try decoder.decodeSingularEnumField(value: &_storage._difficulty)
+        case 11: try decoder.decodeSingularInt32Field(value: &_storage._serving)
+        case 12: try decoder.decodeRepeatedMessageField(value: &_storage._ingredient)
+        case 13: try decoder.decodeRepeatedMessageField(value: &_storage._step)
+        default: break
+        }
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      if _storage._recipeID != 0 {
+        try visitor.visitSingularInt32Field(value: _storage._recipeID, fieldNumber: 1)
+      }
+      if !_storage._recipeName.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._recipeName, fieldNumber: 2)
+      }
+      if !_storage._sampleImgURL.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._sampleImgURL, fieldNumber: 3)
+      }
+      if !_storage._videoURL.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._videoURL, fieldNumber: 4)
+      }
+      if let v = _storage._nutrient {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 5)
+      }
+      if _storage._favouriteNum != 0 {
+        try visitor.visitSingularInt32Field(value: _storage._favouriteNum, fieldNumber: 6)
+      }
+      if _storage._isFavourite != false {
+        try visitor.visitSingularBoolField(value: _storage._isFavourite, fieldNumber: 7)
+      }
+      if _storage._isChecked != false {
+        try visitor.visitSingularBoolField(value: _storage._isChecked, fieldNumber: 8)
+      }
+      if _storage._cookingTime != 0 {
+        try visitor.visitSingularInt32Field(value: _storage._cookingTime, fieldNumber: 9)
+      }
+      if _storage._difficulty != .none {
+        try visitor.visitSingularEnumField(value: _storage._difficulty, fieldNumber: 10)
+      }
+      if _storage._serving != 0 {
+        try visitor.visitSingularInt32Field(value: _storage._serving, fieldNumber: 11)
+      }
+      if !_storage._ingredient.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._ingredient, fieldNumber: 12)
+      }
+      if !_storage._step.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._step, fieldNumber: 13)
+      }
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Apisvr_GetRecipeDetailResp, rhs: Apisvr_GetRecipeDetailResp) -> Bool {
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._recipeID != rhs_storage._recipeID {return false}
+        if _storage._recipeName != rhs_storage._recipeName {return false}
+        if _storage._sampleImgURL != rhs_storage._sampleImgURL {return false}
+        if _storage._videoURL != rhs_storage._videoURL {return false}
+        if _storage._nutrient != rhs_storage._nutrient {return false}
+        if _storage._favouriteNum != rhs_storage._favouriteNum {return false}
+        if _storage._isFavourite != rhs_storage._isFavourite {return false}
+        if _storage._isChecked != rhs_storage._isChecked {return false}
+        if _storage._cookingTime != rhs_storage._cookingTime {return false}
+        if _storage._difficulty != rhs_storage._difficulty {return false}
+        if _storage._serving != rhs_storage._serving {return false}
+        if _storage._ingredient != rhs_storage._ingredient {return false}
+        if _storage._step != rhs_storage._step {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -368,15 +816,15 @@ extension Apisvr_GetRecommendedMealPlanReq: SwiftProtobuf.Message, SwiftProtobuf
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       switch fieldNumber {
-      case 1: try decoder.decodeSingularStringField(value: &self.date)
+      case 1: try decoder.decodeSingularInt64Field(value: &self.date)
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.date.isEmpty {
-      try visitor.visitSingularStringField(value: self.date, fieldNumber: 1)
+    if self.date != 0 {
+      try visitor.visitSingularInt64Field(value: self.date, fieldNumber: 1)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -395,47 +843,119 @@ extension Apisvr_RecommendedRecipeInfo: SwiftProtobuf.Message, SwiftProtobuf._Me
     2: .standard(proto: "sample_img_url"),
     3: .standard(proto: "recipe_name"),
     4: .standard(proto: "cooking_time"),
-    5: .same(proto: "energy"),
+    5: .same(proto: "difficulty"),
+    6: .same(proto: "nutrient"),
+    7: .standard(proto: "video_url"),
+    8: .standard(proto: "is_favourite"),
+    9: .standard(proto: "is_checked"),
   ]
 
+  fileprivate class _StorageClass {
+    var _recipeID: Int32 = 0
+    var _sampleImgURL: String = String()
+    var _recipeName: String = String()
+    var _cookingTime: Int32 = 0
+    var _difficulty: Apisvr_Difficulty = .none
+    var _nutrient: Apisvr_Nutrient? = nil
+    var _videoURL: String = String()
+    var _isFavourite: Bool = false
+    var _isChecked: Bool = false
+
+    static let defaultInstance = _StorageClass()
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _recipeID = source._recipeID
+      _sampleImgURL = source._sampleImgURL
+      _recipeName = source._recipeName
+      _cookingTime = source._cookingTime
+      _difficulty = source._difficulty
+      _nutrient = source._nutrient
+      _videoURL = source._videoURL
+      _isFavourite = source._isFavourite
+      _isChecked = source._isChecked
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      switch fieldNumber {
-      case 1: try decoder.decodeSingularInt32Field(value: &self.recipeID)
-      case 2: try decoder.decodeSingularStringField(value: &self.sampleImgURL)
-      case 3: try decoder.decodeSingularStringField(value: &self.recipeName)
-      case 4: try decoder.decodeSingularInt32Field(value: &self.cookingTime)
-      case 5: try decoder.decodeSingularDoubleField(value: &self.energy)
-      default: break
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        switch fieldNumber {
+        case 1: try decoder.decodeSingularInt32Field(value: &_storage._recipeID)
+        case 2: try decoder.decodeSingularStringField(value: &_storage._sampleImgURL)
+        case 3: try decoder.decodeSingularStringField(value: &_storage._recipeName)
+        case 4: try decoder.decodeSingularInt32Field(value: &_storage._cookingTime)
+        case 5: try decoder.decodeSingularEnumField(value: &_storage._difficulty)
+        case 6: try decoder.decodeSingularMessageField(value: &_storage._nutrient)
+        case 7: try decoder.decodeSingularStringField(value: &_storage._videoURL)
+        case 8: try decoder.decodeSingularBoolField(value: &_storage._isFavourite)
+        case 9: try decoder.decodeSingularBoolField(value: &_storage._isChecked)
+        default: break
+        }
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if self.recipeID != 0 {
-      try visitor.visitSingularInt32Field(value: self.recipeID, fieldNumber: 1)
-    }
-    if !self.sampleImgURL.isEmpty {
-      try visitor.visitSingularStringField(value: self.sampleImgURL, fieldNumber: 2)
-    }
-    if !self.recipeName.isEmpty {
-      try visitor.visitSingularStringField(value: self.recipeName, fieldNumber: 3)
-    }
-    if self.cookingTime != 0 {
-      try visitor.visitSingularInt32Field(value: self.cookingTime, fieldNumber: 4)
-    }
-    if self.energy != 0 {
-      try visitor.visitSingularDoubleField(value: self.energy, fieldNumber: 5)
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      if _storage._recipeID != 0 {
+        try visitor.visitSingularInt32Field(value: _storage._recipeID, fieldNumber: 1)
+      }
+      if !_storage._sampleImgURL.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._sampleImgURL, fieldNumber: 2)
+      }
+      if !_storage._recipeName.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._recipeName, fieldNumber: 3)
+      }
+      if _storage._cookingTime != 0 {
+        try visitor.visitSingularInt32Field(value: _storage._cookingTime, fieldNumber: 4)
+      }
+      if _storage._difficulty != .none {
+        try visitor.visitSingularEnumField(value: _storage._difficulty, fieldNumber: 5)
+      }
+      if let v = _storage._nutrient {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
+      }
+      if !_storage._videoURL.isEmpty {
+        try visitor.visitSingularStringField(value: _storage._videoURL, fieldNumber: 7)
+      }
+      if _storage._isFavourite != false {
+        try visitor.visitSingularBoolField(value: _storage._isFavourite, fieldNumber: 8)
+      }
+      if _storage._isChecked != false {
+        try visitor.visitSingularBoolField(value: _storage._isChecked, fieldNumber: 9)
+      }
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: Apisvr_RecommendedRecipeInfo, rhs: Apisvr_RecommendedRecipeInfo) -> Bool {
-    if lhs.recipeID != rhs.recipeID {return false}
-    if lhs.sampleImgURL != rhs.sampleImgURL {return false}
-    if lhs.recipeName != rhs.recipeName {return false}
-    if lhs.cookingTime != rhs.cookingTime {return false}
-    if lhs.energy != rhs.energy {return false}
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._recipeID != rhs_storage._recipeID {return false}
+        if _storage._sampleImgURL != rhs_storage._sampleImgURL {return false}
+        if _storage._recipeName != rhs_storage._recipeName {return false}
+        if _storage._cookingTime != rhs_storage._cookingTime {return false}
+        if _storage._difficulty != rhs_storage._difficulty {return false}
+        if _storage._nutrient != rhs_storage._nutrient {return false}
+        if _storage._videoURL != rhs_storage._videoURL {return false}
+        if _storage._isFavourite != rhs_storage._isFavourite {return false}
+        if _storage._isChecked != rhs_storage._isChecked {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -534,12 +1054,14 @@ extension Apisvr_GetCheckListItemReq: SwiftProtobuf.Message, SwiftProtobuf._Mess
   static let protoMessageName: String = _protobuf_package + ".GetCheckListItemReq"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "recommended_recipe_id"),
+    2: .same(proto: "date"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       switch fieldNumber {
       case 1: try decoder.decodeSingularInt32Field(value: &self.recommendedRecipeID)
+      case 2: try decoder.decodeSingularInt64Field(value: &self.date)
       default: break
       }
     }
@@ -549,11 +1071,15 @@ extension Apisvr_GetCheckListItemReq: SwiftProtobuf.Message, SwiftProtobuf._Mess
     if self.recommendedRecipeID != 0 {
       try visitor.visitSingularInt32Field(value: self.recommendedRecipeID, fieldNumber: 1)
     }
+    if self.date != 0 {
+      try visitor.visitSingularInt64Field(value: self.date, fieldNumber: 2)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: Apisvr_GetCheckListItemReq, rhs: Apisvr_GetCheckListItemReq) -> Bool {
     if lhs.recommendedRecipeID != rhs.recommendedRecipeID {return false}
+    if lhs.date != rhs.date {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -664,6 +1190,8 @@ extension Apisvr_IngredientCheckReq: SwiftProtobuf.Message, SwiftProtobuf._Messa
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "recommended_recipe_id"),
     2: .standard(proto: "ingredient_id"),
+    3: .same(proto: "date"),
+    4: .same(proto: "check"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -671,6 +1199,8 @@ extension Apisvr_IngredientCheckReq: SwiftProtobuf.Message, SwiftProtobuf._Messa
       switch fieldNumber {
       case 1: try decoder.decodeSingularInt32Field(value: &self.recommendedRecipeID)
       case 2: try decoder.decodeSingularInt32Field(value: &self.ingredientID)
+      case 3: try decoder.decodeSingularInt64Field(value: &self.date)
+      case 4: try decoder.decodeSingularBoolField(value: &self.check)
       default: break
       }
     }
@@ -683,12 +1213,20 @@ extension Apisvr_IngredientCheckReq: SwiftProtobuf.Message, SwiftProtobuf._Messa
     if self.ingredientID != 0 {
       try visitor.visitSingularInt32Field(value: self.ingredientID, fieldNumber: 2)
     }
+    if self.date != 0 {
+      try visitor.visitSingularInt64Field(value: self.date, fieldNumber: 3)
+    }
+    if self.check != false {
+      try visitor.visitSingularBoolField(value: self.check, fieldNumber: 4)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: Apisvr_IngredientCheckReq, rhs: Apisvr_IngredientCheckReq) -> Bool {
     if lhs.recommendedRecipeID != rhs.recommendedRecipeID {return false}
     if lhs.ingredientID != rhs.ingredientID {return false}
+    if lhs.date != rhs.date {return false}
+    if lhs.check != rhs.check {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -713,70 +1251,18 @@ extension Apisvr_IngredientCheckResp: SwiftProtobuf.Message, SwiftProtobuf._Mess
   }
 }
 
-extension Apisvr_IngredientUncheckReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".IngredientUncheckReq"
-  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "recommended_recipe_id"),
-    2: .standard(proto: "ingredient_id"),
-  ]
-
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let fieldNumber = try decoder.nextFieldNumber() {
-      switch fieldNumber {
-      case 1: try decoder.decodeSingularInt32Field(value: &self.recommendedRecipeID)
-      case 2: try decoder.decodeSingularInt32Field(value: &self.ingredientID)
-      default: break
-      }
-    }
-  }
-
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if self.recommendedRecipeID != 0 {
-      try visitor.visitSingularInt32Field(value: self.recommendedRecipeID, fieldNumber: 1)
-    }
-    if self.ingredientID != 0 {
-      try visitor.visitSingularInt32Field(value: self.ingredientID, fieldNumber: 2)
-    }
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  static func ==(lhs: Apisvr_IngredientUncheckReq, rhs: Apisvr_IngredientUncheckReq) -> Bool {
-    if lhs.recommendedRecipeID != rhs.recommendedRecipeID {return false}
-    if lhs.ingredientID != rhs.ingredientID {return false}
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
-extension Apisvr_IngredientUncheckResp: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".IngredientUncheckResp"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
-
-  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let _ = try decoder.nextFieldNumber() {
-    }
-  }
-
-  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    try unknownFields.traverse(visitor: &visitor)
-  }
-
-  static func ==(lhs: Apisvr_IngredientUncheckResp, rhs: Apisvr_IngredientUncheckResp) -> Bool {
-    if lhs.unknownFields != rhs.unknownFields {return false}
-    return true
-  }
-}
-
 extension Apisvr_GetAllIngredientsReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".GetAllIngredientsReq"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "recommended_recipe_ids"),
+    2: .same(proto: "date"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       switch fieldNumber {
       case 1: try decoder.decodeRepeatedInt32Field(value: &self.recommendedRecipeIds)
+      case 2: try decoder.decodeSingularInt64Field(value: &self.date)
       default: break
       }
     }
@@ -786,11 +1272,15 @@ extension Apisvr_GetAllIngredientsReq: SwiftProtobuf.Message, SwiftProtobuf._Mes
     if !self.recommendedRecipeIds.isEmpty {
       try visitor.visitPackedInt32Field(value: self.recommendedRecipeIds, fieldNumber: 1)
     }
+    if self.date != 0 {
+      try visitor.visitSingularInt64Field(value: self.date, fieldNumber: 2)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: Apisvr_GetAllIngredientsReq, rhs: Apisvr_GetAllIngredientsReq) -> Bool {
     if lhs.recommendedRecipeIds != rhs.recommendedRecipeIds {return false}
+    if lhs.date != rhs.date {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -801,7 +1291,7 @@ extension Apisvr_AllIngredientsInfo: SwiftProtobuf.Message, SwiftProtobuf._Messa
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "ingredient_id"),
     2: .same(proto: "name"),
-    3: .same(proto: "mark"),
+    3: .standard(proto: "is_checked"),
     4: .same(proto: "amount"),
     5: .standard(proto: "total_amount"),
     6: .same(proto: "unit"),
@@ -812,7 +1302,7 @@ extension Apisvr_AllIngredientsInfo: SwiftProtobuf.Message, SwiftProtobuf._Messa
       switch fieldNumber {
       case 1: try decoder.decodeSingularInt32Field(value: &self.ingredientID)
       case 2: try decoder.decodeSingularStringField(value: &self.name)
-      case 3: try decoder.decodeSingularBoolField(value: &self.mark)
+      case 3: try decoder.decodeSingularBoolField(value: &self.isChecked)
       case 4: try decoder.decodeSingularDoubleField(value: &self.amount)
       case 5: try decoder.decodeSingularDoubleField(value: &self.totalAmount)
       case 6: try decoder.decodeSingularStringField(value: &self.unit)
@@ -828,8 +1318,8 @@ extension Apisvr_AllIngredientsInfo: SwiftProtobuf.Message, SwiftProtobuf._Messa
     if !self.name.isEmpty {
       try visitor.visitSingularStringField(value: self.name, fieldNumber: 2)
     }
-    if self.mark != false {
-      try visitor.visitSingularBoolField(value: self.mark, fieldNumber: 3)
+    if self.isChecked != false {
+      try visitor.visitSingularBoolField(value: self.isChecked, fieldNumber: 3)
     }
     if self.amount != 0 {
       try visitor.visitSingularDoubleField(value: self.amount, fieldNumber: 4)
@@ -846,7 +1336,7 @@ extension Apisvr_AllIngredientsInfo: SwiftProtobuf.Message, SwiftProtobuf._Messa
   static func ==(lhs: Apisvr_AllIngredientsInfo, rhs: Apisvr_AllIngredientsInfo) -> Bool {
     if lhs.ingredientID != rhs.ingredientID {return false}
     if lhs.name != rhs.name {return false}
-    if lhs.mark != rhs.mark {return false}
+    if lhs.isChecked != rhs.isChecked {return false}
     if lhs.amount != rhs.amount {return false}
     if lhs.totalAmount != rhs.totalAmount {return false}
     if lhs.unit != rhs.unit {return false}
@@ -879,6 +1369,78 @@ extension Apisvr_GetAllIngredientsResp: SwiftProtobuf.Message, SwiftProtobuf._Me
 
   static func ==(lhs: Apisvr_GetAllIngredientsResp, rhs: Apisvr_GetAllIngredientsResp) -> Bool {
     if lhs.ingredients != rhs.ingredients {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Apisvr_AllIngredientCheckReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".AllIngredientCheckReq"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "recommended_recipe_ids"),
+    2: .standard(proto: "ingredient_id"),
+    3: .same(proto: "date"),
+    4: .same(proto: "check"),
+    5: .same(proto: "unit"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      switch fieldNumber {
+      case 1: try decoder.decodeRepeatedInt32Field(value: &self.recommendedRecipeIds)
+      case 2: try decoder.decodeSingularInt32Field(value: &self.ingredientID)
+      case 3: try decoder.decodeSingularInt64Field(value: &self.date)
+      case 4: try decoder.decodeSingularBoolField(value: &self.check)
+      case 5: try decoder.decodeSingularStringField(value: &self.unit)
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.recommendedRecipeIds.isEmpty {
+      try visitor.visitPackedInt32Field(value: self.recommendedRecipeIds, fieldNumber: 1)
+    }
+    if self.ingredientID != 0 {
+      try visitor.visitSingularInt32Field(value: self.ingredientID, fieldNumber: 2)
+    }
+    if self.date != 0 {
+      try visitor.visitSingularInt64Field(value: self.date, fieldNumber: 3)
+    }
+    if self.check != false {
+      try visitor.visitSingularBoolField(value: self.check, fieldNumber: 4)
+    }
+    if !self.unit.isEmpty {
+      try visitor.visitSingularStringField(value: self.unit, fieldNumber: 5)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Apisvr_AllIngredientCheckReq, rhs: Apisvr_AllIngredientCheckReq) -> Bool {
+    if lhs.recommendedRecipeIds != rhs.recommendedRecipeIds {return false}
+    if lhs.ingredientID != rhs.ingredientID {return false}
+    if lhs.date != rhs.date {return false}
+    if lhs.check != rhs.check {return false}
+    if lhs.unit != rhs.unit {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Apisvr_ALLIngredientCheckResp: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".ALLIngredientCheckResp"
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let _ = try decoder.nextFieldNumber() {
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Apisvr_ALLIngredientCheckResp, rhs: Apisvr_ALLIngredientCheckResp) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

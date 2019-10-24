@@ -52,7 +52,6 @@ class RecipeDetailView:UIView, UITableViewDelegate {
         self.headerImage.addSubview(playButton)
         //set up table view
         recipeDetailTable.register(RecipeDetailTableCell.self, forCellReuseIdentifier: "RecipeDetailCell")
-        recipeDetailTable.contentInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
         recipeDetailTable.tableHeaderView = contentView
         recipeDetailTable.tableFooterView = footerView
         recipeDetailTable.backgroundColor = UIColor.clear
@@ -75,7 +74,7 @@ class RecipeDetailView:UIView, UITableViewDelegate {
         let playImage = UIImage(named: "playbutton_white")?.resizeImageWith(newSize: CGSize(width: 100, height: 100))
         playButton.setImage(playImage, for: .normal)
         playButton.center = CGPoint(x: UIScreen.main.bounds.size.width/2, y: contentView.emptyViewHead.frame.height/2)
-        recipeDetailTable.tableHeaderView!.addSubview(playButton)
+        contentView.emptyViewHead.addSubview(playButton)
         //cover view setting
         naviCoverView.backgroundColor = UIColor.white
         naviCoverView.layer.masksToBounds = false
@@ -86,9 +85,9 @@ class RecipeDetailView:UIView, UITableViewDelegate {
         
         self.addSubview(naviCoverView)
         //bring view to the front
-        self.bringSubviewToFront(recipeDetailTable)
-        self.bringSubviewToFront(contentView)
-        self.bringSubviewToFront(naviCoverView)
+//        self.bringSubviewToFront(recipeDetailTable)
+//        self.bringSubviewToFront(contentView)
+//        self.bringSubviewToFront(naviCoverView)
 //        self.bringSubviewToFront(customBackButton)
     }
 

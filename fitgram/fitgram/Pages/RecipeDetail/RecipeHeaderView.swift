@@ -23,7 +23,7 @@ class RecipeHeaderView: UIView {
     
     convenience init (){
         self.init(frame: CGRect.zero)
-        emptyViewHead.backgroundColor = UIColor.clear
+        emptyViewHead.backgroundColor = UIColor.white
         self.addSubview(emptyViewHead)
         nutritionPanel.frame.origin.y = UIScreen.main.bounds.width + 16
         self.addSubview(nutritionPanel)
@@ -33,8 +33,6 @@ class RecipeHeaderView: UIView {
         difficulityLvl.frame.origin.y = UIScreen.main.bounds.width + 167
         self.addSubview(timeInfo)
         self.addSubview(difficulityLvl)
-        self.assembleIngredientList()
-        self.createStartCookButton()
     }
     
     func createDescLabelsContainer(descIcon:UIImage, descTitle:String, descContent: String) -> UIView {

@@ -15,11 +15,12 @@ class HomeTabViewController: UITabBarController {
         let foodDiaryVC = FoodDiaryViewController()
         let progressVC = ProgressViewController()
         let moreVC = MoreViewController()
+        let profileVC = ProfileViewController()
         recommendHomeVC.tabBarItem = UITabBarItem(tabBarSystemItem: .topRated, tag: 0)
         foodDiaryVC.tabBarItem = UITabBarItem(tabBarSystemItem: .bookmarks, tag: 1)
         progressVC.tabBarItem = UITabBarItem(tabBarSystemItem: .recents, tag: 2)
-        moreVC.tabBarItem = UITabBarItem(tabBarSystemItem: .more, tag: 3)
-        self.viewControllers = [recommendHomeVC, foodDiaryVC, progressVC, moreVC]
+        profileVC.tabBarItem = UITabBarItem(tabBarSystemItem: .more, tag: 3)
+        self.viewControllers = [recommendHomeVC, foodDiaryVC, progressVC, profileVC]
         self.selectedViewController = recommendHomeVC
         self.selectedIndex = 0
     }

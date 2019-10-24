@@ -41,7 +41,6 @@ class RecommendHomeTableCell: UITableViewCell {
         layout.minimumLineSpacing = 10
         layout.minimumInteritemSpacing = 10
         layout.itemSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width) //set item size to eliminate the offset issue
-//        let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         recommendationCollectionView.collectionViewLayout = layout
         recommendationCollectionView.backgroundColor = .clear
