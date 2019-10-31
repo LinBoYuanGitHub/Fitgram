@@ -18,6 +18,8 @@ class RecommendHomeTableCell: UITableViewCell {
     
     //on collection item select listener
     var didSelectAction: (RecipeModel,Int) -> Void = {_,_ in }
+    var didMoveAction: (Int) -> Void = {_ in }
+    
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -85,6 +87,13 @@ extension RecommendHomeTableCell: UICollectionViewDelegate, UICollectionViewData
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let recipeItem = recommendationDishes[indexPath.row]
         didSelectAction(recipeItem,indexPath.row)
+    }
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        guard let indexPath = self.recommendationCollectionView.indexPathForItem(at: recommendationCollectionView.center) else {
+            return
+        }
+        didMoveAction(indexPath.row)
     }
     
 }

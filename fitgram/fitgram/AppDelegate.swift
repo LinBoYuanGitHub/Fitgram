@@ -19,10 +19,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         Bundle(path: "/Applications/InjectionIII.app/Contents/Resources/iOSInjection.bundle")?.load()
         window = UIWindow(frame: UIScreen.main.bounds)
-//        let naviVC = UINavigationController()
-//        naviVC.viewControllers = [HomeTabViewController()]
-        let firstVC = LaunchPageViewController()
-        window?.rootViewController = firstVC
+        let naviVC = UINavigationController()
+        naviVC.viewControllers = [FoodDiaryTagViewController()]
+//        let firstVC = LaunchPageViewController()
+        window?.rootViewController = naviVC
         window?.makeKeyAndVisible()
         return true
     }

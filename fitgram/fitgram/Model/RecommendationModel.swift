@@ -11,4 +11,5 @@ import UIKit
 struct RecommendationModel {
     public var mealTitle = ""
     public var recipeList = [RecipeModel]()
+    public var selected_Pos = 0
 }

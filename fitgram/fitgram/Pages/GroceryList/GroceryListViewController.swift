@@ -7,12 +7,17 @@
 //
 
 import UIKit
+import SwiftGRPC
 
 class GroceryListViewController: UIViewController {
+    var date = Int()
     
     var groceryList = [GroceryItem]()
     var rootView:GroceryListView! = nil
     var isSelectAll = true
+    //
+    var address: String!
+    var client: Apisvr_RecommendationServiceServiceClient!
     
     func initMockUpGroceryListData(){
         var ingredientList = [IngredientModel]()
@@ -34,7 +39,14 @@ class GroceryListViewController: UIViewController {
             let groceryItem = GroceryItem(groceryItemId: 0, dishImageUrl: "https://i2.chuimg.com/ac6aa49e873d4aaa926e89d42c8a022b_1920w_1920h.jpg?imageView2/2/w/300/interlace/1/q/90", dishTitle: "酸奶南瓜碗", ingredientList: ingredientList, isChecked: true)
             groceryList.append(groceryItem)
         }
-       
+    }
+    
+  
+    func initDataService() {
+        address = Bundle.main.object(forInfoDictionaryKey: "GRPC_Address") as! String
+        gRPC.initialize()
+        print("GRPC version \(gRPC.version) - endpoint: \(address)")
+        self.client = Apisvr_RecommendationServiceServiceClient(address: address, secure: false)
     }
     
     override func loadView() {
@@ -48,7 +60,7 @@ class GroceryListViewController: UIViewController {
         super.viewDidLoad()
         self.title = "食谱列表"
 //        self.navigationController?.navigationBar.topItem?.title = "食谱列表"
-        self.initMockUpGroceryListData()
+//        self.initMockUpGroceryListData()
         self.navigationItem.leftBarButtonItem  = UIBarButtonItem(image: UIImage(imageLiteralResourceName: "backbutton_black"), style: .plain, target: self, action: #selector(onBackPressed))
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor.black
         self.rootView.allIngredientBtn.addTarget(self, action: #selector(navigateToSelectedRecipeIngredientPage), for: .touchUpInside)
@@ -56,21 +68,37 @@ class GroceryListViewController: UIViewController {
         on("INJECTION_BUNDLE_NOTIFICATION") {
             self.loadView()
         }
+        self.initDataService()
     }
     
     @objc func onBackPressed(){
         self.navigationController?.popViewController(animated: true)
     }
     
-    @objc func navigateToSelectedRecipeIngredientPage(){
-        let targetVC = GroceryDetailViewController()
-        var selectedIngredientList = [IngredientModel]()
-        for groceryItem in groceryList {
-            if groceryItem.isChecked {
-                selectedIngredientList.append(contentsOf: groceryItem.ingredientList)
+    @objc func requestForAllIngredientList() {
+        let req = Apisvr_GetAllIngredientsReq()
+        do{
+            guard let token = UserDefaults.standard.string(forKey: Constants.tokenKey) else {
+                return
             }
+            let metaData = try Metadata(["authorization": "Token " + token])
+            try self.client.getAllIngredients(req, metadata: metaData) { (resp, result) in
+                if result.statusCode == .ok {
+                    let targetVC = GroceryDetailViewController()
+                    let groceryDetailItem = Apisvr_GetCheckListItemResp()
+//                    groceryDetailItem.ingredients = resp?.ingredients
+                    targetVC.groceryDetailItem = groceryDetailItem
+                    self.navigationController?.pushViewController(targetVC, animated: true)
+                }
+            }
+        } catch {
+            print(error)
         }
-        targetVC.ingredientList = selectedIngredientList
+    }
+    
+    @objc func navigateToSelectedRecipeIngredientPage() {
+        let targetVC = GroceryDetailViewController()
+        targetVC.isAllIngredient = true
         self.navigationController?.pushViewController(targetVC, animated: true)
     }
     
@@ -116,9 +144,29 @@ extension GroceryListViewController: UITableViewDataSource, UITableViewDelegate 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //view the ingreident list
-        let targetVC = GroceryDetailViewController()
-        targetVC.ingredientList = groceryList[indexPath.row].ingredientList
-        self.navigationController?.pushViewController(targetVC, animated: true)
+        self.requestForGroceryListItem(groceryId:groceryList[indexPath.row].groceryItemId)
+    }
+    
+    func requestForGroceryListItem(groceryId:Int){
+        var req = Apisvr_GetCheckListItemReq()
+        req.date = Int64(date)
+        req.recommendedRecipeID = Int32(groceryId)
+        do{
+            guard let token = UserDefaults.standard.string(forKey: Constants.tokenKey) else {
+                return
+            }
+            let metaData = try Metadata(["authorization": "Token " + token])
+            try self.client.getCheckListItem(req, metadata: metaData, completion: { (resp, result) in
+                if result.statusCode == .ok {
+                    let targetVC = GroceryDetailViewController()
+                    targetVC.groceryDetailItem = resp!
+                    targetVC.detailItemId = groceryId
+                    self.navigationController?.pushViewController(targetVC, animated: true)
+                }
+            })
+        }catch {
+            print(error)
+        }
     }
     
     @objc func onGroceryItemCheck(sender:UIButton){

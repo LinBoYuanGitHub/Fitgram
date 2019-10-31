@@ -37,10 +37,10 @@ fileprivate final class Apisvr_RecommendationServiceGetRecommendedMealPlanCallBa
   override class var method: String { return "/apisvr.RecommendationService/GetRecommendedMealPlan" }
 }
 
-internal protocol Apisvr_RecommendationServiceAddCheckListItemCall: ClientCallUnary {}
+internal protocol Apisvr_RecommendationServiceAddCheckListItemsCall: ClientCallUnary {}
 
-fileprivate final class Apisvr_RecommendationServiceAddCheckListItemCallBase: ClientCallUnaryBase<Apisvr_AddCheckListItemReq, Apisvr_AddCheckListItemResp>, Apisvr_RecommendationServiceAddCheckListItemCall {
-  override class var method: String { return "/apisvr.RecommendationService/AddCheckListItem" }
+fileprivate final class Apisvr_RecommendationServiceAddCheckListItemsCallBase: ClientCallUnaryBase<Apisvr_AddCheckListItemsReq, Apisvr_AddCheckListItemsResp>, Apisvr_RecommendationServiceAddCheckListItemsCall {
+  override class var method: String { return "/apisvr.RecommendationService/AddCheckListItems" }
 }
 
 internal protocol Apisvr_RecommendationServiceGetCheckListItemCall: ClientCallUnary {}
@@ -83,10 +83,10 @@ internal protocol Apisvr_RecommendationServiceService: ServiceClient {
   func getRecommendedMealPlan(_ request: Apisvr_GetRecommendedMealPlanReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_GetRecommendedMealPlanResp?, CallResult) -> Void) throws -> Apisvr_RecommendationServiceGetRecommendedMealPlanCall
 
   /// Synchronous. Unary.
-  func addCheckListItem(_ request: Apisvr_AddCheckListItemReq, metadata customMetadata: Metadata) throws -> Apisvr_AddCheckListItemResp
+  func addCheckListItems(_ request: Apisvr_AddCheckListItemsReq, metadata customMetadata: Metadata) throws -> Apisvr_AddCheckListItemsResp
   /// Asynchronous. Unary.
   @discardableResult
-  func addCheckListItem(_ request: Apisvr_AddCheckListItemReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_AddCheckListItemResp?, CallResult) -> Void) throws -> Apisvr_RecommendationServiceAddCheckListItemCall
+  func addCheckListItems(_ request: Apisvr_AddCheckListItemsReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_AddCheckListItemsResp?, CallResult) -> Void) throws -> Apisvr_RecommendationServiceAddCheckListItemsCall
 
   /// Synchronous. Unary.
   func getCheckListItem(_ request: Apisvr_GetCheckListItemReq, metadata customMetadata: Metadata) throws -> Apisvr_GetCheckListItemResp
@@ -136,13 +136,13 @@ internal extension Apisvr_RecommendationServiceService {
   }
 
   /// Synchronous. Unary.
-  func addCheckListItem(_ request: Apisvr_AddCheckListItemReq) throws -> Apisvr_AddCheckListItemResp {
-    return try self.addCheckListItem(request, metadata: self.metadata)
+  func addCheckListItems(_ request: Apisvr_AddCheckListItemsReq) throws -> Apisvr_AddCheckListItemsResp {
+    return try self.addCheckListItems(request, metadata: self.metadata)
   }
   /// Asynchronous. Unary.
   @discardableResult
-  func addCheckListItem(_ request: Apisvr_AddCheckListItemReq, completion: @escaping (Apisvr_AddCheckListItemResp?, CallResult) -> Void) throws -> Apisvr_RecommendationServiceAddCheckListItemCall {
-    return try self.addCheckListItem(request, metadata: self.metadata, completion: completion)
+  func addCheckListItems(_ request: Apisvr_AddCheckListItemsReq, completion: @escaping (Apisvr_AddCheckListItemsResp?, CallResult) -> Void) throws -> Apisvr_RecommendationServiceAddCheckListItemsCall {
+    return try self.addCheckListItems(request, metadata: self.metadata, completion: completion)
   }
 
   /// Synchronous. Unary.
@@ -213,14 +213,14 @@ internal final class Apisvr_RecommendationServiceServiceClient: ServiceClientBas
   }
 
   /// Synchronous. Unary.
-  internal func addCheckListItem(_ request: Apisvr_AddCheckListItemReq, metadata customMetadata: Metadata) throws -> Apisvr_AddCheckListItemResp {
-    return try Apisvr_RecommendationServiceAddCheckListItemCallBase(channel)
+  internal func addCheckListItems(_ request: Apisvr_AddCheckListItemsReq, metadata customMetadata: Metadata) throws -> Apisvr_AddCheckListItemsResp {
+    return try Apisvr_RecommendationServiceAddCheckListItemsCallBase(channel)
       .run(request: request, metadata: customMetadata)
   }
   /// Asynchronous. Unary.
   @discardableResult
-  internal func addCheckListItem(_ request: Apisvr_AddCheckListItemReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_AddCheckListItemResp?, CallResult) -> Void) throws -> Apisvr_RecommendationServiceAddCheckListItemCall {
-    return try Apisvr_RecommendationServiceAddCheckListItemCallBase(channel)
+  internal func addCheckListItems(_ request: Apisvr_AddCheckListItemsReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_AddCheckListItemsResp?, CallResult) -> Void) throws -> Apisvr_RecommendationServiceAddCheckListItemsCall {
+    return try Apisvr_RecommendationServiceAddCheckListItemsCallBase(channel)
       .start(request: request, metadata: customMetadata, completion: completion)
   }
 
@@ -280,7 +280,7 @@ internal final class Apisvr_RecommendationServiceServiceClient: ServiceClientBas
 internal protocol Apisvr_RecommendationServiceProvider: ServiceProvider {
   func getRecipeDetail(request: Apisvr_GetRecipeDetailReq, session: Apisvr_RecommendationServiceGetRecipeDetailSession) throws -> Apisvr_GetRecipeDetailResp
   func getRecommendedMealPlan(request: Apisvr_GetRecommendedMealPlanReq, session: Apisvr_RecommendationServiceGetRecommendedMealPlanSession) throws -> Apisvr_GetRecommendedMealPlanResp
-  func addCheckListItem(request: Apisvr_AddCheckListItemReq, session: Apisvr_RecommendationServiceAddCheckListItemSession) throws -> Apisvr_AddCheckListItemResp
+  func addCheckListItems(request: Apisvr_AddCheckListItemsReq, session: Apisvr_RecommendationServiceAddCheckListItemsSession) throws -> Apisvr_AddCheckListItemsResp
   func getCheckListItem(request: Apisvr_GetCheckListItemReq, session: Apisvr_RecommendationServiceGetCheckListItemSession) throws -> Apisvr_GetCheckListItemResp
   func ingredientCheck(request: Apisvr_IngredientCheckReq, session: Apisvr_RecommendationServiceIngredientCheckSession) throws -> Apisvr_IngredientCheckResp
   func getAllIngredients(request: Apisvr_GetAllIngredientsReq, session: Apisvr_RecommendationServiceGetAllIngredientsSession) throws -> Apisvr_GetAllIngredientsResp
@@ -304,10 +304,10 @@ extension Apisvr_RecommendationServiceProvider {
         handler: handler,
         providerBlock: { try self.getRecommendedMealPlan(request: $0, session: $1 as! Apisvr_RecommendationServiceGetRecommendedMealPlanSessionBase) })
           .run()
-    case "/apisvr.RecommendationService/AddCheckListItem":
-      return try Apisvr_RecommendationServiceAddCheckListItemSessionBase(
+    case "/apisvr.RecommendationService/AddCheckListItems":
+      return try Apisvr_RecommendationServiceAddCheckListItemsSessionBase(
         handler: handler,
-        providerBlock: { try self.addCheckListItem(request: $0, session: $1 as! Apisvr_RecommendationServiceAddCheckListItemSessionBase) })
+        providerBlock: { try self.addCheckListItems(request: $0, session: $1 as! Apisvr_RecommendationServiceAddCheckListItemsSessionBase) })
           .run()
     case "/apisvr.RecommendationService/GetCheckListItem":
       return try Apisvr_RecommendationServiceGetCheckListItemSessionBase(
@@ -343,9 +343,9 @@ internal protocol Apisvr_RecommendationServiceGetRecommendedMealPlanSession: Ser
 
 fileprivate final class Apisvr_RecommendationServiceGetRecommendedMealPlanSessionBase: ServerSessionUnaryBase<Apisvr_GetRecommendedMealPlanReq, Apisvr_GetRecommendedMealPlanResp>, Apisvr_RecommendationServiceGetRecommendedMealPlanSession {}
 
-internal protocol Apisvr_RecommendationServiceAddCheckListItemSession: ServerSessionUnary {}
+internal protocol Apisvr_RecommendationServiceAddCheckListItemsSession: ServerSessionUnary {}
 
-fileprivate final class Apisvr_RecommendationServiceAddCheckListItemSessionBase: ServerSessionUnaryBase<Apisvr_AddCheckListItemReq, Apisvr_AddCheckListItemResp>, Apisvr_RecommendationServiceAddCheckListItemSession {}
+fileprivate final class Apisvr_RecommendationServiceAddCheckListItemsSessionBase: ServerSessionUnaryBase<Apisvr_AddCheckListItemsReq, Apisvr_AddCheckListItemsResp>, Apisvr_RecommendationServiceAddCheckListItemsSession {}
 
 internal protocol Apisvr_RecommendationServiceGetCheckListItemSession: ServerSessionUnary {}
 

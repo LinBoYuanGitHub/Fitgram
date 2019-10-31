@@ -9,6 +9,7 @@ target 'fitgram' do
   pod 'Kingfisher'
   pod 'ASPCircleChart'
   pod 'SwiftGRPC'
+  pod 'AADraggableView'
 
   # Pods for fitgram
 

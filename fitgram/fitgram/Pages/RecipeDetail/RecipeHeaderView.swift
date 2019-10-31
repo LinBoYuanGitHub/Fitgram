@@ -12,6 +12,7 @@ import Stevia
 class RecipeHeaderView: UIView {
     //empty head view
     public var emptyViewHead = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width , height:  UIScreen.main.bounds.width))
+    public var whiteBoardContainer:UIView!
     //function button part
     public var favoriteBtn = UIButton()
     public var checkedBtn = UIButton()
@@ -23,16 +24,19 @@ class RecipeHeaderView: UIView {
     
     convenience init (){
         self.init(frame: CGRect.zero)
-        emptyViewHead.backgroundColor = UIColor.white
+        emptyViewHead.backgroundColor = UIColor.clear
         self.addSubview(emptyViewHead)
-        nutritionPanel.frame.origin.y = UIScreen.main.bounds.width + 16
-        self.addSubview(nutritionPanel)
+        whiteBoardContainer =  UIView(frame: CGRect(x: 0, y: UIScreen.main.bounds.width, width:  UIScreen.main.bounds.width, height: CGFloat(600+ingredientDataList.count*45)))
+        whiteBoardContainer.backgroundColor = .white
+        self.addSubview(whiteBoardContainer)
+        nutritionPanel.frame.origin.y =  16
+        whiteBoardContainer.addSubview(nutritionPanel)
         let timeInfo = createDescLabelsContainer(descIcon: UIImage(named: "clockIcon_gray")!, descTitle: "时间", descContent: "约20分钟")
         let difficulityLvl = createDescLabelsContainer(descIcon: UIImage(named: "difficulityIcon_gray")!, descTitle: "难度", descContent: "容易做")
-        timeInfo.frame.origin.y = UIScreen.main.bounds.width + 137
-        difficulityLvl.frame.origin.y = UIScreen.main.bounds.width + 167
-        self.addSubview(timeInfo)
-        self.addSubview(difficulityLvl)
+        timeInfo.frame.origin.y = 137
+        difficulityLvl.frame.origin.y = 167
+        whiteBoardContainer.addSubview(timeInfo)
+        whiteBoardContainer.addSubview(difficulityLvl)
     }
     
     func createDescLabelsContainer(descIcon:UIImage, descTitle:String, descContent: String) -> UIView {
@@ -54,25 +58,25 @@ class RecipeHeaderView: UIView {
     //ingredient list part
     func assembleIngredientList() {
         //ingredient title
-        let ingredientsLabel = UILabel(frame: CGRect(x: 32, y: UIScreen.main.bounds.width + 220, width: CGFloat(UIScreen.main.bounds.width-32), height: 25))
+        let ingredientsLabel = UILabel(frame: CGRect(x: 32, y: 220, width: CGFloat(UIScreen.main.bounds.width-32), height: 25))
         ingredientsLabel.text = "用料～一人份"
         ingredientsLabel.font = UIFont(name: ":PingFangSC-Medium", size: 18)
-        self.addSubview(ingredientsLabel)
+        whiteBoardContainer.addSubview(ingredientsLabel)
         //ingredient list part
         let heightFactor = 50
-        let ingredientViewContainer = UIView(frame: CGRect(x: 0, y: UIScreen.main.bounds.width + 270, width: CGFloat(UIScreen.main.bounds.width), height:  CGFloat(ingredientDataList.count * heightFactor)))
+        let ingredientViewContainer = UIView(frame: CGRect(x: 0, y: 270, width: CGFloat(UIScreen.main.bounds.width), height:  CGFloat(ingredientDataList.count * heightFactor)))
         for index in 0..<ingredientDataList.count {
             let ingredientNameLabel = UILabel(frame: CGRect(x: 16, y: index*heightFactor, width:Int((UIScreen.main.bounds.width-16)/2), height: heightFactor))
             let ingredientUnitLabel = UILabel(frame: CGRect(x: Int((UIScreen.main.bounds.width-16)/2), y: index*heightFactor, width:Int((UIScreen.main.bounds.width-16)/2), height: heightFactor))
             ingredientUnitLabel.textAlignment = .right
-            let ingredientDashLineView = createDashLine(lineLength: 1,lineSpacing: 1,lineColor: UIColor.black,yValue:(index+1)*heightFactor )
+            let ingredientDashLineView = createDashLine(lineLength: 1,lineSpacing: 1,lineColor: UIColor.black,yValue:(index+1)*heightFactor)
             ingredientNameLabel.text = ingredientDataList[index].ingredientName
             ingredientUnitLabel.text = ingredientDataList[index].portionDesc
             ingredientViewContainer.addSubview(ingredientNameLabel)
             ingredientViewContainer.addSubview(ingredientUnitLabel)
             ingredientViewContainer.addSubview(ingredientDashLineView)
         }
-        self.addSubview(ingredientViewContainer)
+        whiteBoardContainer.addSubview(ingredientViewContainer)
     }
     
     func createDashLine(lineLength : Int ,lineSpacing : Int,lineColor : UIColor,yValue:Int) -> UIView {

@@ -24,6 +24,7 @@ class ProfileView:UIView{
         )
         self.backgroundColor = .white
         profileTableView.register(ProfileTableCell.self, forCellReuseIdentifier: "ProfileTableCell")
+        profileTableView.register(ProfileAvatarCell.self, forCellReuseIdentifier: "ProfileAvatarCell")
     }
     
     

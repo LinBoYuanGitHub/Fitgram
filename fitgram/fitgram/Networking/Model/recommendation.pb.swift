@@ -299,19 +299,21 @@ struct Apisvr_GetRecommendedMealPlanResp {
   init() {}
 }
 
-struct Apisvr_AddCheckListItemReq {
+struct Apisvr_AddCheckListItemsReq {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var recommendedRecipeID: Int32 = 0
+  var recommendedRecipeIds: [Int32] = []
+
+  var date: Int64 = 0
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 }
 
-struct Apisvr_AddCheckListItemResp {
+struct Apisvr_AddCheckListItemsResp {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -1002,37 +1004,43 @@ extension Apisvr_GetRecommendedMealPlanResp: SwiftProtobuf.Message, SwiftProtobu
   }
 }
 
-extension Apisvr_AddCheckListItemReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".AddCheckListItemReq"
+extension Apisvr_AddCheckListItemsReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".AddCheckListItemsReq"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "recommended_recipe_id"),
+    1: .standard(proto: "recommended_recipe_ids"),
+    2: .same(proto: "date"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       switch fieldNumber {
-      case 1: try decoder.decodeSingularInt32Field(value: &self.recommendedRecipeID)
+      case 1: try decoder.decodeRepeatedInt32Field(value: &self.recommendedRecipeIds)
+      case 2: try decoder.decodeSingularInt64Field(value: &self.date)
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if self.recommendedRecipeID != 0 {
-      try visitor.visitSingularInt32Field(value: self.recommendedRecipeID, fieldNumber: 1)
+    if !self.recommendedRecipeIds.isEmpty {
+      try visitor.visitPackedInt32Field(value: self.recommendedRecipeIds, fieldNumber: 1)
+    }
+    if self.date != 0 {
+      try visitor.visitSingularInt64Field(value: self.date, fieldNumber: 2)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: Apisvr_AddCheckListItemReq, rhs: Apisvr_AddCheckListItemReq) -> Bool {
-    if lhs.recommendedRecipeID != rhs.recommendedRecipeID {return false}
+  static func ==(lhs: Apisvr_AddCheckListItemsReq, rhs: Apisvr_AddCheckListItemsReq) -> Bool {
+    if lhs.recommendedRecipeIds != rhs.recommendedRecipeIds {return false}
+    if lhs.date != rhs.date {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
-extension Apisvr_AddCheckListItemResp: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".AddCheckListItemResp"
+extension Apisvr_AddCheckListItemsResp: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".AddCheckListItemsResp"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1044,7 +1052,7 @@ extension Apisvr_AddCheckListItemResp: SwiftProtobuf.Message, SwiftProtobuf._Mes
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: Apisvr_AddCheckListItemResp, rhs: Apisvr_AddCheckListItemResp) -> Bool {
+  static func ==(lhs: Apisvr_AddCheckListItemsResp, rhs: Apisvr_AddCheckListItemsResp) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

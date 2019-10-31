@@ -32,7 +32,7 @@ class RecommendHomeViewController:UIViewController{
                 recipe.recipeCalorie = "345千卡"
                 recipe.recipeCookingDuration = "烹饪时间约10-15分钟"
                 recipe.videoCoverImageUrl = "https://i2.chuimg.com/ac6aa49e873d4aaa926e89d42c8a022b_1920w_1920h.jpg?imageView2/2/w/300/interlace/1/q/90"
-                recipe.recipeVideoUrl = "https://i4.chuimg.com/e655f0aeb0e311e8960402420a000135_720w_72逻辑0h.mp4"
+                recipe.recipeVideoUrl = "https://i4.chuimg.com/e655f0aeb0e311e8960402420a000135_720w_720h.mp4"
                 //add ingredient list testing data
                 recipe.ingredientList.append(IngredientModel(ingredientName: "虾仁", portionDesc: "50克",isChecked: false))
                 recipe.ingredientList.append(IngredientModel(ingredientName: "鸡蛋", portionDesc: "1个",isChecked: false))
@@ -76,7 +76,22 @@ class RecommendHomeViewController:UIViewController{
     
     @objc func naviToGroceryListView(){
         let targetVC = GroceryListViewController()
+        targetVC.groceryList = self.getSelectedRecipeGroceryList()
         self.navigationController?.pushViewController(targetVC, animated: true)
+    }
+    
+    func getSelectedRecipeGroceryList() -> [GroceryItem]{
+        var groceryList = [GroceryItem]()
+        for index in 0...recommendationList.count-1 {
+            let recipe = self.recommendationList[index].recipeList[recommendationList[index].selected_Pos]
+            var groceryItem = GroceryItem()
+            groceryItem.dishImageUrl = recipe.videoCoverImageUrl
+            groceryItem.dishTitle = recipe.recipeTitle
+            groceryItem.isChecked = true
+            groceryItem.groceryItemId = recipe.recipeId
+            groceryList.append(groceryItem)
+        }
+        return groceryList
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -142,6 +157,9 @@ extension RecommendHomeViewController: UITableViewDelegate, UITableViewDataSourc
         cell.setRecommendationList(dishList: recommendationList[indexPath.row].recipeList)
         cell.didSelectAction = {recipe,columnIndex in
             self.displayTransistScaleAnimation(rowIndex: indexPath.row, columnIndex: columnIndex,recipe: recipe)
+        }
+        cell.didMoveAction = { movePositionIndex in
+            self.recommendationList[indexPath.row].selected_Pos = movePositionIndex
         }
         return cell
     }

@@ -85,9 +85,9 @@ class RecipeDetailView:UIView, UITableViewDelegate {
         
         self.addSubview(naviCoverView)
         //bring view to the front
-//        self.bringSubviewToFront(recipeDetailTable)
+        self.bringSubviewToFront(recipeDetailTable)
 //        self.bringSubviewToFront(contentView)
-//        self.bringSubviewToFront(naviCoverView)
+        self.bringSubviewToFront(naviCoverView)
 //        self.bringSubviewToFront(customBackButton)
     }
 

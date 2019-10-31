@@ -39,17 +39,17 @@ class RecommendationDataManager {
                     for item in mealPlan.breakfast{
                         breakFastRecipeList.append(self.mealPlanItem2RecipeItem(item:item))
                     }
-                    let breakfastEntity = RecommendationModel(mealTitle: "早餐", recipeList: breakFastRecipeList)
+                    let breakfastEntity = RecommendationModel(mealTitle: "早餐", recipeList: breakFastRecipeList, selected_Pos: 0)
                     var lunchRecipeList = [RecipeModel]()
                     for item in mealPlan.lunch {
                         lunchRecipeList.append(self.mealPlanItem2RecipeItem(item:item))
                     }
-                    let lunchEntity = RecommendationModel(mealTitle: "午餐", recipeList: lunchRecipeList)
+                    let lunchEntity = RecommendationModel(mealTitle: "午餐", recipeList: lunchRecipeList, selected_Pos: 0)
                     var dinnerRecipeList = [RecipeModel]()
                     for item in mealPlan.dinner {
                         dinnerRecipeList.append(self.mealPlanItem2RecipeItem(item:item))
                     }
-                    let dinnerEntity = RecommendationModel(mealTitle: "晚餐", recipeList: dinnerRecipeList)
+                    let dinnerEntity = RecommendationModel(mealTitle: "晚餐", recipeList: dinnerRecipeList, selected_Pos: 0)
                     completition([breakfastEntity,lunchEntity,dinnerEntity])
                 } else {
                     //return error message
@@ -109,11 +109,13 @@ class RecommendationDataManager {
     }
     
     func checkGroceryItem(){
-
+        var request  = Apisvr_IngredientCheckReq()
+        
+        
     }
     
-    func unCheckGroceryItem(){
-        
+    func checkGroceryAllItem(){
+        var request = Apisvr_AllIngredientCheckReq()
     }
     
     

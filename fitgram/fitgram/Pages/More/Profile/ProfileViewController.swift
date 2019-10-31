@@ -14,6 +14,7 @@ class ProfileViewController: UIViewController{
     var rootView = ProfileView()
 //    var profile = ProfileModel()
     let profileFieldList = ["性别","出生年份","身高","体重","日常运动量"]
+    let fixSectionFieldList = ["头像","昵称"]
     let genderValueList = ["女","男"]
     let birthyearValueList = [Int]()
     let activityLevelValueList = ["卧床休息","轻度,静坐少动","中度,常常站立走动","重度,负重"]
@@ -159,66 +160,113 @@ extension ProfileViewController: UITextFieldDelegate {
         self.updateProfileToStorage()
     }
     
+
+    
     
 }
 
 extension ProfileViewController: UITableViewDelegate,UITableViewDataSource {
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sectionTitle
+        if section == 1 {
+            return sectionTitle
+        } else {
+            return ""
+        }
+       
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 40
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == 0 && indexPath.row == 0 {
+            return 90
+        } else {
+            return 46
+        }
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5 //gender,birth,height,weight,activitylvl
+        if section == 0 {
+            return 2
+        } else if section == 1{
+            return 5 //gender,birth,height,weight,activitylvl
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = self.rootView.profileTableView.dequeueReusableCell(withIdentifier: "ProfileTableCell") as? ProfileTableCell else {
-            return UITableViewCell()
+        if indexPath.section == 0 {
+            switch indexPath.row {
+            case 0: 
+                guard let cell = self.rootView.profileTableView.dequeueReusableCell(withIdentifier: "ProfileAvatarCell") as? ProfileAvatarCell else {
+                    return UITableViewCell()
+                }
+                cell.profileInfoLabel.text = fixSectionFieldList[indexPath.row]
+                cell.profileAvatarView.image = UIImage(named: "profile_avatar")
+                return cell
+            case 1:
+                guard let cell = self.rootView.profileTableView.dequeueReusableCell(withIdentifier: "ProfileTableCell") as? ProfileTableCell else {
+                    return UITableViewCell()
+                }
+                cell.profileInfoLabel.text = fixSectionFieldList[indexPath.row]
+                cell.profileInfoTextField.text = "AAA"
+                cell.profileInfoTextField.isEnabled = false
+                return cell
+            default:
+                return UITableViewCell()
+            }
+        } else {
+            guard let cell = self.rootView.profileTableView.dequeueReusableCell(withIdentifier: "ProfileTableCell") as? ProfileTableCell else {
+                return UITableViewCell()
+            }
+            cell.profileInfoLabel.text = profileFieldList[indexPath.row]
+            cell.profileInfoTextField.tag = indexPath.row
+            cell.profileInfoTextField.delegate = self
+            switch indexPath.row {
+            case 0://gender
+                genderPicker.tag = genderIndex
+                cell.profileInfoTextField.inputView = genderPicker
+                let valueIndex = Int(profile.gender)
+                cell.profileInfoTextField.text = genderValueList[valueIndex]
+                cell.profileInfoTextField.delegate = self
+                break
+            case 1://birthYear
+                birthdayPicker.tag = birthdayIndex
+                cell.profileInfoTextField.inputView = birthdayPicker
+                cell.profileInfoTextField.text = String(profile.birthYear)
+                cell.profileInfoTextField.delegate = self
+                birthdayPicker.selectRow(20, inComponent: 0, animated: false)
+                break
+            case 2://height
+                cell.profileInfoTextField.keyboardType = .decimalPad
+                cell.profileInfoTextField.text = String(profile.height)
+                cell.profileUnitLabel.text = "cm"
+                cell.profileInfoTextField.delegate = self
+                break
+            case 3://weight
+                cell.profileInfoTextField.keyboardType = .decimalPad
+                cell.profileInfoTextField.text = String(profile.weight)
+                cell.profileUnitLabel.text = "kg"
+                cell.profileInfoTextField.delegate = self
+                break
+            case 4://actvity level
+                activityLevelPicker.tag = activityIndex
+                cell.profileInfoTextField.inputView = activityLevelPicker
+                cell.profileInfoTextField.text = activityLevelValueList[0]
+                cell.profileInfoTextField.delegate = self
+                break
+            default:
+                break
+            }
+            return cell
         }
-        cell.profileInfoLabel.text = profileFieldList[indexPath.row]
-        cell.profileInfoTextField.tag = indexPath.row
-        cell.profileInfoTextField.delegate = self
-        switch indexPath.row {
-        case 0://gender
-            genderPicker.tag = genderIndex
-            cell.profileInfoTextField.inputView = genderPicker
-            cell.profileInfoTextField.text = genderValueList[0]
-            cell.profileInfoTextField.delegate = self
-            break
-        case 1://birthYear
-            birthdayPicker.tag = birthdayIndex
-            cell.profileInfoTextField.inputView = birthdayPicker
-            cell.profileInfoTextField.text = String(profile.birthYear)
-            cell.profileInfoTextField.delegate = self
-            birthdayPicker.selectRow(20, inComponent: 0, animated: false)
-            break
-        case 2://height
-            cell.profileInfoTextField.keyboardType = .decimalPad
-            cell.profileInfoTextField.text = String(profile.height)
-            cell.profileUnitLabel.text = "cm"
-            cell.profileInfoTextField.delegate = self
-            break
-        case 3://weight
-            cell.profileInfoTextField.keyboardType = .decimalPad
-            cell.profileInfoTextField.text = String(profile.weight)
-            cell.profileUnitLabel.text = "kg"
-            cell.profileInfoTextField.delegate = self
-            break
-        case 4://actvity level
-            activityLevelPicker.tag = activityIndex
-            cell.profileInfoTextField.inputView = activityLevelPicker
-            cell.profileInfoTextField.text = activityLevelValueList[0]
-            cell.profileInfoTextField.delegate = self
-            break
-        default:
-            break
-        }
-        return cell
     }
     
     
@@ -257,7 +305,7 @@ extension ProfileViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let indexPath = IndexPath(row: pickerView.tag, section: 0)
+        let indexPath = IndexPath(row: pickerView.tag, section: 1)
         guard let cell = self.rootView.profileTableView.cellForRow(at: indexPath) as? ProfileTableCell else {
             return
         }

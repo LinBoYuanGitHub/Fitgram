@@ -35,9 +35,6 @@ class RecipeDetailViewController:UIViewController{
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationItem.hidesBackButton = true
-        //        self.navigationController?.navigationBar.subviews[0].alpha = 0
-        //        self.navigationController?.navigationBar.tintColor = UIColor.black
-        //        self.navigationController?.navigationBar.topItem?.title = ""
         self.navigationItem.leftBarButtonItem  = UIBarButtonItem(image: UIImage(imageLiteralResourceName: "backbutton_black"), style: .plain, target: self, action: #selector(onBackPressed))
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor.white
         //        self.rootView.customBackButton.addTarget(self, action: #selector(onBackPressed), for: .touchUpInside)
@@ -103,7 +100,7 @@ class RecipeDetailViewController:UIViewController{
                     self.rootView.recipeDetailTable.reloadData()
                     self.rootView.contentView.assembleIngredientList()
                     self.rootView.contentView.createStartCookButton()
-                    self.rootView.bringSubviewToFront(self.rootView.recipeDetailTable)
+//                    self.rootView.bringSubviewToFront(self.rootView.recipeDetailTable)
                     self.rootView.recipeDetailTable.isScrollEnabled = true
                 }
             }

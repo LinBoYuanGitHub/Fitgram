@@ -10,6 +10,8 @@
 		0087E303DAB981C1D2C21CF2 /* Pods_fitgramTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF409EE695EEACE9BA276B2E /* Pods_fitgramTests.framework */; };
 		2CD9F66E5FB62E76983F9856 /* Pods_fitgram.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2350F7B9E6CC8CA91E259263 /* Pods_fitgram.framework */; };
 		33C5B433F0FAA4CBDB6F699A /* Pods_fitgramUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EDAA5CB49F608E8519E04FD /* Pods_fitgramUITests.framework */; };
+		3F288B32236A8410004B8B3C /* FoodDiaryTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F288B31236A8410004B8B3C /* FoodDiaryTagViewController.swift */; };
+		3F288B34236A8423004B8B3C /* FoodDiaryTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F288B33236A8423004B8B3C /* FoodDiaryTagView.swift */; };
 		3F4FC7B42355D0CD00E119E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4FC7B32355D0CD00E119E3 /* AppDelegate.swift */; };
 		3F4FC7B92355D0CD00E119E3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F4FC7B72355D0CD00E119E3 /* Main.storyboard */; };
 		3F4FC7BB2355D0CF00E119E3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F4FC7BA2355D0CF00E119E3 /* Assets.xcassets */; };
@@ -65,8 +67,9 @@
 		3F4FC85B235D628B00E119E3 /* LaunchPageViewControler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4FC85A235D628B00E119E3 /* LaunchPageViewControler.swift */; };
 		3F4FC85E235D87A100E119E3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4FC85D235D87A100E119E3 /* Constants.swift */; };
 		3F4FC860235EDF2600E119E3 /* ProfileDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4FC85F235EDF2600E119E3 /* ProfileDataService.swift */; };
-		3F4FC86623604DFA00E119E3 /* recommendation.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4FC86523604DFA00E119E3 /* recommendation.pb.swift */; };
-		3F4FC86823604E3700E119E3 /* recommendation.grpc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4FC86723604E3700E119E3 /* recommendation.grpc.swift */; };
+		3F4FC86A2361486F00E119E3 /* recommendation.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4FC8692361486F00E119E3 /* recommendation.pb.swift */; };
+		3F4FC86C2361487B00E119E3 /* recommendation.grpc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4FC86B2361487B00E119E3 /* recommendation.grpc.swift */; };
+		3F4FC86E2362D1F800E119E3 /* ProfileAvatarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4FC86D2362D1F800E119E3 /* ProfileAvatarCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +97,8 @@
 		251FD795F7F7469D48EBFC0E /* Pods-fitgram.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fitgram.debug.xcconfig"; path = "Pods/Target Support Files/Pods-fitgram/Pods-fitgram.debug.xcconfig"; sourceTree = "<group>"; };
 		2EDAA5CB49F608E8519E04FD /* Pods_fitgramUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_fitgramUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		335E2D42D00A90EC15280EFB /* Pods-fitgramUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fitgramUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-fitgramUITests/Pods-fitgramUITests.release.xcconfig"; sourceTree = "<group>"; };
+		3F288B31236A8410004B8B3C /* FoodDiaryTagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDiaryTagViewController.swift; sourceTree = "<group>"; };
+		3F288B33236A8423004B8B3C /* FoodDiaryTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDiaryTagView.swift; sourceTree = "<group>"; };
 		3F4FC7B02355D0CD00E119E3 /* fitgram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fitgram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F4FC7B32355D0CD00E119E3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3F4FC7B82355D0CD00E119E3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -155,8 +160,9 @@
 		3F4FC85A235D628B00E119E3 /* LaunchPageViewControler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchPageViewControler.swift; sourceTree = "<group>"; };
 		3F4FC85D235D87A100E119E3 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		3F4FC85F235EDF2600E119E3 /* ProfileDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDataService.swift; sourceTree = "<group>"; };
-		3F4FC86523604DFA00E119E3 /* recommendation.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = recommendation.pb.swift; sourceTree = "<group>"; };
-		3F4FC86723604E3700E119E3 /* recommendation.grpc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = recommendation.grpc.swift; sourceTree = "<group>"; };
+		3F4FC8692361486F00E119E3 /* recommendation.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = recommendation.pb.swift; sourceTree = "<group>"; };
+		3F4FC86B2361487B00E119E3 /* recommendation.grpc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = recommendation.grpc.swift; sourceTree = "<group>"; };
+		3F4FC86D2362D1F800E119E3 /* ProfileAvatarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAvatarCell.swift; sourceTree = "<group>"; };
 		B35A9FBCB9C16941669597C0 /* Pods-fitgram.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fitgram.release.xcconfig"; path = "Pods/Target Support Files/Pods-fitgram/Pods-fitgram.release.xcconfig"; sourceTree = "<group>"; };
 		DF409EE695EEACE9BA276B2E /* Pods_fitgramTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_fitgramTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -189,6 +195,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3F288B2F2367D329004B8B3C /* Account */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Account;
+			sourceTree = "<group>";
+		};
+		3F288B30236A83CF004B8B3C /* FoodDiaryTagging */ = {
+			isa = PBXGroup;
+			children = (
+				3F288B31236A8410004B8B3C /* FoodDiaryTagViewController.swift */,
+				3F288B33236A8423004B8B3C /* FoodDiaryTagView.swift */,
+			);
+			path = FoodDiaryTagging;
+			sourceTree = "<group>";
+		};
 		3F4FC7A72355D0CD00E119E3 = {
 			isa = PBXGroup;
 			children = (
@@ -249,6 +271,7 @@
 		3F4FC7E12355D40200E119E3 /* Pages */ = {
 			isa = PBXGroup;
 			children = (
+				3F288B2F2367D329004B8B3C /* Account */,
 				3F4FC8502359A19600E119E3 /* More */,
 				3F4FC8322355D58B00E119E3 /* VideoPlay */,
 				3F4FC8252355D56C00E119E3 /* RecipeDetail */,
@@ -321,6 +344,7 @@
 		3F4FC8112355D4F100E119E3 /* FoodDiary */ = {
 			isa = PBXGroup;
 			children = (
+				3F288B30236A83CF004B8B3C /* FoodDiaryTagging */,
 				3F4FC8122355D4FF00E119E3 /* FoodDiaryViewController.swift */,
 			);
 			path = FoodDiary;
@@ -402,7 +426,7 @@
 			children = (
 				3F4FC8462358620800E119E3 /* login.grpc.swift */,
 				3F4FC8472358620800E119E3 /* user_info.grpc.swift */,
-				3F4FC86723604E3700E119E3 /* recommendation.grpc.swift */,
+				3F4FC86B2361487B00E119E3 /* recommendation.grpc.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -410,8 +434,8 @@
 		3F4FC841235861E400E119E3 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3F4FC8692361486F00E119E3 /* recommendation.pb.swift */,
 				3F4FC843235861FC00E119E3 /* login.pb.swift */,
-				3F4FC86523604DFA00E119E3 /* recommendation.pb.swift */,
 				3F4FC842235861FC00E119E3 /* user_info.pb.swift */,
 			);
 			path = Model;
@@ -432,6 +456,7 @@
 				3F4FC8522359A2AA00E119E3 /* ProfileViewController.swift */,
 				3F4FC8542359A2B300E119E3 /* ProfileView.swift */,
 				3F4FC8562359A56100E119E3 /* ProfileTableCell.swift */,
+				3F4FC86D2362D1F800E119E3 /* ProfileAvatarCell.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -608,17 +633,29 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-fitgram/Pods-fitgram-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AADraggableView/AADraggableView.framework",
 				"${BUILT_PRODUCTS_DIR}/ASPCircleChart/ASPCircleChart.framework",
+				"${BUILT_PRODUCTS_DIR}/BoringSSL-GRPC/openssl_grpc.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/SteviaLayout/Stevia.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftGRPC/SwiftGRPC.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftProtobuf/SwiftProtobuf.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AADraggableView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ASPCircleChart.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl_grpc.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Stevia.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftGRPC.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftProtobuf.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -715,6 +752,7 @@
 				3F4FC81A2355D51200E119E3 /* GroceryListView.swift in Sources */,
 				3F4FC8592359A9A200E119E3 /* ProfileModel.swift in Sources */,
 				3F4FC8482358620800E119E3 /* login.grpc.swift in Sources */,
+				3F288B34236A8423004B8B3C /* FoodDiaryTagView.swift in Sources */,
 				3F4FC8072355D4D000E119E3 /* RecommendHomeView.swift in Sources */,
 				3F4FC7FE2355D4BA00E119E3 /* MoreViewController.swift in Sources */,
 				3F4FC8212355D52500E119E3 /* GroceryIngredientCell.swift in Sources */,
@@ -727,7 +765,7 @@
 				3F4FC8202355D52500E119E3 /* GroceryDetailView.swift in Sources */,
 				3F4FC84B23595DE400E119E3 /* LoginDataManager.swift in Sources */,
 				3F4FC7B42355D0CD00E119E3 /* AppDelegate.swift in Sources */,
-				3F4FC86623604DFA00E119E3 /* recommendation.pb.swift in Sources */,
+				3F4FC86A2361486F00E119E3 /* recommendation.pb.swift in Sources */,
 				3F4FC8192355D51200E119E3 /* GroceryListViewController.swift in Sources */,
 				3F4FC8082355D4D000E119E3 /* RecommendHomeViewController.swift in Sources */,
 				3F4FC7FD2355D4BA00E119E3 /* HomeTabViewController.swift in Sources */,
@@ -735,11 +773,13 @@
 				3F4FC7F92355D4AF00E119E3 /* GroceryItem.swift in Sources */,
 				3F4FC8102355D4EC00E119E3 /* CookinStepView.swift in Sources */,
 				3F4FC8092355D4D000E119E3 /* RecommendationCollectionFlowLayout.swift in Sources */,
+				3F288B32236A8410004B8B3C /* FoodDiaryTagViewController.swift in Sources */,
 				3F4FC81F2355D52500E119E3 /* GroceryDetailViewController.swift in Sources */,
 				3F4FC860235EDF2600E119E3 /* ProfileDataService.swift in Sources */,
-				3F4FC86823604E3700E119E3 /* recommendation.grpc.swift in Sources */,
+				3F4FC86C2361487B00E119E3 /* recommendation.grpc.swift in Sources */,
 				3F4FC7EC2355D49E00E119E3 /* ViewPagerOptions.swift in Sources */,
 				3F4FC7FA2355D4AF00E119E3 /* RecommendationModel.swift in Sources */,
+				3F4FC86E2362D1F800E119E3 /* ProfileAvatarCell.swift in Sources */,
 				3F4FC8132355D4FF00E119E3 /* FoodDiaryViewController.swift in Sources */,
 				3F4FC7ED2355D49E00E119E3 /* ViewPager.swift in Sources */,
 				3F4FC8552359A2B300E119E3 /* ProfileView.swift in Sources */,
