@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Bundle(path: "/Applications/InjectionIII.app/Contents/Resources/iOSInjection.bundle")?.load()
         window = UIWindow(frame: UIScreen.main.bounds)
         let naviVC = UINavigationController()
-        naviVC.viewControllers = [FoodDiaryTagViewController()]
+        naviVC.viewControllers = [HomeTabViewController()]
 //        let firstVC = LaunchPageViewController()
         window?.rootViewController = naviVC
         window?.makeKeyAndVisible()

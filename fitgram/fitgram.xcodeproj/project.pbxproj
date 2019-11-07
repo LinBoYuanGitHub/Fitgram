@@ -12,6 +12,15 @@
 		33C5B433F0FAA4CBDB6F699A /* Pods_fitgramUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EDAA5CB49F608E8519E04FD /* Pods_fitgramUITests.framework */; };
 		3F288B32236A8410004B8B3C /* FoodDiaryTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F288B31236A8410004B8B3C /* FoodDiaryTagViewController.swift */; };
 		3F288B34236A8423004B8B3C /* FoodDiaryTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F288B33236A8423004B8B3C /* FoodDiaryTagView.swift */; };
+		3F288B37236FC5FB004B8B3C /* FoodDiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F288B36236FC5FB004B8B3C /* FoodDiaryView.swift */; };
+		3F288B39236FC7AD004B8B3C /* NutritionPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F288B38236FC7AD004B8B3C /* NutritionPanelView.swift */; };
+		3F288B3C236FC891004B8B3C /* SingleNutritionCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F288B3B236FC891004B8B3C /* SingleNutritionCircleView.swift */; };
+		3F288B3E23701844004B8B3C /* food_diary.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F288B3D23701843004B8B3C /* food_diary.pb.swift */; };
+		3F288B4023701852004B8B3C /* food_diary.grpc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F288B3F23701852004B8B3C /* food_diary.grpc.swift */; };
+		3F288B422370228D004B8B3C /* FoodDiaryMainCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F288B412370228D004B8B3C /* FoodDiaryMainCell.swift */; };
+		3F288B4423711B37004B8B3C /* FoodDiaryRecipeTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F288B4323711B37004B8B3C /* FoodDiaryRecipeTableCell.swift */; };
+		3F288B4723716D40004B8B3C /* SelfSizedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F288B4623716D40004B8B3C /* SelfSizedTableView.swift */; };
+		3F288B492371708B004B8B3C /* FoodDiaryMealCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F288B482371708B004B8B3C /* FoodDiaryMealCollectionCell.swift */; };
 		3F4FC7B42355D0CD00E119E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4FC7B32355D0CD00E119E3 /* AppDelegate.swift */; };
 		3F4FC7B92355D0CD00E119E3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F4FC7B72355D0CD00E119E3 /* Main.storyboard */; };
 		3F4FC7BB2355D0CF00E119E3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F4FC7BA2355D0CF00E119E3 /* Assets.xcassets */; };
@@ -99,6 +108,15 @@
 		335E2D42D00A90EC15280EFB /* Pods-fitgramUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fitgramUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-fitgramUITests/Pods-fitgramUITests.release.xcconfig"; sourceTree = "<group>"; };
 		3F288B31236A8410004B8B3C /* FoodDiaryTagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDiaryTagViewController.swift; sourceTree = "<group>"; };
 		3F288B33236A8423004B8B3C /* FoodDiaryTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDiaryTagView.swift; sourceTree = "<group>"; };
+		3F288B36236FC5FB004B8B3C /* FoodDiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDiaryView.swift; sourceTree = "<group>"; };
+		3F288B38236FC7AD004B8B3C /* NutritionPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutritionPanelView.swift; sourceTree = "<group>"; };
+		3F288B3B236FC891004B8B3C /* SingleNutritionCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleNutritionCircleView.swift; sourceTree = "<group>"; };
+		3F288B3D23701843004B8B3C /* food_diary.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = food_diary.pb.swift; sourceTree = "<group>"; };
+		3F288B3F23701852004B8B3C /* food_diary.grpc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = food_diary.grpc.swift; sourceTree = "<group>"; };
+		3F288B412370228D004B8B3C /* FoodDiaryMainCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDiaryMainCell.swift; sourceTree = "<group>"; };
+		3F288B4323711B37004B8B3C /* FoodDiaryRecipeTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDiaryRecipeTableCell.swift; sourceTree = "<group>"; };
+		3F288B4623716D40004B8B3C /* SelfSizedTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfSizedTableView.swift; sourceTree = "<group>"; };
+		3F288B482371708B004B8B3C /* FoodDiaryMealCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDiaryMealCollectionCell.swift; sourceTree = "<group>"; };
 		3F4FC7B02355D0CD00E119E3 /* fitgram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fitgram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F4FC7B32355D0CD00E119E3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3F4FC7B82355D0CD00E119E3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -211,6 +229,30 @@
 			path = FoodDiaryTagging;
 			sourceTree = "<group>";
 		};
+		3F288B35236FC5B5004B8B3C /* TextSearch */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = TextSearch;
+			sourceTree = "<group>";
+		};
+		3F288B3A236FC86B004B8B3C /* NutritionView */ = {
+			isa = PBXGroup;
+			children = (
+				3F288B38236FC7AD004B8B3C /* NutritionPanelView.swift */,
+				3F288B3B236FC891004B8B3C /* SingleNutritionCircleView.swift */,
+			);
+			path = NutritionView;
+			sourceTree = "<group>";
+		};
+		3F288B4523716D2B004B8B3C /* CustomTableView */ = {
+			isa = PBXGroup;
+			children = (
+				3F288B4623716D40004B8B3C /* SelfSizedTableView.swift */,
+			);
+			path = CustomTableView;
+			sourceTree = "<group>";
+		};
 		3F4FC7A72355D0CD00E119E3 = {
 			isa = PBXGroup;
 			children = (
@@ -303,6 +345,7 @@
 		3F4FC7E32355D42E00E119E3 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				3F288B4523716D2B004B8B3C /* CustomTableView */,
 				3F4FC7E62355D48800E119E3 /* ViewPager-Swift */,
 			);
 			path = Utils;
@@ -344,8 +387,14 @@
 		3F4FC8112355D4F100E119E3 /* FoodDiary */ = {
 			isa = PBXGroup;
 			children = (
+				3F288B3A236FC86B004B8B3C /* NutritionView */,
+				3F288B35236FC5B5004B8B3C /* TextSearch */,
 				3F288B30236A83CF004B8B3C /* FoodDiaryTagging */,
 				3F4FC8122355D4FF00E119E3 /* FoodDiaryViewController.swift */,
+				3F288B36236FC5FB004B8B3C /* FoodDiaryView.swift */,
+				3F288B412370228D004B8B3C /* FoodDiaryMainCell.swift */,
+				3F288B4323711B37004B8B3C /* FoodDiaryRecipeTableCell.swift */,
+				3F288B482371708B004B8B3C /* FoodDiaryMealCollectionCell.swift */,
 			);
 			path = FoodDiary;
 			sourceTree = "<group>";
@@ -425,6 +474,7 @@
 			isa = PBXGroup;
 			children = (
 				3F4FC8462358620800E119E3 /* login.grpc.swift */,
+				3F288B3F23701852004B8B3C /* food_diary.grpc.swift */,
 				3F4FC8472358620800E119E3 /* user_info.grpc.swift */,
 				3F4FC86B2361487B00E119E3 /* recommendation.grpc.swift */,
 			);
@@ -436,6 +486,7 @@
 			children = (
 				3F4FC8692361486F00E119E3 /* recommendation.pb.swift */,
 				3F4FC843235861FC00E119E3 /* login.pb.swift */,
+				3F288B3D23701843004B8B3C /* food_diary.pb.swift */,
 				3F4FC842235861FC00E119E3 /* user_info.pb.swift */,
 			);
 			path = Model;
@@ -735,12 +786,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F288B492371708B004B8B3C /* FoodDiaryMealCollectionCell.swift in Sources */,
+				3F288B422370228D004B8B3C /* FoodDiaryMainCell.swift in Sources */,
 				3F4FC7F52355D4AF00E119E3 /* RecipeModel.swift in Sources */,
 				3F4FC7F82355D4AF00E119E3 /* ImageDataModel.swift in Sources */,
 				3F4FC8492358620800E119E3 /* user_info.grpc.swift in Sources */,
 				3F4FC8062355D4D000E119E3 /* RecommendHomeTableCell.swift in Sources */,
 				3F4FC844235861FC00E119E3 /* user_info.pb.swift in Sources */,
 				3F4FC7F72355D4AF00E119E3 /* StepModel.swift in Sources */,
+				3F288B4723716D40004B8B3C /* SelfSizedTableView.swift in Sources */,
 				3F4FC8342355D59700E119E3 /* CustomAVController.swift in Sources */,
 				3F4FC7EB2355D49E00E119E3 /* ViewPagerTabView.swift in Sources */,
 				3F4FC7F62355D4AF00E119E3 /* IngredientModel.swift in Sources */,
@@ -753,8 +807,10 @@
 				3F4FC8592359A9A200E119E3 /* ProfileModel.swift in Sources */,
 				3F4FC8482358620800E119E3 /* login.grpc.swift in Sources */,
 				3F288B34236A8423004B8B3C /* FoodDiaryTagView.swift in Sources */,
+				3F288B3E23701844004B8B3C /* food_diary.pb.swift in Sources */,
 				3F4FC8072355D4D000E119E3 /* RecommendHomeView.swift in Sources */,
 				3F4FC7FE2355D4BA00E119E3 /* MoreViewController.swift in Sources */,
+				3F288B3C236FC891004B8B3C /* SingleNutritionCircleView.swift in Sources */,
 				3F4FC8212355D52500E119E3 /* GroceryIngredientCell.swift in Sources */,
 				3F4FC8182355D51200E119E3 /* GroceryTableCell.swift in Sources */,
 				3F4FC8572359A56100E119E3 /* ProfileTableCell.swift in Sources */,
@@ -763,6 +819,7 @@
 				3F4FC85E235D87A100E119E3 /* Constants.swift in Sources */,
 				3F4FC82C2355D57D00E119E3 /* NutritionCardView.swift in Sources */,
 				3F4FC8202355D52500E119E3 /* GroceryDetailView.swift in Sources */,
+				3F288B37236FC5FB004B8B3C /* FoodDiaryView.swift in Sources */,
 				3F4FC84B23595DE400E119E3 /* LoginDataManager.swift in Sources */,
 				3F4FC7B42355D0CD00E119E3 /* AppDelegate.swift in Sources */,
 				3F4FC86A2361486F00E119E3 /* recommendation.pb.swift in Sources */,
@@ -776,9 +833,12 @@
 				3F288B32236A8410004B8B3C /* FoodDiaryTagViewController.swift in Sources */,
 				3F4FC81F2355D52500E119E3 /* GroceryDetailViewController.swift in Sources */,
 				3F4FC860235EDF2600E119E3 /* ProfileDataService.swift in Sources */,
+				3F288B39236FC7AD004B8B3C /* NutritionPanelView.swift in Sources */,
+				3F288B4023701852004B8B3C /* food_diary.grpc.swift in Sources */,
 				3F4FC86C2361487B00E119E3 /* recommendation.grpc.swift in Sources */,
 				3F4FC7EC2355D49E00E119E3 /* ViewPagerOptions.swift in Sources */,
 				3F4FC7FA2355D4AF00E119E3 /* RecommendationModel.swift in Sources */,
+				3F288B4423711B37004B8B3C /* FoodDiaryRecipeTableCell.swift in Sources */,
 				3F4FC86E2362D1F800E119E3 /* ProfileAvatarCell.swift in Sources */,
 				3F4FC8132355D4FF00E119E3 /* FoodDiaryViewController.swift in Sources */,
 				3F4FC7ED2355D49E00E119E3 /* ViewPager.swift in Sources */,
@@ -965,13 +1025,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8W82VH8H4G;
+				DEVELOPMENT_TEAM = 2WSND8KCD9;
 				INFOPLIST_FILE = fitgram/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = sg.next.fitgram.fitgram;
+				PRODUCT_BUNDLE_IDENTIFIER = sg.next.fitgramer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -984,13 +1044,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8W82VH8H4G;
+				DEVELOPMENT_TEAM = 2WSND8KCD9;
 				INFOPLIST_FILE = fitgram/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = sg.next.fitgram.fitgram;
+				PRODUCT_BUNDLE_IDENTIFIER = sg.next.fitgramer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
