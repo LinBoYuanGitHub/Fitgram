@@ -12,10 +12,12 @@ struct RecipeModel {
     public var recipeId: Int = 0
     public var recipeTitle: String = ""
     public var recipeCalorie: String = ""
-    public var recipeCookingDuration: String = ""
+    public var recipeCookingDuration: Int = 0
+    public var difficulity:Apisvr_Difficulty = .easy
     public var recipeVideoUrl: String = ""
     public var videoCoverImageUrl: String = ""
     public var ingredientList = [IngredientModel]()
     public var stepList = [StepModel]()
+    public var nutrientData = Apisvr_Nutrient()
 }
 

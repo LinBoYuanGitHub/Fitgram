@@ -7,22 +7,25 @@
 //
 
 import UIKit
+import SwiftGRPC
 
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var server:Server!
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         Bundle(path: "/Applications/InjectionIII.app/Contents/Resources/iOSInjection.bundle")?.load()
+        gRPC.initialize()
         window = UIWindow(frame: UIScreen.main.bounds)
-        let naviVC = UINavigationController()
-        naviVC.viewControllers = [HomeTabViewController()]
-//        let firstVC = LaunchPageViewController()
-        window?.rootViewController = naviVC
+//        let naviVC = UINavigationController()
+//        naviVC.viewControllers = [HomeTabViewController()]
+        let firstVC = LaunchPageViewController()
+        window?.rootViewController = firstVC
         window?.makeKeyAndVisible()
         return true
     }

@@ -1,5 +1,6 @@
 PODS:
   - AADraggableView (1.0)
+  - AliyunOSSiOS (2.10.7)
   - ASPCircleChart (3.0.0)
   - BoringSSL-GRPC (0.0.3):
     - BoringSSL-GRPC/Implementation (= 0.0.3)
@@ -16,6 +17,7 @@ PODS:
     - nanopb (~> 0.3)
   - gRPC-Core/Interface (1.19.0)
   - Kingfisher (5.7.1)
+  - KWVerificationCodeView (0.4.0)
   - nanopb (0.3.901):
     - nanopb/decode (= 0.3.901)
     - nanopb/encode (= 0.3.901)
@@ -29,18 +31,22 @@ PODS:
 
 DEPENDENCIES:
   - AADraggableView
+  - AliyunOSSiOS
   - ASPCircleChart
   - Kingfisher
+  - KWVerificationCodeView
   - SteviaLayout
   - SwiftGRPC
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - AADraggableView
+    - AliyunOSSiOS
     - ASPCircleChart
     - BoringSSL-GRPC
     - gRPC-Core
     - Kingfisher
+    - KWVerificationCodeView
     - nanopb
     - SteviaLayout
     - SwiftGRPC
@@ -48,15 +54,17 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   AADraggableView: 964288413ae872baca1fd68d7476385d8913926d
+  AliyunOSSiOS: 602b6a4e70e62a5f0a6431c20496343141d7e66f
   ASPCircleChart: c1437eb07adffcf66aa04a666e3849e6fc5f3f71
   BoringSSL-GRPC: db8764df3204ccea016e1c8dd15d9a9ad63ff318
   gRPC-Core: bd9472c8daa2e414b9f8038ba667bf56ce0e02b8
   Kingfisher: 176d377ad339113c99ad4980cbae687f807e20fe
+  KWVerificationCodeView: 92cca6ad028546d3232fa75cda3a40d00109a1a2
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   SteviaLayout: aa64a62810544348c9e328a6521cb9160fa82ec6
   SwiftGRPC: 43d3e8db88f97e7386bd44f159ecdfad02ce3362
   SwiftProtobuf: 241400280f912735c1e1b9fe675fdd2c6c4d42e2
 
-PODFILE CHECKSUM: a447f5d387af3ec0b81b249913c64f7a6805df49
+PODFILE CHECKSUM: c93fcb769f6004f8e27d471338a2339d957f7a4f
 
 COCOAPODS: 1.5.3

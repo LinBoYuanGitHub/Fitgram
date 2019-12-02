@@ -30,19 +30,6 @@ class RecommendationCollectionFlowLayout: UICollectionViewFlowLayout {
         return true
     }
     
-    //scale the cell
-//    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-//        let original = super.layoutAttributesForElements(in: rect)
-//        let attsArray = NSArray.init(array: original!, copyItems: true) as! [UICollectionViewLayoutAttributes]
-//        let centerX = (self.collectionView?.frame.size.width)! / 2 + (self.collectionView?.contentOffset.x)!
-//        for atts in attsArray {
-//            let space = abs(atts.center.x - centerX)
-//            let scale = 1 - (space/(self.collectionView?.frame.size.width)!/5)
-//            atts.transform = CGAffineTransform(scaleX: scale, y: scale)
-//        }
-//        return attsArray
-//    }
-    
     //set collectionView cell position when scrolling stop
     override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
         var rect = CGRect()
@@ -64,6 +51,9 @@ class RecommendationCollectionFlowLayout: UICollectionViewFlowLayout {
         finalContentOffset.y = proposedContentOffset.y
         return finalContentOffset;
     }
+    
+    
+    
     
     
     

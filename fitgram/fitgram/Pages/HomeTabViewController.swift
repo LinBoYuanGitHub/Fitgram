@@ -9,25 +9,39 @@
 import UIKit
 
 class HomeTabViewController: UITabBarController {
+    let recommendHomeVC = RecommendHomeViewController()
+    let foodDiaryVC = FoodDiaryViewController()
+    let progressVC = ProgressViewController()
+    let moreVC = MoreViewController()
+    let profileVC = ProfileViewController()
     
     override func viewDidLoad() {
-        let recommendHomeVC = RecommendHomeViewController()
-        let foodDiaryVC = FoodDiaryViewController()
-        let progressVC = ProgressViewController()
-        let moreVC = MoreViewController()
-        let profileVC = ProfileViewController()
-        recommendHomeVC.tabBarItem = UITabBarItem(tabBarSystemItem: .topRated, tag: 0)
-        foodDiaryVC.tabBarItem = UITabBarItem(tabBarSystemItem: .bookmarks, tag: 1)
-        progressVC.tabBarItem = UITabBarItem(tabBarSystemItem: .recents, tag: 2)
-        profileVC.tabBarItem = UITabBarItem(tabBarSystemItem: .more, tag: 3)
+        UITabBar.appearance().tintColor = UIColor(red: 255/255, green: 189/255, blue: 0, alpha: 1)
+        recommendHomeVC.tabBarItem =  UITabBarItem(title: "", image: UIImage(named: "appBottomHome_unselected"), selectedImage: UIImage(named: "appBottomHome_selected"))
+        foodDiaryVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "appBottomDiary_unselected"), selectedImage: UIImage(named: "appBottomDiary_selected"))
+        progressVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "appBottomProgress_unselected"), selectedImage: UIImage(named: "appBottomProgress_selected"))
+        profileVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "appBottomProfile_unselected"), selectedImage: UIImage(named: "appBottomProfile_selected"))
         self.viewControllers = [recommendHomeVC, foodDiaryVC, progressVC, profileVC]
         self.selectedViewController = recommendHomeVC
         self.selectedIndex = 0
+        self.delegate = self
     }
     
+    func navigateToLoginPage(){
+        let targetVC = LoginViewController()
+        self.navigationController?.pushViewController(targetVC, animated: true)
+    }
     
-    
-    
-    
+
     
 }
+
+extension HomeTabViewController: UITabBarControllerDelegate {
+    
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        if viewController != recommendHomeVC && LoginDataManager.shared.userId.isEmpty {
+            navigateToLoginPage()
+        }
+    }
+}
+

@@ -15,9 +15,6 @@ class GroceryListViewController: UIViewController {
     var groceryList = [GroceryItem]()
     var rootView:GroceryListView! = nil
     var isSelectAll = true
-    //
-    var address: String!
-    var client: Apisvr_RecommendationServiceServiceClient!
     
     func initMockUpGroceryListData(){
         var ingredientList = [IngredientModel]()
@@ -41,13 +38,6 @@ class GroceryListViewController: UIViewController {
         }
     }
     
-  
-    func initDataService() {
-        address = Bundle.main.object(forInfoDictionaryKey: "GRPC_Address") as! String
-        gRPC.initialize()
-        print("GRPC version \(gRPC.version) - endpoint: \(address)")
-        self.client = Apisvr_RecommendationServiceServiceClient(address: address, secure: false)
-    }
     
     override func loadView() {
         rootView = GroceryListView()
@@ -63,12 +53,11 @@ class GroceryListViewController: UIViewController {
 //        self.initMockUpGroceryListData()
         self.navigationItem.leftBarButtonItem  = UIBarButtonItem(image: UIImage(imageLiteralResourceName: "backbutton_black"), style: .plain, target: self, action: #selector(onBackPressed))
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor.black
-        self.rootView.allIngredientBtn.addTarget(self, action: #selector(navigateToSelectedRecipeIngredientPage), for: .touchUpInside)
+        self.rootView.allIngredientBtn.addTarget(self, action: #selector(requestForAllIngredientList), for: .touchUpInside)
         self.countRecipeNumber()
         on("INJECTION_BUNDLE_NOTIFICATION") {
             self.loadView()
         }
-        self.initDataService()
     }
     
     @objc func onBackPressed(){
@@ -82,7 +71,7 @@ class GroceryListViewController: UIViewController {
                 return
             }
             let metaData = try Metadata(["authorization": "Token " + token])
-            try self.client.getAllIngredients(req, metadata: metaData) { (resp, result) in
+            try RecommendationDataManager.shared.client.getAllIngredients(req, metadata: metaData) { (resp, result) in
                 if result.statusCode == .ok {
                     let targetVC = GroceryDetailViewController()
                     let groceryDetailItem = Apisvr_GetCheckListItemResp()
@@ -156,7 +145,7 @@ extension GroceryListViewController: UITableViewDataSource, UITableViewDelegate 
                 return
             }
             let metaData = try Metadata(["authorization": "Token " + token])
-            try self.client.getCheckListItem(req, metadata: metaData, completion: { (resp, result) in
+            try RecommendationDataManager.shared.client.getCheckListItem(req, metadata: metaData, completion: { (resp, result) in
                 if result.statusCode == .ok {
                     let targetVC = GroceryDetailViewController()
                     targetVC.groceryDetailItem = resp!

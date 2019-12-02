@@ -10,21 +10,15 @@ import UIKit
 
 class LaunchPageViewController: UIViewController {
     //set it as launch screen
-    let loginManager = LoginDataManager()
     
     override func viewDidLoad() {
         self.loginForTokenRequest()
-//        DispatchQueue.main.async {
-//            let naviVC = UINavigationController()
-//            naviVC.viewControllers = [HomeTabViewController()]
-//            self.present(naviVC, animated: true, completion: nil)
-//        }
         self.view.backgroundColor = .white
     }
     
     func loginForTokenRequest(){
         do {
-            try loginManager.anonymousLogin(){ isSuccess in
+            try LoginDataManager.shared.anonymousLogin(){ isSuccess in
                 if isSuccess {
                     //redirect to home navi controller
                     DispatchQueue.main.async {

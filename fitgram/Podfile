@@ -10,6 +10,8 @@ target 'fitgram' do
   pod 'ASPCircleChart'
   pod 'SwiftGRPC'
   pod 'AADraggableView'
+  pod 'KWVerificationCodeView'
+  pod 'AliyunOSSiOS'
 
   # Pods for fitgram
 

@@ -10,6 +10,8 @@
 		0087E303DAB981C1D2C21CF2 /* Pods_fitgramTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF409EE695EEACE9BA276B2E /* Pods_fitgramTests.framework */; };
 		2CD9F66E5FB62E76983F9856 /* Pods_fitgram.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2350F7B9E6CC8CA91E259263 /* Pods_fitgram.framework */; };
 		33C5B433F0FAA4CBDB6F699A /* Pods_fitgramUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EDAA5CB49F608E8519E04FD /* Pods_fitgramUITests.framework */; };
+		3F180A03238D7EB60022D50E /* FoodDiaryDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F180A02238D7EB60022D50E /* FoodDiaryDataManager.swift */; };
+		3F180A05238E6CB10022D50E /* UploaderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F180A04238E6CB10022D50E /* UploaderManager.swift */; };
 		3F288B32236A8410004B8B3C /* FoodDiaryTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F288B31236A8410004B8B3C /* FoodDiaryTagViewController.swift */; };
 		3F288B34236A8423004B8B3C /* FoodDiaryTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F288B33236A8423004B8B3C /* FoodDiaryTagView.swift */; };
 		3F288B37236FC5FB004B8B3C /* FoodDiaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F288B36236FC5FB004B8B3C /* FoodDiaryView.swift */; };
@@ -21,6 +23,24 @@
 		3F288B4423711B37004B8B3C /* FoodDiaryRecipeTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F288B4323711B37004B8B3C /* FoodDiaryRecipeTableCell.swift */; };
 		3F288B4723716D40004B8B3C /* SelfSizedTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F288B4623716D40004B8B3C /* SelfSizedTableView.swift */; };
 		3F288B492371708B004B8B3C /* FoodDiaryMealCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F288B482371708B004B8B3C /* FoodDiaryMealCollectionCell.swift */; };
+		3F49F9E8238186FF002BECD3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F49F9E7238186FF002BECD3 /* LoginViewController.swift */; };
+		3F49F9EA23818706002BECD3 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F49F9E923818706002BECD3 /* LoginView.swift */; };
+		3F49F9EC23839802002BECD3 /* ForgetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F49F9EB23839802002BECD3 /* ForgetPasswordViewController.swift */; };
+		3F49F9EE23839BF3002BECD3 /* ForgetPwdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F49F9ED23839BF3002BECD3 /* ForgetPwdView.swift */; };
+		3F49F9F12383B546002BECD3 /* CodeVerficationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F49F9F02383B546002BECD3 /* CodeVerficationViewController.swift */; };
+		3F49F9F32383B563002BECD3 /* CodeVerficationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F49F9F22383B563002BECD3 /* CodeVerficationView.swift */; };
+		3F49F9F62383C85E002BECD3 /* ResetPwdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F49F9F52383C85E002BECD3 /* ResetPwdViewController.swift */; };
+		3F49F9F82383C868002BECD3 /* ResetPwdView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F49F9F72383C868002BECD3 /* ResetPwdView.swift */; };
+		3F49F9FA2383E8BE002BECD3 /* GoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F49F9F92383E8BE002BECD3 /* GoalViewController.swift */; };
+		3F49F9FC2383E8EA002BECD3 /* GenderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F49F9FB2383E8EA002BECD3 /* GenderViewController.swift */; };
+		3F49F9FE2383E936002BECD3 /* BirthYearViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F49F9FD2383E936002BECD3 /* BirthYearViewController.swift */; };
+		3F49FA002383E9BF002BECD3 /* HeightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F49F9FF2383E9BF002BECD3 /* HeightViewController.swift */; };
+		3F49FA022383E9CC002BECD3 /* WeightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F49FA012383E9CC002BECD3 /* WeightViewController.swift */; };
+		3F49FA042383F3D8002BECD3 /* CurrentBodyShapeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F49FA032383F3D8002BECD3 /* CurrentBodyShapeViewController.swift */; };
+		3F49FA062383F448002BECD3 /* TargetBodyShapeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F49FA052383F448002BECD3 /* TargetBodyShapeViewController.swift */; };
+		3F49FA082383F707002BECD3 /* ActivityLevelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F49FA072383F707002BECD3 /* ActivityLevelViewController.swift */; };
+		3F49FA0A2383F77A002BECD3 /* EnergyIntakenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F49FA092383F77A002BECD3 /* EnergyIntakenViewController.swift */; };
+		3F49FA0C23878555002BECD3 /* BodyImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F49FA0B23878555002BECD3 /* BodyImageCollectionViewCell.swift */; };
 		3F4FC7B42355D0CD00E119E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4FC7B32355D0CD00E119E3 /* AppDelegate.swift */; };
 		3F4FC7B92355D0CD00E119E3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F4FC7B72355D0CD00E119E3 /* Main.storyboard */; };
 		3F4FC7BB2355D0CF00E119E3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F4FC7BA2355D0CF00E119E3 /* Assets.xcassets */; };
@@ -79,6 +99,14 @@
 		3F4FC86A2361486F00E119E3 /* recommendation.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4FC8692361486F00E119E3 /* recommendation.pb.swift */; };
 		3F4FC86C2361487B00E119E3 /* recommendation.grpc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4FC86B2361487B00E119E3 /* recommendation.grpc.swift */; };
 		3F4FC86E2362D1F800E119E3 /* ProfileAvatarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F4FC86D2362D1F800E119E3 /* ProfileAvatarCell.swift */; };
+		3F7EBEC1237515BF00F04C4C /* TextSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7EBEC0237515BF00F04C4C /* TextSearchViewController.swift */; };
+		3F7EBEC323753EAD00F04C4C /* TextSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7EBEC223753EAD00F04C4C /* TextSearchView.swift */; };
+		3F7EBEC523754A2B00F04C4C /* TextSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7EBEC423754A2B00F04C4C /* TextSearchTableViewCell.swift */; };
+		3F7EBEC723754A8C00F04C4C /* TextSearchSuggestionCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7EBEC623754A8C00F04C4C /* TextSearchSuggestionCollectionCell.swift */; };
+		3F7EBECA2379327E00F04C4C /* LeftViewTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7EBEC92379327E00F04C4C /* LeftViewTextField.swift */; };
+		3F7EBECF2379641100F04C4C /* FoodDiaryDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7EBECE2379641100F04C4C /* FoodDiaryDetailViewController.swift */; };
+		3F7EBED12379642200F04C4C /* FoodDiaryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7EBED02379642200F04C4C /* FoodDiaryDetailView.swift */; };
+		3F7EBED3237A666000F04C4C /* FoodDiaryDetailViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7EBED2237A666000F04C4C /* FoodDiaryDetailViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,6 +134,8 @@
 		251FD795F7F7469D48EBFC0E /* Pods-fitgram.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fitgram.debug.xcconfig"; path = "Pods/Target Support Files/Pods-fitgram/Pods-fitgram.debug.xcconfig"; sourceTree = "<group>"; };
 		2EDAA5CB49F608E8519E04FD /* Pods_fitgramUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_fitgramUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		335E2D42D00A90EC15280EFB /* Pods-fitgramUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fitgramUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-fitgramUITests/Pods-fitgramUITests.release.xcconfig"; sourceTree = "<group>"; };
+		3F180A02238D7EB60022D50E /* FoodDiaryDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDiaryDataManager.swift; sourceTree = "<group>"; };
+		3F180A04238E6CB10022D50E /* UploaderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploaderManager.swift; sourceTree = "<group>"; };
 		3F288B31236A8410004B8B3C /* FoodDiaryTagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDiaryTagViewController.swift; sourceTree = "<group>"; };
 		3F288B33236A8423004B8B3C /* FoodDiaryTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDiaryTagView.swift; sourceTree = "<group>"; };
 		3F288B36236FC5FB004B8B3C /* FoodDiaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDiaryView.swift; sourceTree = "<group>"; };
@@ -117,6 +147,24 @@
 		3F288B4323711B37004B8B3C /* FoodDiaryRecipeTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDiaryRecipeTableCell.swift; sourceTree = "<group>"; };
 		3F288B4623716D40004B8B3C /* SelfSizedTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfSizedTableView.swift; sourceTree = "<group>"; };
 		3F288B482371708B004B8B3C /* FoodDiaryMealCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDiaryMealCollectionCell.swift; sourceTree = "<group>"; };
+		3F49F9E7238186FF002BECD3 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		3F49F9E923818706002BECD3 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		3F49F9EB23839802002BECD3 /* ForgetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordViewController.swift; sourceTree = "<group>"; };
+		3F49F9ED23839BF3002BECD3 /* ForgetPwdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPwdView.swift; sourceTree = "<group>"; };
+		3F49F9F02383B546002BECD3 /* CodeVerficationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeVerficationViewController.swift; sourceTree = "<group>"; };
+		3F49F9F22383B563002BECD3 /* CodeVerficationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeVerficationView.swift; sourceTree = "<group>"; };
+		3F49F9F52383C85E002BECD3 /* ResetPwdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPwdViewController.swift; sourceTree = "<group>"; };
+		3F49F9F72383C868002BECD3 /* ResetPwdView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPwdView.swift; sourceTree = "<group>"; };
+		3F49F9F92383E8BE002BECD3 /* GoalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalViewController.swift; sourceTree = "<group>"; };
+		3F49F9FB2383E8EA002BECD3 /* GenderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderViewController.swift; sourceTree = "<group>"; };
+		3F49F9FD2383E936002BECD3 /* BirthYearViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthYearViewController.swift; sourceTree = "<group>"; };
+		3F49F9FF2383E9BF002BECD3 /* HeightViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeightViewController.swift; sourceTree = "<group>"; };
+		3F49FA012383E9CC002BECD3 /* WeightViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightViewController.swift; sourceTree = "<group>"; };
+		3F49FA032383F3D8002BECD3 /* CurrentBodyShapeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentBodyShapeViewController.swift; sourceTree = "<group>"; };
+		3F49FA052383F448002BECD3 /* TargetBodyShapeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetBodyShapeViewController.swift; sourceTree = "<group>"; };
+		3F49FA072383F707002BECD3 /* ActivityLevelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityLevelViewController.swift; sourceTree = "<group>"; };
+		3F49FA092383F77A002BECD3 /* EnergyIntakenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnergyIntakenViewController.swift; sourceTree = "<group>"; };
+		3F49FA0B23878555002BECD3 /* BodyImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		3F4FC7B02355D0CD00E119E3 /* fitgram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fitgram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F4FC7B32355D0CD00E119E3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3F4FC7B82355D0CD00E119E3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -181,6 +229,14 @@
 		3F4FC8692361486F00E119E3 /* recommendation.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = recommendation.pb.swift; sourceTree = "<group>"; };
 		3F4FC86B2361487B00E119E3 /* recommendation.grpc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = recommendation.grpc.swift; sourceTree = "<group>"; };
 		3F4FC86D2362D1F800E119E3 /* ProfileAvatarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileAvatarCell.swift; sourceTree = "<group>"; };
+		3F7EBEC0237515BF00F04C4C /* TextSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextSearchViewController.swift; sourceTree = "<group>"; };
+		3F7EBEC223753EAD00F04C4C /* TextSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextSearchView.swift; sourceTree = "<group>"; };
+		3F7EBEC423754A2B00F04C4C /* TextSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextSearchTableViewCell.swift; sourceTree = "<group>"; };
+		3F7EBEC623754A8C00F04C4C /* TextSearchSuggestionCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextSearchSuggestionCollectionCell.swift; sourceTree = "<group>"; };
+		3F7EBEC92379327E00F04C4C /* LeftViewTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftViewTextField.swift; sourceTree = "<group>"; };
+		3F7EBECE2379641100F04C4C /* FoodDiaryDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDiaryDetailViewController.swift; sourceTree = "<group>"; };
+		3F7EBED02379642200F04C4C /* FoodDiaryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDiaryDetailView.swift; sourceTree = "<group>"; };
+		3F7EBED2237A666000F04C4C /* FoodDiaryDetailViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDiaryDetailViewCell.swift; sourceTree = "<group>"; };
 		B35A9FBCB9C16941669597C0 /* Pods-fitgram.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fitgram.release.xcconfig"; path = "Pods/Target Support Files/Pods-fitgram/Pods-fitgram.release.xcconfig"; sourceTree = "<group>"; };
 		DF409EE695EEACE9BA276B2E /* Pods_fitgramTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_fitgramTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -216,6 +272,10 @@
 		3F288B2F2367D329004B8B3C /* Account */ = {
 			isa = PBXGroup;
 			children = (
+				3F49F9F42383C848002BECD3 /* ResetPwd */,
+				3F49F9EF2383B4FD002BECD3 /* CodeVerify */,
+				3F49F9E62381801F002BECD3 /* ForgetPwd */,
+				3F49F9E523818010002BECD3 /* Login */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -232,6 +292,10 @@
 		3F288B35236FC5B5004B8B3C /* TextSearch */ = {
 			isa = PBXGroup;
 			children = (
+				3F7EBEC0237515BF00F04C4C /* TextSearchViewController.swift */,
+				3F7EBEC223753EAD00F04C4C /* TextSearchView.swift */,
+				3F7EBEC423754A2B00F04C4C /* TextSearchTableViewCell.swift */,
+				3F7EBEC623754A8C00F04C4C /* TextSearchSuggestionCollectionCell.swift */,
 			);
 			path = TextSearch;
 			sourceTree = "<group>";
@@ -251,6 +315,59 @@
 				3F288B4623716D40004B8B3C /* SelfSizedTableView.swift */,
 			);
 			path = CustomTableView;
+			sourceTree = "<group>";
+		};
+		3F49F9E323817FA2002BECD3 /* OnBoarding */ = {
+			isa = PBXGroup;
+			children = (
+				3F49F9F92383E8BE002BECD3 /* GoalViewController.swift */,
+				3F49F9FB2383E8EA002BECD3 /* GenderViewController.swift */,
+				3F49F9FD2383E936002BECD3 /* BirthYearViewController.swift */,
+				3F49F9FF2383E9BF002BECD3 /* HeightViewController.swift */,
+				3F49FA012383E9CC002BECD3 /* WeightViewController.swift */,
+				3F49FA032383F3D8002BECD3 /* CurrentBodyShapeViewController.swift */,
+				3F49FA052383F448002BECD3 /* TargetBodyShapeViewController.swift */,
+				3F49FA072383F707002BECD3 /* ActivityLevelViewController.swift */,
+				3F49FA092383F77A002BECD3 /* EnergyIntakenViewController.swift */,
+				3F49FA0B23878555002BECD3 /* BodyImageCollectionViewCell.swift */,
+			);
+			path = OnBoarding;
+			sourceTree = "<group>";
+		};
+		3F49F9E523818010002BECD3 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				3F49F9E7238186FF002BECD3 /* LoginViewController.swift */,
+				3F49F9E923818706002BECD3 /* LoginView.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		3F49F9E62381801F002BECD3 /* ForgetPwd */ = {
+			isa = PBXGroup;
+			children = (
+				3F49F9EB23839802002BECD3 /* ForgetPasswordViewController.swift */,
+				3F49F9ED23839BF3002BECD3 /* ForgetPwdView.swift */,
+			);
+			path = ForgetPwd;
+			sourceTree = "<group>";
+		};
+		3F49F9EF2383B4FD002BECD3 /* CodeVerify */ = {
+			isa = PBXGroup;
+			children = (
+				3F49F9F02383B546002BECD3 /* CodeVerficationViewController.swift */,
+				3F49F9F22383B563002BECD3 /* CodeVerficationView.swift */,
+			);
+			path = CodeVerify;
+			sourceTree = "<group>";
+		};
+		3F49F9F42383C848002BECD3 /* ResetPwd */ = {
+			isa = PBXGroup;
+			children = (
+				3F49F9F52383C85E002BECD3 /* ResetPwdViewController.swift */,
+				3F49F9F72383C868002BECD3 /* ResetPwdView.swift */,
+			);
+			path = ResetPwd;
 			sourceTree = "<group>";
 		};
 		3F4FC7A72355D0CD00E119E3 = {
@@ -313,6 +430,7 @@
 		3F4FC7E12355D40200E119E3 /* Pages */ = {
 			isa = PBXGroup;
 			children = (
+				3F49F9E323817FA2002BECD3 /* OnBoarding */,
 				3F288B2F2367D329004B8B3C /* Account */,
 				3F4FC8502359A19600E119E3 /* More */,
 				3F4FC8322355D58B00E119E3 /* VideoPlay */,
@@ -345,6 +463,7 @@
 		3F4FC7E32355D42E00E119E3 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				3F7EBEC82379326500F04C4C /* LeftViewTextField */,
 				3F288B4523716D2B004B8B3C /* CustomTableView */,
 				3F4FC7E62355D48800E119E3 /* ViewPager-Swift */,
 			);
@@ -387,6 +506,7 @@
 		3F4FC8112355D4F100E119E3 /* FoodDiary */ = {
 			isa = PBXGroup;
 			children = (
+				3F7EBECD237963ED00F04C4C /* FoodDiaryDetailPage */,
 				3F288B3A236FC86B004B8B3C /* NutritionView */,
 				3F288B35236FC5B5004B8B3C /* TextSearch */,
 				3F288B30236A83CF004B8B3C /* FoodDiaryTagging */,
@@ -466,6 +586,8 @@
 				3F4FC83E235811FD00E119E3 /* RecommendationDataManager.swift */,
 				3F4FC84A23595DE400E119E3 /* LoginDataManager.swift */,
 				3F4FC85F235EDF2600E119E3 /* ProfileDataService.swift */,
+				3F180A02238D7EB60022D50E /* FoodDiaryDataManager.swift */,
+				3F180A04238E6CB10022D50E /* UploaderManager.swift */,
 			);
 			path = DataManager;
 			sourceTree = "<group>";
@@ -518,6 +640,24 @@
 				3F4FC85D235D87A100E119E3 /* Constants.swift */,
 			);
 			path = Constant;
+			sourceTree = "<group>";
+		};
+		3F7EBEC82379326500F04C4C /* LeftViewTextField */ = {
+			isa = PBXGroup;
+			children = (
+				3F7EBEC92379327E00F04C4C /* LeftViewTextField.swift */,
+			);
+			path = LeftViewTextField;
+			sourceTree = "<group>";
+		};
+		3F7EBECD237963ED00F04C4C /* FoodDiaryDetailPage */ = {
+			isa = PBXGroup;
+			children = (
+				3F7EBECE2379641100F04C4C /* FoodDiaryDetailViewController.swift */,
+				3F7EBED02379642200F04C4C /* FoodDiaryDetailView.swift */,
+				3F7EBED2237A666000F04C4C /* FoodDiaryDetailViewCell.swift */,
+			);
+			path = FoodDiaryDetailPage;
 			sourceTree = "<group>";
 		};
 		4F30D82CFF6C8131C8C7A926 /* Pods */ = {
@@ -686,7 +826,9 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-fitgram/Pods-fitgram-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/AADraggableView/AADraggableView.framework",
 				"${BUILT_PRODUCTS_DIR}/ASPCircleChart/ASPCircleChart.framework",
+				"${BUILT_PRODUCTS_DIR}/AliyunOSSiOS/AliyunOSSiOS.framework",
 				"${BUILT_PRODUCTS_DIR}/BoringSSL-GRPC/openssl_grpc.framework",
+				"${BUILT_PRODUCTS_DIR}/KWVerificationCodeView/KWVerificationCodeView.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/SteviaLayout/Stevia.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftGRPC/SwiftGRPC.framework",
@@ -700,7 +842,9 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AADraggableView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ASPCircleChart.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AliyunOSSiOS.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl_grpc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KWVerificationCodeView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Stevia.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftGRPC.framework",
@@ -788,21 +932,36 @@
 			files = (
 				3F288B492371708B004B8B3C /* FoodDiaryMealCollectionCell.swift in Sources */,
 				3F288B422370228D004B8B3C /* FoodDiaryMainCell.swift in Sources */,
+				3F49F9EE23839BF3002BECD3 /* ForgetPwdView.swift in Sources */,
 				3F4FC7F52355D4AF00E119E3 /* RecipeModel.swift in Sources */,
 				3F4FC7F82355D4AF00E119E3 /* ImageDataModel.swift in Sources */,
+				3F49FA0C23878555002BECD3 /* BodyImageCollectionViewCell.swift in Sources */,
 				3F4FC8492358620800E119E3 /* user_info.grpc.swift in Sources */,
 				3F4FC8062355D4D000E119E3 /* RecommendHomeTableCell.swift in Sources */,
 				3F4FC844235861FC00E119E3 /* user_info.pb.swift in Sources */,
+				3F7EBED3237A666000F04C4C /* FoodDiaryDetailViewCell.swift in Sources */,
 				3F4FC7F72355D4AF00E119E3 /* StepModel.swift in Sources */,
+				3F49F9F62383C85E002BECD3 /* ResetPwdViewController.swift in Sources */,
 				3F288B4723716D40004B8B3C /* SelfSizedTableView.swift in Sources */,
+				3F49FA022383E9CC002BECD3 /* WeightViewController.swift in Sources */,
+				3F49FA0A2383F77A002BECD3 /* EnergyIntakenViewController.swift in Sources */,
 				3F4FC8342355D59700E119E3 /* CustomAVController.swift in Sources */,
+				3F49F9FE2383E936002BECD3 /* BirthYearViewController.swift in Sources */,
 				3F4FC7EB2355D49E00E119E3 /* ViewPagerTabView.swift in Sources */,
+				3F180A05238E6CB10022D50E /* UploaderManager.swift in Sources */,
 				3F4FC7F62355D4AF00E119E3 /* IngredientModel.swift in Sources */,
+				3F7EBEC723754A8C00F04C4C /* TextSearchSuggestionCollectionCell.swift in Sources */,
+				3F49F9F32383B563002BECD3 /* CodeVerficationView.swift in Sources */,
 				3F4FC82E2355D57D00E119E3 /* RecipeDetailViewController.swift in Sources */,
 				3F4FC80F2355D4EC00E119E3 /* CookingDetailViewController.swift in Sources */,
 				3F4FC8052355D4D000E119E3 /* RecommendHomeCollectionCell.swift in Sources */,
 				3F4FC82D2355D57D00E119E3 /* RecipeDetailTableCell.swift in Sources */,
+				3F49F9FA2383E8BE002BECD3 /* GoalViewController.swift in Sources */,
 				3F4FC7EE2355D49E00E119E3 /* ViewPagerTab.swift in Sources */,
+				3F180A03238D7EB60022D50E /* FoodDiaryDataManager.swift in Sources */,
+				3F7EBEC323753EAD00F04C4C /* TextSearchView.swift in Sources */,
+				3F7EBEC523754A2B00F04C4C /* TextSearchTableViewCell.swift in Sources */,
+				3F49FA082383F707002BECD3 /* ActivityLevelViewController.swift in Sources */,
 				3F4FC81A2355D51200E119E3 /* GroceryListView.swift in Sources */,
 				3F4FC8592359A9A200E119E3 /* ProfileModel.swift in Sources */,
 				3F4FC8482358620800E119E3 /* login.grpc.swift in Sources */,
@@ -810,25 +969,34 @@
 				3F288B3E23701844004B8B3C /* food_diary.pb.swift in Sources */,
 				3F4FC8072355D4D000E119E3 /* RecommendHomeView.swift in Sources */,
 				3F4FC7FE2355D4BA00E119E3 /* MoreViewController.swift in Sources */,
+				3F7EBECF2379641100F04C4C /* FoodDiaryDetailViewController.swift in Sources */,
 				3F288B3C236FC891004B8B3C /* SingleNutritionCircleView.swift in Sources */,
 				3F4FC8212355D52500E119E3 /* GroceryIngredientCell.swift in Sources */,
 				3F4FC8182355D51200E119E3 /* GroceryTableCell.swift in Sources */,
 				3F4FC8572359A56100E119E3 /* ProfileTableCell.swift in Sources */,
+				3F49FA002383E9BF002BECD3 /* HeightViewController.swift in Sources */,
 				3F4FC8242355D56800E119E3 /* ProgressViewController.swift in Sources */,
+				3F7EBED12379642200F04C4C /* FoodDiaryDetailView.swift in Sources */,
 				3F4FC80E2355D4EC00E119E3 /* CookingStepViewController.swift in Sources */,
+				3F49FA062383F448002BECD3 /* TargetBodyShapeViewController.swift in Sources */,
+				3F49F9E8238186FF002BECD3 /* LoginViewController.swift in Sources */,
 				3F4FC85E235D87A100E119E3 /* Constants.swift in Sources */,
 				3F4FC82C2355D57D00E119E3 /* NutritionCardView.swift in Sources */,
 				3F4FC8202355D52500E119E3 /* GroceryDetailView.swift in Sources */,
 				3F288B37236FC5FB004B8B3C /* FoodDiaryView.swift in Sources */,
+				3F49F9FC2383E8EA002BECD3 /* GenderViewController.swift in Sources */,
 				3F4FC84B23595DE400E119E3 /* LoginDataManager.swift in Sources */,
 				3F4FC7B42355D0CD00E119E3 /* AppDelegate.swift in Sources */,
 				3F4FC86A2361486F00E119E3 /* recommendation.pb.swift in Sources */,
 				3F4FC8192355D51200E119E3 /* GroceryListViewController.swift in Sources */,
+				3F49F9F12383B546002BECD3 /* CodeVerficationViewController.swift in Sources */,
 				3F4FC8082355D4D000E119E3 /* RecommendHomeViewController.swift in Sources */,
 				3F4FC7FD2355D4BA00E119E3 /* HomeTabViewController.swift in Sources */,
 				3F4FC845235861FC00E119E3 /* login.pb.swift in Sources */,
 				3F4FC7F92355D4AF00E119E3 /* GroceryItem.swift in Sources */,
 				3F4FC8102355D4EC00E119E3 /* CookinStepView.swift in Sources */,
+				3F49F9F82383C868002BECD3 /* ResetPwdView.swift in Sources */,
+				3F49F9EC23839802002BECD3 /* ForgetPasswordViewController.swift in Sources */,
 				3F4FC8092355D4D000E119E3 /* RecommendationCollectionFlowLayout.swift in Sources */,
 				3F288B32236A8410004B8B3C /* FoodDiaryTagViewController.swift in Sources */,
 				3F4FC81F2355D52500E119E3 /* GroceryDetailViewController.swift in Sources */,
@@ -837,14 +1005,18 @@
 				3F288B4023701852004B8B3C /* food_diary.grpc.swift in Sources */,
 				3F4FC86C2361487B00E119E3 /* recommendation.grpc.swift in Sources */,
 				3F4FC7EC2355D49E00E119E3 /* ViewPagerOptions.swift in Sources */,
+				3F49F9EA23818706002BECD3 /* LoginView.swift in Sources */,
 				3F4FC7FA2355D4AF00E119E3 /* RecommendationModel.swift in Sources */,
 				3F288B4423711B37004B8B3C /* FoodDiaryRecipeTableCell.swift in Sources */,
 				3F4FC86E2362D1F800E119E3 /* ProfileAvatarCell.swift in Sources */,
 				3F4FC8132355D4FF00E119E3 /* FoodDiaryViewController.swift in Sources */,
+				3F49FA042383F3D8002BECD3 /* CurrentBodyShapeViewController.swift in Sources */,
 				3F4FC7ED2355D49E00E119E3 /* ViewPager.swift in Sources */,
 				3F4FC8552359A2B300E119E3 /* ProfileView.swift in Sources */,
 				3F4FC8312355D57D00E119E3 /* RecipeHeaderView.swift in Sources */,
+				3F7EBECA2379327E00F04C4C /* LeftViewTextField.swift in Sources */,
 				3F4FC83F235811FD00E119E3 /* RecommendationDataManager.swift in Sources */,
+				3F7EBEC1237515BF00F04C4C /* TextSearchViewController.swift in Sources */,
 				3F4FC8532359A2AA00E119E3 /* ProfileViewController.swift in Sources */,
 				3F4FC8302355D57D00E119E3 /* RecipeFooterView.swift in Sources */,
 				3F4FC85B235D628B00E119E3 /* LaunchPageViewControler.swift in Sources */,

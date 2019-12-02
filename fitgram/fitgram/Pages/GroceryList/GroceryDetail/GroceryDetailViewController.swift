@@ -15,10 +15,7 @@ class GroceryDetailViewController: UIViewController {
     var isAllIngredient = false
     var detailItemId = 0
     var groceryDetailItem = Apisvr_GetCheckListItemResp()
-    
-    var client: Apisvr_RecommendationServiceServiceClient!
-    var address: String!
-//    var ingredientList = [IngredientModel]()
+    var groceryList = [Apisvr_IngredientInfo]()
     
     override func loadView() {
         rootView = GroceryDetailView()
@@ -35,14 +32,6 @@ class GroceryDetailViewController: UIViewController {
         on("INJECTION_BUNDLE_NOTIFICATION") {
             self.loadView()
         }
-        initDataService()
-    }
-    
-    func initDataService() {
-        address = Bundle.main.object(forInfoDictionaryKey: "GRPC_Address") as! String
-        gRPC.initialize()
-        print("GRPC version \(gRPC.version) - endpoint: \(address)")
-        self.client = Apisvr_RecommendationServiceServiceClient(address: address, secure: false)
     }
     
     @objc func onBackPressed(){
@@ -88,7 +77,7 @@ extension GroceryDetailViewController: UITableViewDelegate, UITableViewDataSourc
                 return
             }
             let metaData = try Metadata(["authorization": "Token " + token])
-            try self.client.ingredientCheck(req, metadata: metaData, completion: { (resp, result) in
+            try RecommendationDataManager.shared.client.ingredientCheck(req, metadata: metaData, completion: { (resp, result) in
                 let indexPath = IndexPath(row: index, section: 0)
                 guard let cell = self.rootView.ingredientTableView.cellForRow(at: indexPath) as? GroceryIngredientCell else {
                     return

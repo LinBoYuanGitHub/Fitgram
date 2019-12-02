@@ -21,19 +21,19 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
 
 enum Apisvr_Difficulty: SwiftProtobuf.Enum {
   typealias RawValue = Int
-  case none // = 0
+  case noneDifficulty // = 0
   case easy // = 1
   case normal // = 2
   case hard // = 3
   case UNRECOGNIZED(Int)
 
   init() {
-    self = .none
+    self = .noneDifficulty
   }
 
   init?(rawValue: Int) {
     switch rawValue {
-    case 0: self = .none
+    case 0: self = .noneDifficulty
     case 1: self = .easy
     case 2: self = .normal
     case 3: self = .hard
@@ -43,7 +43,7 @@ enum Apisvr_Difficulty: SwiftProtobuf.Enum {
 
   var rawValue: Int {
     switch self {
-    case .none: return 0
+    case .noneDifficulty: return 0
     case .easy: return 1
     case .normal: return 2
     case .hard: return 3
@@ -58,7 +58,7 @@ enum Apisvr_Difficulty: SwiftProtobuf.Enum {
 extension Apisvr_Difficulty: CaseIterable {
   // The compiler won't synthesize support with the UNRECOGNIZED case.
   static var allCases: [Apisvr_Difficulty] = [
-    .none,
+    .noneDifficulty,
     .easy,
     .normal,
     .hard,
@@ -83,6 +83,8 @@ struct Apisvr_Ingredient {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
+
+  var ingredientID: Int32 = 0
 
   var name: String = String()
 
@@ -487,7 +489,7 @@ fileprivate let _protobuf_package = "apisvr"
 
 extension Apisvr_Difficulty: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    0: .same(proto: "None"),
+    0: .same(proto: "NONE_DIFFICULTY"),
     1: .same(proto: "EASY"),
     2: .same(proto: "NORMAL"),
     3: .same(proto: "HARD"),
@@ -526,36 +528,42 @@ extension Apisvr_GetRecipeDetailReq: SwiftProtobuf.Message, SwiftProtobuf._Messa
 extension Apisvr_Ingredient: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".Ingredient"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "name"),
-    2: .same(proto: "amount"),
-    3: .same(proto: "unit"),
+    1: .standard(proto: "ingredient_id"),
+    2: .same(proto: "name"),
+    3: .same(proto: "amount"),
+    4: .same(proto: "unit"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       switch fieldNumber {
-      case 1: try decoder.decodeSingularStringField(value: &self.name)
-      case 2: try decoder.decodeSingularDoubleField(value: &self.amount)
-      case 3: try decoder.decodeSingularStringField(value: &self.unit)
+      case 1: try decoder.decodeSingularInt32Field(value: &self.ingredientID)
+      case 2: try decoder.decodeSingularStringField(value: &self.name)
+      case 3: try decoder.decodeSingularDoubleField(value: &self.amount)
+      case 4: try decoder.decodeSingularStringField(value: &self.unit)
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.ingredientID != 0 {
+      try visitor.visitSingularInt32Field(value: self.ingredientID, fieldNumber: 1)
+    }
     if !self.name.isEmpty {
-      try visitor.visitSingularStringField(value: self.name, fieldNumber: 1)
+      try visitor.visitSingularStringField(value: self.name, fieldNumber: 2)
     }
     if self.amount != 0 {
-      try visitor.visitSingularDoubleField(value: self.amount, fieldNumber: 2)
+      try visitor.visitSingularDoubleField(value: self.amount, fieldNumber: 3)
     }
     if !self.unit.isEmpty {
-      try visitor.visitSingularStringField(value: self.unit, fieldNumber: 3)
+      try visitor.visitSingularStringField(value: self.unit, fieldNumber: 4)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: Apisvr_Ingredient, rhs: Apisvr_Ingredient) -> Bool {
+    if lhs.ingredientID != rhs.ingredientID {return false}
     if lhs.name != rhs.name {return false}
     if lhs.amount != rhs.amount {return false}
     if lhs.unit != rhs.unit {return false}
@@ -680,7 +688,7 @@ extension Apisvr_GetRecipeDetailResp: SwiftProtobuf.Message, SwiftProtobuf._Mess
     var _isFavourite: Bool = false
     var _isChecked: Bool = false
     var _cookingTime: Int32 = 0
-    var _difficulty: Apisvr_Difficulty = .none
+    var _difficulty: Apisvr_Difficulty = .noneDifficulty
     var _serving: Int32 = 0
     var _ingredient: [Apisvr_Ingredient] = []
     var _step: [Apisvr_Step] = []
@@ -766,7 +774,7 @@ extension Apisvr_GetRecipeDetailResp: SwiftProtobuf.Message, SwiftProtobuf._Mess
       if _storage._cookingTime != 0 {
         try visitor.visitSingularInt32Field(value: _storage._cookingTime, fieldNumber: 9)
       }
-      if _storage._difficulty != .none {
+      if _storage._difficulty != .noneDifficulty {
         try visitor.visitSingularEnumField(value: _storage._difficulty, fieldNumber: 10)
       }
       if _storage._serving != 0 {
@@ -857,7 +865,7 @@ extension Apisvr_RecommendedRecipeInfo: SwiftProtobuf.Message, SwiftProtobuf._Me
     var _sampleImgURL: String = String()
     var _recipeName: String = String()
     var _cookingTime: Int32 = 0
-    var _difficulty: Apisvr_Difficulty = .none
+    var _difficulty: Apisvr_Difficulty = .noneDifficulty
     var _nutrient: Apisvr_Nutrient? = nil
     var _videoURL: String = String()
     var _isFavourite: Bool = false
@@ -921,7 +929,7 @@ extension Apisvr_RecommendedRecipeInfo: SwiftProtobuf.Message, SwiftProtobuf._Me
       if _storage._cookingTime != 0 {
         try visitor.visitSingularInt32Field(value: _storage._cookingTime, fieldNumber: 4)
       }
-      if _storage._difficulty != .none {
+      if _storage._difficulty != .noneDifficulty {
         try visitor.visitSingularEnumField(value: _storage._difficulty, fieldNumber: 5)
       }
       if let v = _storage._nutrient {

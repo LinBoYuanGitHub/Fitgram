@@ -11,7 +11,7 @@ import Stevia
 
 class FoodDiaryView: UIView{
     let foodDiaryTableView = UITableView.init()
-//    let nutrientPanel = NutritionPanelView()
+    let nutrientPanel = NutritionPanelView()
     
     convenience init(){
         self.init(frame: CGRect.zero)
@@ -19,13 +19,13 @@ class FoodDiaryView: UIView{
         foodDiaryTableView.register(FoodDiaryMainCell.self, forCellReuseIdentifier: "FoodDiaryMainCell")
         foodDiaryTableView.allowsSelection = false
         foodDiaryTableView.showsVerticalScrollIndicator = false
-//        foodDiaryTableView.tableHeaderView = nutrientPanel
+        foodDiaryTableView.tableHeaderView = nutrientPanel
         sv(
             foodDiaryTableView
         )
         layout(
             0,
-            |-foodDiaryTableView-|,
+            |-8-foodDiaryTableView-8-|,
             0
         )
     }

@@ -14,16 +14,32 @@ import AADraggableView
 class FoodDiaryTagViewController:UIViewController {
     var rootView:FoodDiaryTagView! = nil
     var selectedImage = UIImage()
+    var foodTagList = [Apisvr_FoodTag]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         on("INJECTION_BUNDLE_NOTIFICATION") {
             self.loadView()
         }
-        rootView.foodImage.kf.setImage(with: URL(string: "https://i2.chuimg.com/ac6aa49e873d4aaa926e89d42c8a022b_1920w_1920h.jpg?imageView2/2/w/300/interlace/1/q/90"))
+        self.navigationItem.hidesBackButton = true
+        self.navigationItem.leftBarButtonItem  = UIBarButtonItem(image: UIImage(imageLiteralResourceName: "backbutton_black"), style: .plain, target: self, action: #selector(onBackPressed))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "下一步", style: .plain, target: self, action:  #selector(naviToFoodDetailPage))
         rootView.didAddTag = {
             //navigate page to text search
+            let targetVC = TextSearchViewController()
+            targetVC.textSearchDelegate = self
+            self.navigationController?.pushViewController(targetVC, animated: true)
         }
+    }
+    
+    @objc func onBackPressed(){
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func naviToFoodDetailPage(){
+        let targetVC = FoodDiaryDetailViewController()
+        targetVC.foodImage = selectedImage
+        self.navigationController?.pushViewController(targetVC, animated: true)
     }
     
     override func loadView() {
@@ -31,5 +47,20 @@ class FoodDiaryTagViewController:UIViewController {
         view = rootView
         rootView.foodImage.image = selectedImage
     }
+    
+}
+
+extension FoodDiaryTagViewController: TextSearchDelegate {
+    
+    func onReturnTextsSearchResult(item: Apisvr_SearchItem) {
+        let targetView = self.rootView.foodLabelList.last
+        targetView?.text = item.searchItemName
+    }
+    
+    func onCancelTextSearchAction() {
+        let removedView = self.rootView.foodTagList.removeLast()
+        removedView.removeFromSuperview()
+    }
+    
     
 }

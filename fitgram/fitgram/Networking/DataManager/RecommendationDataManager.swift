@@ -13,9 +13,10 @@ class RecommendationDataManager {
     
     var address: String
     var client: Apisvr_RecommendationServiceServiceClient!
-
     
-    init() {
+    static let shared = RecommendationDataManager()
+    
+    private init() {
         address = Bundle.main.object(forInfoDictionaryKey: "GRPC_Address") as! String
         gRPC.initialize()
         print("GRPC version \(gRPC.version) - endpoint: \(address)")
@@ -63,11 +64,12 @@ class RecommendationDataManager {
     func mealPlanItem2RecipeItem(item:Apisvr_RecommendedRecipeInfo) -> RecipeModel{
         var recipe = RecipeModel()
         recipe.recipeId = Int(item.recipeID)
-        recipe.recipeCookingDuration =  "烹饪时间约\(item.cookingTime)分钟"
-        recipe.recipeCalorie = "\(item.nutrient.energy)千卡"
+        recipe.recipeCookingDuration =  Int(item.cookingTime)
+        recipe.recipeCalorie = "\(Int(item.nutrient.energy))千卡"
         recipe.recipeTitle = item.recipeName
         recipe.videoCoverImageUrl = item.sampleImgURL
         recipe.recipeVideoUrl = item.videoURL
+        recipe.nutrientData = item.nutrient
         return recipe
     }
     
@@ -82,10 +84,12 @@ class RecommendationDataManager {
             if(result.statusCode == .ok){
                 //ingredient convertsion
                 var recipe = RecipeModel()
-                recipe.recipeCookingDuration =  "烹饪时间约\(resp!.cookingTime)分钟"
+                recipe.recipeCookingDuration =  Int(resp!.cookingTime)
+                recipe.difficulity = resp!.difficulty
                 recipe.recipeTitle = resp!.recipeName
                 recipe.videoCoverImageUrl = resp!.sampleImgURL
                 recipe.recipeVideoUrl = resp!.videoURL
+                recipe.nutrientData = resp!.nutrient
                 //ingrdient part
                 for ingredient in resp!.ingredient {
                     var ingredientModel = IngredientModel()

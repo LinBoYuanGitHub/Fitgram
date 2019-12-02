@@ -15,16 +15,12 @@ class RecipeDetailViewController:UIViewController{
     let vc = AVPlayerViewController()
     //data part
     var recipe = RecipeModel()
-    //cache
-    var datasource = RecommendationDataManager()
     
     override func loadView() {
         rootView = RecipeDetailView()
         rootView.recipeDetailTable.delegate = self
         rootView.recipeDetailTable.dataSource = self
         rootView.recipeDetailTable.allowsSelection = false
-//        rootView.contentView.ingredientDataList = recipe.ingredientList
-//        rootView.contentView.assembleIngredientList()
         view = rootView
     }
     
@@ -39,7 +35,7 @@ class RecipeDetailViewController:UIViewController{
         self.navigationItem.leftBarButtonItem?.tintColor = UIColor.white
         //        self.rootView.customBackButton.addTarget(self, action: #selector(onBackPressed), for: .touchUpInside)
         self.rootView.playButton.addTarget(self, action: #selector(playVideo), for: .touchUpInside)
-        self.rootView.contentView.startCookBtn.addTarget(self, action: #selector(startCook), for: .touchUpInside)
+        self.rootView.headerView.startCookBtn.addTarget(self, action: #selector(startCook), for: .touchUpInside)
         self.rootView.recipeTitle.text = recipe.recipeTitle
         let imageUrl = URL(string: recipe.videoCoverImageUrl)
         self.rootView.headerImage.kf.setImage(with: imageUrl)
@@ -57,7 +53,7 @@ class RecipeDetailViewController:UIViewController{
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         //dismiss the floating btn when exit
-        self.rootView.contentView.dismissStartCookBtn()
+        self.rootView.headerView.dismissStartCookBtn()
     }
     
     
@@ -86,22 +82,19 @@ class RecipeDetailViewController:UIViewController{
         let cookingVC = CookingDetailViewController()
         cookingVC.stepList = recipe.stepList
         self.present(cookingVC, animated: true)
-        self.rootView.contentView.dismissStartCookBtn()
+        self.rootView.headerView.dismissStartCookBtn()
     }
     
     
     func retrieveRecipeDetail(){
-        self.rootView.recipeDetailTable.isScrollEnabled = false
+//        self.rootView.recipeDetailTable.isScrollEnabled = false
         do{
-            try datasource.retrieveRecipeDetail(recipeId: recipe.recipeId) { (recipe) in
+            try  RecommendationDataManager.shared.retrieveRecipeDetail(recipeId: recipe.recipeId) { (recipe) in
                 self.recipe = recipe
-                self.rootView.contentView.ingredientDataList = recipe.ingredientList
                 DispatchQueue.main.async {
+                    self.rootView.headerView.setData(ingredientDataList:  recipe.ingredientList, nutritionData: recipe.nutrientData, duration: recipe.recipeCookingDuration , difficulity: recipe.difficulity)
                     self.rootView.recipeDetailTable.reloadData()
-                    self.rootView.contentView.assembleIngredientList()
-                    self.rootView.contentView.createStartCookButton()
-//                    self.rootView.bringSubviewToFront(self.rootView.recipeDetailTable)
-                    self.rootView.recipeDetailTable.isScrollEnabled = true
+                    self.rootView.headerView.createStartCookButton()
                 }
             }
         } catch {
@@ -133,12 +126,14 @@ extension RecipeDetailViewController: UITableViewDelegate, UITableViewDataSource
             return UITableViewCell()
         }
         cell.recipeStepLabel.text = recipe.stepList[indexPath.section].stepText
-        cell.recipeStepImage.kf.setImage(with: URL(string: recipe.stepList[indexPath.section].stepImageUrl))
+//        cell.recipeStepImage.kf.setImage(with: URL(string: recipe.stepList[indexPath.section].stepImageUrl))
+        cell.recipeStepImage.kf.setImage(with: URL(string: "https://picsum.photos/500/500"))
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 450
+        let numOfLines = recipe.stepList[indexPath.section].stepText.count/20 + 1
+        return CGFloat(Int(UIScreen.main.bounds.width) + numOfLines * 30 + 16)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -172,9 +167,9 @@ extension RecipeDetailViewController: UITableViewDelegate, UITableViewDataSource
         }
         //start cook btn visibility
         if (y <= 100 && y >= UIScreen.main.bounds.height + 500 - self.rootView.recipeDetailTable.contentSize.height) {
-            self.rootView.contentView.showStartCookBtn()
+            self.rootView.headerView.showStartCookBtn()
         } else if (y > 100 || y < UIScreen.main.bounds.height + 500 - self.rootView.recipeDetailTable.contentSize.height) {
-            self.rootView.contentView.dismissStartCookBtn()
+            self.rootView.headerView.dismissStartCookBtn()
         }
     }
 }

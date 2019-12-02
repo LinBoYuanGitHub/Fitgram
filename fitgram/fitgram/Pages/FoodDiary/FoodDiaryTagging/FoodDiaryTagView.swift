@@ -15,7 +15,7 @@ class FoodDiaryTagView: UIView {
     public var foodTagList = [AADraggableView]()
     public var foodLabelList = [UILabel]()
     public var foodDeleteBtnList = [UIButton]()
-    public var instructionLabel = UILabel(frame: CGRect(x: 0, y: UIScreen.main.bounds.height/2 + UIScreen.main.bounds.width/2, width: UIScreen.main.bounds.width, height: 30))
+    public var instructionLabel = UILabel(frame: CGRect(x: 0, y: UIScreen.main.bounds.height/2 + UIScreen.main.bounds.width/4, width: UIScreen.main.bounds.width, height: 30))
     private let tagSize = CGSize(width: 90, height: 75)
     private let tagImageSize = CGSize(width: 35, height: 35)
     private let deleteBtnSize = CGSize(width: 20, height: 20)
@@ -33,7 +33,7 @@ class FoodDiaryTagView: UIView {
         instructionLabel.textColor = .gray
         instructionLabel.textAlignment = .center
         instructionLabel.font = UIFont(name: "PingFangSC-Regular", size: 17)
-        foodImage.contentMode = .scaleAspectFill
+        foodImage.contentMode = .scaleAspectFit
         respectedView.addSubview(foodImage)
         respectedView.addSubview(instructionLabel)
         //set long press trigger event
@@ -82,7 +82,10 @@ class FoodDiaryTagView: UIView {
         foodTag.isEnabled = true
         foodTag.repositionIfNeeded()
         foodTag.isUserInteractionEnabled = true
-        self.didAddTag() // callback for view controller
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.didAddTag()
+        }
+         // callback for view controller
     }
     
     @objc func toggleDeleteBtn(){

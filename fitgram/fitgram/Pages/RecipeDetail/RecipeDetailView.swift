@@ -12,7 +12,7 @@ import Kingfisher
 
 class RecipeDetailView:UIView, UITableViewDelegate {
     let scrollView = UIScrollView() //scrollable container
-    let contentView = RecipeHeaderView() //container inside the UIView
+    var headerView:RecipeHeaderView! //container inside the UIView
     let footerView = RecipeFooterView()
     let headerImage = UIImageView()
     let recipeTitle = UILabel(frame: CGRect(x:0,y:300,width:UIScreen.main.bounds.size.width,height:50))
@@ -22,6 +22,9 @@ class RecipeDetailView:UIView, UITableViewDelegate {
 //    let customBackButton = UIButton(frame: CGRect(x: 0, y: 42, width: 48, height: 48))
     //cover view to replace navigation view
     let naviCoverView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 44 + (UIApplication.shared.keyWindow?.safeAreaInsets.top)!))
+    
+    //ingredient part
+    public var ingredientDataList = [IngredientModel]()
   
     convenience init(){
         self.init(frame: CGRect.zero)
@@ -41,8 +44,9 @@ class RecipeDetailView:UIView, UITableViewDelegate {
 //        self.addSubview(customBackButton)
         //setting for header image
         headerImage.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height)
-        contentView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height:  1000)
-//        contentView.backgroundColor = UIColor.clear
+        headerView = RecipeHeaderView()
+        headerView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: CGFloat(600 + ingredientDataList.count*45))
+//        headerView.backgroundColor = UIColor.clear
         headerImage.image = UIImage()
         headerImage.contentMode = .scaleAspectFill
         headerImage.clipsToBounds = true
@@ -52,7 +56,7 @@ class RecipeDetailView:UIView, UITableViewDelegate {
         self.headerImage.addSubview(playButton)
         //set up table view
         recipeDetailTable.register(RecipeDetailTableCell.self, forCellReuseIdentifier: "RecipeDetailCell")
-        recipeDetailTable.tableHeaderView = contentView
+        recipeDetailTable.tableHeaderView = headerView
         recipeDetailTable.tableFooterView = footerView
         recipeDetailTable.backgroundColor = UIColor.clear
         //set shadow for header
@@ -61,7 +65,7 @@ class RecipeDetailView:UIView, UITableViewDelegate {
         let gradientLayer = CAGradientLayer()
         gradientLayer.colors = gradientColors
         gradientLayer.locations = gradientLocations
-        contentView.emptyViewHead.addSubview(recipeTitleShadowContainer)
+        headerView.emptyViewHead.addSubview(recipeTitleShadowContainer)
         gradientLayer.frame = recipeTitleShadowContainer.frame
         recipeTitleShadowContainer.layer.insertSublayer(gradientLayer, at: 0)
         recipeTitleShadowContainer.alpha = 0.5
@@ -69,12 +73,12 @@ class RecipeDetailView:UIView, UITableViewDelegate {
         recipeTitle.font = UIFont(name: "ArialRoundedMTBold", size: 25)
         recipeTitle.textAlignment = .center
         recipeTitle.textColor = UIColor.white
-        contentView.emptyViewHead.addSubview(recipeTitle)
+        headerView.emptyViewHead.addSubview(recipeTitle)
         //play button
         let playImage = UIImage(named: "playbutton_white")?.resizeImageWith(newSize: CGSize(width: 100, height: 100))
         playButton.setImage(playImage, for: .normal)
-        playButton.center = CGPoint(x: UIScreen.main.bounds.size.width/2, y: contentView.emptyViewHead.frame.height/2)
-        contentView.emptyViewHead.addSubview(playButton)
+        playButton.center = CGPoint(x: UIScreen.main.bounds.size.width/2, y: headerView.emptyViewHead.frame.height/2)
+        headerView.emptyViewHead.addSubview(playButton)
         //cover view setting
         naviCoverView.backgroundColor = UIColor.white
         naviCoverView.layer.masksToBounds = false
@@ -86,7 +90,7 @@ class RecipeDetailView:UIView, UITableViewDelegate {
         self.addSubview(naviCoverView)
         //bring view to the front
         self.bringSubviewToFront(recipeDetailTable)
-//        self.bringSubviewToFront(contentView)
+//        self.bringSubviewToFront(headerView)
         self.bringSubviewToFront(naviCoverView)
 //        self.bringSubviewToFront(customBackButton)
     }

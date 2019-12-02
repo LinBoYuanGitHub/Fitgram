@@ -17,9 +17,19 @@ class RecommendHomeViewController:UIViewController{
     
     var recommendationList = [RecommendationModel]()
     let mealList = ["早餐","午餐","晚餐"]
+
+    lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action:
+            #selector(handleRefresh(_:)),
+                                 for: .valueChanged)
+        refreshControl.tintColor = UIColor(red: 238/255, green: 194/255, blue: 0, alpha: 1)
+        return refreshControl
+    }()
     
-    var datasource = RecommendationDataManager()
-    
+    @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
+        self.retrieveRecommendationList()
+    }
     
     func initMockUpData() {
         for index in 0...2 {
@@ -30,7 +40,7 @@ class RecommendHomeViewController:UIViewController{
                 var recipe = RecipeModel()
                 recipe.recipeTitle = "酸奶南瓜碗"
                 recipe.recipeCalorie = "345千卡"
-                recipe.recipeCookingDuration = "烹饪时间约10-15分钟"
+                recipe.recipeCookingDuration = 10
                 recipe.videoCoverImageUrl = "https://i2.chuimg.com/ac6aa49e873d4aaa926e89d42c8a022b_1920w_1920h.jpg?imageView2/2/w/300/interlace/1/q/90"
                 recipe.recipeVideoUrl = "https://i4.chuimg.com/e655f0aeb0e311e8960402420a000135_720w_720h.mp4"
                 //add ingredient list testing data
@@ -53,12 +63,18 @@ class RecommendHomeViewController:UIViewController{
     }
     
     func retrieveRecommendationList(){
-        datasource.retrieveRecommendationList(dateStr: "") {recommendationList in
+        RecommendationDataManager.shared.retrieveRecommendationList(dateStr: "") {recommendationList in
             print("request finish")
             self.recommendationList = recommendationList
-            DispatchQueue.main.async {
-                 self.rootView.recommendationMainTableView.reloadData()
-            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+                self.refreshControl.endRefreshing()
+                let indexSet = IndexSet([0])
+                self.rootView.recommendationMainTableView.reloadSections(indexSet, with: .automatic)
+            })
+//            DispatchQueue.main.async {
+//                self.refreshControl.endRefreshing()
+//                self.rootView.recommendationMainTableView.reloadData()
+//            }
         }
     }
 
@@ -67,11 +83,11 @@ class RecommendHomeViewController:UIViewController{
         super.viewDidLoad()
 //        self.initMockUpData()
         self.retrieveRecommendationList()
-      
         on("INJECTION_BUNDLE_NOTIFICATION") {
             self.loadView()
         }
         self.rootView.toGroceryListButton.addTarget(self, action: #selector(naviToGroceryListView), for: .touchUpInside)
+        self.rootView.recommendationMainTableView.addSubview(self.refreshControl)
     }
     
     @objc func naviToGroceryListView(){
@@ -114,16 +130,9 @@ class RecommendHomeViewController:UIViewController{
         view = rootView
     }
     
-//    func prepareVideo() {
-//        let videoUrl = URL(fileURLWithPath: "https://i4.chuimg.com/e655f0aeb0e311e8960402420a000135_720w_720h.mp4")
-//        let urlAsset = AVURLAsset(url: videoUrl)
-//        urlAsset.resourceLoader.setDelegate(self, queue: DispatchQueue.main)
-//    }
-    
     
     
     func playVideo(videoUrl: URL, contentView:UIView){
-//        let videoUrl = URL(fileURLWithPath: "https://i4.chuimg.com/e655f0aeb0e311e8960402420a000135_720w_720h.mp4")
         let playerItem = AVPlayerItem(url: videoUrl)
         let player = AVPlayer(playerItem: playerItem)
         NotificationCenter.default.addObserver(self, selector: #selector(playerItemDidReachEndTime), name: .AVPlayerItemDidPlayToEndTime, object: player.currentItem)

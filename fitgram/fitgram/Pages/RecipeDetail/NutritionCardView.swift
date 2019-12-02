@@ -13,18 +13,22 @@ import ASPCircleChart
 class NutritionCardView: UIView {
     
     let shadowContainer = UIView(frame: CGRect(x: 16, y: 0, width: UIScreen.main.bounds.width - 32, height: 105))
-    let dataSource = DataSource()
+    var dataSource = DataSource(items: [27, 54, 19])
     
     var circleChart = ASPCircleChart(frame: CGRect(x: 0, y: 0, width: 76, height: 70))
     
+    public var nutrientData = Apisvr_Nutrient()
     
-    convenience init (){
+    
+    convenience init (nutrientData:Apisvr_Nutrient){
         self.init(frame: CGRect.zero)
+        self.nutrientData = nutrientData
+        self.calculateDataSource()
         let circleView = createCircleGraph()
         //mock up data for card
-        let fatDataView = createNutriDataSet(dataSetFrame:CGRect(x: 120, y: 24, width: 66, height: 60),percentageText: "27%", percentageTextColor: UIColor.black, gramText: "7克", gramTextColor: UIColor.black, nutriNameText: "脂肪", nutriNameTextColor:  UIColor.fatNutriPurple)
-        let carbDataView = createNutriDataSet(dataSetFrame:CGRect(x: 200, y: 24, width: 66, height: 60),percentageText: "54%", percentageTextColor: UIColor.black, gramText: "27克", gramTextColor: UIColor.black, nutriNameText: "碳水化合物", nutriNameTextColor:  UIColor.carbNutriEmerald)
-        let proteinDataView = createNutriDataSet(dataSetFrame:CGRect(x: 273, y: 24, width: 66, height: 60),percentageText: "19%", percentageTextColor: UIColor.black, gramText: "13克", gramTextColor: UIColor.black, nutriNameText: "蛋白质", nutriNameTextColor: UIColor.proteinNutriIndigo)
+        let fatDataView = createNutriDataSet(dataSetFrame:CGRect(x: 120, y: 24, width: 66, height: 60),percentageText: String(dataSource.items[0]) + "%", percentageTextColor: UIColor.black, gramText:  String(Int(nutrientData.fat)) + "克", gramTextColor: UIColor.black, nutriNameText: "脂肪", nutriNameTextColor:  UIColor.fatNutriPurple)
+        let carbDataView = createNutriDataSet(dataSetFrame:CGRect(x: 200, y: 24, width: 66, height: 60),percentageText:  String(dataSource.items[1]) + "%", percentageTextColor: UIColor.black, gramText: String(Int(nutrientData.carbohydrate)) + "克", gramTextColor: UIColor.black, nutriNameText: "碳水化合物", nutriNameTextColor:  UIColor.carbNutriEmerald)
+        let proteinDataView = createNutriDataSet(dataSetFrame:CGRect(x: 273, y: 24, width: 66, height: 60),percentageText:  String(dataSource.items[2]) + "%", percentageTextColor: UIColor.black, gramText: String(Int(nutrientData.protein)) + "克", gramTextColor: UIColor.black, nutriNameText: "蛋白质", nutriNameTextColor: UIColor.proteinNutriIndigo)
         //shadow setting
         shadowContainer.layer.shadowOffset = CGSize(width: 0, height: 0) //no shadow direction
         shadowContainer.layer.cornerRadius = 4
@@ -75,7 +79,7 @@ class NutritionCardView: UIView {
         circleChart.dataSource = dataSource
         //center text part
         let calorieLabel = UILabel(frame: CGRect(x: 0, y: 16, width: 76, height: 25))
-        calorieLabel.text = "365"
+        calorieLabel.text = String(Int(nutrientData.energy))
         calorieLabel.font = UIFont(name: ":PingFangSC-Regular", size: 18)
         calorieLabel.textAlignment = .center
         cicleContainer.addSubview(circleChart)
@@ -89,11 +93,28 @@ class NutritionCardView: UIView {
         return cicleContainer
     }
     
+    func calculateDataSource() {
+        //datasource caclulation
+        let totalValue = nutrientData.fat + nutrientData.carbohydrate + nutrientData.protein
+        if totalValue == 0 {
+            dataSource = DataSource(items: [0,0,0])
+        } else {
+            let faPercentage = Double(Int(nutrientData.fat*100/totalValue))
+            let carboPercentage = Double(Int(nutrientData.carbohydrate*100/totalValue))
+            let proteinPercentage = Double(Int(nutrientData.protein*100/totalValue))
+            dataSource = DataSource(items: [faPercentage,carboPercentage,proteinPercentage])
+        }
+    }
+    
 }
 
 
 class DataSource: ASPCircleChartDataSource {
     var items: [Double] = [27, 54, 19]
+    
+    init(items:[Double]) {
+        self.items = items
+    }
     
     @objc func numberOfDataPoints() -> Int {
         return items.count

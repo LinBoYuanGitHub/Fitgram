@@ -75,7 +75,7 @@ extension RecommendHomeTableCell: UICollectionViewDelegate, UICollectionViewData
         cell.videoPlayView.kf.setImage(with: URL(string: recommendationDishes[indexPath.row].videoCoverImageUrl))
         cell.videoTitleLabel.text = recommendationDishes[indexPath.row].recipeTitle
         cell.videoCalorieLabel.text = recommendationDishes[indexPath.row].recipeCalorie
-        cell.videoDurationBtn.setTitle(recommendationDishes[indexPath.row].recipeCookingDuration, for: .normal)
+        cell.videoDurationBtn.setTitle("烹饪时间约\(recommendationDishes[indexPath.row].recipeCookingDuration)分钟", for: .normal)
         cell.checkedButton.setTitle("打卡", for: .normal)
         return cell
     }
@@ -90,7 +90,8 @@ extension RecommendHomeTableCell: UICollectionViewDelegate, UICollectionViewData
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        guard let indexPath = self.recommendationCollectionView.indexPathForItem(at: recommendationCollectionView.center) else {
+        let centerPoint = CGPoint(x: self.recommendationCollectionView.center.x + self.recommendationCollectionView.contentOffset.x, y: self.recommendationCollectionView.center.y + self.recommendationCollectionView.contentOffset.y)
+        guard let indexPath = self.recommendationCollectionView.indexPathForItem(at: centerPoint) else {
             return
         }
         didMoveAction(indexPath.row)

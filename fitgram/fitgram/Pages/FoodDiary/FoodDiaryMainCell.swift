@@ -31,7 +31,7 @@ class FoodDiaryMainCell: UITableViewCell {
         //calculate cell height
         let collectionViewHeight = (mealList.count+1)%4 * 70
         let tableviewHeight = getRecipeNum() * 52
-        shadowContainer = UIView(frame: CGRect(x: 16, y: 8, width: UIScreen.main.bounds.width - 48, height: CGFloat(100 + collectionViewHeight + tableviewHeight)))
+        shadowContainer = UIView(frame: CGRect(x: 8, y: 8, width: UIScreen.main.bounds.width - 32, height: CGFloat(100 + collectionViewHeight + tableviewHeight)))
         shadowContainer.layer.shadowOffset = CGSize(width: 0, height: 0) //no shadow direction
         shadowContainer.layer.cornerRadius = 10
         shadowContainer.layer.shadowColor = UIColor.black.cgColor
@@ -67,7 +67,7 @@ class FoodDiaryMainCell: UITableViewCell {
         shadowContainer.addSubview(foodListTableView)
     }
     
-    func getRecipeNum() -> Int{
+    func getRecipeNum() -> Int {
         var recipeNum = 0
         for meal in mealList {
             let count = meal.foodLog.count
