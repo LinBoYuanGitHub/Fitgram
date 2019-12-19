@@ -68,15 +68,39 @@ extension CookingDetailViewController: ViewPagerDataSource, ViewPagerDelegate{
             pageController.isLast  = true
             pageController.imageUrl = stepImageUrl
             pageController.stepText = stepText
+            pageController.checkBtn.addTarget(self, action: #selector(saveToFoodDiary), for: .touchUpInside)
         } else {
             let stepText = stepList[position].stepText
             let stepImageUrl = stepList[position].stepImageUrl
             pageController.imageUrl = stepImageUrl
             pageController.stepText = stepText
         }
-        
         return pageController
     }
+    
+    
+    @objc func saveToFoodDiary() {
+        if LoginDataManager.shared.getUserStatus() == 0 {
+            let targetVC = LoginViewController()
+            self.navigationController?.pushViewController(targetVC, animated: true)
+        } else {
+            do{
+                var req = Apisvr_GetFoodLogDetailReq()
+                let foodTag = Apisvr_FoodTag()
+                req.foodTags = [foodTag]
+                try FoodDiaryDataManager.shared.client.getFoodLogDetail(req) { (resp, result) in
+                    if result.statusCode == .ok {
+                        let targetVC = FoodDiaryDetailViewController()
+                        targetVC.mealType = .breakfast //TODO modify latter
+                        self.navigationController?.pushViewController(targetVC, animated: true)
+                    }
+                }
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
     
     func tabsForPages() -> [ViewPagerTab] {
         var tabs = [ViewPagerTab]()

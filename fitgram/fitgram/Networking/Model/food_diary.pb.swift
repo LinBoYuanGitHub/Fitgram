@@ -171,12 +171,26 @@ extension Apisvr_Category: CaseIterable {
 
 #endif  // swift(>=4.2)
 
+struct Apisvr_Calendar {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var year: Int32 = 0
+
+  var months: [Int32] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 struct Apisvr_GetMealLogCalendarReq {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var month: [Int32] = []
+  var calendar: [Apisvr_Calendar] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -305,6 +319,20 @@ struct Apisvr_FoodDiaryMealLog {
   init() {}
 }
 
+struct Apisvr_MealLogByType {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var mealType: Apisvr_MealType = .unknownMealType
+
+  var mealLogByType: [Apisvr_FoodDiaryMealLog] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 struct Apisvr_GetFoodDiaryResp {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -328,19 +356,9 @@ struct Apisvr_GetFoodDiaryResp {
   /// Clears the value of `nutrientByMeal`. Subsequent reads from it will return its default value.
   mutating func clearNutrientByMeal() {_uniqueStorage()._nutrientByMeal = nil}
 
-  var breakfast: [Apisvr_FoodDiaryMealLog] {
-    get {return _storage._breakfast}
-    set {_uniqueStorage()._breakfast = newValue}
-  }
-
-  var lunch: [Apisvr_FoodDiaryMealLog] {
-    get {return _storage._lunch}
-    set {_uniqueStorage()._lunch = newValue}
-  }
-
-  var dinner: [Apisvr_FoodDiaryMealLog] {
-    get {return _storage._dinner}
-    set {_uniqueStorage()._dinner = newValue}
+  var mealLogs: [Apisvr_MealLogByType] {
+    get {return _storage._mealLogs}
+    set {_uniqueStorage()._mealLogs = newValue}
   }
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -724,30 +742,65 @@ extension Apisvr_Category: SwiftProtobuf._ProtoNameProviding {
   ]
 }
 
-extension Apisvr_GetMealLogCalendarReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".GetMealLogCalendarReq"
+extension Apisvr_Calendar: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".Calendar"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "month"),
+    1: .same(proto: "year"),
+    2: .same(proto: "months"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       switch fieldNumber {
-      case 1: try decoder.decodeRepeatedInt32Field(value: &self.month)
+      case 1: try decoder.decodeSingularInt32Field(value: &self.year)
+      case 2: try decoder.decodeRepeatedInt32Field(value: &self.months)
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.month.isEmpty {
-      try visitor.visitPackedInt32Field(value: self.month, fieldNumber: 1)
+    if self.year != 0 {
+      try visitor.visitSingularInt32Field(value: self.year, fieldNumber: 1)
+    }
+    if !self.months.isEmpty {
+      try visitor.visitPackedInt32Field(value: self.months, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Apisvr_Calendar, rhs: Apisvr_Calendar) -> Bool {
+    if lhs.year != rhs.year {return false}
+    if lhs.months != rhs.months {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Apisvr_GetMealLogCalendarReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".GetMealLogCalendarReq"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "calendar"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      switch fieldNumber {
+      case 1: try decoder.decodeRepeatedMessageField(value: &self.calendar)
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.calendar.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.calendar, fieldNumber: 1)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: Apisvr_GetMealLogCalendarReq, rhs: Apisvr_GetMealLogCalendarReq) -> Bool {
-    if lhs.month != rhs.month {return false}
+    if lhs.calendar != rhs.calendar {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -1070,22 +1123,53 @@ extension Apisvr_FoodDiaryMealLog: SwiftProtobuf.Message, SwiftProtobuf._Message
   }
 }
 
+extension Apisvr_MealLogByType: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".MealLogByType"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "meal_type"),
+    2: .standard(proto: "meal_log_by_type"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      switch fieldNumber {
+      case 1: try decoder.decodeSingularEnumField(value: &self.mealType)
+      case 2: try decoder.decodeRepeatedMessageField(value: &self.mealLogByType)
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.mealType != .unknownMealType {
+      try visitor.visitSingularEnumField(value: self.mealType, fieldNumber: 1)
+    }
+    if !self.mealLogByType.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.mealLogByType, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Apisvr_MealLogByType, rhs: Apisvr_MealLogByType) -> Bool {
+    if lhs.mealType != rhs.mealType {return false}
+    if lhs.mealLogByType != rhs.mealLogByType {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
 extension Apisvr_GetFoodDiaryResp: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".GetFoodDiaryResp"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "nutrient"),
     2: .standard(proto: "nutrient_by_meal"),
-    3: .same(proto: "breakfast"),
-    4: .same(proto: "lunch"),
-    5: .same(proto: "dinner"),
+    3: .same(proto: "mealLogs"),
   ]
 
   fileprivate class _StorageClass {
     var _nutrient: Apisvr_FoodDiaryNutrient? = nil
     var _nutrientByMeal: Apisvr_NutrientByMeal? = nil
-    var _breakfast: [Apisvr_FoodDiaryMealLog] = []
-    var _lunch: [Apisvr_FoodDiaryMealLog] = []
-    var _dinner: [Apisvr_FoodDiaryMealLog] = []
+    var _mealLogs: [Apisvr_MealLogByType] = []
 
     static let defaultInstance = _StorageClass()
 
@@ -1094,9 +1178,7 @@ extension Apisvr_GetFoodDiaryResp: SwiftProtobuf.Message, SwiftProtobuf._Message
     init(copying source: _StorageClass) {
       _nutrient = source._nutrient
       _nutrientByMeal = source._nutrientByMeal
-      _breakfast = source._breakfast
-      _lunch = source._lunch
-      _dinner = source._dinner
+      _mealLogs = source._mealLogs
     }
   }
 
@@ -1114,9 +1196,7 @@ extension Apisvr_GetFoodDiaryResp: SwiftProtobuf.Message, SwiftProtobuf._Message
         switch fieldNumber {
         case 1: try decoder.decodeSingularMessageField(value: &_storage._nutrient)
         case 2: try decoder.decodeSingularMessageField(value: &_storage._nutrientByMeal)
-        case 3: try decoder.decodeRepeatedMessageField(value: &_storage._breakfast)
-        case 4: try decoder.decodeRepeatedMessageField(value: &_storage._lunch)
-        case 5: try decoder.decodeRepeatedMessageField(value: &_storage._dinner)
+        case 3: try decoder.decodeRepeatedMessageField(value: &_storage._mealLogs)
         default: break
         }
       }
@@ -1131,14 +1211,8 @@ extension Apisvr_GetFoodDiaryResp: SwiftProtobuf.Message, SwiftProtobuf._Message
       if let v = _storage._nutrientByMeal {
         try visitor.visitSingularMessageField(value: v, fieldNumber: 2)
       }
-      if !_storage._breakfast.isEmpty {
-        try visitor.visitRepeatedMessageField(value: _storage._breakfast, fieldNumber: 3)
-      }
-      if !_storage._lunch.isEmpty {
-        try visitor.visitRepeatedMessageField(value: _storage._lunch, fieldNumber: 4)
-      }
-      if !_storage._dinner.isEmpty {
-        try visitor.visitRepeatedMessageField(value: _storage._dinner, fieldNumber: 5)
+      if !_storage._mealLogs.isEmpty {
+        try visitor.visitRepeatedMessageField(value: _storage._mealLogs, fieldNumber: 3)
       }
     }
     try unknownFields.traverse(visitor: &visitor)
@@ -1151,9 +1225,7 @@ extension Apisvr_GetFoodDiaryResp: SwiftProtobuf.Message, SwiftProtobuf._Message
         let rhs_storage = _args.1
         if _storage._nutrient != rhs_storage._nutrient {return false}
         if _storage._nutrientByMeal != rhs_storage._nutrientByMeal {return false}
-        if _storage._breakfast != rhs_storage._breakfast {return false}
-        if _storage._lunch != rhs_storage._lunch {return false}
-        if _storage._dinner != rhs_storage._dinner {return false}
+        if _storage._mealLogs != rhs_storage._mealLogs {return false}
         return true
       }
       if !storagesAreEqual {return false}

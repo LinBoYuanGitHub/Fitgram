@@ -32,21 +32,22 @@ class ActivityLevelViewController: UIViewController{
         confirmBtn.backgroundColor = UIColor(red: 252/255, green: 200/255, blue: 45/255, alpha: 1)
         confirmBtn.addTarget(self, action: #selector(nextStep), for: .touchUpInside)
         
-        setUpActButtons(targetBtn: activityBtn_1, titleText: "卧床休息")
-        setUpActButtons(targetBtn: activityBtn_2, titleText: "轻度,静坐少动")
-        setUpActButtons(targetBtn: activityBtn_3, titleText: "中度,常常走动")
-        setUpActButtons(targetBtn: activityBtn_4, titleText: "重度,负重")
+        setUpActButtons(targetBtn: activityBtn_1, titleText: "卧床休息", tag:1)
+        setUpActButtons(targetBtn: activityBtn_2, titleText: "轻度,静坐少动", tag:2)
+        setUpActButtons(targetBtn: activityBtn_3, titleText: "中度,常常走动", tag:3)
+        setUpActButtons(targetBtn: activityBtn_4, titleText: "重度,负重", tag:4)
         self.view.addSubview(titleLabel)
         self.view.addSubview(confirmBtn)
     }
     
-    func setUpActButtons(targetBtn:UIButton,titleText:String){
+    func setUpActButtons(targetBtn:UIButton,titleText:String, tag:Int){
         targetBtn.setTitle(titleText, for: .normal)
         targetBtn.adjustsImageWhenHighlighted = false
         targetBtn.setTitleColor(.white, for: .selected)
         targetBtn.setTitleColor(.black, for: .normal)
         targetBtn.layer.cornerRadius = 10
         targetBtn.layer.masksToBounds = true
+        targetBtn.tag = tag
         targetBtn.setBackgroundColor(color: UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1), forState: .normal)
         targetBtn.setBackgroundColor(color: UIColor(red: 251/255, green: 200/255, blue: 45/255, alpha: 1), forState: .selected)
         targetBtn.addTarget(self, action: #selector(onOptionSelected), for: .touchUpInside)
@@ -57,6 +58,9 @@ class ActivityLevelViewController: UIViewController{
     @objc func onOptionSelected(sender:UIButton){
         buttons.forEach { (button) in
             button.isSelected = (button == sender)
+            if button.isSelected {
+                 ProfileDataManager.shared.profile.activityLevel = Int32(button.tag)
+            }
         }
     }
     

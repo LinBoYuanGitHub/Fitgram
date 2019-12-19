@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftGRPC
 
 public enum TargetTrend{
     case increase
@@ -55,16 +56,20 @@ class EnergyIntakenViewController: UIViewController {
         self.view.addSubview(confirmBtn)
     }
     
-    func buildTrendGraph(){
-        switch targetTrend {
-        case .increase:
+    
+    
+    func buildTrendGraph() {
+        switch ProfileDataManager.shared.profile.goal {
+        case 1:
             graphImageView.image = UIImage(named: "weight_increase")
             break
-        case .decrease:
+        case 2:
             graphImageView.image = UIImage(named: "weight_decrease")
             break
-        case .netrual:
+        case 3:
             graphImageView.image = UIImage(named: "weight_neutral")
+            break
+        default:
             break
         }
         graphImageView.contentMode = .scaleAspectFit
@@ -72,9 +77,18 @@ class EnergyIntakenViewController: UIViewController {
     }
     
     @objc func onConfirmBtnPressed(){
-        //TODO upload profile data to backend
-        let naviVC = UINavigationController()
-        naviVC.viewControllers = [HomeTabViewController()]
-        self.present(naviVC, animated: true, completion: nil)
+        ProfileDataManager.shared.updateUserProfile(completion: { (isSuccess) in
+            if isSuccess {
+                DispatchQueue.main.async {
+                    let naviVC = UINavigationController()
+                    naviVC.viewControllers = [HomeTabViewController()]
+                    self.present(naviVC, animated: true, completion: nil)
+                }
+            }
+        }) { (errMsg) in
+            //TODO notify user update fialed
+            print(errMsg)
+        }
+        
     }
 }

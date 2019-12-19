@@ -67,6 +67,8 @@ class BirthYearViewController: UIViewController {
     }
     
     @objc func nextStep(){
+        let year = Int32(yearLabel.text!)
+        ProfileDataManager.shared.profile.birthYear = year!
         let targetVC = HeightViewController()
         self.navigationController?.pushViewController(targetVC, animated: true)
     }

@@ -53,21 +53,24 @@ class GoalViewController: UIViewController {
         goalTitleLabel.textAlignment = .center
         goalTitleLabel.font = textFont
         
-        setUpButtonAttribute(targetBtn: targetBtn_1, title: "减脂")
-        setUpButtonAttribute(targetBtn: targetBtn_2, title: "塑形")
-        setUpButtonAttribute(targetBtn: targetBtn_3, title: "增肌")
+        setUpButtonAttribute(targetBtn: targetBtn_1, title: "减脂", tag: 1)
+        setUpButtonAttribute(targetBtn: targetBtn_2, title: "塑形", tag: 2)
+        setUpButtonAttribute(targetBtn: targetBtn_3, title: "增肌", tag: 3)
     }
     
-    func setUpButtonAttribute(targetBtn:UIButton,title:String) {
+    func setUpButtonAttribute(targetBtn:UIButton, title:String, tag:Int) {
         targetBtn.setTitle(title, for: .normal)
         targetBtn.layer.cornerRadius = 10
         targetBtn.titleLabel?.font = textFont
         targetBtn.setTitleColor(.black, for: .normal)
         targetBtn.backgroundColor = UIColor(red: 246/255, green: 246/255, blue: 246/255, alpha: 1)
+        targetBtn.tag = tag
         targetBtn.addTarget(self, action: #selector(onGoalSelected), for: .touchUpInside)
     }
     
-    @objc func onGoalSelected(){
+    @objc func onGoalSelected(sender:UIButton){
+        let tag = sender.tag
+        ProfileDataManager.shared.profile.goal = Int32(tag)
         let targetVC = GenderViewController()
         self.navigationController?.pushViewController(targetVC, animated: true)
     }

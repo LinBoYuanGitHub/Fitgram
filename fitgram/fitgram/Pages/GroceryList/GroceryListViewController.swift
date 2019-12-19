@@ -138,7 +138,9 @@ extension GroceryListViewController: UITableViewDataSource, UITableViewDelegate 
     
     func requestForGroceryListItem(groceryId:Int){
         var req = Apisvr_GetCheckListItemReq()
-        req.date = Int64(date)
+        let calendar = Calendar(identifier: .chinese)
+        let components = calendar.dateComponents([.year,.month,.day],from: Date())
+        req.date =  Int64(calendar.date(from: components)!.timeIntervalSince1970)
         req.recommendedRecipeID = Int32(groceryId)
         do{
             guard let token = UserDefaults.standard.string(forKey: Constants.tokenKey) else {

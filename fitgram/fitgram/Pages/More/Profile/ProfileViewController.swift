@@ -30,7 +30,7 @@ class ProfileViewController: UIViewController{
     let weightIndex = 3
     let activityIndex = 4
     
-    let profileDataSvr = ProfileDataService()
+    let profileDataSvr = ProfileDataManager.shared
     var profile = Apisvr_GetUserProfileResp()
     
     override func loadView() {

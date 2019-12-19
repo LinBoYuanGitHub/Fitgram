@@ -14,11 +14,18 @@ class FoodDiaryViewController:UIViewController {
     var nutritient = Apisvr_FoodDiaryNutrient()
     var mealEntity = Apisvr_GetFoodDiaryResp()
     
+    public var diaryDate = Date()
+    private var keyboardOffsetDistance = 100
+    public var currentMealType:Apisvr_MealType = .breakfast
+    
     override func viewDidLoad() {
         on("INJECTION_BUNDLE_NOTIFICATION") {
             self.loadView()
         }
-        requestForFoodDiary()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.requestForFoodDiary()
     }
     
     override func loadView() {
@@ -33,12 +40,15 @@ class FoodDiaryViewController:UIViewController {
     
     func requestForFoodDiary(){
         do{
-            let requset = Apisvr_GetFoodDiaryReq()
+            var request = Apisvr_GetFoodDiaryReq()
+            let calendar = Calendar(identifier: .chinese)
+            let components = calendar.dateComponents([.year,.month,.day],from: Date())
+            request.date = Int64(calendar.date(from: components)!.timeIntervalSince1970)
             guard let token = UserDefaults.standard.string(forKey: Constants.tokenKey) else {
                 return
             }
             let metaData = try Metadata(["authorization": "Token " + token])
-            try FoodDiaryDataManager.shared.client.getFoodDiary(requset, metadata: metaData) { (resp, result) in
+            try FoodDiaryDataManager.shared.client.getFoodDiary(request, metadata: metaData) { (resp, result) in
                 self.mealEntity = resp!
                 self.nutritient = resp!.nutrient
                 DispatchQueue.main.async {
@@ -50,7 +60,6 @@ class FoodDiaryViewController:UIViewController {
             print(error)
         }
     }
-    
     
     func initNutritientData(){
         nutritient.energyIntake = 1523
@@ -75,7 +84,12 @@ class FoodDiaryViewController:UIViewController {
             optionMenu.dismiss(animated: true, completion: nil)
         }
         let textOption  = UIAlertAction(title: "文字记录", style: .default) { (alertAction) in
-            //TODO: navi to text records
+            let targetVC = TextSearchViewController()
+            targetVC.textSearchDelegate = self
+            targetVC.isKeepSearchPage = true
+            targetVC.mealType = self.currentMealType
+            optionMenu.dismiss(animated: true, completion: nil)
+            self.navigationController?.pushViewController(targetVC, animated: true)
         }
         let cancelOption  = UIAlertAction(title: "取消", style: .cancel) { (alertAction) in
             optionMenu.dismiss(animated: true, completion: nil)
@@ -124,7 +138,7 @@ class FoodDiaryViewController:UIViewController {
 extension FoodDiaryViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3 //breakfast, lunch, dinner
+        return mealEntity.mealLogs.count //breakfast, lunch, dinner
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -136,51 +150,41 @@ extension FoodDiaryViewController: UITableViewDelegate, UITableViewDataSource {
             cell.mealTItle.text = "早餐"
             cell.calorieTitle.text = String(mealEntity.nutrientByMeal.breakfastEnergy) + "千卡"
             cell.suggestionIntakenLabel.text = "推荐:占每日摄入量的\(mealEntity.nutrientByMeal.breakfastPercentage)(大约\(mealEntity.nutrientByMeal.breakfastEnergy)千卡)"
-            cell.mealList = mealEntity.breakfast
+            cell.setUpMealData(mealList: mealEntity.mealLogs[0].mealLogByType)   //Apisvr_FoodDiaryMealLog
             cell.didSelectMealAction = { index in
                 self.showRecordActionSheet()
+                self.currentMealType = .breakfast
             }
             break;
         case 1://lunch
              cell.mealTItle.text = "午餐"
              cell.calorieTitle.text = String(mealEntity.nutrientByMeal.lunchEnergy) + "千卡"
              cell.suggestionIntakenLabel.text = "推荐:占每日摄入量的\(mealEntity.nutrientByMeal.lunchPercentage)(大约\(mealEntity.nutrientByMeal.lunchEnergy)千卡)"
-             cell.mealList = mealEntity.lunch
+             cell.setUpMealData(mealList: mealEntity.mealLogs[1].mealLogByType)
              cell.didSelectMealAction = { index in
                 self.showRecordActionSheet()
+                self.currentMealType = .lunch
              }
             break;
         case 2://dinner
              cell.mealTItle.text = "晚餐"
              cell.calorieTitle.text = String(mealEntity.nutrientByMeal.dinnerEnergy) + "千卡"
              cell.suggestionIntakenLabel.text = "推荐:占每日摄入量的\(mealEntity.nutrientByMeal.dinnerPercentage)(大约\(mealEntity.nutrientByMeal.dinnerEnergy)千卡)"
-             cell.mealList = mealEntity.dinner
+             cell.setUpMealData(mealList: mealEntity.mealLogs[2].mealLogByType)
              cell.didSelectMealAction = { index in
                 self.showRecordActionSheet()
+                self.currentMealType = .dinner
              }
             break;
         default: break;
         }
-        cell.foodImagecCollectionView.reloadData()
-        cell.foodListTableView.reloadData()
         return cell
     }
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         var mealLogs = [Apisvr_FoodDiaryMealLog]()
-        switch indexPath.row{
-        case 0://breakfast
-            mealLogs = mealEntity.breakfast
-            break;
-        case 1://lunch
-           mealLogs = mealEntity.lunch
-            break;
-        case 2://dinner
-            mealLogs = mealEntity.dinner
-            break;
-        default: break;
-        }
+        mealLogs = mealEntity.mealLogs[indexPath.row].mealLogByType
         return calculateCellHeight(mealLogs:mealLogs)
     }
     
@@ -190,9 +194,9 @@ extension FoodDiaryViewController: UITableViewDelegate, UITableViewDataSource {
             let count = meal.foodLog.count
             recipeNum += count
         }
-        let collectionViewHeight = (mealLogs.count/4 + 1) * 70
+        let collectionViewHeight =  ((mealLogs.count+1)/4 + 1) * 70
         let tableviewHeight = recipeNum * 52
-        return CGFloat(108 + collectionViewHeight + tableviewHeight)
+        return CGFloat(110 + collectionViewHeight + tableviewHeight)
     }
     
     
@@ -213,7 +217,10 @@ extension FoodDiaryViewController: UIImagePickerControllerDelegate,UINavigationC
         let objectKey = userId + "_" + timeStamp
         UploaderManager.shared.asyncPutImage(objectKey: objectKey, image: selectedImage) { (objectKey) in
             do{
-                let req = Apisvr_RecognitionReq()
+                var req = Apisvr_RecognitionReq()
+                req.imgURL = objectKey
+                req.lat = 0.0
+                req.lng = 0.0
                 guard let token = UserDefaults.standard.string(forKey: Constants.tokenKey) else {
                     return
                 }
@@ -225,6 +232,8 @@ extension FoodDiaryViewController: UIImagePickerControllerDelegate,UINavigationC
                         }
                         let targetVC = FoodDiaryTagViewController()
                         targetVC.selectedImage = selectedImage
+                        targetVC.taskId = taskId
+                        targetVC.mealType = self.currentMealType
                         DispatchQueue.main.async {
                             self.navigationController?.pushViewController(targetVC, animated: true)
                         }
@@ -233,7 +242,36 @@ extension FoodDiaryViewController: UIImagePickerControllerDelegate,UINavigationC
             } catch {
                 print(error)
             }
-            
         }
+        
+    }
+}
+
+extension FoodDiaryViewController: TextSearchDelegate {
+    
+    func onReturnTextsSearchResult(item: Apisvr_SearchItem) {
+        do{
+            var req = Apisvr_GetFoodLogDetailReq()
+            var textTag = Apisvr_FoodTag()
+            textTag.foodID = item.searchItemID
+            req.foodTags = [textTag]
+            guard let token = UserDefaults.standard.string(forKey: Constants.tokenKey) else {
+                return
+            }
+            let metaData = try Metadata(["authorization": "Token " + token])
+            try FoodDiaryDataManager.shared.client.getFoodLogDetail(req, metadata: metaData) { (resp, result) in
+                DispatchQueue.main.async {
+                    let targetVC = FoodDiaryDetailViewController()
+                    targetVC.mealType = self.currentMealType
+                    self.navigationController?.pushViewController(targetVC, animated: true)
+                }
+            }
+        }catch {
+            print(error)
+        }
+    }
+    
+    func onCancelTextSearchAction() {
+        
     }
 }

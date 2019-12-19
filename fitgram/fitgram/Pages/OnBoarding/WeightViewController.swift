@@ -59,6 +59,10 @@ class WeightViewController: UIViewController {
     }
     
     @objc func nextStep(){
+        guard let weight = Double(weightTextField.text!) else {
+            return
+        }
+        ProfileDataManager.shared.profile.weight = weight
         let targetVC = CurrentBodyShapeViewController()
         self.navigationController?.pushViewController(targetVC, animated: true)
     }

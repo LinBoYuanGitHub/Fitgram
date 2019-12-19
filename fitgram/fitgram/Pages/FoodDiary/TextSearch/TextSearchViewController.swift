@@ -25,11 +25,15 @@ protocol TextSearchDelegate:AnyObject {
 class TextSearchViewController:UIViewController {
     //text search flag
     public var searchType:TextSearchType = .all
+    public var isKeepSearchPage:Bool = false
     
     var rootView:TextSearchView! = nil
     var textSearchResult = [Apisvr_SearchItem]()
+    var textSearchSuggestedResult = [Apisvr_SuggestedTag]()
+    var mealType:Apisvr_MealType = .breakfast
     
     public weak var textSearchDelegate:TextSearchDelegate?
+    public var recognitionTaskId = ""
     
     
     override func viewDidLoad() {
@@ -39,6 +43,11 @@ class TextSearchViewController:UIViewController {
         on("INJECTION_BUNDLE_NOTIFICATION") {
             self.loadView()
         }
+        if !isKeepSearchPage {
+            self.getRecognitionResult()
+        }
+        self.rootView.foodRecognitionCollection.delegate = self
+        self.rootView.foodRecognitionCollection.dataSource = self
     }
     
     override func loadView() {
@@ -69,8 +78,29 @@ class TextSearchViewController:UIViewController {
         textSearchResult.append(entity2)
     }
     
+    func getRecognitionResult(){
+        var req = Apisvr_GetRecognitionResultReq()
+        req.taskID = self.recognitionTaskId
+        do{
+            guard let token = UserDefaults.standard.string(forKey: Constants.tokenKey) else {
+                return
+            }
+            let metaData = try Metadata(["authorization": "Token " + token])
+            try FoodDiaryDataManager.shared.client.getRecognitionResult(req, metadata: metaData, completion: { (resp, result) in
+                if result.statusCode == .ok {
+                    DispatchQueue.main.async {
+                        self.textSearchSuggestedResult = resp!.suggestedTags
+                        self.rootView.setSuggestedData(suggestedTags: resp!.suggestedTags)
+                        self.rootView.foodRecognitionCollection.reloadData()
+                    }
+                }
+            })
+        }catch{
+            print("error")
+        }
+    }
+    
     func performTextSearch(keyword:String){
-//        self.initMockUpData()
         var req = Apisvr_SearchReq()
         req.keywords = keyword
         do{
@@ -88,9 +118,10 @@ class TextSearchViewController:UIViewController {
             print("error")
         }
         self.rootView.foodTextSearchTable.reloadData()
+        self.rootView.foodTextLabel.isHidden = true
         self.rootView.foodTextSearchTable.isHidden = false
+        self.rootView.foodRecognitionCollection.isHidden = true
     }
-    
     
     
 }
@@ -118,7 +149,9 @@ extension TextSearchViewController: UITableViewDelegate,UITableViewDataSource {
         //navi back
         let item = textSearchResult[indexPath.row]
         textSearchDelegate?.onReturnTextsSearchResult(item: item)
-        self.navigationController?.popViewController(animated: true)
+        if !isKeepSearchPage{
+             self.navigationController?.popViewController(animated: true)
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -136,3 +169,38 @@ extension TextSearchViewController:UITextFieldDelegate {
         return true
     }
 }
+
+
+extension TextSearchViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return textSearchSuggestedResult.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TextSearchSuggestionCollectionCell", for: indexPath) as? TextSearchSuggestionCollectionCell else {
+            return UICollectionViewCell()
+        }
+        cell.foodTagBtn.setTitle(textSearchSuggestedResult[indexPath.row].foodName, for: .normal)
+        cell.backgroundColor = .white
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let result = textSearchSuggestedResult[indexPath.row]
+        var item = Apisvr_SearchItem()
+        item.searchItemID = result.foodID
+        item.searchItemName = result.foodName
+        textSearchDelegate?.onReturnTextsSearchResult(item: item)
+        if !isKeepSearchPage{
+            self.navigationController?.popViewController(animated: true)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width:textSearchSuggestedResult[indexPath.row].foodName.count * 15 + 20 , height: 40)
+    }
+    
+    
+}
+

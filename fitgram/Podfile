@@ -12,6 +12,7 @@ target 'fitgram' do
   pod 'AADraggableView'
   pod 'KWVerificationCodeView'
   pod 'AliyunOSSiOS'
+  pod 'Charts'
 
   # Pods for fitgram
 

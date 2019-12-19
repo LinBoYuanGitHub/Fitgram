@@ -48,9 +48,6 @@ class LoginView:UIView {
         titleLabel.textColor = .white
         titleLabel.text = "手机登录"
         
-        phoneNumTextField.font = UIFont(name: "PingFangSC-Regular", size: 17)
-        phoneNumTextField.textColor = .white
-        
         phoneContainer.backgroundColor = .lightGray
         phoneContainer.layer.cornerRadius = 20
         phoneContainer.layer.masksToBounds = true
@@ -63,13 +60,15 @@ class LoginView:UIView {
         loginBtn.titleLabel?.textColor = .white
         loginBtn.setBackgroundColor(color:  UIColor(red: 80/255, green: 184/255, blue: 60/255, alpha: 0.5), forState: .disabled)
         loginBtn.setBackgroundColor(color:  UIColor(red: 80/255, green: 184/255, blue: 60/255, alpha: 1), forState: .normal)
-        loginBtn.isEnabled = false
+        loginBtn.isEnabled = true
         
+        phoneNumTextField.font = UIFont(name: "PingFangSC-Regular", size: 17)
         phoneNumTextField.attributedPlaceholder =  NSAttributedString(string: "输入手机号码", attributes: [NSAttributedString.Key.foregroundColor : UIColor.white])
         phoneNumTextField.textAlignment = .left
-        phoneNumTextField.textColor = .lightGray
+        phoneNumTextField.textColor = .white
         phoneNumTextField.keyboardType = .decimalPad
-        phonePrefixTextField.text = "+86"
+        phonePrefixTextField.text = "+65"
+        phoneNumTextField.rightView = UIImageView(image: UIImage(named: ""))
         phonePrefixTextField.textColor = .white
         phonePrefixTextField.rightView = UIImageView(image: UIImage(named: "phone_arrow_down"))
     }

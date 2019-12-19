@@ -60,6 +60,7 @@ class CodeVerificationView: UIView{
         confirmBtn.layer.cornerRadius = 20
         confirmBtn.layer.masksToBounds = true
         confirmBtn.titleLabel?.textColor = .white
+        confirmBtn.isEnabled = true
     }
     
 }

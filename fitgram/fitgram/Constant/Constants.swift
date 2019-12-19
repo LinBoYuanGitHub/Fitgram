@@ -11,6 +11,7 @@ import Foundation
 struct Constants {
     public static let tokenKey = "token"
     public static let userIdKey = "userId"
+    public static let userStatusKey = "userStatus"
     
     struct Profile {
         public static let genderStorageKey = "genderKey"
@@ -18,6 +19,14 @@ struct Constants {
         public static let heightStorageKey = "heightKey"
         public static let weightStorageKey = "weightKey"
         public static let activityLvlStorageKey = "activityLevelKey"
+    }
+    
+    struct Dimension {
+        public static let RoundButtoRradius = 15
+        public static let SmallTextFont = 14
+        public static let MediumTextFont = 16
+        public static let LargeTextFont = 18
+        public static let RegularFont = "PingFangSC-Regular"
     }
     
 }

@@ -58,6 +58,10 @@ class HeightViewController: UIViewController {
     }
     
     @objc func nextStep(){
+        guard let height = Double(heightTextField.text!) else {
+            return
+        }
+        ProfileDataManager.shared.profile.height = height
         let targetVC = WeightViewController()
         self.navigationController?.pushViewController(targetVC, animated: true)
     }

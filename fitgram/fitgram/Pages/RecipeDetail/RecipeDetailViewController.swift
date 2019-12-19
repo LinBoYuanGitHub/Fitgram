@@ -36,6 +36,7 @@ class RecipeDetailViewController:UIViewController{
         //        self.rootView.customBackButton.addTarget(self, action: #selector(onBackPressed), for: .touchUpInside)
         self.rootView.playButton.addTarget(self, action: #selector(playVideo), for: .touchUpInside)
         self.rootView.headerView.startCookBtn.addTarget(self, action: #selector(startCook), for: .touchUpInside)
+        self.rootView.footerView.checkButton.addTarget(self, action: #selector(saveToFoodDiary), for: .touchUpInside)
         self.rootView.recipeTitle.text = recipe.recipeTitle
         let imageUrl = URL(string: recipe.videoCoverImageUrl)
         self.rootView.headerImage.kf.setImage(with: imageUrl)
@@ -101,6 +102,29 @@ class RecipeDetailViewController:UIViewController{
             print(error)
         }
         
+    }
+    
+   @objc func saveToFoodDiary(){
+        if LoginDataManager.shared.getUserStatus() == 0 {
+            let targetVC = LoginViewController()
+            self.navigationController?.pushViewController(targetVC, animated: true)
+        } else {
+            do{
+                var req = Apisvr_GetFoodLogDetailReq()
+                let foodTag = Apisvr_FoodTag()
+//                foodTag.foodID = Int32(recipe.recipeId)
+                req.foodTags = [foodTag]
+                try FoodDiaryDataManager.shared.client.getFoodLogDetail(req) { (resp, result) in
+                    if result.statusCode == .ok {
+                        let targetVC = FoodDiaryDetailViewController()
+                        targetVC.mealType = .breakfast //TODO modify latter
+                        self.navigationController?.pushViewController(targetVC, animated: true)
+                    }
+                }
+            } catch {
+                print(error)
+            }
+        }
     }
     
 }

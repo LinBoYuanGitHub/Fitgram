@@ -30,8 +30,7 @@ class FoodDiaryMainCell: UITableViewCell {
         self.backgroundColor = UIColor.white
         //calculate cell height
         let collectionViewHeight = (mealList.count+1)%4 * 70
-        let tableviewHeight = getRecipeNum() * 52
-        shadowContainer = UIView(frame: CGRect(x: 8, y: 8, width: UIScreen.main.bounds.width - 32, height: CGFloat(100 + collectionViewHeight + tableviewHeight)))
+        shadowContainer = UIView(frame: CGRect(x: 8, y: 8, width: UIScreen.main.bounds.width - 32, height: CGFloat(100 + collectionViewHeight)))
         shadowContainer.layer.shadowOffset = CGSize(width: 0, height: 0) //no shadow direction
         shadowContainer.layer.cornerRadius = 10
         shadowContainer.layer.shadowColor = UIColor.black.cgColor
@@ -42,7 +41,7 @@ class FoodDiaryMainCell: UITableViewCell {
         foodImagecCollectionView = UICollectionView.init(frame: CGRect(x: 16, y: 80, width: Int(UIScreen.main.bounds.width-64), height: collectionViewHeight), collectionViewLayout: UICollectionViewFlowLayout())
         foodImagecCollectionView.delegate = self
         foodImagecCollectionView.dataSource = self
-        foodListTableView = UITableView(frame: CGRect(x: 16, y: 60+collectionViewHeight, width: Int(UIScreen.main.bounds.width-64), height: tableviewHeight), style: .plain)
+        foodListTableView = UITableView(frame: CGRect(x: 16, y: 60+collectionViewHeight, width: Int(UIScreen.main.bounds.width-64), height: 0), style: .plain)
         foodListTableView.delegate = self
         foodListTableView.dataSource = self
         //mealLabel setup
@@ -59,12 +58,24 @@ class FoodDiaryMainCell: UITableViewCell {
         foodListTableView.backgroundColor = .white
         foodImagecCollectionView.register(FoodDiaryMeaCollectionCell.self, forCellWithReuseIdentifier: "FoodDiaryMeaCollectionCell")
         foodListTableView.register(FoodDiaryRecipeTableCell.self, forCellReuseIdentifier: "FoodDiaryRecipeTableCell")
+        foodListTableView.allowsSelection = false
         self.addSubview(shadowContainer)
         shadowContainer.addSubview(mealTItle)
         shadowContainer.addSubview(calorieTitle)
         shadowContainer.addSubview(suggestionIntakenLabel)
         shadowContainer.addSubview(foodImagecCollectionView)
         shadowContainer.addSubview(foodListTableView)
+    }
+    
+    public func setUpMealData(mealList:[Apisvr_FoodDiaryMealLog]){
+        self.mealList = mealList
+        let collectionViewHeight = ((mealList.count+1)/4 + 1) * 70
+        let tableviewHeight = getRecipeNum() * 52
+        shadowContainer.frame = CGRect(x: 8, y: 8, width: UIScreen.main.bounds.width - 32, height: CGFloat(100 + collectionViewHeight + tableviewHeight))
+        foodListTableView.frame = CGRect(x: 16, y: 90+collectionViewHeight, width: Int(UIScreen.main.bounds.width-64), height: tableviewHeight)
+        foodImagecCollectionView.frame = CGRect(x: 16, y: 80, width: Int(UIScreen.main.bounds.width-64), height: collectionViewHeight)
+        foodImagecCollectionView.reloadData()
+        foodListTableView.reloadData()
     }
     
     func getRecipeNum() -> Int {
@@ -79,6 +90,7 @@ class FoodDiaryMainCell: UITableViewCell {
 }
 
 extension FoodDiaryMainCell: UITableViewDelegate, UITableViewDataSource {
+    
     func tableView(_ tableVivarew: UITableView, numberOfRowsInSection section: Int) -> Int {
        return getRecipeNum()
     }
@@ -87,13 +99,15 @@ extension FoodDiaryMainCell: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "FoodDiaryRecipeTableCell", for: indexPath) as? FoodDiaryRecipeTableCell else {
             return UITableViewCell()
         }
+        var foodItems = [Apisvr_FoodDiaryFoodLog]()
         for meal in mealList {
-            for foodItem in meal.foodLog{
-                cell.foodNameLabel.text = foodItem.foodName
-                cell.calorieLabel.text = String(foodItem.energy)
-                cell.portionLabel.text = String(foodItem.amount) + foodItem.unit
+            for foodItem in meal.foodLog {
+                foodItems.append(foodItem)
             }
         }
+        cell.foodNameLabel.text = foodItems[indexPath.row].foodName
+        cell.calorieLabel.text = String(foodItems[indexPath.row].energy)
+        cell.portionLabel.text = String(foodItems[indexPath.row].amount) + foodItems[indexPath.row].unit
         return cell
     }
 

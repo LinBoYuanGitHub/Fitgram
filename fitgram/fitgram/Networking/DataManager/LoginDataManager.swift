@@ -25,11 +25,18 @@ class LoginDataManager {
 //        address = "172.29.32.226:10000"
 //        address = "api.gram.fit:443"
         gRPC.initialize()
+        self.client = Apisvr_LoginServiceServiceClient(address: address, secure: false)
         print("GRPC version \(gRPC.version) - endpoint: \(address)")
     }
     
-    func anonymousLogin (completition: @escaping (Bool) -> Void) throws{
-        self.client = Apisvr_LoginServiceServiceClient(address: address, secure: false)
+    func getUserStatus() -> Int {
+        guard let userStatus = UserDefaults.standard.integer(forKey: Constants.userStatusKey) as Int? else {
+            return 0
+        }
+        return userStatus
+    }
+    
+    func anonymousLogin (completition: @escaping (Bool) -> Void) throws {
 //        guard let caU = Bundle.main.url(forResource: "server", withExtension: "pem") else {
 //            return
 //        }
@@ -68,6 +75,80 @@ class LoginDataManager {
                 completition(false)
             }
         })
+    }
+    
+    func phoneVerification(phone:String, completition: @escaping (Bool) -> Void,failureCompletion:@escaping (String) -> Void) {
+        do{
+            var req = Apisvr_VerifyPhoneNumReq()
+            req.phone = phone
+            try self.client.verifyPhoneNum(req) { (resp, result) in
+                completition(resp!.isExist)
+            }
+        } catch {
+            failureCompletion(error.localizedDescription)
+        }
+    }
+    
+    func phonePwdLogin (phone:String, password:String, completition: @escaping (Bool) -> Void,failureCompletion:@escaping (String) -> Void) throws{
+        do{
+            var req = Apisvr_AppLoginReq()
+            req.phone = phone
+            req.password = password
+            try self.client.appLogin(req) { (resp, result) in
+                if result.statusCode == .ok {
+                     completition(true)
+                }
+            }
+        } catch {
+            failureCompletion(error.localizedDescription)
+        }
+    }
+    
+    func sendVerificationCode(phone:String, purpose:Int, completion: @escaping (Bool) -> Void,failureCompletion:@escaping (String) -> Void){
+        do{
+            var req = Apisvr_GetOneTimePasswordReq()
+            req.phone = phone
+            req.purpose = Int32(purpose)
+            req.userID = UserDefaults.standard.string(forKey: Constants.userIdKey)!
+            try self.client.getOneTimePassword(req,  completion: { (resp, result) in
+                if result.statusCode == .ok {
+                    completion(true)
+                }
+            })
+        } catch {
+           failureCompletion(error.localizedDescription)
+        }
+    }
+    
+    func phoneSMSLogin (phone:String,otp:String, completition: @escaping (Bool) -> Void,failureCompletion:@escaping (String) -> Void){
+        do{
+            var req = Apisvr_OneTimePasswordLoginReq()
+            req.phone = phone
+            req.otp = otp
+            try self.client.oneTimePasswordLogin(req) { (resp, result) in
+                if result.statusCode == .ok{
+                    UserDefaults.standard.set(1, forKey: Constants.userStatusKey)
+                    completition(resp!.isNewUser)
+                }
+            }
+        } catch {
+            failureCompletion(error.localizedDescription)
+        }
+    }
+    
+    
+    
+    func resetPwd (newPwd:String,otpToken:String, completition: @escaping (Bool) -> Void,failureCompletion:@escaping (String) -> Void){
+        do {
+            var req = Apisvr_ResetPasswordReq()
+            req.otpToken = otpToken
+            req.password = newPwd
+            try self.client.resetPassword(req) { (resp, result) in
+                completition(true)
+            }
+        } catch {
+           failureCompletion(error.localizedDescription)
+        }
     }
     
     
