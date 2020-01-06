@@ -44,6 +44,12 @@
 		3F3889C023AB5EA400B11BE2 /* PhotoRecordHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3889BF23AB5EA400B11BE2 /* PhotoRecordHomeView.swift */; };
 		3F3889C223AB81EA00B11BE2 /* BodyMeasurementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3889C123AB81EA00B11BE2 /* BodyMeasurementViewController.swift */; };
 		3F3889C423AB822700B11BE2 /* BodyMeasurementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3889C323AB822700B11BE2 /* BodyMeasurementView.swift */; };
+		3F3889C623AC737400B11BE2 /* BodyMeasurementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3889C523AC737400B11BE2 /* BodyMeasurementCell.swift */; };
+		3F3889C823ACBE4300B11BE2 /* BodyMeasurementInputViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3889C723ACBE4300B11BE2 /* BodyMeasurementInputViewController.swift */; };
+		3F3889CA23ACC23F00B11BE2 /* BodyMeasurementInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3889C923ACC23F00B11BE2 /* BodyMeasurementInputCell.swift */; };
+		3F3889CC23B0AB3400B11BE2 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3889CB23B0AB3400B11BE2 /* CalendarViewController.swift */; };
+		3F3889CE23B4837400B11BE2 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3889CD23B4837400B11BE2 /* BaseViewController.swift */; };
+		3F3889D023BB31A800B11BE2 /* MoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3889CF23BB31A700B11BE2 /* MoreView.swift */; };
 		3F49F9E8238186FF002BECD3 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F49F9E7238186FF002BECD3 /* LoginViewController.swift */; };
 		3F49F9EA23818706002BECD3 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F49F9E923818706002BECD3 /* LoginView.swift */; };
 		3F49F9EC23839802002BECD3 /* ForgetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F49F9EB23839802002BECD3 /* ForgetPasswordViewController.swift */; };
@@ -189,6 +195,12 @@
 		3F3889BF23AB5EA400B11BE2 /* PhotoRecordHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoRecordHomeView.swift; sourceTree = "<group>"; };
 		3F3889C123AB81EA00B11BE2 /* BodyMeasurementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyMeasurementViewController.swift; sourceTree = "<group>"; };
 		3F3889C323AB822700B11BE2 /* BodyMeasurementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyMeasurementView.swift; sourceTree = "<group>"; };
+		3F3889C523AC737400B11BE2 /* BodyMeasurementCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyMeasurementCell.swift; sourceTree = "<group>"; };
+		3F3889C723ACBE4300B11BE2 /* BodyMeasurementInputViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyMeasurementInputViewController.swift; sourceTree = "<group>"; };
+		3F3889C923ACC23F00B11BE2 /* BodyMeasurementInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyMeasurementInputCell.swift; sourceTree = "<group>"; };
+		3F3889CB23B0AB3400B11BE2 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
+		3F3889CD23B4837400B11BE2 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		3F3889CF23BB31A700B11BE2 /* MoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreView.swift; sourceTree = "<group>"; };
 		3F49F9E7238186FF002BECD3 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		3F49F9E923818706002BECD3 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		3F49F9EB23839802002BECD3 /* ForgetPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordViewController.swift; sourceTree = "<group>"; };
@@ -382,6 +394,9 @@
 			children = (
 				3F3889C123AB81EA00B11BE2 /* BodyMeasurementViewController.swift */,
 				3F3889C323AB822700B11BE2 /* BodyMeasurementView.swift */,
+				3F3889C523AC737400B11BE2 /* BodyMeasurementCell.swift */,
+				3F3889C723ACBE4300B11BE2 /* BodyMeasurementInputViewController.swift */,
+				3F3889C923ACC23F00B11BE2 /* BodyMeasurementInputCell.swift */,
 			);
 			path = BodyMeasurement;
 			sourceTree = "<group>";
@@ -531,6 +546,7 @@
 				3F4FC7FF2355D4C100E119E3 /* Home */,
 				3F4FC7FB2355D4BA00E119E3 /* HomeTabViewController.swift */,
 				3F4FC85A235D628B00E119E3 /* LaunchPageViewControler.swift */,
+				3F3889CD23B4837400B11BE2 /* BaseViewController.swift */,
 			);
 			path = Pages;
 			sourceTree = "<group>";
@@ -604,6 +620,7 @@
 				3F288B412370228D004B8B3C /* FoodDiaryMainCell.swift */,
 				3F288B4323711B37004B8B3C /* FoodDiaryRecipeTableCell.swift */,
 				3F288B482371708B004B8B3C /* FoodDiaryMealCollectionCell.swift */,
+				3F3889CB23B0AB3400B11BE2 /* CalendarViewController.swift */,
 			);
 			path = FoodDiary;
 			sourceTree = "<group>";
@@ -722,6 +739,7 @@
 			children = (
 				3F4FC8512359A29C00E119E3 /* Profile */,
 				3F4FC7FC2355D4BA00E119E3 /* MoreViewController.swift */,
+				3F3889CF23BB31A700B11BE2 /* MoreView.swift */,
 			);
 			path = More;
 			sourceTree = "<group>";
@@ -932,6 +950,7 @@
 				"${BUILT_PRODUCTS_DIR}/AliyunOSSiOS/AliyunOSSiOS.framework",
 				"${BUILT_PRODUCTS_DIR}/BoringSSL-GRPC/openssl_grpc.framework",
 				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
+				"${BUILT_PRODUCTS_DIR}/EPCalendarPicker/EPCalendarPicker.framework",
 				"${BUILT_PRODUCTS_DIR}/KWVerificationCodeView/KWVerificationCodeView.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/SteviaLayout/Stevia.framework",
@@ -949,6 +968,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AliyunOSSiOS.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl_grpc.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EPCalendarPicker.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KWVerificationCodeView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Stevia.framework",
@@ -1054,6 +1074,7 @@
 				3F49FA0A2383F77A002BECD3 /* EnergyIntakenViewController.swift in Sources */,
 				3F4FC8342355D59700E119E3 /* CustomAVController.swift in Sources */,
 				3F3889A123A7226B00B11BE2 /* ProgressDataManager.swift in Sources */,
+				3F3889D023BB31A800B11BE2 /* MoreView.swift in Sources */,
 				3F49F9FE2383E936002BECD3 /* BirthYearViewController.swift in Sources */,
 				3F4FC7EB2355D49E00E119E3 /* ViewPagerTabView.swift in Sources */,
 				3F180A05238E6CB10022D50E /* UploaderManager.swift in Sources */,
@@ -1061,8 +1082,10 @@
 				3F3889B523AA0F8B00B11BE2 /* RDAGoalView.swift in Sources */,
 				3F7EBEC723754A8C00F04C4C /* TextSearchSuggestionCollectionCell.swift in Sources */,
 				3F38899323A0EC8900B11BE2 /* ProgressView.swift in Sources */,
+				3F3889CA23ACC23F00B11BE2 /* BodyMeasurementInputCell.swift in Sources */,
 				3F49F9F32383B563002BECD3 /* CodeVerficationView.swift in Sources */,
 				3F38899D23A37BAB00B11BE2 /* progress.grpc.swift in Sources */,
+				3F3889C823ACBE4300B11BE2 /* BodyMeasurementInputViewController.swift in Sources */,
 				3F4FC82E2355D57D00E119E3 /* RecipeDetailViewController.swift in Sources */,
 				3F4FC80F2355D4EC00E119E3 /* CookingDetailViewController.swift in Sources */,
 				3F4FC8052355D4D000E119E3 /* RecommendHomeCollectionCell.swift in Sources */,
@@ -1085,6 +1108,7 @@
 				3F4FC8072355D4D000E119E3 /* RecommendHomeView.swift in Sources */,
 				3F4FC7FE2355D4BA00E119E3 /* MoreViewController.swift in Sources */,
 				3F7EBECF2379641100F04C4C /* FoodDiaryDetailViewController.swift in Sources */,
+				3F3889CC23B0AB3400B11BE2 /* CalendarViewController.swift in Sources */,
 				3F288B3C236FC891004B8B3C /* SingleNutritionCircleView.swift in Sources */,
 				3F4FC8212355D52500E119E3 /* GroceryIngredientCell.swift in Sources */,
 				3F4FC8182355D51200E119E3 /* GroceryTableCell.swift in Sources */,
@@ -1130,11 +1154,13 @@
 				3F49F9EA23818706002BECD3 /* LoginView.swift in Sources */,
 				3F4FC7FA2355D4AF00E119E3 /* RecommendationModel.swift in Sources */,
 				3F288B4423711B37004B8B3C /* FoodDiaryRecipeTableCell.swift in Sources */,
+				3F3889C623AC737400B11BE2 /* BodyMeasurementCell.swift in Sources */,
 				3F4FC86E2362D1F800E119E3 /* ProfileAvatarCell.swift in Sources */,
 				3F4FC8132355D4FF00E119E3 /* FoodDiaryViewController.swift in Sources */,
 				3F3889AA23A9D0F500B11BE2 /* ReportListCell.swift in Sources */,
 				3F3889B723AA15E400B11BE2 /* RDAGoalCell.swift in Sources */,
 				3F3889A323A8A85700B11BE2 /* ProgressHomeMeasurementLogCell.swift in Sources */,
+				3F3889CE23B4837400B11BE2 /* BaseViewController.swift in Sources */,
 				3F49FA042383F3D8002BECD3 /* CurrentBodyShapeViewController.swift in Sources */,
 				3F4FC7ED2355D49E00E119E3 /* ViewPager.swift in Sources */,
 				3F4FC8552359A2B300E119E3 /* ProfileView.swift in Sources */,

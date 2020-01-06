@@ -20,7 +20,7 @@ class ProfileDataManager{
         address = Bundle.main.object(forInfoDictionaryKey: "GRPC_Address") as! String
         gRPC.initialize()
         print("GRPC version \(gRPC.version) - endpoint: \(address)")
-        self.client = Apisvr_UserServiceServiceClient(address: address, secure: false)
+        self.client = Apisvr_UserServiceServiceClient(address: address, secure: true)
     }
     
     public func getUserProfile(completion: @escaping (Bool) -> Void, failureCompletion: @escaping (String) -> Void){
@@ -49,6 +49,8 @@ class ProfileDataManager{
         req.goal = profile.goal
         req.height = profile.height
         req.weight = profile.weight
+        req.bodyType = profile.bodyType
+        req.targetBodyType = profile.targetBodyType
         
         do{
             guard let token = UserDefaults.standard.string(forKey: Constants.tokenKey) else {
@@ -58,6 +60,8 @@ class ProfileDataManager{
             try self.client.updateUserProfile(req, metadata: metadata) { (resp, result) in
                 if result.statusCode == .ok {
                     completion(true)
+                } else {
+                    failureCompletion(result.statusMessage!)
                 }
             }
         } catch {

@@ -11,6 +11,7 @@ PODS:
   - Charts (3.3.0):
     - Charts/Core (= 3.3.0)
   - Charts/Core (3.3.0)
+  - EPCalendarPicker (1.0.9)
   - gRPC-Core (1.19.0):
     - gRPC-Core/Implementation (= 1.19.0)
     - gRPC-Core/Interface (= 1.19.0)
@@ -37,6 +38,7 @@ DEPENDENCIES:
   - AliyunOSSiOS
   - ASPCircleChart
   - Charts
+  - EPCalendarPicker
   - Kingfisher
   - KWVerificationCodeView
   - SteviaLayout
@@ -49,6 +51,7 @@ SPEC REPOS:
     - ASPCircleChart
     - BoringSSL-GRPC
     - Charts
+    - EPCalendarPicker
     - gRPC-Core
     - Kingfisher
     - KWVerificationCodeView
@@ -63,6 +66,7 @@ SPEC CHECKSUMS:
   ASPCircleChart: c1437eb07adffcf66aa04a666e3849e6fc5f3f71
   BoringSSL-GRPC: db8764df3204ccea016e1c8dd15d9a9ad63ff318
   Charts: e0dd4cd8f257bccf98407b58183ddca8e8d5b578
+  EPCalendarPicker: f6d39acc73f6df2bd78e963ed7f59b6949df2eaa
   gRPC-Core: bd9472c8daa2e414b9f8038ba667bf56ce0e02b8
   Kingfisher: 176d377ad339113c99ad4980cbae687f807e20fe
   KWVerificationCodeView: 92cca6ad028546d3232fa75cda3a40d00109a1a2
@@ -71,6 +75,6 @@ SPEC CHECKSUMS:
   SwiftGRPC: 43d3e8db88f97e7386bd44f159ecdfad02ce3362
   SwiftProtobuf: 241400280f912735c1e1b9fe675fdd2c6c4d42e2
 
-PODFILE CHECKSUM: 033e8121f15397064c873f1a49da1ad31f5a34b6
+PODFILE CHECKSUM: 1fd49627e735022591a0b12b82462a9e510ccc9d
 
 COCOAPODS: 1.5.3

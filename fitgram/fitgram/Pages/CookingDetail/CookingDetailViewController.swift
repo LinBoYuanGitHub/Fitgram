@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftGRPC
 
 class CookingDetailViewController: UIViewController {
     let mOptions = ViewPagerOptions()
@@ -14,11 +15,20 @@ class CookingDetailViewController: UIViewController {
     var viewPager:ViewPager? //have to set the viewpager as a global virable
     //dismiss button
     var closeBtn = UIButton(frame: CGRect(x: 0, y: 42, width: 64, height: 64))
+    var recipeId = 0
+    var mealType:Apisvr_MealType = .breakfast
+    var foodImage = UIImage()
     
     override func loadView() {
         let newView = UIView()
         newView.backgroundColor = UIColor.white
         view = newView
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
     }
     
     override func viewDidLoad() {
@@ -27,6 +37,7 @@ class CookingDetailViewController: UIViewController {
         //set up close btn
         closeBtn.setImage(UIImage(named: "closeIcon_white"), for: .normal)
         closeBtn.addTarget(self, action: #selector(onBackPressed), for: .touchUpInside)
+        self.view.bringSubviewToFront(closeBtn)
         self.view.addSubview(closeBtn)
     }
     
@@ -48,7 +59,7 @@ class CookingDetailViewController: UIViewController {
     }
     
     @objc func onBackPressed(){
-        self.dismiss(animated: true, completion: nil)
+        self.parent!.dismiss(animated: true, completion: nil)
     }
 
     
@@ -80,25 +91,50 @@ extension CookingDetailViewController: ViewPagerDataSource, ViewPagerDelegate{
     
     
     @objc func saveToFoodDiary() {
-        if LoginDataManager.shared.getUserStatus() == 0 {
+        if LoginDataManager.shared.getUserStatus() == .unknownUserType {
             let targetVC = LoginViewController()
             self.navigationController?.pushViewController(targetVC, animated: true)
         } else {
             do{
                 var req = Apisvr_GetFoodLogDetailReq()
-                let foodTag = Apisvr_FoodTag()
+                var foodTag = Apisvr_FoodTag()
+                foodTag.foodID = Int32(recipeId)
                 req.foodTags = [foodTag]
-                try FoodDiaryDataManager.shared.client.getFoodLogDetail(req) { (resp, result) in
+                guard let token = UserDefaults.standard.string(forKey: Constants.tokenKey) else {
+                    return
+                }
+                let metaData = try Metadata(["authorization": "Token " + token])
+                try FoodDiaryDataManager.shared.client.getFoodLogDetail(req, metadata: metaData) { (resp, result) in
                     if result.statusCode == .ok {
-                        let targetVC = FoodDiaryDetailViewController()
-                        targetVC.mealType = .breakfast //TODO modify latter
-                        self.navigationController?.pushViewController(targetVC, animated: true)
+                        DispatchQueue.main.async {
+                            let targetVC = FoodDiaryDetailViewController()
+                            targetVC.mealType = self.mealType //TODO modify latter
+                            targetVC.foodImage = self.foodImage
+                            targetVC.foodDiaryList = resp!.foodLogs
+                            targetVC.mealLogList = self.convertFoodLogToInfo(foodDiaryList:  resp!.foodLogs)
+                            self.navigationController?.pushViewController(targetVC, animated: true)
+                        }
                     }
                 }
             } catch {
                 print(error)
             }
         }
+    }
+    
+    func convertFoodLogToInfo(foodDiaryList:[Apisvr_FoodLog]) -> [Apisvr_FoodLogInfo]{
+        var foodLogInfos = [Apisvr_FoodLogInfo]()
+        for index in 0...foodDiaryList.count - 1 {
+            var foodInfo = Apisvr_FoodLogInfo()
+            //set up initial value for logs
+            foodInfo.amount = 1
+            foodInfo.foodID = foodDiaryList[index].foodID
+            foodInfo.selectedUnitID = foodDiaryList[index].selectedUnitID
+            foodInfo.tagX = 0
+            foodInfo.tagY = 0
+            foodLogInfos.append(foodInfo)
+        }
+        return foodLogInfos
     }
     
     

@@ -9,12 +9,14 @@
 import UIKit
 import Kingfisher
 import AVKit
+import SwiftGRPC
 
 class RecipeDetailViewController:UIViewController{
     var rootView:RecipeDetailView!
     let vc = AVPlayerViewController()
     //data part
     var recipe = RecipeModel()
+    var mealType:Apisvr_MealType = .breakfast
     
     override func loadView() {
         rootView = RecipeDetailView()
@@ -25,14 +27,6 @@ class RecipeDetailViewController:UIViewController{
     }
     
     override func viewDidLoad() {
-        self.navigationController?.navigationBar.barStyle = .black
-        self.rootView.naviCoverView.alpha = 0
-        self.navigationController?.navigationBar.isTranslucent = true
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationItem.hidesBackButton = true
-        self.navigationItem.leftBarButtonItem  = UIBarButtonItem(image: UIImage(imageLiteralResourceName: "backbutton_black"), style: .plain, target: self, action: #selector(onBackPressed))
-        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.white
         //        self.rootView.customBackButton.addTarget(self, action: #selector(onBackPressed), for: .touchUpInside)
         self.rootView.playButton.addTarget(self, action: #selector(playVideo), for: .touchUpInside)
         self.rootView.headerView.startCookBtn.addTarget(self, action: #selector(startCook), for: .touchUpInside)
@@ -48,18 +42,29 @@ class RecipeDetailViewController:UIViewController{
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
+        self.navigationController?.navigationBar.barStyle = .black
+        self.rootView.naviCoverView.alpha = 0
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.backgroundColor = .clear
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationItem.hidesBackButton = true
+        self.navigationItem.leftBarButtonItem  = UIBarButtonItem(image: UIImage(imageLiteralResourceName: "backbutton_black"), style: .plain, target: self, action: #selector(onBackPressed))
+        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.white
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         //dismiss the floating btn when exit
-        self.rootView.headerView.dismissStartCookBtn()
+        DispatchQueue.main.async {
+            self.rootView.headerView.dismissStartCookBtn()
+        }
     }
     
     
     @objc func onBackPressed(){
         self.navigationController?.popViewController(animated: true)
+//        self.rootView.headerView.dismissStartCookBtn()
     }
     
     @objc func playVideo(){
@@ -82,8 +87,28 @@ class RecipeDetailViewController:UIViewController{
     @objc func startCook(){
         let cookingVC = CookingDetailViewController()
         cookingVC.stepList = recipe.stepList
-        self.present(cookingVC, animated: true)
+        cookingVC.recipeId = recipe.recipeId
+        cookingVC.mealType = self.mealType
+        cookingVC.foodImage = self.rootView.headerImage.image!
+        let naviVC = UINavigationController()
+        naviVC.viewControllers = [cookingVC]
+        self.present(naviVC, animated: true)
         self.rootView.headerView.dismissStartCookBtn()
+    }
+    
+    func convertFoodLogToInfo(foodDiaryList:[Apisvr_FoodLog]) -> [Apisvr_FoodLogInfo]{
+        var foodLogInfos = [Apisvr_FoodLogInfo]()
+        for index in 0...foodDiaryList.count - 1 {
+            var foodInfo = Apisvr_FoodLogInfo()
+            //set up initial value for logs
+            foodInfo.amount = 1
+            foodInfo.foodID = foodDiaryList[index].foodID
+            foodInfo.selectedUnitID = foodDiaryList[index].selectedUnitID
+            foodInfo.tagX = 0
+            foodInfo.tagY = 0
+            foodLogInfos.append(foodInfo)
+        }
+        return foodLogInfos
     }
     
     
@@ -105,20 +130,29 @@ class RecipeDetailViewController:UIViewController{
     }
     
    @objc func saveToFoodDiary(){
-        if LoginDataManager.shared.getUserStatus() == 0 {
+        if LoginDataManager.shared.getUserStatus() == .unknownUserType {
             let targetVC = LoginViewController()
             self.navigationController?.pushViewController(targetVC, animated: true)
         } else {
             do{
                 var req = Apisvr_GetFoodLogDetailReq()
-                let foodTag = Apisvr_FoodTag()
-//                foodTag.foodID = Int32(recipe.recipeId)
+                var foodTag = Apisvr_FoodTag()
+                foodTag.foodID = Int32(recipe.recipeId)
                 req.foodTags = [foodTag]
-                try FoodDiaryDataManager.shared.client.getFoodLogDetail(req) { (resp, result) in
+                guard let token = UserDefaults.standard.string(forKey: Constants.tokenKey) else {
+                    return
+                }
+                let metaData = try Metadata(["authorization": "Token " + token])
+                try FoodDiaryDataManager.shared.client.getFoodLogDetail(req, metadata: metaData) { (resp, result) in
                     if result.statusCode == .ok {
-                        let targetVC = FoodDiaryDetailViewController()
-                        targetVC.mealType = .breakfast //TODO modify latter
-                        self.navigationController?.pushViewController(targetVC, animated: true)
+                        DispatchQueue.main.async {
+                            let targetVC = FoodDiaryDetailViewController()
+                            targetVC.foodImage = self.rootView.headerImage.image!
+                            targetVC.foodDiaryList = resp!.foodLogs
+                            targetVC.mealLogList = self.convertFoodLogToInfo(foodDiaryList: resp!.foodLogs)
+                            targetVC.mealType = self.mealType//TODO modify latter
+                            self.navigationController?.pushViewController(targetVC, animated: true)
+                        }
                     }
                 }
             } catch {

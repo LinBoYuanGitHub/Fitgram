@@ -17,7 +17,7 @@ class WeightViewController: UIViewController {
     var confirmBtn = UIButton(frame: CGRect(x: 32, y: UIScreen.main.bounds.height/2, width: UIScreen.main.bounds.width - 64, height: 50))
     
     override func viewDidLoad() {
-        setUpProgressView()
+        self.setUpProgressView()
         self.view.backgroundColor = .white
         self.titleLabel.text = "你的体重"
         self.titleLabel.font  = UIFont(name: "PingFangSC-Medium", size: 20)
@@ -35,7 +35,6 @@ class WeightViewController: UIViewController {
         confirmBtn.layer.masksToBounds = true
         confirmBtn.backgroundColor = UIColor(red: 252/255, green: 200/255, blue: 45/255, alpha: 1)
         confirmBtn.addTarget(self, action: #selector(nextStep), for: .touchUpInside)
-        self.view.addSubview(progressBar)
         self.view.addSubview(titleLabel)
         self.view.addSubview(weightTextField)
         self.view.addSubview(unitLabel)
@@ -51,15 +50,16 @@ class WeightViewController: UIViewController {
     }
     
     func setUpProgressView() {
-        self.title = "5/7"
+        self.title = "4/7"
         progressBar.frame = CGRect(x: 0, y: 88, width: UIScreen.main.bounds.width, height: 6)
-        progressBar.progress = 5/7
+        progressBar.progress = 4/7
         progressBar.backgroundColor = UIColor(red: 244/255, green: 244/255, blue: 244/255, alpha: 1)
         progressBar.progressTintColor = UIColor(red: 252/255, green: 200/255, blue: 45/255, alpha: 1)
+        self.view.addSubview(progressBar)
     }
     
     @objc func nextStep(){
-        guard let weight = Double(weightTextField.text!) else {
+        guard let weight = Float(weightTextField.text!) else {
             return
         }
         ProfileDataManager.shared.profile.weight = weight

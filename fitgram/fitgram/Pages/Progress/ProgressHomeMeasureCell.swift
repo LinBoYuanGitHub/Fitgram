@@ -15,6 +15,7 @@ class ProgressHomeMeasureCell:UITableViewCell {
     public var measurementCollectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 100), collectionViewLayout: UICollectionViewFlowLayout())
     
     public var measurementDataList = [Apisvr_BodyMeasurementLog]()
+    public var onArrowPressedAction: () -> Void = {}
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -41,6 +42,11 @@ class ProgressHomeMeasureCell:UITableViewCell {
         arrowImageView.image = UIImage(named: "rightArrow_black")
         arrowImageView.width(10)
         arrowImageView.height(15)
+        arrowImageView.isUserInteractionEnabled = true
+        measurementBtn.addTarget(self, action: #selector(onArrowPressed), for: .touchUpInside)
+        let tapGesture = UITapGestureRecognizer()
+        tapGesture.addTarget(self, action: #selector(onArrowPressed))
+        arrowImageView.addGestureRecognizer(tapGesture)
         
         measurementCollectionView.backgroundColor = .white
         measurementCollectionView.register(ProgressHomeMeasurementLogCell.self, forCellWithReuseIdentifier: "ProgressHomeMeasurementLogCell")
@@ -52,6 +58,10 @@ class ProgressHomeMeasureCell:UITableViewCell {
         measurementCollectionView.showsHorizontalScrollIndicator = false
         measurementCollectionView.delegate = self
         measurementCollectionView.dataSource = self
+    }
+    
+    @objc func onArrowPressed() {
+        self.onArrowPressedAction()
     }
     
     

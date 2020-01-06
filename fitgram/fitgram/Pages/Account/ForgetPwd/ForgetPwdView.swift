@@ -18,7 +18,7 @@ class ForgetPwdView:UIView {
     
     convenience init(){
         self.init(frame: .zero)
-        self.backgroundColor = UIColor(red: 138/255, green: 97/255, blue: 22/255, alpha: 1)
+        self.backgroundColor = .white
         sv(
             forgetPwdLabel,
             forgetPwdContainer.sv(
@@ -40,24 +40,24 @@ class ForgetPwdView:UIView {
         )
         //attribute setting
         forgetPwdLabel.font = UIFont(name: "PingFangSC-Regular", size: 36)
-        forgetPwdLabel.textColor = .white
+        forgetPwdLabel.textColor = .black
         forgetPwdLabel.text = "忘记密码"
-        forgetPwdContainer.backgroundColor = .white
+        forgetPwdContainer.backgroundColor = .lightGray
         forgetPwdContainer.layer.cornerRadius = 20
         forgetPwdContainer.layer.masksToBounds = true
         forgetPwdContainer.alpha = 0.35
         //phone num textfield
-        phoneNumTextField.attributedPlaceholder =  NSAttributedString(string: "输入手机号码", attributes: [NSAttributedString.Key.foregroundColor : UIColor.lightGray])
+        phoneNumTextField.attributedPlaceholder =  NSAttributedString(string: "输入手机号码", attributes: [NSAttributedString.Key.foregroundColor : UIColor.white])
         phoneNumTextField.textAlignment = .left
-        phoneNumTextField.textColor = .lightGray
+        phoneNumTextField.textColor = .white
         phoneNumTextField.keyboardType = .decimalPad
         //forget password page
-        phonePrefixTextField.text = "+86"
-        phonePrefixTextField.textColor = .lightGray
+        phonePrefixTextField.text = "+65"
+        phonePrefixTextField.textColor = .white
         phonePrefixTextField.rightView = UIImageView(image: UIImage(named: ""))
         //button setup
         nextStepBtn.setTitle("下一步", for: .normal)
-        nextStepBtn.backgroundColor  = UIColor(red: 80/255, green: 184/255, blue: 60/255, alpha: 0.5)
+        nextStepBtn.backgroundColor = UIColor(red: 252/255, green: 200/255, blue: 45/255, alpha: 1)
         nextStepBtn.layer.cornerRadius = 20
         nextStepBtn.layer.masksToBounds = true
         nextStepBtn.titleLabel?.textColor = .white

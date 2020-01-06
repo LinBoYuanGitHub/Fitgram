@@ -33,6 +33,7 @@ class ProgressViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
 //        requestForProgressHomeData()
         initMockUpData()
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
     func initMockUpData(){
@@ -41,14 +42,14 @@ class ProgressViewController: UIViewController {
         for i in 0...2 {
             var log = Apisvr_Log()
             log.date = 0
-            log.value = Double(65 - i)
+            log.value = Float(65 - i)
             self.progressData.weightLogs.append(log)
         }
         for i in 0...3 {
             var log = Apisvr_BodyMeasurementLog()
             log.title = "围度"
             log.unit = "厘米"
-            log.value = Double(50 - i)
+            log.value = Float(50 - i)
             self.progressData.bodyMeasurementLog.append(log)
         }
         self.progressData.goal = "减脂"
@@ -83,7 +84,7 @@ class ProgressViewController: UIViewController {
             let val = progressData.weightLogs[i].value
 //            let date = progressData.weightLogs[i].date
             valueColors.append(.white)
-            return ChartDataEntry(x: Double(i), y: val)
+            return ChartDataEntry(x: Double(i), y: Double(val))
         }
         let chartDataSet = LineChartDataSet(entries: values, label: "weight")
         chartDataSet.setColor(.white)
@@ -133,6 +134,10 @@ extension ProgressViewController: UITableViewDelegate, UITableViewDataSource {
             }
             cell.measurementDataList = progressData.bodyMeasurementLog
             cell.measurementCollectionView.reloadData()
+            cell.onArrowPressedAction = {
+                let targetVC = BodyMeasurementViewController()
+                self.navigationController?.pushViewController(targetVC , animated: true)
+            }
             return cell
         case 3:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "ProgressReportCell", for: indexPath) as? ProgressReportCell else {

@@ -12,8 +12,18 @@ class LaunchPageViewController: UIViewController {
     //set it as launch screen
     
     override func viewDidLoad() {
-        self.loginForTokenRequest()
+        let token = UserDefaults.standard.string(forKey: Constants.tokenKey)
+        if (token == nil || token!.isEmpty) {
+            self.loginForTokenRequest()
+        } else {
+            self.naviToHomeTabPage()
+        }
         self.view.backgroundColor = .white
+        let logoView = UIImageView(image: UIImage(named: "AppIcon"))
+        logoView.frame.size = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        logoView.center = CGPoint(x: UIScreen.main.bounds.width/2, y: UIScreen.main.bounds.height/2)
+        logoView.image = UIImage(named: "launchPagePic")
+        self.view.addSubview(logoView)
     }
     
     func loginForTokenRequest(){
@@ -21,11 +31,7 @@ class LaunchPageViewController: UIViewController {
             try LoginDataManager.shared.anonymousLogin(){ isSuccess in
                 if isSuccess {
                     //redirect to home navi controller
-                    DispatchQueue.main.async {
-                        let naviVC = UINavigationController()
-                        naviVC.viewControllers = [HomeTabViewController()]
-                        self.present(naviVC, animated: true, completion: nil)
-                    }
+                   self.naviToHomeTabPage()
                 } else {
                     print("login failed")
                 }
@@ -34,5 +40,18 @@ class LaunchPageViewController: UIViewController {
             print(error)
         }
         
+    }
+    
+    func naviToHomeTabPage(){
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            let naviVC = UINavigationController()
+            naviVC.viewControllers = [HomeTabViewController()]
+            self.present(naviVC, animated: true, completion: nil)
+        }
+//        DispatchQueue.main.async {
+//            let naviVC = UINavigationController()
+//            naviVC.viewControllers = [HomeTabViewController()]
+//            self.present(naviVC, animated: true, completion: nil)
+//        }
     }
 }

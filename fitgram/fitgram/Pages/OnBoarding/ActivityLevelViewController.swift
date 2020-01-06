@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import SwiftGRPC
 
-class ActivityLevelViewController: UIViewController{
+class ActivityLevelViewController: BaseViewController{
     
     public var titleLabel = UILabel(frame: CGRect(x: 0, y: UIScreen.main.bounds.height/5, width: UIScreen.main.bounds.width, height: 30))
     public var activityBtn_1 = UIButton(frame: CGRect(x: 60, y: UIScreen.main.bounds.height/5 + 60, width: UIScreen.main.bounds.width - 120, height: 50))
@@ -17,10 +18,12 @@ class ActivityLevelViewController: UIViewController{
     public var activityBtn_4 = UIButton(frame: CGRect(x: 60, y: UIScreen.main.bounds.height/5 + 240, width: UIScreen.main.bounds.width - 120, height: 50))
     public var confirmBtn = UIButton(frame: CGRect(x: 32, y: UIScreen.main.bounds.height/5 + 350, width: UIScreen.main.bounds.width - 64, height: 50))
     
+    var progressBar = UIProgressView(progressViewStyle: .bar)
     var buttons = [UIButton]()
     
     override func viewDidLoad() {
         self.view.backgroundColor = .white
+        self.setUpProgressView()
         buttons = [activityBtn_1,activityBtn_2,activityBtn_3,activityBtn_4]
         self.titleLabel.text = "你的日常运动量"
         self.titleLabel.font  = UIFont(name: "PingFangSC-Medium", size: 20)
@@ -40,6 +43,15 @@ class ActivityLevelViewController: UIViewController{
         self.view.addSubview(confirmBtn)
     }
     
+    func setUpProgressView() {
+        self.title = "7/7"
+        progressBar.frame = CGRect(x: 0, y: 88, width: UIScreen.main.bounds.width, height: 6)
+        progressBar.progress = 7/7
+        progressBar.backgroundColor = UIColor(red: 244/255, green: 244/255, blue: 244/255, alpha: 1)
+        progressBar.progressTintColor = UIColor(red: 252/255, green: 200/255, blue: 45/255, alpha: 1)
+        self.view.addSubview(progressBar)
+    }
+    
     func setUpActButtons(targetBtn:UIButton,titleText:String, tag:Int){
         targetBtn.setTitle(titleText, for: .normal)
         targetBtn.adjustsImageWhenHighlighted = false
@@ -55,18 +67,68 @@ class ActivityLevelViewController: UIViewController{
         buttons.append(targetBtn)
     }
     
-    @objc func onOptionSelected(sender:UIButton){
+    @objc func onOptionSelected(sender:UIButton) {
         buttons.forEach { (button) in
             button.isSelected = (button == sender)
             if button.isSelected {
-                 ProfileDataManager.shared.profile.activityLevel = Int32(button.tag)
+                switch button.tag{
+                case 1: ProfileDataManager.shared.profile.activityLevel = .extremelyInactive
+                case 2: ProfileDataManager.shared.profile.activityLevel = .sedentary
+                case 3: ProfileDataManager.shared.profile.activityLevel = .moderatelyActive
+                case 4: ProfileDataManager.shared.profile.activityLevel = .extremelyActive
+                case 5: ProfileDataManager.shared.profile.activityLevel = .vigorouslyActive
+                default: ProfileDataManager.shared.profile.activityLevel = .unknownLevel
+                }
+                
             }
         }
     }
     
-    @objc func nextStep(){
-        let targetVC = EnergyIntakenViewController()
-        self.navigationController?.pushViewController(targetVC, animated: true)
+    @objc func nextStep() {
+        updateProfile()
+    }
+    
+    func updateProfile(){
+        ProfileDataManager.shared.updateUserProfile(completion: { (isSuccess) in
+            if isSuccess {
+                self.getGoalDetail()
+            }
+        }) { (errMsg) in
+            //TODO notify user update fialed
+            print(errMsg)
+            DispatchQueue.main.async {
+                self.showAlertMessage(msg: errMsg)
+            }
+        }
+    }
+    
+    func getGoalDetail() {
+        let req = Apisvr_GetGoalDetailsReq()
+        do{
+            guard let token = UserDefaults.standard.string(forKey: Constants.tokenKey) else {
+                return
+            }
+            let metaData = try Metadata(["authorization": "Token " + token])
+            try ProfileDataManager.shared.client.getGoalDetails(req, metadata: metaData) { (resp, result) in
+                if result.statusCode == .ok {
+                    DispatchQueue.main.async {
+                        let calorie = resp?.recommendedEnergyInstake
+                        let days = resp?.days
+                        let weightLoss = resp?.recommendedWeightLoss
+                        let targetVC = EnergyIntakenViewController()
+                        targetVC.recommendCalorie = Int(calorie!)
+                        targetVC.days = Int(days!)
+                        targetVC.weightLoss =  Int(weightLoss!)
+                        self.navigationController?.pushViewController(targetVC, animated: true)
+                    }
+                }
+            }
+        } catch {
+            print(error)
+            DispatchQueue.main.async {
+                self.showAlertMessage(msg: error.localizedDescription)
+            }
+        }
     }
     
 }

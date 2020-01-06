@@ -138,7 +138,7 @@ struct Apisvr_Log {
 
   var date: Int64 = 0
 
-  var value: Double = 0
+  var value: Float = 0
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -152,7 +152,7 @@ struct Apisvr_BodyMeasurementLog {
 
   var title: String = String()
 
-  var value: Double = 0
+  var value: Float = 0
 
   var unit: String = String()
 
@@ -171,9 +171,9 @@ struct Apisvr_GetProgressHomeResp {
 
   var goal: String = String()
 
-  var initialWeight: Double = 0
+  var initialWeight: Float = 0
 
-  var targetWeight: Double = 0
+  var targetWeight: Float = 0
 
   var remainingDays: Int32 = 0
 
@@ -192,7 +192,7 @@ struct Apisvr_AddWeightLogReq {
 
   var date: Int64 = 0
 
-  var weight: Double = 0
+  var weight: Float = 0
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -233,7 +233,7 @@ struct Apisvr_WeightDataPoint {
 
   var xAxis: String = String()
 
-  var value: Double = 0
+  var value: Float = 0
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -303,7 +303,7 @@ struct Apisvr_GetBodyMeasurementLogReq {
 
   var limit: Int32 = 0
 
-  var bodyMeasurementType: Apisvr_BodyMeasurementType = .unknownBodyMeasurementType
+  var bodyMeasurementType: [Apisvr_BodyMeasurementType] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -353,7 +353,7 @@ struct Apisvr_BodyShape {
 
   var photoURL: String = String()
 
-  var value: Double = 0
+  var value: Float = 0
 
   var date: Int64 = 0
 
@@ -439,7 +439,7 @@ extension Apisvr_Log: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementatio
     while let fieldNumber = try decoder.nextFieldNumber() {
       switch fieldNumber {
       case 1: try decoder.decodeSingularInt64Field(value: &self.date)
-      case 2: try decoder.decodeSingularDoubleField(value: &self.value)
+      case 2: try decoder.decodeSingularFloatField(value: &self.value)
       default: break
       }
     }
@@ -450,7 +450,7 @@ extension Apisvr_Log: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementatio
       try visitor.visitSingularInt64Field(value: self.date, fieldNumber: 1)
     }
     if self.value != 0 {
-      try visitor.visitSingularDoubleField(value: self.value, fieldNumber: 2)
+      try visitor.visitSingularFloatField(value: self.value, fieldNumber: 2)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -475,7 +475,7 @@ extension Apisvr_BodyMeasurementLog: SwiftProtobuf.Message, SwiftProtobuf._Messa
     while let fieldNumber = try decoder.nextFieldNumber() {
       switch fieldNumber {
       case 1: try decoder.decodeSingularStringField(value: &self.title)
-      case 2: try decoder.decodeSingularDoubleField(value: &self.value)
+      case 2: try decoder.decodeSingularFloatField(value: &self.value)
       case 3: try decoder.decodeSingularStringField(value: &self.unit)
       default: break
       }
@@ -487,7 +487,7 @@ extension Apisvr_BodyMeasurementLog: SwiftProtobuf.Message, SwiftProtobuf._Messa
       try visitor.visitSingularStringField(value: self.title, fieldNumber: 1)
     }
     if self.value != 0 {
-      try visitor.visitSingularDoubleField(value: self.value, fieldNumber: 2)
+      try visitor.visitSingularFloatField(value: self.value, fieldNumber: 2)
     }
     if !self.unit.isEmpty {
       try visitor.visitSingularStringField(value: self.unit, fieldNumber: 3)
@@ -520,8 +520,8 @@ extension Apisvr_GetProgressHomeResp: SwiftProtobuf.Message, SwiftProtobuf._Mess
       switch fieldNumber {
       case 1: try decoder.decodeRepeatedMessageField(value: &self.weightLogs)
       case 2: try decoder.decodeSingularStringField(value: &self.goal)
-      case 3: try decoder.decodeSingularDoubleField(value: &self.initialWeight)
-      case 4: try decoder.decodeSingularDoubleField(value: &self.targetWeight)
+      case 3: try decoder.decodeSingularFloatField(value: &self.initialWeight)
+      case 4: try decoder.decodeSingularFloatField(value: &self.targetWeight)
       case 5: try decoder.decodeSingularInt32Field(value: &self.remainingDays)
       case 6: try decoder.decodeRepeatedMessageField(value: &self.bodyMeasurementLog)
       default: break
@@ -537,10 +537,10 @@ extension Apisvr_GetProgressHomeResp: SwiftProtobuf.Message, SwiftProtobuf._Mess
       try visitor.visitSingularStringField(value: self.goal, fieldNumber: 2)
     }
     if self.initialWeight != 0 {
-      try visitor.visitSingularDoubleField(value: self.initialWeight, fieldNumber: 3)
+      try visitor.visitSingularFloatField(value: self.initialWeight, fieldNumber: 3)
     }
     if self.targetWeight != 0 {
-      try visitor.visitSingularDoubleField(value: self.targetWeight, fieldNumber: 4)
+      try visitor.visitSingularFloatField(value: self.targetWeight, fieldNumber: 4)
     }
     if self.remainingDays != 0 {
       try visitor.visitSingularInt32Field(value: self.remainingDays, fieldNumber: 5)
@@ -574,7 +574,7 @@ extension Apisvr_AddWeightLogReq: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     while let fieldNumber = try decoder.nextFieldNumber() {
       switch fieldNumber {
       case 1: try decoder.decodeSingularInt64Field(value: &self.date)
-      case 2: try decoder.decodeSingularDoubleField(value: &self.weight)
+      case 2: try decoder.decodeSingularFloatField(value: &self.weight)
       default: break
       }
     }
@@ -585,7 +585,7 @@ extension Apisvr_AddWeightLogReq: SwiftProtobuf.Message, SwiftProtobuf._MessageI
       try visitor.visitSingularInt64Field(value: self.date, fieldNumber: 1)
     }
     if self.weight != 0 {
-      try visitor.visitSingularDoubleField(value: self.weight, fieldNumber: 2)
+      try visitor.visitSingularFloatField(value: self.weight, fieldNumber: 2)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -669,7 +669,7 @@ extension Apisvr_WeightDataPoint: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     while let fieldNumber = try decoder.nextFieldNumber() {
       switch fieldNumber {
       case 1: try decoder.decodeSingularStringField(value: &self.xAxis)
-      case 2: try decoder.decodeSingularDoubleField(value: &self.value)
+      case 2: try decoder.decodeSingularFloatField(value: &self.value)
       default: break
       }
     }
@@ -680,7 +680,7 @@ extension Apisvr_WeightDataPoint: SwiftProtobuf.Message, SwiftProtobuf._MessageI
       try visitor.visitSingularStringField(value: self.xAxis, fieldNumber: 1)
     }
     if self.value != 0 {
-      try visitor.visitSingularDoubleField(value: self.value, fieldNumber: 2)
+      try visitor.visitSingularFloatField(value: self.value, fieldNumber: 2)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -840,7 +840,7 @@ extension Apisvr_GetBodyMeasurementLogReq: SwiftProtobuf.Message, SwiftProtobuf.
       switch fieldNumber {
       case 1: try decoder.decodeSingularInt32Field(value: &self.offset)
       case 2: try decoder.decodeSingularInt32Field(value: &self.limit)
-      case 3: try decoder.decodeSingularEnumField(value: &self.bodyMeasurementType)
+      case 3: try decoder.decodeRepeatedEnumField(value: &self.bodyMeasurementType)
       default: break
       }
     }
@@ -853,8 +853,8 @@ extension Apisvr_GetBodyMeasurementLogReq: SwiftProtobuf.Message, SwiftProtobuf.
     if self.limit != 0 {
       try visitor.visitSingularInt32Field(value: self.limit, fieldNumber: 2)
     }
-    if self.bodyMeasurementType != .unknownBodyMeasurementType {
-      try visitor.visitSingularEnumField(value: self.bodyMeasurementType, fieldNumber: 3)
+    if !self.bodyMeasurementType.isEmpty {
+      try visitor.visitPackedEnumField(value: self.bodyMeasurementType, fieldNumber: 3)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -964,7 +964,7 @@ extension Apisvr_BodyShape: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     while let fieldNumber = try decoder.nextFieldNumber() {
       switch fieldNumber {
       case 1: try decoder.decodeSingularStringField(value: &self.photoURL)
-      case 2: try decoder.decodeSingularDoubleField(value: &self.value)
+      case 2: try decoder.decodeSingularFloatField(value: &self.value)
       case 3: try decoder.decodeSingularInt64Field(value: &self.date)
       case 4: try decoder.decodeSingularStringField(value: &self.unit)
       default: break
@@ -977,7 +977,7 @@ extension Apisvr_BodyShape: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
       try visitor.visitSingularStringField(value: self.photoURL, fieldNumber: 1)
     }
     if self.value != 0 {
-      try visitor.visitSingularDoubleField(value: self.value, fieldNumber: 2)
+      try visitor.visitSingularFloatField(value: self.value, fieldNumber: 2)
     }
     if self.date != 0 {
       try visitor.visitSingularInt64Field(value: self.date, fieldNumber: 3)

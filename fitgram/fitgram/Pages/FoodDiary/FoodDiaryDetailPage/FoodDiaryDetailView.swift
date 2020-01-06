@@ -11,7 +11,7 @@ import UIKit
 class FoodDiaryDetailView:UIView {
     
     public var foodImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width))
-    public var recipeTable = UITableView.init(frame: CGRect(x: 0, y: UIScreen.main.bounds.width-100, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height-UIScreen.main.bounds.width))
+    public var recipeTable = UITableView.init(frame: CGRect(x: 0, y: UIScreen.main.bounds.width - 50, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height-UIScreen.main.bounds.width))
     
     convenience init(){
         self.init(frame:CGRect.zero)

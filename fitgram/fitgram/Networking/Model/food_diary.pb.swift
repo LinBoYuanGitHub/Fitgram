@@ -240,21 +240,21 @@ struct Apisvr_FoodDiaryNutrient {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var energyIntake: Double = 0
+  var energyIntake: Float = 0
 
-  var fatIntake: Double = 0
+  var fatIntake: Float = 0
 
-  var proteinIntake: Double = 0
+  var proteinIntake: Float = 0
 
-  var carbohydrateIntake: Double = 0
+  var carbohydrateIntake: Float = 0
 
-  var energyRecommend: Double = 0
+  var energyRecommend: Float = 0
 
-  var fatRecommend: Double = 0
+  var fatRecommend: Float = 0
 
-  var proteinRecommend: Double = 0
+  var proteinRecommend: Float = 0
 
-  var carbohydrateRecommend: Double = 0
+  var carbohydrateRecommend: Float = 0
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -266,17 +266,17 @@ struct Apisvr_NutrientByMeal {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var breakfastEnergy: Double = 0
+  var breakfastEnergy: Float = 0
 
-  var lunchEnergy: Double = 0
+  var lunchEnergy: Float = 0
 
-  var dinnerEnergy: Double = 0
+  var dinnerEnergy: Float = 0
 
-  var breakfastPercentage: Double = 0
+  var breakfastPercentage: Float = 0
 
-  var lunchPercentage: Double = 0
+  var lunchPercentage: Float = 0
 
-  var dinnerPercentage: Double = 0
+  var dinnerPercentage: Float = 0
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -292,11 +292,11 @@ struct Apisvr_FoodDiaryFoodLog {
 
   var foodName: String = String()
 
-  var amount: Double = 0
+  var amount: Float = 0
 
   var unit: String = String()
 
-  var energy: Double = 0
+  var energy: Float = 0
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -389,7 +389,7 @@ struct Apisvr_UnitOption {
 
   var name: String = String()
 
-  var weight: Double = 0
+  var weight: Float = 0
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -405,15 +405,15 @@ struct Apisvr_FoodLog {
 
   var foodName: String = String()
 
-  var energy: Double = 0
+  var energy: Float = 0
 
-  var fat: Double = 0
+  var fat: Float = 0
 
-  var protein: Double = 0
+  var protein: Float = 0
 
-  var carbohydrate: Double = 0
+  var carbohydrate: Float = 0
 
-  var amount: Double = 0
+  var amount: Float = 0
 
   var selectedUnitID: Int32 = 0
 
@@ -489,7 +489,7 @@ struct Apisvr_FoodLogInfo {
 
   var foodID: Int32 = 0
 
-  var amount: Double = 0
+  var amount: Float = 0
 
   var selectedUnitID: Int32 = 0
 
@@ -686,9 +686,9 @@ struct Apisvr_SearchItem {
 
   var searchItemUnit: String = String()
 
-  var energy: Double = 0
+  var energy: Float = 0
 
-  var searchItemWeight: Double = 0
+  var searchItemWeight: Float = 0
 
   var searchItemType: Apisvr_Category = .unknownCategoryType
 
@@ -915,14 +915,14 @@ extension Apisvr_FoodDiaryNutrient: SwiftProtobuf.Message, SwiftProtobuf._Messag
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       switch fieldNumber {
-      case 1: try decoder.decodeSingularDoubleField(value: &self.energyIntake)
-      case 2: try decoder.decodeSingularDoubleField(value: &self.fatIntake)
-      case 3: try decoder.decodeSingularDoubleField(value: &self.proteinIntake)
-      case 4: try decoder.decodeSingularDoubleField(value: &self.carbohydrateIntake)
-      case 5: try decoder.decodeSingularDoubleField(value: &self.energyRecommend)
-      case 6: try decoder.decodeSingularDoubleField(value: &self.fatRecommend)
-      case 7: try decoder.decodeSingularDoubleField(value: &self.proteinRecommend)
-      case 8: try decoder.decodeSingularDoubleField(value: &self.carbohydrateRecommend)
+      case 1: try decoder.decodeSingularFloatField(value: &self.energyIntake)
+      case 2: try decoder.decodeSingularFloatField(value: &self.fatIntake)
+      case 3: try decoder.decodeSingularFloatField(value: &self.proteinIntake)
+      case 4: try decoder.decodeSingularFloatField(value: &self.carbohydrateIntake)
+      case 5: try decoder.decodeSingularFloatField(value: &self.energyRecommend)
+      case 6: try decoder.decodeSingularFloatField(value: &self.fatRecommend)
+      case 7: try decoder.decodeSingularFloatField(value: &self.proteinRecommend)
+      case 8: try decoder.decodeSingularFloatField(value: &self.carbohydrateRecommend)
       default: break
       }
     }
@@ -930,28 +930,28 @@ extension Apisvr_FoodDiaryNutrient: SwiftProtobuf.Message, SwiftProtobuf._Messag
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     if self.energyIntake != 0 {
-      try visitor.visitSingularDoubleField(value: self.energyIntake, fieldNumber: 1)
+      try visitor.visitSingularFloatField(value: self.energyIntake, fieldNumber: 1)
     }
     if self.fatIntake != 0 {
-      try visitor.visitSingularDoubleField(value: self.fatIntake, fieldNumber: 2)
+      try visitor.visitSingularFloatField(value: self.fatIntake, fieldNumber: 2)
     }
     if self.proteinIntake != 0 {
-      try visitor.visitSingularDoubleField(value: self.proteinIntake, fieldNumber: 3)
+      try visitor.visitSingularFloatField(value: self.proteinIntake, fieldNumber: 3)
     }
     if self.carbohydrateIntake != 0 {
-      try visitor.visitSingularDoubleField(value: self.carbohydrateIntake, fieldNumber: 4)
+      try visitor.visitSingularFloatField(value: self.carbohydrateIntake, fieldNumber: 4)
     }
     if self.energyRecommend != 0 {
-      try visitor.visitSingularDoubleField(value: self.energyRecommend, fieldNumber: 5)
+      try visitor.visitSingularFloatField(value: self.energyRecommend, fieldNumber: 5)
     }
     if self.fatRecommend != 0 {
-      try visitor.visitSingularDoubleField(value: self.fatRecommend, fieldNumber: 6)
+      try visitor.visitSingularFloatField(value: self.fatRecommend, fieldNumber: 6)
     }
     if self.proteinRecommend != 0 {
-      try visitor.visitSingularDoubleField(value: self.proteinRecommend, fieldNumber: 7)
+      try visitor.visitSingularFloatField(value: self.proteinRecommend, fieldNumber: 7)
     }
     if self.carbohydrateRecommend != 0 {
-      try visitor.visitSingularDoubleField(value: self.carbohydrateRecommend, fieldNumber: 8)
+      try visitor.visitSingularFloatField(value: self.carbohydrateRecommend, fieldNumber: 8)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -984,12 +984,12 @@ extension Apisvr_NutrientByMeal: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       switch fieldNumber {
-      case 1: try decoder.decodeSingularDoubleField(value: &self.breakfastEnergy)
-      case 2: try decoder.decodeSingularDoubleField(value: &self.lunchEnergy)
-      case 3: try decoder.decodeSingularDoubleField(value: &self.dinnerEnergy)
-      case 4: try decoder.decodeSingularDoubleField(value: &self.breakfastPercentage)
-      case 5: try decoder.decodeSingularDoubleField(value: &self.lunchPercentage)
-      case 6: try decoder.decodeSingularDoubleField(value: &self.dinnerPercentage)
+      case 1: try decoder.decodeSingularFloatField(value: &self.breakfastEnergy)
+      case 2: try decoder.decodeSingularFloatField(value: &self.lunchEnergy)
+      case 3: try decoder.decodeSingularFloatField(value: &self.dinnerEnergy)
+      case 4: try decoder.decodeSingularFloatField(value: &self.breakfastPercentage)
+      case 5: try decoder.decodeSingularFloatField(value: &self.lunchPercentage)
+      case 6: try decoder.decodeSingularFloatField(value: &self.dinnerPercentage)
       default: break
       }
     }
@@ -997,22 +997,22 @@ extension Apisvr_NutrientByMeal: SwiftProtobuf.Message, SwiftProtobuf._MessageIm
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
     if self.breakfastEnergy != 0 {
-      try visitor.visitSingularDoubleField(value: self.breakfastEnergy, fieldNumber: 1)
+      try visitor.visitSingularFloatField(value: self.breakfastEnergy, fieldNumber: 1)
     }
     if self.lunchEnergy != 0 {
-      try visitor.visitSingularDoubleField(value: self.lunchEnergy, fieldNumber: 2)
+      try visitor.visitSingularFloatField(value: self.lunchEnergy, fieldNumber: 2)
     }
     if self.dinnerEnergy != 0 {
-      try visitor.visitSingularDoubleField(value: self.dinnerEnergy, fieldNumber: 3)
+      try visitor.visitSingularFloatField(value: self.dinnerEnergy, fieldNumber: 3)
     }
     if self.breakfastPercentage != 0 {
-      try visitor.visitSingularDoubleField(value: self.breakfastPercentage, fieldNumber: 4)
+      try visitor.visitSingularFloatField(value: self.breakfastPercentage, fieldNumber: 4)
     }
     if self.lunchPercentage != 0 {
-      try visitor.visitSingularDoubleField(value: self.lunchPercentage, fieldNumber: 5)
+      try visitor.visitSingularFloatField(value: self.lunchPercentage, fieldNumber: 5)
     }
     if self.dinnerPercentage != 0 {
-      try visitor.visitSingularDoubleField(value: self.dinnerPercentage, fieldNumber: 6)
+      try visitor.visitSingularFloatField(value: self.dinnerPercentage, fieldNumber: 6)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -1044,9 +1044,9 @@ extension Apisvr_FoodDiaryFoodLog: SwiftProtobuf.Message, SwiftProtobuf._Message
       switch fieldNumber {
       case 1: try decoder.decodeSingularInt32Field(value: &self.foodID)
       case 2: try decoder.decodeSingularStringField(value: &self.foodName)
-      case 3: try decoder.decodeSingularDoubleField(value: &self.amount)
+      case 3: try decoder.decodeSingularFloatField(value: &self.amount)
       case 4: try decoder.decodeSingularStringField(value: &self.unit)
-      case 5: try decoder.decodeSingularDoubleField(value: &self.energy)
+      case 5: try decoder.decodeSingularFloatField(value: &self.energy)
       default: break
       }
     }
@@ -1060,13 +1060,13 @@ extension Apisvr_FoodDiaryFoodLog: SwiftProtobuf.Message, SwiftProtobuf._Message
       try visitor.visitSingularStringField(value: self.foodName, fieldNumber: 2)
     }
     if self.amount != 0 {
-      try visitor.visitSingularDoubleField(value: self.amount, fieldNumber: 3)
+      try visitor.visitSingularFloatField(value: self.amount, fieldNumber: 3)
     }
     if !self.unit.isEmpty {
       try visitor.visitSingularStringField(value: self.unit, fieldNumber: 4)
     }
     if self.energy != 0 {
-      try visitor.visitSingularDoubleField(value: self.energy, fieldNumber: 5)
+      try visitor.visitSingularFloatField(value: self.energy, fieldNumber: 5)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -1277,7 +1277,7 @@ extension Apisvr_UnitOption: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
       switch fieldNumber {
       case 1: try decoder.decodeSingularInt32Field(value: &self.unitID)
       case 2: try decoder.decodeSingularStringField(value: &self.name)
-      case 3: try decoder.decodeSingularDoubleField(value: &self.weight)
+      case 3: try decoder.decodeSingularFloatField(value: &self.weight)
       default: break
       }
     }
@@ -1291,7 +1291,7 @@ extension Apisvr_UnitOption: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
       try visitor.visitSingularStringField(value: self.name, fieldNumber: 2)
     }
     if self.weight != 0 {
-      try visitor.visitSingularDoubleField(value: self.weight, fieldNumber: 3)
+      try visitor.visitSingularFloatField(value: self.weight, fieldNumber: 3)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -1325,11 +1325,11 @@ extension Apisvr_FoodLog: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
       switch fieldNumber {
       case 1: try decoder.decodeSingularInt32Field(value: &self.foodID)
       case 2: try decoder.decodeSingularStringField(value: &self.foodName)
-      case 3: try decoder.decodeSingularDoubleField(value: &self.energy)
-      case 4: try decoder.decodeSingularDoubleField(value: &self.fat)
-      case 5: try decoder.decodeSingularDoubleField(value: &self.protein)
-      case 6: try decoder.decodeSingularDoubleField(value: &self.carbohydrate)
-      case 7: try decoder.decodeSingularDoubleField(value: &self.amount)
+      case 3: try decoder.decodeSingularFloatField(value: &self.energy)
+      case 4: try decoder.decodeSingularFloatField(value: &self.fat)
+      case 5: try decoder.decodeSingularFloatField(value: &self.protein)
+      case 6: try decoder.decodeSingularFloatField(value: &self.carbohydrate)
+      case 7: try decoder.decodeSingularFloatField(value: &self.amount)
       case 8: try decoder.decodeSingularInt32Field(value: &self.selectedUnitID)
       case 9: try decoder.decodeRepeatedMessageField(value: &self.unitOption)
       case 10: try decoder.decodeRepeatedMessageField(value: &self.ingredients)
@@ -1346,19 +1346,19 @@ extension Apisvr_FoodLog: SwiftProtobuf.Message, SwiftProtobuf._MessageImplement
       try visitor.visitSingularStringField(value: self.foodName, fieldNumber: 2)
     }
     if self.energy != 0 {
-      try visitor.visitSingularDoubleField(value: self.energy, fieldNumber: 3)
+      try visitor.visitSingularFloatField(value: self.energy, fieldNumber: 3)
     }
     if self.fat != 0 {
-      try visitor.visitSingularDoubleField(value: self.fat, fieldNumber: 4)
+      try visitor.visitSingularFloatField(value: self.fat, fieldNumber: 4)
     }
     if self.protein != 0 {
-      try visitor.visitSingularDoubleField(value: self.protein, fieldNumber: 5)
+      try visitor.visitSingularFloatField(value: self.protein, fieldNumber: 5)
     }
     if self.carbohydrate != 0 {
-      try visitor.visitSingularDoubleField(value: self.carbohydrate, fieldNumber: 6)
+      try visitor.visitSingularFloatField(value: self.carbohydrate, fieldNumber: 6)
     }
     if self.amount != 0 {
-      try visitor.visitSingularDoubleField(value: self.amount, fieldNumber: 7)
+      try visitor.visitSingularFloatField(value: self.amount, fieldNumber: 7)
     }
     if self.selectedUnitID != 0 {
       try visitor.visitSingularInt32Field(value: self.selectedUnitID, fieldNumber: 8)
@@ -1536,7 +1536,7 @@ extension Apisvr_FoodLogInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
     while let fieldNumber = try decoder.nextFieldNumber() {
       switch fieldNumber {
       case 1: try decoder.decodeSingularInt32Field(value: &self.foodID)
-      case 2: try decoder.decodeSingularDoubleField(value: &self.amount)
+      case 2: try decoder.decodeSingularFloatField(value: &self.amount)
       case 3: try decoder.decodeSingularInt32Field(value: &self.selectedUnitID)
       case 4: try decoder.decodeSingularDoubleField(value: &self.tagX)
       case 5: try decoder.decodeSingularDoubleField(value: &self.tagY)
@@ -1550,7 +1550,7 @@ extension Apisvr_FoodLogInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImple
       try visitor.visitSingularInt32Field(value: self.foodID, fieldNumber: 1)
     }
     if self.amount != 0 {
-      try visitor.visitSingularDoubleField(value: self.amount, fieldNumber: 2)
+      try visitor.visitSingularFloatField(value: self.amount, fieldNumber: 2)
     }
     if self.selectedUnitID != 0 {
       try visitor.visitSingularInt32Field(value: self.selectedUnitID, fieldNumber: 3)
@@ -2008,8 +2008,8 @@ extension Apisvr_SearchItem: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
       case 2: try decoder.decodeSingularStringField(value: &self.sampleImageURL)
       case 3: try decoder.decodeSingularStringField(value: &self.searchItemName)
       case 4: try decoder.decodeSingularStringField(value: &self.searchItemUnit)
-      case 5: try decoder.decodeSingularDoubleField(value: &self.energy)
-      case 6: try decoder.decodeSingularDoubleField(value: &self.searchItemWeight)
+      case 5: try decoder.decodeSingularFloatField(value: &self.energy)
+      case 6: try decoder.decodeSingularFloatField(value: &self.searchItemWeight)
       case 7: try decoder.decodeSingularEnumField(value: &self.searchItemType)
       default: break
       }
@@ -2030,10 +2030,10 @@ extension Apisvr_SearchItem: SwiftProtobuf.Message, SwiftProtobuf._MessageImplem
       try visitor.visitSingularStringField(value: self.searchItemUnit, fieldNumber: 4)
     }
     if self.energy != 0 {
-      try visitor.visitSingularDoubleField(value: self.energy, fieldNumber: 5)
+      try visitor.visitSingularFloatField(value: self.energy, fieldNumber: 5)
     }
     if self.searchItemWeight != 0 {
-      try visitor.visitSingularDoubleField(value: self.searchItemWeight, fieldNumber: 6)
+      try visitor.visitSingularFloatField(value: self.searchItemWeight, fieldNumber: 6)
     }
     if self.searchItemType != .unknownCategoryType {
       try visitor.visitSingularEnumField(value: self.searchItemType, fieldNumber: 7)

@@ -13,6 +13,8 @@ target 'fitgram' do
   pod 'KWVerificationCodeView'
   pod 'AliyunOSSiOS'
   pod 'Charts'
+#  pod 'CalendarKit'
+  pod 'EPCalendarPicker'
 
   # Pods for fitgram
 

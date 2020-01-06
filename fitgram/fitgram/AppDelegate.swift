@@ -22,8 +22,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Bundle(path: "/Applications/InjectionIII.app/Contents/Resources/iOSInjection.bundle")?.load()
         gRPC.initialize()
         window = UIWindow(frame: UIScreen.main.bounds)
-//        let naviVC = UINavigationController()
-//        naviVC.viewControllers = [HomeTabViewController()]
         let firstVC = LaunchPageViewController()
         window?.rootViewController = firstVC
         window?.makeKeyAndVisible()

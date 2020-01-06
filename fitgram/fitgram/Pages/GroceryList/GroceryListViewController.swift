@@ -133,7 +133,7 @@ extension GroceryListViewController: UITableViewDataSource, UITableViewDelegate 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //view the ingreident list
-        self.requestForGroceryListItem(groceryId:groceryList[indexPath.row].groceryItemId)
+//        self.requestForGroceryListItem(groceryId:groceryList[indexPath.row].groceryItemId)
     }
     
     func requestForGroceryListItem(groceryId:Int){

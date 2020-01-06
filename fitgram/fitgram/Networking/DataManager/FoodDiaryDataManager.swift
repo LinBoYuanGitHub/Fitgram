@@ -22,7 +22,7 @@ class FoodDiaryDataManager {
         address = Bundle.main.object(forInfoDictionaryKey: "GRPC_Address") as! String
         gRPC.initialize()
         print("GRPC version \(gRPC.version) - endpoint: \(address)")
-        self.client = Apisvr_FoodDiaryServiceServiceClient(address: address, secure: false)
+        self.client = Apisvr_FoodDiaryServiceServiceClient(address: address, secure: true)
     }
     
     

@@ -28,8 +28,8 @@ class GoalViewController: UIViewController {
         self.view.backgroundColor = .white
         self.navigationController?.navigationBar.backgroundColor = .white
         backgroundImage.image = UIImage(named: "registration_background")
-        self.setUpProgressView()
-        self.view.addSubview(progressBar)
+//        self.setUpProgressView()
+//        self.view.addSubview(progressBar)
         self.view.addSubview(logoImageView)
         self.view.addSubview(goalTitleLabel)
         self.view.addSubview(targetBtn_1)
@@ -38,6 +38,13 @@ class GoalViewController: UIViewController {
         self.view.addSubview(backgroundImage)
         self.view.sendSubviewToBack(backgroundImage)
         self.setUpView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     func setUpProgressView() {
@@ -70,7 +77,12 @@ class GoalViewController: UIViewController {
     
     @objc func onGoalSelected(sender:UIButton){
         let tag = sender.tag
-        ProfileDataManager.shared.profile.goal = Int32(tag)
+        switch tag {
+        case 1:  ProfileDataManager.shared.profile.goal = .loseWeight
+        case 2:  ProfileDataManager.shared.profile.goal = .keepFit
+        case 3:  ProfileDataManager.shared.profile.goal = .gainMuscle
+        default:  ProfileDataManager.shared.profile.goal = .unknownGoal
+        }
         let targetVC = GenderViewController()
         self.navigationController?.pushViewController(targetVC, animated: true)
     }

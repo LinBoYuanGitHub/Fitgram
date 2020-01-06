@@ -25,7 +25,13 @@ class GroceryDetailView:UIView {
             |ingredientTableView|,
             0
         )
-        
+    }
+    
+    public func setImageHeaderForTable(recipeImage:UIImage)
+    {
+        let headerImageView = UIImageView(image: recipeImage)
+        ingredientTableView.tableHeaderView = headerImageView
+        ingredientTableView.reloadData()
     }
     
 }

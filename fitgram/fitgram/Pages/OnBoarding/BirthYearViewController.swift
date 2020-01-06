@@ -44,9 +44,9 @@ class BirthYearViewController: UIViewController {
     }
     
     func setUpProgressView() {
-        self.title = "3/7"
+        self.title = "2/7"
         progressBar.frame = CGRect(x: 0, y: 88, width: UIScreen.main.bounds.width, height: 6)
-        progressBar.progress = 3/7
+        progressBar.progress = 2/7
         progressBar.backgroundColor = UIColor(red: 244/255, green: 244/255, blue: 244/255, alpha: 1)
         progressBar.progressTintColor = UIColor(red: 252/255, green: 200/255, blue: 45/255, alpha: 1)
     }

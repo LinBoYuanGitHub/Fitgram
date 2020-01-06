@@ -19,7 +19,7 @@ class CodeVerificationView: UIView{
     
     convenience init(){
         self.init(frame: .zero)
-        self.backgroundColor = UIColor(red: 138/255, green: 97/255, blue: 22/255, alpha: 1)
+        self.backgroundColor = .white
         sv(
             verficationLabel,
             DescLabel,
@@ -45,18 +45,21 @@ class CodeVerificationView: UIView{
         verficationCodeTextField.textSize = 22
         verficationCodeTextField.keyboardType = .numberPad
         verficationCodeTextField.isTappable = true
-        verficationCodeTextField.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.35)
+        verficationCodeTextField.backgroundColor = .lightGray
+        verficationCodeTextField.alpha = 0.35
         verficationCodeTextField.layer.cornerRadius = 10
         verficationCodeTextField.layer.masksToBounds = true
         verficationCodeTextField.textColor = .white
         verficationCodeTextField.focus()
         verficationLabel.font = UIFont(name: "PingFangSC-Medium", size: 30)
-        verficationLabel.textColor = .white
+        verficationLabel.textColor = .black
         verficationLabel.text = "输入验证码"
         DescLabel.font = UIFont(name: "PingFangSC-Medium", size: 14)
-        DescLabel.textColor = .white
+        DescLabel.textColor = .black
         confirmBtn.setTitle("确认", for: .normal)
-        confirmBtn.backgroundColor  = UIColor(red: 80/255, green: 184/255, blue: 60/255, alpha: 0.5)
+        confirmBtn.backgroundColor  = UIColor(red: 252/255, green: 200/255, blue: 45/255, alpha: 1)
+        confirmBtn.setBackgroundColor(color: UIColor(red: 252/255, green: 200/255, blue: 45/255, alpha: 1), forState: .normal)
+        confirmBtn.setBackgroundColor(color: UIColor(red: 252/255, green: 200/255, blue: 45/255, alpha: 0.5), forState: .disabled)
         confirmBtn.layer.cornerRadius = 20
         confirmBtn.layer.masksToBounds = true
         confirmBtn.titleLabel?.textColor = .white

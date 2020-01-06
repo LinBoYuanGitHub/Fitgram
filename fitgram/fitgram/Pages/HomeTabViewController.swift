@@ -32,16 +32,32 @@ class HomeTabViewController: UITabBarController {
         self.navigationController?.pushViewController(targetVC, animated: true)
     }
     
-
     
 }
 
 extension HomeTabViewController: UITabBarControllerDelegate {
     
-    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        if viewController != recommendHomeVC && LoginDataManager.shared.userId.isEmpty {
+//    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+//        let userType = Apisvr_UserType(rawValue: UserDefaults.standard.integer(forKey: Constants.userStatusKey))
+//        if viewController != recommendHomeVC && userType == .unknownUserType {
+//            navigateToLoginPage()
+//            tabBarController.selectedIndex = 0
+//        }
+//    }
+    
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        let userType = Apisvr_UserType(rawValue: UserDefaults.standard.integer(forKey: Constants.userStatusKey))
+        if viewController != recommendHomeVC && userType == .unknownUserType {
             navigateToLoginPage()
+            return false
         }
+        //navigation bar hidden config
+        if viewController == foodDiaryVC {
+            self.navigationController?.setNavigationBarHidden(true, animated: false)
+        } else {
+            self.navigationController?.setNavigationBarHidden(false, animated: false)
+        }
+        return true
     }
 }
 

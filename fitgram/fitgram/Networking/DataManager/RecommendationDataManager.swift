@@ -20,7 +20,7 @@ class RecommendationDataManager {
         address = Bundle.main.object(forInfoDictionaryKey: "GRPC_Address") as! String
         gRPC.initialize()
         print("GRPC version \(gRPC.version) - endpoint: \(address)")
-        self.client = Apisvr_RecommendationServiceServiceClient(address: address, secure: false)
+        self.client = Apisvr_RecommendationServiceServiceClient(address: address, secure: true)
     }
     
     func retrieveRecommendationList (dateStr:String, completition: @escaping ([RecommendationModel]) -> Void){
@@ -84,6 +84,7 @@ class RecommendationDataManager {
             if(result.statusCode == .ok){
                 //ingredient convertsion
                 var recipe = RecipeModel()
+                recipe.recipeId = Int(resp!.recipeID)
                 recipe.recipeCookingDuration =  Int(resp!.cookingTime)
                 recipe.difficulity = resp!.difficulty
                 recipe.recipeTitle = resp!.recipeName

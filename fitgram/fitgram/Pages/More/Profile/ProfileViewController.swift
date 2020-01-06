@@ -10,7 +10,7 @@ import UIKit
 import Stevia
 import SwiftGRPC
 
-class ProfileViewController: UIViewController{
+class ProfileViewController: BaseViewController{
     var rootView = ProfileView()
 //    var profile = ProfileModel()
     let profileFieldList = ["性别","出生年份","身高","体重","日常运动量"]
@@ -31,7 +31,7 @@ class ProfileViewController: UIViewController{
     let activityIndex = 4
     
     let profileDataSvr = ProfileDataManager.shared
-    var profile = Apisvr_GetUserProfileResp()
+//    var profile = Apisvr_GetUserProfileResp()
     
     override func loadView() {
         rootView = ProfileView()
@@ -43,7 +43,6 @@ class ProfileViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.initMockedProfile()
         self.navigationController?.navigationBar.topItem?.title = "我的"
         genderPicker.delegate = self
         genderPicker.dataSource = self
@@ -52,16 +51,14 @@ class ProfileViewController: UIViewController{
         activityLevelPicker.delegate = self
         activityLevelPicker.dataSource = self
         //set init value for profile
-        
         on("INJECTION_BUNDLE_NOTIFICATION") {
             self.loadView()
         }
-        self.getProfileDataFromLocalStorage()
-        self.rootView.profileTableView.reloadData()
+        self.requestProfileData()
     }
     
-    func initMockedProfile(){
-        
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
     func requestProfileData(){
@@ -71,20 +68,19 @@ class ProfileViewController: UIViewController{
         do{
             let metaData = try Metadata(["authorization": "Token " + token])
             let request = Apisvr_GetUserProfileReq()
-            
             try profileDataSvr.client.getUserProfile(request, metadata: metaData) { (resp, result) in
                 if(result.statusCode == .ok){
-                    guard let response = resp else {
-                        //error resp message
-                        return
+                    ProfileDataManager.shared.profile = resp!
+                    DispatchQueue.main.async {
+                        self.rootView.profileTableView.reloadData()
                     }
-                    self.profile = response
-                    self.rootView.profileTableView.reloadData()
                 }
             }
         } catch {
             print(error)
-            //show error message
+            DispatchQueue.main.async {
+                self.showAlertMessage(msg: error.localizedDescription)
+            }
         }
     }
     
@@ -95,12 +91,12 @@ class ProfileViewController: UIViewController{
         do{
             let metaData = try Metadata(["authorization": "Token " + token])
             var request = Apisvr_UpdateUserProfileReq()
-            request.activityLevel = profile.activityLevel
-            request.avatarURL = profile.avatarURL
-            request.birthYear = profile.birthYear
-            request.gender = profile.gender
-            request.height = profile.height
-            request.weight = profile.weight
+            request.activityLevel =  ProfileDataManager.shared.profile.activityLevel
+            request.avatarURL =  ProfileDataManager.shared.profile.avatarURL
+            request.birthYear =  ProfileDataManager.shared.profile.birthYear
+            request.gender =  ProfileDataManager.shared.profile.gender
+            request.height =  ProfileDataManager.shared.profile.height
+            request.weight =  ProfileDataManager.shared.profile.weight
             try profileDataSvr.client.updateUserProfile(request, metadata: metaData, completion: { (resp, result) in
                 if (result.statusCode == .ok){
                     print("update sucessfully")
@@ -114,20 +110,20 @@ class ProfileViewController: UIViewController{
     
     func getProfileDataFromLocalStorage() {
         let storage = UserDefaults.standard
-        self.profile.gender = Int32(storage.integer(forKey: Constants.Profile.genderStorageKey))
-        self.profile.birthYear = Int32(storage.integer(forKey: Constants.Profile.birthyearStorageKey))
-        self.profile.height = storage.double(forKey: Constants.Profile.heightStorageKey)
-        self.profile.weight = storage.double(forKey: Constants.Profile.weightStorageKey)
-        self.profile.activityLevel = Int32(storage.integer(forKey: Constants.Profile.activityLvlStorageKey))
+        ProfileDataManager.shared.profile.gender = Apisvr_Gender.init(rawValue: storage.integer(forKey: Constants.Profile.genderStorageKey))!
+        ProfileDataManager.shared.profile.birthYear = Int32(storage.integer(forKey: Constants.Profile.birthyearStorageKey))
+        ProfileDataManager.shared.profile.height = storage.float(forKey: Constants.Profile.heightStorageKey)
+        ProfileDataManager.shared.profile.weight = storage.float(forKey: Constants.Profile.weightStorageKey)
+        ProfileDataManager.shared.profile.activityLevel = Apisvr_ActivityLevel.init(rawValue: storage.integer(forKey: Constants.Profile.activityLvlStorageKey))!
     }
     
     func updateProfileToStorage() {
         let storage = UserDefaults.standard
-        storage.set(self.profile.gender, forKey: Constants.Profile.genderStorageKey)
-        storage.set(self.profile.birthYear, forKey: Constants.Profile.birthyearStorageKey)
-        storage.set(self.profile.height, forKey: Constants.Profile.heightStorageKey)
-        storage.set(self.profile.weight, forKey: Constants.Profile.weightStorageKey)
-        storage.set(self.profile.activityLevel, forKey: Constants.Profile.activityLvlStorageKey)
+        storage.set(ProfileDataManager.shared.profile.gender.rawValue, forKey: Constants.Profile.genderStorageKey)
+        storage.set(ProfileDataManager.shared.profile.birthYear, forKey: Constants.Profile.birthyearStorageKey)
+        storage.set(ProfileDataManager.shared.profile.height, forKey: Constants.Profile.heightStorageKey)
+        storage.set(ProfileDataManager.shared.profile.weight, forKey: Constants.Profile.weightStorageKey)
+        storage.set(ProfileDataManager.shared.profile.activityLevel.rawValue, forKey: Constants.Profile.activityLvlStorageKey)
     }
     
     
@@ -135,29 +131,17 @@ class ProfileViewController: UIViewController{
 
 extension ProfileViewController: UITextFieldDelegate {
     
-//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//        textField.resignFirstResponder()
-//        if textField.tag == heightIndex{//height
-//            let value = Double(textField.text!)
-//            profile.height = value!
-//        } else if textField.tag == weightIndex{//weight
-//            let value = Double(textField.text!)
-//            profile.weight = value!
-//        }
-//        self.updateProfileData()
-//        return true
-//    }
-    
     func textFieldDidEndEditing(_ textField: UITextField) {
         textField.resignFirstResponder()
         if textField.tag == heightIndex{//height
-            let value = Double(textField.text!)
-            profile.height = value!
+            let value = Float(textField.text!)
+             ProfileDataManager.shared.profile.height = value!
         } else if textField.tag == weightIndex{//weight
-            let value = Double(textField.text!)
-            profile.weight = value!
+            let value = Float(textField.text!)
+             ProfileDataManager.shared.profile.weight = value!
         }
         self.updateProfileToStorage()
+        self.updateProfileData()
     }
     
 
@@ -233,33 +217,39 @@ extension ProfileViewController: UITableViewDelegate,UITableViewDataSource {
             case 0://gender
                 genderPicker.tag = genderIndex
                 cell.profileInfoTextField.inputView = genderPicker
-                let valueIndex = Int(profile.gender)
-                cell.profileInfoTextField.text = genderValueList[valueIndex]
+                let valueIndex =  ProfileDataManager.shared.profile.gender.rawValue - 1 //fix the offset of the picker index for gender
+                if valueIndex > 0 && valueIndex < genderValueList.count {
+                    cell.profileInfoTextField.text = genderValueList[valueIndex]
+                } else {
+                    cell.profileInfoTextField.text = genderValueList[0]
+                }
                 cell.profileInfoTextField.delegate = self
                 break
             case 1://birthYear
                 birthdayPicker.tag = birthdayIndex
                 cell.profileInfoTextField.inputView = birthdayPicker
-                cell.profileInfoTextField.text = String(profile.birthYear)
+                cell.profileInfoTextField.text = String(ProfileDataManager.shared.profile.birthYear)
                 cell.profileInfoTextField.delegate = self
                 birthdayPicker.selectRow(20, inComponent: 0, animated: false)
                 break
             case 2://height
                 cell.profileInfoTextField.keyboardType = .decimalPad
-                cell.profileInfoTextField.text = String(profile.height)
+                cell.profileInfoTextField.text = String(ProfileDataManager.shared.profile.height)
                 cell.profileUnitLabel.text = "cm"
                 cell.profileInfoTextField.delegate = self
                 break
             case 3://weight
                 cell.profileInfoTextField.keyboardType = .decimalPad
-                cell.profileInfoTextField.text = String(profile.weight)
+                cell.profileInfoTextField.text = String(ProfileDataManager.shared.profile.weight)
                 cell.profileUnitLabel.text = "kg"
                 cell.profileInfoTextField.delegate = self
                 break
             case 4://actvity level
                 activityLevelPicker.tag = activityIndex
                 cell.profileInfoTextField.inputView = activityLevelPicker
-                cell.profileInfoTextField.text = activityLevelValueList[0]
+                if ProfileDataManager.shared.profile.activityLevel != .unknownLevel {
+                    cell.profileInfoTextField.text = activityLevelValueList[ProfileDataManager.shared.profile.activityLevel.rawValue - 1]
+                }
                 cell.profileInfoTextField.delegate = self
                 break
             default:
@@ -311,20 +301,22 @@ extension ProfileViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         }
         switch pickerView.tag {
         case genderIndex:
-            profile.gender = Int32(row)
+            ProfileDataManager.shared.profile.gender =  Apisvr_Gender.init(rawValue: row + 1)!
             cell.profileInfoTextField.text = genderValueList[row]
             break
         case birthdayIndex:
-            profile.birthYear = Int32(1970 + row)
+            ProfileDataManager.shared.profile.birthYear = Int32(1970 + row)
             cell.profileInfoTextField.text = String(1970 + row)
             break
         case activityIndex:
-            profile.activityLevel = Int32(row)
+            ProfileDataManager.shared.profile.activityLevel = Apisvr_ActivityLevel.init(rawValue: row + 1)!
             cell.profileInfoTextField.text = activityLevelValueList[row]
             break
         default:
             break
         }
+//        self.updateProfileToStorage()
+//        self.updateProfileData()
     }
     
     

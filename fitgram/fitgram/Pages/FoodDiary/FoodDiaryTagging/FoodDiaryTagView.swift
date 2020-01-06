@@ -23,7 +23,7 @@ class FoodDiaryTagView: UIView {
     private var longTapGestureRecognizer:UILongPressGestureRecognizer!
     private var showDeleteBtnGestureRecognizer:UITapGestureRecognizer!
     
-    var didAddTag: () -> Void = { }
+    var didAddTag: (Double,Double) -> Void = {tagX,tagY in }
     
     convenience init() {
         self.init(frame: CGRect.zero)
@@ -88,7 +88,7 @@ class FoodDiaryTagView: UIView {
         foodTag.repositionIfNeeded()
         foodTag.isUserInteractionEnabled = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.didAddTag()
+            self.didAddTag(Double(point.x),Double(point.y))
         }
     }
     

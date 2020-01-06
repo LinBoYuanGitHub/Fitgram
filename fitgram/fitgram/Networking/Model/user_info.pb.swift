@@ -19,6 +19,154 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
+enum Apisvr_Goal: SwiftProtobuf.Enum {
+  typealias RawValue = Int
+  case unknownGoal // = 0
+  case loseWeight // = 1
+  case keepFit // = 2
+  case gainMuscle // = 3
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .unknownGoal
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .unknownGoal
+    case 1: self = .loseWeight
+    case 2: self = .keepFit
+    case 3: self = .gainMuscle
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .unknownGoal: return 0
+    case .loseWeight: return 1
+    case .keepFit: return 2
+    case .gainMuscle: return 3
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+}
+
+#if swift(>=4.2)
+
+extension Apisvr_Goal: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static var allCases: [Apisvr_Goal] = [
+    .unknownGoal,
+    .loseWeight,
+    .keepFit,
+    .gainMuscle,
+  ]
+}
+
+#endif  // swift(>=4.2)
+
+enum Apisvr_Gender: SwiftProtobuf.Enum {
+  typealias RawValue = Int
+  case unknownGender // = 0
+  case female // = 1
+  case male // = 2
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .unknownGender
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .unknownGender
+    case 1: self = .female
+    case 2: self = .male
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .unknownGender: return 0
+    case .female: return 1
+    case .male: return 2
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+}
+
+#if swift(>=4.2)
+
+extension Apisvr_Gender: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static var allCases: [Apisvr_Gender] = [
+    .unknownGender,
+    .female,
+    .male,
+  ]
+}
+
+#endif  // swift(>=4.2)
+
+enum Apisvr_ActivityLevel: SwiftProtobuf.Enum {
+  typealias RawValue = Int
+  case unknownLevel // = 0
+  case extremelyInactive // = 1
+  case sedentary // = 2
+  case moderatelyActive // = 3
+  case vigorouslyActive // = 4
+  case extremelyActive // = 5
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .unknownLevel
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .unknownLevel
+    case 1: self = .extremelyInactive
+    case 2: self = .sedentary
+    case 3: self = .moderatelyActive
+    case 4: self = .vigorouslyActive
+    case 5: self = .extremelyActive
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .unknownLevel: return 0
+    case .extremelyInactive: return 1
+    case .sedentary: return 2
+    case .moderatelyActive: return 3
+    case .vigorouslyActive: return 4
+    case .extremelyActive: return 5
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+}
+
+#if swift(>=4.2)
+
+extension Apisvr_ActivityLevel: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static var allCases: [Apisvr_ActivityLevel] = [
+    .unknownLevel,
+    .extremelyInactive,
+    .sedentary,
+    .moderatelyActive,
+    .vigorouslyActive,
+    .extremelyActive,
+  ]
+}
+
+#endif  // swift(>=4.2)
+
 struct Apisvr_GetUserProfileReq {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -40,15 +188,19 @@ struct Apisvr_GetUserProfileResp {
 
   var birthYear: Int32 = 0
 
-  var gender: Int32 = 0
+  var gender: Apisvr_Gender = .unknownGender
 
-  var height: Double = 0
+  var height: Float = 0
 
-  var weight: Double = 0
+  var weight: Float = 0
 
-  var activityLevel: Int32 = 0
+  var activityLevel: Apisvr_ActivityLevel = .unknownLevel
 
-  var goal: Int32 = 0
+  var goal: Apisvr_Goal = .unknownGoal
+
+  var bodyType: Int32 = 0
+
+  var targetBodyType: Int32 = 0
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -92,17 +244,17 @@ struct Apisvr_UpdateUserProfileReq {
 
   var optionalGender: Apisvr_UpdateUserProfileReq.OneOf_OptionalGender? = nil
 
-  var gender: Int32 {
+  var gender: Apisvr_Gender {
     get {
       if case .gender(let v)? = optionalGender {return v}
-      return 0
+      return .unknownGender
     }
     set {optionalGender = .gender(newValue)}
   }
 
   var optionalHeight: Apisvr_UpdateUserProfileReq.OneOf_OptionalHeight? = nil
 
-  var height: Double {
+  var height: Float {
     get {
       if case .height(let v)? = optionalHeight {return v}
       return 0
@@ -112,7 +264,7 @@ struct Apisvr_UpdateUserProfileReq {
 
   var optionalWeight: Apisvr_UpdateUserProfileReq.OneOf_OptionalWeight? = nil
 
-  var weight: Double {
+  var weight: Float {
     get {
       if case .weight(let v)? = optionalWeight {return v}
       return 0
@@ -122,22 +274,42 @@ struct Apisvr_UpdateUserProfileReq {
 
   var optionalActivityLevel: Apisvr_UpdateUserProfileReq.OneOf_OptionalActivityLevel? = nil
 
-  var activityLevel: Int32 {
+  var activityLevel: Apisvr_ActivityLevel {
     get {
       if case .activityLevel(let v)? = optionalActivityLevel {return v}
-      return 0
+      return .unknownLevel
     }
     set {optionalActivityLevel = .activityLevel(newValue)}
   }
 
   var optionalGoal: Apisvr_UpdateUserProfileReq.OneOf_OptionalGoal? = nil
 
-  var goal: Int32 {
+  var goal: Apisvr_Goal {
     get {
       if case .goal(let v)? = optionalGoal {return v}
-      return 0
+      return .unknownGoal
     }
     set {optionalGoal = .goal(newValue)}
+  }
+
+  var optionalBodyType: Apisvr_UpdateUserProfileReq.OneOf_OptionalBodyType? = nil
+
+  var bodyType: Int32 {
+    get {
+      if case .bodyType(let v)? = optionalBodyType {return v}
+      return 0
+    }
+    set {optionalBodyType = .bodyType(newValue)}
+  }
+
+  var optionalTargetBodyType: Apisvr_UpdateUserProfileReq.OneOf_OptionalTargetBodyType? = nil
+
+  var targetBodyType: Int32 {
+    get {
+      if case .targetBodyType(let v)? = optionalTargetBodyType {return v}
+      return 0
+    }
+    set {optionalTargetBodyType = .targetBodyType(newValue)}
   }
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -179,7 +351,7 @@ struct Apisvr_UpdateUserProfileReq {
   }
 
   enum OneOf_OptionalGender: Equatable {
-    case gender(Int32)
+    case gender(Apisvr_Gender)
 
   #if !swift(>=4.1)
     static func ==(lhs: Apisvr_UpdateUserProfileReq.OneOf_OptionalGender, rhs: Apisvr_UpdateUserProfileReq.OneOf_OptionalGender) -> Bool {
@@ -191,7 +363,7 @@ struct Apisvr_UpdateUserProfileReq {
   }
 
   enum OneOf_OptionalHeight: Equatable {
-    case height(Double)
+    case height(Float)
 
   #if !swift(>=4.1)
     static func ==(lhs: Apisvr_UpdateUserProfileReq.OneOf_OptionalHeight, rhs: Apisvr_UpdateUserProfileReq.OneOf_OptionalHeight) -> Bool {
@@ -203,7 +375,7 @@ struct Apisvr_UpdateUserProfileReq {
   }
 
   enum OneOf_OptionalWeight: Equatable {
-    case weight(Double)
+    case weight(Float)
 
   #if !swift(>=4.1)
     static func ==(lhs: Apisvr_UpdateUserProfileReq.OneOf_OptionalWeight, rhs: Apisvr_UpdateUserProfileReq.OneOf_OptionalWeight) -> Bool {
@@ -215,7 +387,7 @@ struct Apisvr_UpdateUserProfileReq {
   }
 
   enum OneOf_OptionalActivityLevel: Equatable {
-    case activityLevel(Int32)
+    case activityLevel(Apisvr_ActivityLevel)
 
   #if !swift(>=4.1)
     static func ==(lhs: Apisvr_UpdateUserProfileReq.OneOf_OptionalActivityLevel, rhs: Apisvr_UpdateUserProfileReq.OneOf_OptionalActivityLevel) -> Bool {
@@ -227,12 +399,36 @@ struct Apisvr_UpdateUserProfileReq {
   }
 
   enum OneOf_OptionalGoal: Equatable {
-    case goal(Int32)
+    case goal(Apisvr_Goal)
 
   #if !swift(>=4.1)
     static func ==(lhs: Apisvr_UpdateUserProfileReq.OneOf_OptionalGoal, rhs: Apisvr_UpdateUserProfileReq.OneOf_OptionalGoal) -> Bool {
       switch (lhs, rhs) {
       case (.goal(let l), .goal(let r)): return l == r
+      }
+    }
+  #endif
+  }
+
+  enum OneOf_OptionalBodyType: Equatable {
+    case bodyType(Int32)
+
+  #if !swift(>=4.1)
+    static func ==(lhs: Apisvr_UpdateUserProfileReq.OneOf_OptionalBodyType, rhs: Apisvr_UpdateUserProfileReq.OneOf_OptionalBodyType) -> Bool {
+      switch (lhs, rhs) {
+      case (.bodyType(let l), .bodyType(let r)): return l == r
+      }
+    }
+  #endif
+  }
+
+  enum OneOf_OptionalTargetBodyType: Equatable {
+    case targetBodyType(Int32)
+
+  #if !swift(>=4.1)
+    static func ==(lhs: Apisvr_UpdateUserProfileReq.OneOf_OptionalTargetBodyType, rhs: Apisvr_UpdateUserProfileReq.OneOf_OptionalTargetBodyType) -> Bool {
+      switch (lhs, rhs) {
+      case (.targetBodyType(let l), .targetBodyType(let r)): return l == r
       }
     }
   #endif
@@ -270,13 +466,13 @@ struct Apisvr_FavouriteItem {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var itemID: Int32 = 0
+  var itemMappingID: Int32 = 0
 
   var imgURL: String = String()
 
   var name: String = String()
 
-  var energy: Double = 0
+  var energy: Float = 0
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -297,6 +493,7 @@ struct Apisvr_GetUserFavouriteItemResp {
   init() {}
 }
 
+/// mapping according to item_type, restaurant or recipe
 struct Apisvr_AddUserFavouriteItemReq {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -304,7 +501,7 @@ struct Apisvr_AddUserFavouriteItemReq {
 
   var itemType: Int32 = 0
 
-  var itemID: Int32 = 0
+  var itemMappingID: Int32 = 0
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -328,7 +525,7 @@ struct Apisvr_RemoveFavouriteItemReq {
 
   var itemType: Int32 = 0
 
-  var itemID: Int32 = 0
+  var itemMappingID: Int32 = 0
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -345,9 +542,63 @@ struct Apisvr_RemoveUserFavouriteItemResp {
   init() {}
 }
 
+struct Apisvr_GetGoalDetailsReq {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct Apisvr_GetGoalDetailsResp {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var recommendedEnergyInstake: Float = 0
+
+  var recommendedWeightLoss: Float = 0
+
+  var days: Int32 = 0
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate let _protobuf_package = "apisvr"
+
+extension Apisvr_Goal: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "UNKNOWN_GOAL"),
+    1: .same(proto: "LOSE_WEIGHT"),
+    2: .same(proto: "KEEP_FIT"),
+    3: .same(proto: "GAIN_MUSCLE"),
+  ]
+}
+
+extension Apisvr_Gender: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "UNKNOWN_GENDER"),
+    1: .same(proto: "FEMALE"),
+    2: .same(proto: "MALE"),
+  ]
+}
+
+extension Apisvr_ActivityLevel: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "UNKNOWN_LEVEL"),
+    1: .same(proto: "EXTREMELY_INACTIVE"),
+    2: .same(proto: "SEDENTARY"),
+    3: .same(proto: "MODERATELY_ACTIVE"),
+    4: .same(proto: "VIGOROUSLY_ACTIVE"),
+    5: .same(proto: "EXTREMELY_ACTIVE"),
+  ]
+}
 
 extension Apisvr_GetUserProfileReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".GetUserProfileReq"
@@ -379,6 +630,8 @@ extension Apisvr_GetUserProfileResp: SwiftProtobuf.Message, SwiftProtobuf._Messa
     6: .same(proto: "weight"),
     7: .standard(proto: "activity_level"),
     8: .same(proto: "goal"),
+    9: .standard(proto: "body_type"),
+    10: .standard(proto: "target_body_type"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -387,11 +640,13 @@ extension Apisvr_GetUserProfileResp: SwiftProtobuf.Message, SwiftProtobuf._Messa
       case 1: try decoder.decodeSingularStringField(value: &self.avatarURL)
       case 2: try decoder.decodeSingularStringField(value: &self.nickname)
       case 3: try decoder.decodeSingularInt32Field(value: &self.birthYear)
-      case 4: try decoder.decodeSingularInt32Field(value: &self.gender)
-      case 5: try decoder.decodeSingularDoubleField(value: &self.height)
-      case 6: try decoder.decodeSingularDoubleField(value: &self.weight)
-      case 7: try decoder.decodeSingularInt32Field(value: &self.activityLevel)
-      case 8: try decoder.decodeSingularInt32Field(value: &self.goal)
+      case 4: try decoder.decodeSingularEnumField(value: &self.gender)
+      case 5: try decoder.decodeSingularFloatField(value: &self.height)
+      case 6: try decoder.decodeSingularFloatField(value: &self.weight)
+      case 7: try decoder.decodeSingularEnumField(value: &self.activityLevel)
+      case 8: try decoder.decodeSingularEnumField(value: &self.goal)
+      case 9: try decoder.decodeSingularInt32Field(value: &self.bodyType)
+      case 10: try decoder.decodeSingularInt32Field(value: &self.targetBodyType)
       default: break
       }
     }
@@ -407,20 +662,26 @@ extension Apisvr_GetUserProfileResp: SwiftProtobuf.Message, SwiftProtobuf._Messa
     if self.birthYear != 0 {
       try visitor.visitSingularInt32Field(value: self.birthYear, fieldNumber: 3)
     }
-    if self.gender != 0 {
-      try visitor.visitSingularInt32Field(value: self.gender, fieldNumber: 4)
+    if self.gender != .unknownGender {
+      try visitor.visitSingularEnumField(value: self.gender, fieldNumber: 4)
     }
     if self.height != 0 {
-      try visitor.visitSingularDoubleField(value: self.height, fieldNumber: 5)
+      try visitor.visitSingularFloatField(value: self.height, fieldNumber: 5)
     }
     if self.weight != 0 {
-      try visitor.visitSingularDoubleField(value: self.weight, fieldNumber: 6)
+      try visitor.visitSingularFloatField(value: self.weight, fieldNumber: 6)
     }
-    if self.activityLevel != 0 {
-      try visitor.visitSingularInt32Field(value: self.activityLevel, fieldNumber: 7)
+    if self.activityLevel != .unknownLevel {
+      try visitor.visitSingularEnumField(value: self.activityLevel, fieldNumber: 7)
     }
-    if self.goal != 0 {
-      try visitor.visitSingularInt32Field(value: self.goal, fieldNumber: 8)
+    if self.goal != .unknownGoal {
+      try visitor.visitSingularEnumField(value: self.goal, fieldNumber: 8)
+    }
+    if self.bodyType != 0 {
+      try visitor.visitSingularInt32Field(value: self.bodyType, fieldNumber: 9)
+    }
+    if self.targetBodyType != 0 {
+      try visitor.visitSingularInt32Field(value: self.targetBodyType, fieldNumber: 10)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -434,6 +695,8 @@ extension Apisvr_GetUserProfileResp: SwiftProtobuf.Message, SwiftProtobuf._Messa
     if lhs.weight != rhs.weight {return false}
     if lhs.activityLevel != rhs.activityLevel {return false}
     if lhs.goal != rhs.goal {return false}
+    if lhs.bodyType != rhs.bodyType {return false}
+    if lhs.targetBodyType != rhs.targetBodyType {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -450,6 +713,8 @@ extension Apisvr_UpdateUserProfileReq: SwiftProtobuf.Message, SwiftProtobuf._Mes
     6: .same(proto: "weight"),
     7: .standard(proto: "activity_level"),
     8: .same(proto: "goal"),
+    9: .standard(proto: "body_type"),
+    10: .standard(proto: "target_body_type"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -472,29 +737,39 @@ extension Apisvr_UpdateUserProfileReq: SwiftProtobuf.Message, SwiftProtobuf._Mes
         if let v = v {self.optionalBirthYear = .birthYear(v)}
       case 4:
         if self.optionalGender != nil {try decoder.handleConflictingOneOf()}
-        var v: Int32?
-        try decoder.decodeSingularInt32Field(value: &v)
+        var v: Apisvr_Gender?
+        try decoder.decodeSingularEnumField(value: &v)
         if let v = v {self.optionalGender = .gender(v)}
       case 5:
         if self.optionalHeight != nil {try decoder.handleConflictingOneOf()}
-        var v: Double?
-        try decoder.decodeSingularDoubleField(value: &v)
+        var v: Float?
+        try decoder.decodeSingularFloatField(value: &v)
         if let v = v {self.optionalHeight = .height(v)}
       case 6:
         if self.optionalWeight != nil {try decoder.handleConflictingOneOf()}
-        var v: Double?
-        try decoder.decodeSingularDoubleField(value: &v)
+        var v: Float?
+        try decoder.decodeSingularFloatField(value: &v)
         if let v = v {self.optionalWeight = .weight(v)}
       case 7:
         if self.optionalActivityLevel != nil {try decoder.handleConflictingOneOf()}
-        var v: Int32?
-        try decoder.decodeSingularInt32Field(value: &v)
+        var v: Apisvr_ActivityLevel?
+        try decoder.decodeSingularEnumField(value: &v)
         if let v = v {self.optionalActivityLevel = .activityLevel(v)}
       case 8:
         if self.optionalGoal != nil {try decoder.handleConflictingOneOf()}
+        var v: Apisvr_Goal?
+        try decoder.decodeSingularEnumField(value: &v)
+        if let v = v {self.optionalGoal = .goal(v)}
+      case 9:
+        if self.optionalBodyType != nil {try decoder.handleConflictingOneOf()}
         var v: Int32?
         try decoder.decodeSingularInt32Field(value: &v)
-        if let v = v {self.optionalGoal = .goal(v)}
+        if let v = v {self.optionalBodyType = .bodyType(v)}
+      case 10:
+        if self.optionalTargetBodyType != nil {try decoder.handleConflictingOneOf()}
+        var v: Int32?
+        try decoder.decodeSingularInt32Field(value: &v)
+        if let v = v {self.optionalTargetBodyType = .targetBodyType(v)}
       default: break
       }
     }
@@ -511,19 +786,25 @@ extension Apisvr_UpdateUserProfileReq: SwiftProtobuf.Message, SwiftProtobuf._Mes
       try visitor.visitSingularInt32Field(value: v, fieldNumber: 3)
     }
     if case .gender(let v)? = self.optionalGender {
-      try visitor.visitSingularInt32Field(value: v, fieldNumber: 4)
+      try visitor.visitSingularEnumField(value: v, fieldNumber: 4)
     }
     if case .height(let v)? = self.optionalHeight {
-      try visitor.visitSingularDoubleField(value: v, fieldNumber: 5)
+      try visitor.visitSingularFloatField(value: v, fieldNumber: 5)
     }
     if case .weight(let v)? = self.optionalWeight {
-      try visitor.visitSingularDoubleField(value: v, fieldNumber: 6)
+      try visitor.visitSingularFloatField(value: v, fieldNumber: 6)
     }
     if case .activityLevel(let v)? = self.optionalActivityLevel {
-      try visitor.visitSingularInt32Field(value: v, fieldNumber: 7)
+      try visitor.visitSingularEnumField(value: v, fieldNumber: 7)
     }
     if case .goal(let v)? = self.optionalGoal {
-      try visitor.visitSingularInt32Field(value: v, fieldNumber: 8)
+      try visitor.visitSingularEnumField(value: v, fieldNumber: 8)
+    }
+    if case .bodyType(let v)? = self.optionalBodyType {
+      try visitor.visitSingularInt32Field(value: v, fieldNumber: 9)
+    }
+    if case .targetBodyType(let v)? = self.optionalTargetBodyType {
+      try visitor.visitSingularInt32Field(value: v, fieldNumber: 10)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -537,6 +818,8 @@ extension Apisvr_UpdateUserProfileReq: SwiftProtobuf.Message, SwiftProtobuf._Mes
     if lhs.optionalWeight != rhs.optionalWeight {return false}
     if lhs.optionalActivityLevel != rhs.optionalActivityLevel {return false}
     if lhs.optionalGoal != rhs.optionalGoal {return false}
+    if lhs.optionalBodyType != rhs.optionalBodyType {return false}
+    if lhs.optionalTargetBodyType != rhs.optionalTargetBodyType {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -599,7 +882,7 @@ extension Apisvr_GetUserFavouriteItemReq: SwiftProtobuf.Message, SwiftProtobuf._
 extension Apisvr_FavouriteItem: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".FavouriteItem"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "item_id"),
+    1: .standard(proto: "item_mapping_id"),
     2: .standard(proto: "img_url"),
     3: .same(proto: "name"),
     4: .same(proto: "energy"),
@@ -608,18 +891,18 @@ extension Apisvr_FavouriteItem: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       switch fieldNumber {
-      case 1: try decoder.decodeSingularInt32Field(value: &self.itemID)
+      case 1: try decoder.decodeSingularInt32Field(value: &self.itemMappingID)
       case 2: try decoder.decodeSingularStringField(value: &self.imgURL)
       case 3: try decoder.decodeSingularStringField(value: &self.name)
-      case 4: try decoder.decodeSingularDoubleField(value: &self.energy)
+      case 4: try decoder.decodeSingularFloatField(value: &self.energy)
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if self.itemID != 0 {
-      try visitor.visitSingularInt32Field(value: self.itemID, fieldNumber: 1)
+    if self.itemMappingID != 0 {
+      try visitor.visitSingularInt32Field(value: self.itemMappingID, fieldNumber: 1)
     }
     if !self.imgURL.isEmpty {
       try visitor.visitSingularStringField(value: self.imgURL, fieldNumber: 2)
@@ -628,13 +911,13 @@ extension Apisvr_FavouriteItem: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
       try visitor.visitSingularStringField(value: self.name, fieldNumber: 3)
     }
     if self.energy != 0 {
-      try visitor.visitSingularDoubleField(value: self.energy, fieldNumber: 4)
+      try visitor.visitSingularFloatField(value: self.energy, fieldNumber: 4)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: Apisvr_FavouriteItem, rhs: Apisvr_FavouriteItem) -> Bool {
-    if lhs.itemID != rhs.itemID {return false}
+    if lhs.itemMappingID != rhs.itemMappingID {return false}
     if lhs.imgURL != rhs.imgURL {return false}
     if lhs.name != rhs.name {return false}
     if lhs.energy != rhs.energy {return false}
@@ -682,14 +965,14 @@ extension Apisvr_AddUserFavouriteItemReq: SwiftProtobuf.Message, SwiftProtobuf._
   static let protoMessageName: String = _protobuf_package + ".AddUserFavouriteItemReq"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "item_type"),
-    2: .standard(proto: "item_id"),
+    2: .standard(proto: "item_mapping_id"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       switch fieldNumber {
       case 1: try decoder.decodeSingularInt32Field(value: &self.itemType)
-      case 2: try decoder.decodeSingularInt32Field(value: &self.itemID)
+      case 2: try decoder.decodeSingularInt32Field(value: &self.itemMappingID)
       default: break
       }
     }
@@ -699,15 +982,15 @@ extension Apisvr_AddUserFavouriteItemReq: SwiftProtobuf.Message, SwiftProtobuf._
     if self.itemType != 0 {
       try visitor.visitSingularInt32Field(value: self.itemType, fieldNumber: 1)
     }
-    if self.itemID != 0 {
-      try visitor.visitSingularInt32Field(value: self.itemID, fieldNumber: 2)
+    if self.itemMappingID != 0 {
+      try visitor.visitSingularInt32Field(value: self.itemMappingID, fieldNumber: 2)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: Apisvr_AddUserFavouriteItemReq, rhs: Apisvr_AddUserFavouriteItemReq) -> Bool {
     if lhs.itemType != rhs.itemType {return false}
-    if lhs.itemID != rhs.itemID {return false}
+    if lhs.itemMappingID != rhs.itemMappingID {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -736,14 +1019,14 @@ extension Apisvr_RemoveFavouriteItemReq: SwiftProtobuf.Message, SwiftProtobuf._M
   static let protoMessageName: String = _protobuf_package + ".RemoveFavouriteItemReq"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "item_type"),
-    2: .standard(proto: "item_id"),
+    2: .standard(proto: "item_mapping_id"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       switch fieldNumber {
       case 1: try decoder.decodeSingularInt32Field(value: &self.itemType)
-      case 2: try decoder.decodeSingularInt32Field(value: &self.itemID)
+      case 2: try decoder.decodeSingularInt32Field(value: &self.itemMappingID)
       default: break
       }
     }
@@ -753,15 +1036,15 @@ extension Apisvr_RemoveFavouriteItemReq: SwiftProtobuf.Message, SwiftProtobuf._M
     if self.itemType != 0 {
       try visitor.visitSingularInt32Field(value: self.itemType, fieldNumber: 1)
     }
-    if self.itemID != 0 {
-      try visitor.visitSingularInt32Field(value: self.itemID, fieldNumber: 2)
+    if self.itemMappingID != 0 {
+      try visitor.visitSingularInt32Field(value: self.itemMappingID, fieldNumber: 2)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: Apisvr_RemoveFavouriteItemReq, rhs: Apisvr_RemoveFavouriteItemReq) -> Bool {
     if lhs.itemType != rhs.itemType {return false}
-    if lhs.itemID != rhs.itemID {return false}
+    if lhs.itemMappingID != rhs.itemMappingID {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -781,6 +1064,66 @@ extension Apisvr_RemoveUserFavouriteItemResp: SwiftProtobuf.Message, SwiftProtob
   }
 
   static func ==(lhs: Apisvr_RemoveUserFavouriteItemResp, rhs: Apisvr_RemoveUserFavouriteItemResp) -> Bool {
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Apisvr_GetGoalDetailsReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".GetGoalDetailsReq"
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let _ = try decoder.nextFieldNumber() {
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Apisvr_GetGoalDetailsReq, rhs: Apisvr_GetGoalDetailsReq) -> Bool {
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Apisvr_GetGoalDetailsResp: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".GetGoalDetailsResp"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "recommended_energy_instake"),
+    2: .standard(proto: "recommended_weight_loss"),
+    3: .same(proto: "days"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      switch fieldNumber {
+      case 1: try decoder.decodeSingularFloatField(value: &self.recommendedEnergyInstake)
+      case 2: try decoder.decodeSingularFloatField(value: &self.recommendedWeightLoss)
+      case 3: try decoder.decodeSingularInt32Field(value: &self.days)
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.recommendedEnergyInstake != 0 {
+      try visitor.visitSingularFloatField(value: self.recommendedEnergyInstake, fieldNumber: 1)
+    }
+    if self.recommendedWeightLoss != 0 {
+      try visitor.visitSingularFloatField(value: self.recommendedWeightLoss, fieldNumber: 2)
+    }
+    if self.days != 0 {
+      try visitor.visitSingularInt32Field(value: self.days, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Apisvr_GetGoalDetailsResp, rhs: Apisvr_GetGoalDetailsResp) -> Bool {
+    if lhs.recommendedEnergyInstake != rhs.recommendedEnergyInstake {return false}
+    if lhs.recommendedWeightLoss != rhs.recommendedWeightLoss {return false}
+    if lhs.days != rhs.days {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

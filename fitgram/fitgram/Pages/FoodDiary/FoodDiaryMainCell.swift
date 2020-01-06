@@ -37,7 +37,7 @@ class FoodDiaryMainCell: UITableViewCell {
         shadowContainer.layer.shadowOpacity = 0.2
         shadowContainer.layer.shadowRadius = 10
         shadowContainer.backgroundColor = UIColor.white
-        //init collectionview frame
+        //init collectionview frameOL
         foodImagecCollectionView = UICollectionView.init(frame: CGRect(x: 16, y: 80, width: Int(UIScreen.main.bounds.width-64), height: collectionViewHeight), collectionViewLayout: UICollectionViewFlowLayout())
         foodImagecCollectionView.delegate = self
         foodImagecCollectionView.dataSource = self
@@ -106,8 +106,8 @@ extension FoodDiaryMainCell: UITableViewDelegate, UITableViewDataSource {
             }
         }
         cell.foodNameLabel.text = foodItems[indexPath.row].foodName
-        cell.calorieLabel.text = String(foodItems[indexPath.row].energy)
-        cell.portionLabel.text = String(foodItems[indexPath.row].amount) + foodItems[indexPath.row].unit
+        cell.calorieLabel.text = String(Int(foodItems[indexPath.row].energy)) + "千卡"
+        cell.portionLabel.text = String(foodItems[indexPath.row].amount) + " " + foodItems[indexPath.row].unit
         return cell
     }
 
@@ -126,7 +126,7 @@ extension FoodDiaryMainCell: UICollectionViewDelegate, UICollectionViewDataSourc
         if indexPath.row == mealList.count {//case for plus icon
             cell.mealImage.image = UIImage(named: "foodDiaryPlus_red")
         } else {
-            cell.mealImage.kf.setImage(with: URL(string: mealList[indexPath.row].imgURL))
+            cell.mealImage.kf.setImage(with: URL(string: mealList[indexPath.row].imgURL),placeholder: UIImage(named: "fitgram_defaultIcon"))
         }
         return cell
     }

@@ -12,13 +12,16 @@ import Kingfisher
 import AADraggableView
 import SwiftGRPC
 
-class FoodDiaryTagViewController:UIViewController {
+class FoodDiaryTagViewController:BaseViewController {
     var rootView:FoodDiaryTagView! = nil
     var selectedImage = UIImage()
     var taskId = ""
     var foodTagList = [Apisvr_FoodTag]()
     var mealType:Apisvr_MealType = .breakfast
+    var textSearchSuggestedResult = [Apisvr_SuggestedTag]()
     
+    var imageKey = ""
+    var diaryDate = Date()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,16 +31,17 @@ class FoodDiaryTagViewController:UIViewController {
         self.navigationItem.hidesBackButton = true
         self.navigationItem.leftBarButtonItem  = UIBarButtonItem(image: UIImage(imageLiteralResourceName: "backbutton_black"), style: .plain, target: self, action: #selector(onBackPressed))
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "下一步", style: .plain, target: self, action:  #selector(requestForFoodDetail))
-        rootView.didAddTag = {
+        rootView.didAddTag = { tagX,tagY in
+            self.getRecognitionResult(tagX: tagX, tagY: tagY)
             //navigate page to text search
-            let targetVC = TextSearchViewController()
-            targetVC.textSearchDelegate = self
-            targetVC.recognitionTaskId = self.taskId
-            self.navigationController?.pushViewController(targetVC, animated: true)
+//            let targetVC = TextSearchViewController()
+//            targetVC.textSearchDelegate = self
+//            targetVC.textSearchSuggestedResult = self.textSearchSuggestedResult
+//            self.navigationController?.pushViewController(targetVC, animated: true)
         }
     }
     
-    @objc func onBackPressed(){
+    @objc func onBackPressed() {
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -47,7 +51,34 @@ class FoodDiaryTagViewController:UIViewController {
         rootView.foodImage.image = selectedImage
     }
     
-    @objc func requestForFoodDetail(){
+    func getRecognitionResult(tagX:Double, tagY:Double) {
+        var req = Apisvr_GetRecognitionResultReq()
+        req.taskID = self.taskId
+        req.tagX = tagX
+        req.tagY = tagY
+        do{
+            guard let token = UserDefaults.standard.string(forKey: Constants.tokenKey) else {
+                return
+            }
+            let metaData = try Metadata(["authorization": "Token " + token])
+//            self.showLoadingDialog(targetController: self)
+            try FoodDiaryDataManager.shared.client.getRecognitionResult(req, metadata: metaData, completion: { (resp, result) in
+                DispatchQueue.main.async {
+//                    self.hideLoadingDialog()
+                    if result.statusCode == .ok {
+                        let targetVC = TextSearchViewController()
+                        targetVC.textSearchDelegate = self
+                        targetVC.textSearchSuggestedResult =  resp!.suggestedTags
+                        self.navigationController?.pushViewController(targetVC, animated: true)
+                    }
+                }
+            })
+        }catch{
+            print("error")
+        }
+    }
+    
+    @objc func requestForFoodDetail() {
         do{
             guard let token = UserDefaults.standard.string(forKey: Constants.tokenKey) else {
                 return
@@ -59,8 +90,10 @@ class FoodDiaryTagViewController:UIViewController {
                 if result.statusCode == .ok {
                     let targetVC = FoodDiaryDetailViewController()
                     targetVC.foodImage = self.selectedImage
+                    targetVC.imgUrl = self.imageKey
                     targetVC.foodDiaryList = resp!.foodLogs
                     targetVC.mealType = self.mealType
+                    targetVC.diaryDate = self.diaryDate
                     targetVC.mealLogList = self.convertFoodLogToInfo(foodDiaryList: resp!.foodLogs, foodTagList: self.foodTagList)
                     DispatchQueue.main.async {
                         self.navigationController?.pushViewController(targetVC, animated: true)

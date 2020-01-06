@@ -58,32 +58,7 @@ extension PhotoRecordHomeViewController:  UIImagePickerControllerDelegate,UINavi
         let timeStamp = String(Int(Date().timeIntervalSince1970 * 1000))
         let objectKey = userId + "_" + timeStamp
         UploaderManager.shared.asyncPutImage(objectKey: objectKey, image: selectedImage) { (objectKey) in
-            do{
-                var req = Apisvr_RecognitionReq()
-                req.imgURL = objectKey
-                req.lat = 0.0
-                req.lng = 0.0
-                guard let token = UserDefaults.standard.string(forKey: Constants.tokenKey) else {
-                    return
-                }
-                let metaData = try Metadata(["authorization": "Token " + token])
-                try FoodDiaryDataManager.shared.client.recognition(req, metadata: metaData, completion: { (resp, result) in
-                    if result.statusCode == .ok {
-                        guard let taskId = resp?.taskID else {
-                            return
-                        }
-                        let targetVC = FoodDiaryTagViewController()
-                        targetVC.selectedImage = selectedImage
-                        targetVC.taskId = taskId
-                        targetVC.mealType = self.currentMealType
-                        DispatchQueue.main.async {
-                            self.navigationController?.pushViewController(targetVC, animated: true)
-                        }
-                    }
-                })
-            } catch {
-                print(error)
-            }
+            
         }
     }
     

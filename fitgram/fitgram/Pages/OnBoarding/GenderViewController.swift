@@ -36,9 +36,9 @@ class GenderViewController: UIViewController {
     }
     
     func setUpProgressView() {
-        self.title = "2/7"
+        self.title = "1/7"
         progressBar.frame = CGRect(x: 0, y: 88, width: UIScreen.main.bounds.width, height: 6)
-        progressBar.progress = 2/7
+        progressBar.progress = 1/7
         progressBar.backgroundColor = UIColor(red: 244/255, green: 244/255, blue: 244/255, alpha: 1)
         progressBar.progressTintColor = UIColor(red: 252/255, green: 200/255, blue: 45/255, alpha: 1)
     }
@@ -47,9 +47,9 @@ class GenderViewController: UIViewController {
         maleBtn.isSelected = (sender == maleBtn)
         femaleBtn.isSelected = (sender == femaleBtn)
         if sender == femaleBtn{
-            ProfileDataManager.shared.profile.gender = 0
+            ProfileDataManager.shared.profile.gender = .female
         } else {
-            ProfileDataManager.shared.profile.gender = 1
+            ProfileDataManager.shared.profile.gender = .male
         }
         let targetVC = BirthYearViewController()
         self.navigationController?.pushViewController(targetVC, animated: true)

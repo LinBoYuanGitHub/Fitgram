@@ -17,7 +17,7 @@ class ProgressDataManager {
         address = Bundle.main.object(forInfoDictionaryKey: "GRPC_Address") as! String
         gRPC.initialize()
         print("GRPC version \(gRPC.version) - endpoint: \(address)")
-        self.client = Apisvr_ProgressServiceServiceClient(address: address, secure: false)
+        self.client = Apisvr_ProgressServiceServiceClient(address: address, secure: true)
     }
     
 }

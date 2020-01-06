@@ -55,6 +55,12 @@ fileprivate final class Apisvr_UserServiceRemoveFavouriteItemCallBase: ClientCal
   override class var method: String { return "/apisvr.UserService/RemoveFavouriteItem" }
 }
 
+internal protocol Apisvr_UserServiceGetGoalDetailsCall: ClientCallUnary {}
+
+fileprivate final class Apisvr_UserServiceGetGoalDetailsCallBase: ClientCallUnaryBase<Apisvr_GetGoalDetailsReq, Apisvr_GetGoalDetailsResp>, Apisvr_UserServiceGetGoalDetailsCall {
+  override class var method: String { return "/apisvr.UserService/GetGoalDetails" }
+}
+
 
 /// Instantiate Apisvr_UserServiceServiceClient, then call methods of this protocol to make API calls.
 internal protocol Apisvr_UserServiceService: ServiceClient {
@@ -87,6 +93,12 @@ internal protocol Apisvr_UserServiceService: ServiceClient {
   /// Asynchronous. Unary.
   @discardableResult
   func removeFavouriteItem(_ request: Apisvr_RemoveFavouriteItemReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_RemoveUserFavouriteItemResp?, CallResult) -> Void) throws -> Apisvr_UserServiceRemoveFavouriteItemCall
+
+  /// Synchronous. Unary.
+  func getGoalDetails(_ request: Apisvr_GetGoalDetailsReq, metadata customMetadata: Metadata) throws -> Apisvr_GetGoalDetailsResp
+  /// Asynchronous. Unary.
+  @discardableResult
+  func getGoalDetails(_ request: Apisvr_GetGoalDetailsReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_GetGoalDetailsResp?, CallResult) -> Void) throws -> Apisvr_UserServiceGetGoalDetailsCall
 
 }
 
@@ -139,6 +151,16 @@ internal extension Apisvr_UserServiceService {
   @discardableResult
   func removeFavouriteItem(_ request: Apisvr_RemoveFavouriteItemReq, completion: @escaping (Apisvr_RemoveUserFavouriteItemResp?, CallResult) -> Void) throws -> Apisvr_UserServiceRemoveFavouriteItemCall {
     return try self.removeFavouriteItem(request, metadata: self.metadata, completion: completion)
+  }
+
+  /// Synchronous. Unary.
+  func getGoalDetails(_ request: Apisvr_GetGoalDetailsReq) throws -> Apisvr_GetGoalDetailsResp {
+    return try self.getGoalDetails(request, metadata: self.metadata)
+  }
+  /// Asynchronous. Unary.
+  @discardableResult
+  func getGoalDetails(_ request: Apisvr_GetGoalDetailsReq, completion: @escaping (Apisvr_GetGoalDetailsResp?, CallResult) -> Void) throws -> Apisvr_UserServiceGetGoalDetailsCall {
+    return try self.getGoalDetails(request, metadata: self.metadata, completion: completion)
   }
 
 }
@@ -204,6 +226,18 @@ internal final class Apisvr_UserServiceServiceClient: ServiceClientBase, Apisvr_
       .start(request: request, metadata: customMetadata, completion: completion)
   }
 
+  /// Synchronous. Unary.
+  internal func getGoalDetails(_ request: Apisvr_GetGoalDetailsReq, metadata customMetadata: Metadata) throws -> Apisvr_GetGoalDetailsResp {
+    return try Apisvr_UserServiceGetGoalDetailsCallBase(channel)
+      .run(request: request, metadata: customMetadata)
+  }
+  /// Asynchronous. Unary.
+  @discardableResult
+  internal func getGoalDetails(_ request: Apisvr_GetGoalDetailsReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_GetGoalDetailsResp?, CallResult) -> Void) throws -> Apisvr_UserServiceGetGoalDetailsCall {
+    return try Apisvr_UserServiceGetGoalDetailsCallBase(channel)
+      .start(request: request, metadata: customMetadata, completion: completion)
+  }
+
 }
 
 /// To build a server, implement a class that conforms to this protocol.
@@ -215,6 +249,7 @@ internal protocol Apisvr_UserServiceProvider: ServiceProvider {
   func getUserFavouriteItem(request: Apisvr_GetUserFavouriteItemReq, session: Apisvr_UserServiceGetUserFavouriteItemSession) throws -> Apisvr_GetUserFavouriteItemResp
   func addUserFavouriteItem(request: Apisvr_AddUserFavouriteItemReq, session: Apisvr_UserServiceAddUserFavouriteItemSession) throws -> Apisvr_AddUserFavouriteItemResp
   func removeFavouriteItem(request: Apisvr_RemoveFavouriteItemReq, session: Apisvr_UserServiceRemoveFavouriteItemSession) throws -> Apisvr_RemoveUserFavouriteItemResp
+  func getGoalDetails(request: Apisvr_GetGoalDetailsReq, session: Apisvr_UserServiceGetGoalDetailsSession) throws -> Apisvr_GetGoalDetailsResp
 }
 
 extension Apisvr_UserServiceProvider {
@@ -249,6 +284,11 @@ extension Apisvr_UserServiceProvider {
         handler: handler,
         providerBlock: { try self.removeFavouriteItem(request: $0, session: $1 as! Apisvr_UserServiceRemoveFavouriteItemSessionBase) })
           .run()
+    case "/apisvr.UserService/GetGoalDetails":
+      return try Apisvr_UserServiceGetGoalDetailsSessionBase(
+        handler: handler,
+        providerBlock: { try self.getGoalDetails(request: $0, session: $1 as! Apisvr_UserServiceGetGoalDetailsSessionBase) })
+          .run()
     default:
       throw HandleMethodError.unknownMethod
     }
@@ -274,4 +314,8 @@ fileprivate final class Apisvr_UserServiceAddUserFavouriteItemSessionBase: Serve
 internal protocol Apisvr_UserServiceRemoveFavouriteItemSession: ServerSessionUnary {}
 
 fileprivate final class Apisvr_UserServiceRemoveFavouriteItemSessionBase: ServerSessionUnaryBase<Apisvr_RemoveFavouriteItemReq, Apisvr_RemoveUserFavouriteItemResp>, Apisvr_UserServiceRemoveFavouriteItemSession {}
+
+internal protocol Apisvr_UserServiceGetGoalDetailsSession: ServerSessionUnary {}
+
+fileprivate final class Apisvr_UserServiceGetGoalDetailsSessionBase: ServerSessionUnaryBase<Apisvr_GetGoalDetailsReq, Apisvr_GetGoalDetailsResp>, Apisvr_UserServiceGetGoalDetailsSession {}
 

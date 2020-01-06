@@ -19,11 +19,104 @@ fileprivate struct _GeneratedWithProtocGenSwiftVersion: SwiftProtobuf.ProtobufAP
   typealias Version = _2
 }
 
+enum Apisvr_UserType: SwiftProtobuf.Enum {
+  typealias RawValue = Int
+  case unknownUserType // = 0
+  case registered // = 1
+  case vip // = 2
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .unknownUserType
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .unknownUserType
+    case 1: self = .registered
+    case 2: self = .vip
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .unknownUserType: return 0
+    case .registered: return 1
+    case .vip: return 2
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+}
+
+#if swift(>=4.2)
+
+extension Apisvr_UserType: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static var allCases: [Apisvr_UserType] = [
+    .unknownUserType,
+    .registered,
+    .vip,
+  ]
+}
+
+#endif  // swift(>=4.2)
+
+enum Apisvr_OtpType: SwiftProtobuf.Enum {
+  typealias RawValue = Int
+  case unknownOtpType // = 0
+  case loginOtp // = 1
+  case registerOtp // = 2
+  case resetPassOtp // = 3
+  case UNRECOGNIZED(Int)
+
+  init() {
+    self = .unknownOtpType
+  }
+
+  init?(rawValue: Int) {
+    switch rawValue {
+    case 0: self = .unknownOtpType
+    case 1: self = .loginOtp
+    case 2: self = .registerOtp
+    case 3: self = .resetPassOtp
+    default: self = .UNRECOGNIZED(rawValue)
+    }
+  }
+
+  var rawValue: Int {
+    switch self {
+    case .unknownOtpType: return 0
+    case .loginOtp: return 1
+    case .registerOtp: return 2
+    case .resetPassOtp: return 3
+    case .UNRECOGNIZED(let i): return i
+    }
+  }
+
+}
+
+#if swift(>=4.2)
+
+extension Apisvr_OtpType: CaseIterable {
+  // The compiler won't synthesize support with the UNRECOGNIZED case.
+  static var allCases: [Apisvr_OtpType] = [
+    .unknownOtpType,
+    .loginOtp,
+    .registerOtp,
+    .resetPassOtp,
+  ]
+}
+
+#endif  // swift(>=4.2)
+
 struct Apisvr_AnonymousLoginReq {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  /// pass empty string at first time
   var userID: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -68,6 +161,8 @@ struct Apisvr_AppLoginResp {
 
   var isNewUser: Bool = false
 
+  var userType: Apisvr_UserType = .unknownUserType
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -95,6 +190,8 @@ struct Apisvr_OneTimePasswordLoginResp {
   var token: String = String()
 
   var isNewUser: Bool = false
+
+  var userType: Apisvr_UserType = .unknownUserType
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -125,6 +222,8 @@ struct Apisvr_ThirdPartyLoginResp {
   var token: String = String()
 
   var isNewUser: Bool = false
+
+  var userType: Apisvr_UserType = .unknownUserType
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -192,7 +291,7 @@ struct Apisvr_GetOneTimePasswordReq {
 
   var phone: String = String()
 
-  var purpose: Int32 = 0
+  var purpose: Apisvr_OtpType = .unknownOtpType
 
   var userID: String = String()
 
@@ -266,6 +365,23 @@ struct Apisvr_ResetPasswordResp {
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate let _protobuf_package = "apisvr"
+
+extension Apisvr_UserType: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "UNKNOWN_USER_TYPE"),
+    1: .same(proto: "REGISTERED"),
+    2: .same(proto: "VIP"),
+  ]
+}
+
+extension Apisvr_OtpType: SwiftProtobuf._ProtoNameProviding {
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    0: .same(proto: "UNKNOWN_OTP_TYPE"),
+    1: .same(proto: "LOGIN_OTP"),
+    2: .same(proto: "REGISTER_OTP"),
+    3: .same(proto: "RESET_PASS_OTP"),
+  ]
+}
 
 extension Apisvr_AnonymousLoginReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".AnonymousLoginReq"
@@ -371,6 +487,7 @@ extension Apisvr_AppLoginResp: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "token"),
     2: .standard(proto: "is_new_user"),
+    3: .standard(proto: "user_type"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -378,6 +495,7 @@ extension Apisvr_AppLoginResp: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
       switch fieldNumber {
       case 1: try decoder.decodeSingularStringField(value: &self.token)
       case 2: try decoder.decodeSingularBoolField(value: &self.isNewUser)
+      case 3: try decoder.decodeSingularEnumField(value: &self.userType)
       default: break
       }
     }
@@ -390,12 +508,16 @@ extension Apisvr_AppLoginResp: SwiftProtobuf.Message, SwiftProtobuf._MessageImpl
     if self.isNewUser != false {
       try visitor.visitSingularBoolField(value: self.isNewUser, fieldNumber: 2)
     }
+    if self.userType != .unknownUserType {
+      try visitor.visitSingularEnumField(value: self.userType, fieldNumber: 3)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: Apisvr_AppLoginResp, rhs: Apisvr_AppLoginResp) -> Bool {
     if lhs.token != rhs.token {return false}
     if lhs.isNewUser != rhs.isNewUser {return false}
+    if lhs.userType != rhs.userType {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -441,6 +563,7 @@ extension Apisvr_OneTimePasswordLoginResp: SwiftProtobuf.Message, SwiftProtobuf.
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "token"),
     2: .standard(proto: "is_new_user"),
+    3: .standard(proto: "user_type"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -448,6 +571,7 @@ extension Apisvr_OneTimePasswordLoginResp: SwiftProtobuf.Message, SwiftProtobuf.
       switch fieldNumber {
       case 1: try decoder.decodeSingularStringField(value: &self.token)
       case 2: try decoder.decodeSingularBoolField(value: &self.isNewUser)
+      case 3: try decoder.decodeSingularEnumField(value: &self.userType)
       default: break
       }
     }
@@ -460,12 +584,16 @@ extension Apisvr_OneTimePasswordLoginResp: SwiftProtobuf.Message, SwiftProtobuf.
     if self.isNewUser != false {
       try visitor.visitSingularBoolField(value: self.isNewUser, fieldNumber: 2)
     }
+    if self.userType != .unknownUserType {
+      try visitor.visitSingularEnumField(value: self.userType, fieldNumber: 3)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: Apisvr_OneTimePasswordLoginResp, rhs: Apisvr_OneTimePasswordLoginResp) -> Bool {
     if lhs.token != rhs.token {return false}
     if lhs.isNewUser != rhs.isNewUser {return false}
+    if lhs.userType != rhs.userType {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -517,6 +645,7 @@ extension Apisvr_ThirdPartyLoginResp: SwiftProtobuf.Message, SwiftProtobuf._Mess
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "token"),
     2: .standard(proto: "is_new_user"),
+    3: .standard(proto: "user_type"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -524,6 +653,7 @@ extension Apisvr_ThirdPartyLoginResp: SwiftProtobuf.Message, SwiftProtobuf._Mess
       switch fieldNumber {
       case 1: try decoder.decodeSingularStringField(value: &self.token)
       case 2: try decoder.decodeSingularBoolField(value: &self.isNewUser)
+      case 3: try decoder.decodeSingularEnumField(value: &self.userType)
       default: break
       }
     }
@@ -536,12 +666,16 @@ extension Apisvr_ThirdPartyLoginResp: SwiftProtobuf.Message, SwiftProtobuf._Mess
     if self.isNewUser != false {
       try visitor.visitSingularBoolField(value: self.isNewUser, fieldNumber: 2)
     }
+    if self.userType != .unknownUserType {
+      try visitor.visitSingularEnumField(value: self.userType, fieldNumber: 3)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: Apisvr_ThirdPartyLoginResp, rhs: Apisvr_ThirdPartyLoginResp) -> Bool {
     if lhs.token != rhs.token {return false}
     if lhs.isNewUser != rhs.isNewUser {return false}
+    if lhs.userType != rhs.userType {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -693,7 +827,7 @@ extension Apisvr_GetOneTimePasswordReq: SwiftProtobuf.Message, SwiftProtobuf._Me
     while let fieldNumber = try decoder.nextFieldNumber() {
       switch fieldNumber {
       case 1: try decoder.decodeSingularStringField(value: &self.phone)
-      case 2: try decoder.decodeSingularInt32Field(value: &self.purpose)
+      case 2: try decoder.decodeSingularEnumField(value: &self.purpose)
       case 3: try decoder.decodeSingularStringField(value: &self.userID)
       default: break
       }
@@ -704,8 +838,8 @@ extension Apisvr_GetOneTimePasswordReq: SwiftProtobuf.Message, SwiftProtobuf._Me
     if !self.phone.isEmpty {
       try visitor.visitSingularStringField(value: self.phone, fieldNumber: 1)
     }
-    if self.purpose != 0 {
-      try visitor.visitSingularInt32Field(value: self.purpose, fieldNumber: 2)
+    if self.purpose != .unknownOtpType {
+      try visitor.visitSingularEnumField(value: self.purpose, fieldNumber: 2)
     }
     if !self.userID.isEmpty {
       try visitor.visitSingularStringField(value: self.userID, fieldNumber: 3)

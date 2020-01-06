@@ -8,8 +8,9 @@
 
 import UIKit
 import SwiftGRPC
+import EPCalendarPicker
 
-class FoodDiaryViewController:UIViewController {
+class FoodDiaryViewController:BaseViewController {
     var rootView:FoodDiaryView! = nil
     var nutritient = Apisvr_FoodDiaryNutrient()
     var mealEntity = Apisvr_GetFoodDiaryResp()
@@ -22,10 +23,40 @@ class FoodDiaryViewController:UIViewController {
         on("INJECTION_BUNDLE_NOTIFICATION") {
             self.loadView()
         }
+        rootView.onDateBtnPressedEvent = {
+//            let targetVC = CalendarViewController()
+//            self.navigationController?.pushViewController(targetVC, animated: true)
+            let calendarPicker = EPCalendarPicker(startYear: 2019, endYear: 2020, multiSelection: false, selectedDates: [self.diaryDate])
+            calendarPicker.calendarDelegate = self
+            calendarPicker.weekdayTintColor = .black
+            let navigationController = UINavigationController(rootViewController: calendarPicker)
+            self.present(navigationController, animated: true) {
+                calendarPicker.scrollToMonthForDate(self.diaryDate)
+            }
+        }
+        rootView.onLeftArrowPressedEvent = {
+            self.diaryDate = Calendar.current.date(byAdding: .day,value: -1, to: self.diaryDate)!
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MM-dd"
+            let title = dateFormatter.string(from: self.diaryDate)
+            self.rootView.dateBtn.setTitle(title, for: .normal)
+            self.requestForFoodDiary()
+        }
+        
+        rootView.onRightArrowPressedEvent = {
+            self.diaryDate = Calendar.current.date(byAdding: .day,value: 1, to: self.diaryDate)!
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "MM-dd"
+            let title = dateFormatter.string(from: self.diaryDate)
+            self.rootView.dateBtn.setTitle(title, for: .normal)
+            self.requestForFoodDiary()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.requestForFoodDiary()
+        //navigatation bar setting
+        self.navigationController?.view.backgroundColor = .white
     }
     
     override func loadView() {
@@ -42,21 +73,33 @@ class FoodDiaryViewController:UIViewController {
         do{
             var request = Apisvr_GetFoodDiaryReq()
             let calendar = Calendar(identifier: .chinese)
-            let components = calendar.dateComponents([.year,.month,.day],from: Date())
+            let components = calendar.dateComponents([.year,.month,.day],from: diaryDate)
             request.date = Int64(calendar.date(from: components)!.timeIntervalSince1970)
             guard let token = UserDefaults.standard.string(forKey: Constants.tokenKey) else {
                 return
             }
             let metaData = try Metadata(["authorization": "Token " + token])
+            self.rootView.leftDateArrow.isEnabled = false
+            self.rootView.rightDateArrow.isEnabled = false
             try FoodDiaryDataManager.shared.client.getFoodDiary(request, metadata: metaData) { (resp, result) in
+                if result.statusCode != .ok {
+                    return
+                }
                 self.mealEntity = resp!
                 self.nutritient = resp!.nutrient
                 DispatchQueue.main.async {
+                    self.rootView.leftDateArrow.isEnabled = true
+                    self.rootView.rightDateArrow.isEnabled = true
                     self.rootView.foodDiaryTableView.reloadData()
                     self.rootView.nutrientPanel.nutrientObj = self.nutritient
+                    self.rootView.nutrientPanel.nutritionCollectionView.reloadData()
                 }
             }
         }catch {
+            DispatchQueue.main.async {
+                self.rootView.leftDateArrow.isEnabled = true
+                self.rootView.rightDateArrow.isEnabled = true
+            }
             print(error)
         }
     }
@@ -148,8 +191,8 @@ extension FoodDiaryViewController: UITableViewDelegate, UITableViewDataSource {
         switch indexPath.row{
         case 0://breakfast
             cell.mealTItle.text = "早餐"
-            cell.calorieTitle.text = String(mealEntity.nutrientByMeal.breakfastEnergy) + "千卡"
-            cell.suggestionIntakenLabel.text = "推荐:占每日摄入量的\(mealEntity.nutrientByMeal.breakfastPercentage)(大约\(mealEntity.nutrientByMeal.breakfastEnergy)千卡)"
+            cell.calorieTitle.text = String(Int(mealEntity.nutrientByMeal.breakfastEnergy)) + "千卡"
+            cell.suggestionIntakenLabel.text = "推荐:占每日摄入量的\(mealEntity.nutrientByMeal.breakfastPercentage)(大约\(Int(mealEntity.nutrient.energyRecommend*mealEntity.nutrientByMeal.breakfastPercentage))千卡)"
             cell.setUpMealData(mealList: mealEntity.mealLogs[0].mealLogByType)   //Apisvr_FoodDiaryMealLog
             cell.didSelectMealAction = { index in
                 self.showRecordActionSheet()
@@ -158,8 +201,8 @@ extension FoodDiaryViewController: UITableViewDelegate, UITableViewDataSource {
             break;
         case 1://lunch
              cell.mealTItle.text = "午餐"
-             cell.calorieTitle.text = String(mealEntity.nutrientByMeal.lunchEnergy) + "千卡"
-             cell.suggestionIntakenLabel.text = "推荐:占每日摄入量的\(mealEntity.nutrientByMeal.lunchPercentage)(大约\(mealEntity.nutrientByMeal.lunchEnergy)千卡)"
+             cell.calorieTitle.text = String(Int(mealEntity.nutrientByMeal.lunchEnergy)) + "千卡"
+             cell.suggestionIntakenLabel.text = "推荐:占每日摄入量的\(mealEntity.nutrientByMeal.lunchPercentage)(大约\(Int(mealEntity.nutrient.energyRecommend*mealEntity.nutrientByMeal.lunchPercentage))千卡)"
              cell.setUpMealData(mealList: mealEntity.mealLogs[1].mealLogByType)
              cell.didSelectMealAction = { index in
                 self.showRecordActionSheet()
@@ -168,8 +211,8 @@ extension FoodDiaryViewController: UITableViewDelegate, UITableViewDataSource {
             break;
         case 2://dinner
              cell.mealTItle.text = "晚餐"
-             cell.calorieTitle.text = String(mealEntity.nutrientByMeal.dinnerEnergy) + "千卡"
-             cell.suggestionIntakenLabel.text = "推荐:占每日摄入量的\(mealEntity.nutrientByMeal.dinnerPercentage)(大约\(mealEntity.nutrientByMeal.dinnerEnergy)千卡)"
+             cell.calorieTitle.text = String(Int(mealEntity.nutrientByMeal.dinnerEnergy)) + "千卡"
+             cell.suggestionIntakenLabel.text = "推荐:占每日摄入量的\(mealEntity.nutrientByMeal.dinnerPercentage)(大约\(Int(mealEntity.nutrient.energyRecommend*mealEntity.nutrientByMeal.dinnerPercentage))千卡)"
              cell.setUpMealData(mealList: mealEntity.mealLogs[2].mealLogByType)
              cell.didSelectMealAction = { index in
                 self.showRecordActionSheet()
@@ -215,6 +258,7 @@ extension FoodDiaryViewController: UIImagePickerControllerDelegate,UINavigationC
         }
         let timeStamp = String(Int(Date().timeIntervalSince1970 * 1000))
         let objectKey = userId + "_" + timeStamp
+        self.showLoadingDialog(targetController: self, loadingText: "上传图片中...")
         UploaderManager.shared.asyncPutImage(objectKey: objectKey, image: selectedImage) { (objectKey) in
             do{
                 var req = Apisvr_RecognitionReq()
@@ -225,19 +269,23 @@ extension FoodDiaryViewController: UIImagePickerControllerDelegate,UINavigationC
                     return
                 }
                 let metaData = try Metadata(["authorization": "Token " + token])
+//                self.modifyLoadingDialogText(loadingText: "识别中...")
                 try FoodDiaryDataManager.shared.client.recognition(req, metadata: metaData, completion: { (resp, result) in
-                    if result.statusCode == .ok {
-                        guard let taskId = resp?.taskID else {
-                            return
-                        }
-                        let targetVC = FoodDiaryTagViewController()
-                        targetVC.selectedImage = selectedImage
-                        targetVC.taskId = taskId
-                        targetVC.mealType = self.currentMealType
-                        DispatchQueue.main.async {
+                     DispatchQueue.main.asyncAfter(deadline:  .now() + 0.5, execute: {
+                        self.hideLoadingDialog()
+                        if result.statusCode == .ok {
+                            guard let taskId = resp?.taskID else {
+                                return
+                            }
+                            let targetVC = FoodDiaryTagViewController()
+                            targetVC.selectedImage = selectedImage
+                            targetVC.taskId = taskId
+                            targetVC.imageKey = objectKey
+                            targetVC.mealType = self.currentMealType
+                            targetVC.diaryDate = self.diaryDate
                             self.navigationController?.pushViewController(targetVC, animated: true)
                         }
-                    }
+                    })
                 })
             } catch {
                 print(error)
@@ -260,18 +308,56 @@ extension FoodDiaryViewController: TextSearchDelegate {
             }
             let metaData = try Metadata(["authorization": "Token " + token])
             try FoodDiaryDataManager.shared.client.getFoodLogDetail(req, metadata: metaData) { (resp, result) in
-                DispatchQueue.main.async {
-                    let targetVC = FoodDiaryDetailViewController()
-                    targetVC.mealType = self.currentMealType
-                    self.navigationController?.pushViewController(targetVC, animated: true)
+                if result.statusCode == .ok{
+                    DispatchQueue.main.async {
+                        let targetVC = FoodDiaryDetailViewController()
+                        targetVC.diaryDate = self.diaryDate
+                        targetVC.foodDiaryList = resp!.foodLogs
+                        targetVC.mealLogList = self.convertFoodLogToInfo(foodDiaryList: resp!.foodLogs)
+                        targetVC.mealType = self.currentMealType
+                        self.navigationController?.pushViewController(targetVC, animated: true)
+                    }
                 }
+               
             }
         }catch {
             print(error)
         }
     }
     
+    func convertFoodLogToInfo(foodDiaryList:[Apisvr_FoodLog]) -> [Apisvr_FoodLogInfo]{
+        var foodLogInfos = [Apisvr_FoodLogInfo]()
+        for index in 0...foodDiaryList.count - 1 {
+            var foodInfo = Apisvr_FoodLogInfo()
+            //set up initial value for logs
+            foodInfo.amount = 1
+            foodInfo.foodID = foodDiaryList[index].foodID
+            foodInfo.selectedUnitID = foodDiaryList[index].selectedUnitID
+            foodInfo.tagX = 0
+            foodInfo.tagY = 0
+            foodLogInfos.append(foodInfo)
+        }
+        return foodLogInfos
+    }
+    
     func onCancelTextSearchAction() {
         
+    }
+}
+
+extension FoodDiaryViewController: EPCalendarPickerDelegate {
+    
+    
+    func epCalendarPicker(_: EPCalendarPicker, didSelectDate date: Date) {
+        self.diaryDate = date
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM-dd"
+        let title = dateFormatter.string(from: self.diaryDate)
+        self.rootView.dateBtn.setTitle(title, for: .normal)
+        self.requestForFoodDiary()
+    }
+    
+    func epCalendarPicker(_: EPCalendarPicker, didCancel error: NSError) {
+        self.dismiss(animated: true, completion: nil)
     }
 }

@@ -111,6 +111,7 @@ class RecommendHomeViewController:UIViewController{
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
         self.navigationController?.navigationBar.topItem?.title = ""
         self.navigationController?.navigationBar.isTranslucent = false
         self.navigationController?.navigationBar.alpha = 1
@@ -201,6 +202,12 @@ extension RecommendHomeViewController: UITableViewDelegate, UITableViewDataSourc
             let targetVC = RecipeDetailViewController()
             self.navigationController?.pushViewController(targetVC, animated: false)
             targetVC.recipe = recipe
+            switch rowIndex {
+            case 0: targetVC.mealType = .breakfast
+            case 1: targetVC.mealType = .lunch
+            case 2: targetVC.mealType = .dinner
+            default: targetVC.mealType = .unknownMealType
+            }
             animationImage.removeFromSuperview()
             animationContainer.removeFromSuperview()
         }

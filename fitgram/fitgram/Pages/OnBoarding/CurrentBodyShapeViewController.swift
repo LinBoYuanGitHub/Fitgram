@@ -28,7 +28,7 @@ class CurrentBodyShapeViewController: UIViewController{
     var currentIndex = 0
     
     override func viewDidLoad() {
-        setUpProgressView()
+        self.setUpProgressView()
         self.view.backgroundColor = .white
         self.titleLabel.text = "当前体型"
         self.titleLabel.font  = UIFont(name: "PingFangSC-Medium", size: 20)
@@ -50,7 +50,13 @@ class CurrentBodyShapeViewController: UIViewController{
         confirmBtn.addTarget(self, action: #selector(nextStep), for: .touchUpInside)
         
         bodyFatLabel.font = UIFont(name: "PingFangSC-Regualr", size: 13)
-        bodyFatLabel.text = "BODY FAT:" + maleBodyFatRangeArr[currentIndex]
+        if ProfileDataManager.shared.profile.gender == .female{
+            bodyFatLabel.text = "BODY FAT:" + femaleBodyFatRangeArr[currentIndex]
+            ProfileDataManager.shared.profile.bodyType = Int32(1)
+        } else {
+            bodyFatLabel.text = "BODY FAT:" + maleBodyFatRangeArr[currentIndex]
+            ProfileDataManager.shared.profile.bodyType = Int32(9)
+        }
         bodyFatLabel.textAlignment = .center
         
         coverFrameView.layer.borderColor = UIColor(red: 33/255, green: 43/255, blue: 54/255, alpha: 1).cgColor
@@ -80,11 +86,12 @@ class CurrentBodyShapeViewController: UIViewController{
     }
     
     func setUpProgressView() {
-        self.title = "6/7"
+        self.title = "5/7"
         progressBar.frame = CGRect(x: 0, y: 88, width: UIScreen.main.bounds.width, height: 6)
-        progressBar.progress = 6/7
+        progressBar.progress = 5/7
         progressBar.backgroundColor = UIColor(red: 244/255, green: 244/255, blue: 244/255, alpha: 1)
         progressBar.progressTintColor = UIColor(red: 252/255, green: 200/255, blue: 45/255, alpha: 1)
+        self.view.addSubview(progressBar)
     }
     
     @objc func nextStep(){
@@ -99,14 +106,22 @@ class CurrentBodyShapeViewController: UIViewController{
 extension CurrentBodyShapeViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return maleBodyFatRangeArr.count
+        if ProfileDataManager.shared.profile.gender == .female{
+            return femaleBodyFatRangeArr.count
+        } else {
+            return maleBodyFatRangeArr.count
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BodyImageCollectionViewCell", for: indexPath) as? BodyImageCollectionViewCell else {
             return UICollectionViewCell()
         }
-        cell.bodyImageView.image = UIImage(named: maleBodyFatImageStrings[indexPath.row])
+        if ProfileDataManager.shared.profile.gender == .female{
+            cell.bodyImageView.image = UIImage(named: femaleBodyFatImagesStrings[indexPath.row])
+        } else {
+            cell.bodyImageView.image = UIImage(named: maleBodyFatImageStrings[indexPath.row])
+        }
         return cell
     }
     
@@ -120,7 +135,13 @@ extension CurrentBodyShapeViewController: UICollectionViewDelegate, UICollection
             return
         }
         currentIndex = indexPath.row
-        bodyFatLabel.text = "BODY FAT:" + maleBodyFatRangeArr[currentIndex]
+        if ProfileDataManager.shared.profile.gender == .female{
+            bodyFatLabel.text = "BODY FAT:" + femaleBodyFatRangeArr[currentIndex]
+            ProfileDataManager.shared.profile.bodyType = Int32(currentIndex + 1)
+        } else {
+            bodyFatLabel.text = "BODY FAT:" + maleBodyFatRangeArr[currentIndex]
+            ProfileDataManager.shared.profile.bodyType = Int32(currentIndex + 9)
+        }
     }
     
     

@@ -17,6 +17,8 @@ class GroceryDetailViewController: UIViewController {
     var groceryDetailItem = Apisvr_GetCheckListItemResp()
     var groceryList = [Apisvr_IngredientInfo]()
     
+    var HeadImageHeight = 0
+    
     override func loadView() {
         rootView = GroceryDetailView()
         rootView.ingredientTableView.delegate = self
@@ -60,6 +62,10 @@ extension GroceryDetailViewController: UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 75
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return CGFloat(HeadImageHeight)
     }
     
     @objc func onIngredientItemCheck(sender:UIButton){

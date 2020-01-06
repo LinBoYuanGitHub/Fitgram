@@ -44,7 +44,8 @@ class TextSearchViewController:UIViewController {
             self.loadView()
         }
         if !isKeepSearchPage {
-            self.getRecognitionResult()
+            self.rootView.setSuggestedData(suggestedTags: textSearchSuggestedResult)
+            self.rootView.foodRecognitionCollection.reloadData()
         }
         self.rootView.foodRecognitionCollection.delegate = self
         self.rootView.foodRecognitionCollection.dataSource = self
@@ -78,27 +79,6 @@ class TextSearchViewController:UIViewController {
         textSearchResult.append(entity2)
     }
     
-    func getRecognitionResult(){
-        var req = Apisvr_GetRecognitionResultReq()
-        req.taskID = self.recognitionTaskId
-        do{
-            guard let token = UserDefaults.standard.string(forKey: Constants.tokenKey) else {
-                return
-            }
-            let metaData = try Metadata(["authorization": "Token " + token])
-            try FoodDiaryDataManager.shared.client.getRecognitionResult(req, metadata: metaData, completion: { (resp, result) in
-                if result.statusCode == .ok {
-                    DispatchQueue.main.async {
-                        self.textSearchSuggestedResult = resp!.suggestedTags
-                        self.rootView.setSuggestedData(suggestedTags: resp!.suggestedTags)
-                        self.rootView.foodRecognitionCollection.reloadData()
-                    }
-                }
-            })
-        }catch{
-            print("error")
-        }
-    }
     
     func performTextSearch(keyword:String){
         var req = Apisvr_SearchReq()
@@ -109,7 +89,10 @@ class TextSearchViewController:UIViewController {
             }
             let metaData = try Metadata(["authorization": "Token " + token])
             try FoodDiaryDataManager.shared.client.search(req, metadata: metaData) { (resp, callback) in
-                self.textSearchResult =  resp!.searchItems
+                guard let search = resp else {
+                    return
+                }
+                self.textSearchResult =  search.searchItems
                 DispatchQueue.main.async {
                     self.rootView.foodTextSearchTable.reloadData()
                 }
@@ -139,9 +122,9 @@ extension TextSearchViewController: UITableViewDelegate,UITableViewDataSource {
         }
         cell.foodImage.kf.setImage(with: URL(string: textSearchItem.sampleImageURL))
         cell.foodNameLabel.text = textSearchItem.searchItemName
-        cell.foodDescLabel.text = "1\(textSearchItem.searchItemUnit)(\(textSearchItem.searchItemWeight)克)"
+        cell.foodDescLabel.text = "1 \(textSearchItem.searchItemUnit)(\(textSearchItem.searchItemWeight)克)"
         cell.calorieUnitLabel.text = "千卡"
-        cell.calorieValueLabel.text = String(textSearchItem.energy)
+        cell.calorieValueLabel.text = String(Int(textSearchItem.energy))
         return cell
     }
     

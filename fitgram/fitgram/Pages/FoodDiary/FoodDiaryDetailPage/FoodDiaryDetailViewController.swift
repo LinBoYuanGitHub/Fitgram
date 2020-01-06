@@ -28,9 +28,12 @@ class FoodDiaryDetailViewController: UIViewController{
         on("INJECTION_BUNDLE_NOTIFICATION") {
             self.loadView()
         }
-        self.navigationItem.hidesBackButton = true
+//        self.navigationItem.hidesBackButton = true
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
         self.navigationItem.leftBarButtonItem  = UIBarButtonItem(image: UIImage(imageLiteralResourceName: "backbutton_black"), style: .plain, target: self, action: #selector(onBackPressed))
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "完成", style: .plain, target: self, action: #selector(onFoodRecordFinish))
+         self.navigationItem.leftBarButtonItem?.tintColor = .black
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "确认", style: .plain, target: self, action: #selector(onFoodRecordFinish))
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 80/255, green: 184/255, blue: 60/255, alpha: 1)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(notification:)), name:  UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardwillHide(notification:)), name:  UIResponder.keyboardWillHideNotification, object: nil)
         //dismiss keyboard part
@@ -45,6 +48,13 @@ class FoodDiaryDetailViewController: UIViewController{
         rootView.recipeTable.delegate = self
         rootView.recipeTable.dataSource = self
         view = rootView
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+        self.navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.backgroundColor = .white
+        self.navigationController?.navigationBar.shadowImage = UIImage()
     }
     
     @objc func keyboardWillShow(notification: Notification){
@@ -76,11 +86,17 @@ class FoodDiaryDetailViewController: UIViewController{
             req.inputType = inputType
             req.mealType = mealType
             try FoodDiaryDataManager.shared.client.createMealLog(req, metadata: metaData) { (resp, result) in
-                DispatchQueue.main.async {
-                    self.navigationController?.popToRootViewController(animated: true)
+                 DispatchQueue.main.async {
+                    if result.statusCode == .ok {
+                        guard let rootview = self.navigationController?.viewControllers[0] as? HomeTabViewController else {
+                            return
+                        }
+                        self.navigationController?.popToRootViewController(animated: true)
+                        rootview.selectedIndex = 1
+                    }
                 }
             }
-        }catch{
+        }catch {
             print(error)
         }
     }
@@ -109,7 +125,7 @@ class FoodDiaryDetailViewController: UIViewController{
 }
 
 
-extension FoodDiaryDetailViewController: UITableViewDelegate, UITableViewDataSource {
+extension FoodDiaryDetailViewController: UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return foodDiaryList.count
@@ -124,8 +140,12 @@ extension FoodDiaryDetailViewController: UITableViewDelegate, UITableViewDataSou
 //        cell.weightLabel.text = "共\(entity.unitOption[0].weight)克"
         cell.weightLabel.text = "共100克"
         cell.amountInputField.text = String(Int(entity.amount))
+        cell.amountInputField.tag = indexPath.row
+        cell.amountInputField.delegate = self
 //        cell.unitInputField.text = entity.unitOption[0].name
-        cell.unitInputField.text = "克"
+        for unit in entity.unitOption where unit.unitID == entity.selectedUnitID {
+             cell.unitInputField.text = unit.name
+        }
         let portionPicker = UIPickerView()
         portionPicker.tag = indexPath.row
         portionPicker.delegate = self
@@ -141,6 +161,14 @@ extension FoodDiaryDetailViewController: UITableViewDelegate, UITableViewDataSou
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 200
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        guard let amountValue = Float(textField.text!) else {
+            return
+        }
+        let index = textField.tag
+        mealLogList[index].amount = amountValue
     }
     
     
