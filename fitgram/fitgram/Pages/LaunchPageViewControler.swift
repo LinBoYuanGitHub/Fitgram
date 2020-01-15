@@ -46,12 +46,8 @@ class LaunchPageViewController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             let naviVC = UINavigationController()
             naviVC.viewControllers = [HomeTabViewController()]
+            naviVC.modalPresentationStyle = .fullScreen
             self.present(naviVC, animated: true, completion: nil)
         }
-//        DispatchQueue.main.async {
-//            let naviVC = UINavigationController()
-//            naviVC.viewControllers = [HomeTabViewController()]
-//            self.present(naviVC, animated: true, completion: nil)
-//        }
     }
 }

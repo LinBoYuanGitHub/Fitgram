@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftGRPC
+import CoreLocation
 
 
 @UIApplicationMain
@@ -16,6 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var server:Server!
 
+    let locationManager = CLLocationManager()
+    var userLocation = Location()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.

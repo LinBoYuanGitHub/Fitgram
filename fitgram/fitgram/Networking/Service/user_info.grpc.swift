@@ -37,16 +37,28 @@ fileprivate final class Apisvr_UserServiceUpdateUserProfileCallBase: ClientCallU
   override class var method: String { return "/apisvr.UserService/UpdateUserProfile" }
 }
 
-internal protocol Apisvr_UserServiceGetUserFavouriteItemCall: ClientCallUnary {}
+internal protocol Apisvr_UserServiceGetFavouriteRecipesCall: ClientCallUnary {}
 
-fileprivate final class Apisvr_UserServiceGetUserFavouriteItemCallBase: ClientCallUnaryBase<Apisvr_GetUserFavouriteItemReq, Apisvr_GetUserFavouriteItemResp>, Apisvr_UserServiceGetUserFavouriteItemCall {
-  override class var method: String { return "/apisvr.UserService/GetUserFavouriteItem" }
+fileprivate final class Apisvr_UserServiceGetFavouriteRecipesCallBase: ClientCallUnaryBase<Apisvr_GetFavouriteRecipesReq, Apisvr_GetFavouriteRecipesResp>, Apisvr_UserServiceGetFavouriteRecipesCall {
+  override class var method: String { return "/apisvr.UserService/GetFavouriteRecipes" }
 }
 
-internal protocol Apisvr_UserServiceAddUserFavouriteItemCall: ClientCallUnary {}
+internal protocol Apisvr_UserServiceGetFavouriteRestaurantsCall: ClientCallUnary {}
 
-fileprivate final class Apisvr_UserServiceAddUserFavouriteItemCallBase: ClientCallUnaryBase<Apisvr_AddUserFavouriteItemReq, Apisvr_AddUserFavouriteItemResp>, Apisvr_UserServiceAddUserFavouriteItemCall {
-  override class var method: String { return "/apisvr.UserService/AddUserFavouriteItem" }
+fileprivate final class Apisvr_UserServiceGetFavouriteRestaurantsCallBase: ClientCallUnaryBase<Apisvr_GetFavouriteRestaurantsReq, Apisvr_GetFavouriteRestaurantsResp>, Apisvr_UserServiceGetFavouriteRestaurantsCall {
+  override class var method: String { return "/apisvr.UserService/GetFavouriteRestaurants" }
+}
+
+internal protocol Apisvr_UserServiceGetFavouriteRestaurantMenusCall: ClientCallUnary {}
+
+fileprivate final class Apisvr_UserServiceGetFavouriteRestaurantMenusCallBase: ClientCallUnaryBase<Apisvr_GetFavouriteRestaurantMenusReq, Apisvr_GetFavouriteRestaurantMenusResp>, Apisvr_UserServiceGetFavouriteRestaurantMenusCall {
+  override class var method: String { return "/apisvr.UserService/GetFavouriteRestaurantMenus" }
+}
+
+internal protocol Apisvr_UserServiceAddFavouriteItemCall: ClientCallUnary {}
+
+fileprivate final class Apisvr_UserServiceAddFavouriteItemCallBase: ClientCallUnaryBase<Apisvr_AddFavouriteItemReq, Apisvr_AddFavouriteItemResp>, Apisvr_UserServiceAddFavouriteItemCall {
+  override class var method: String { return "/apisvr.UserService/AddFavouriteItem" }
 }
 
 internal protocol Apisvr_UserServiceRemoveFavouriteItemCall: ClientCallUnary {}
@@ -59,6 +71,18 @@ internal protocol Apisvr_UserServiceGetGoalDetailsCall: ClientCallUnary {}
 
 fileprivate final class Apisvr_UserServiceGetGoalDetailsCallBase: ClientCallUnaryBase<Apisvr_GetGoalDetailsReq, Apisvr_GetGoalDetailsResp>, Apisvr_UserServiceGetGoalDetailsCall {
   override class var method: String { return "/apisvr.UserService/GetGoalDetails" }
+}
+
+internal protocol Apisvr_UserServiceLinkPersonalTrainerCall: ClientCallUnary {}
+
+fileprivate final class Apisvr_UserServiceLinkPersonalTrainerCallBase: ClientCallUnaryBase<Apisvr_LinkPersonalTrainerReq, Apisvr_LinkPersonalTrainerResp>, Apisvr_UserServiceLinkPersonalTrainerCall {
+  override class var method: String { return "/apisvr.UserService/LinkPersonalTrainer" }
+}
+
+internal protocol Apisvr_UserServiceGetTrainerInfoCall: ClientCallUnary {}
+
+fileprivate final class Apisvr_UserServiceGetTrainerInfoCallBase: ClientCallUnaryBase<Apisvr_GetTrainerInfoReq, Apisvr_GetTrainerInfoResp>, Apisvr_UserServiceGetTrainerInfoCall {
+  override class var method: String { return "/apisvr.UserService/GetTrainerInfo" }
 }
 
 
@@ -77,16 +101,28 @@ internal protocol Apisvr_UserServiceService: ServiceClient {
   func updateUserProfile(_ request: Apisvr_UpdateUserProfileReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_UpdateUserProfileResp?, CallResult) -> Void) throws -> Apisvr_UserServiceUpdateUserProfileCall
 
   /// Synchronous. Unary.
-  func getUserFavouriteItem(_ request: Apisvr_GetUserFavouriteItemReq, metadata customMetadata: Metadata) throws -> Apisvr_GetUserFavouriteItemResp
+  func getFavouriteRecipes(_ request: Apisvr_GetFavouriteRecipesReq, metadata customMetadata: Metadata) throws -> Apisvr_GetFavouriteRecipesResp
   /// Asynchronous. Unary.
   @discardableResult
-  func getUserFavouriteItem(_ request: Apisvr_GetUserFavouriteItemReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_GetUserFavouriteItemResp?, CallResult) -> Void) throws -> Apisvr_UserServiceGetUserFavouriteItemCall
+  func getFavouriteRecipes(_ request: Apisvr_GetFavouriteRecipesReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_GetFavouriteRecipesResp?, CallResult) -> Void) throws -> Apisvr_UserServiceGetFavouriteRecipesCall
 
   /// Synchronous. Unary.
-  func addUserFavouriteItem(_ request: Apisvr_AddUserFavouriteItemReq, metadata customMetadata: Metadata) throws -> Apisvr_AddUserFavouriteItemResp
+  func getFavouriteRestaurants(_ request: Apisvr_GetFavouriteRestaurantsReq, metadata customMetadata: Metadata) throws -> Apisvr_GetFavouriteRestaurantsResp
   /// Asynchronous. Unary.
   @discardableResult
-  func addUserFavouriteItem(_ request: Apisvr_AddUserFavouriteItemReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_AddUserFavouriteItemResp?, CallResult) -> Void) throws -> Apisvr_UserServiceAddUserFavouriteItemCall
+  func getFavouriteRestaurants(_ request: Apisvr_GetFavouriteRestaurantsReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_GetFavouriteRestaurantsResp?, CallResult) -> Void) throws -> Apisvr_UserServiceGetFavouriteRestaurantsCall
+
+  /// Synchronous. Unary.
+  func getFavouriteRestaurantMenus(_ request: Apisvr_GetFavouriteRestaurantMenusReq, metadata customMetadata: Metadata) throws -> Apisvr_GetFavouriteRestaurantMenusResp
+  /// Asynchronous. Unary.
+  @discardableResult
+  func getFavouriteRestaurantMenus(_ request: Apisvr_GetFavouriteRestaurantMenusReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_GetFavouriteRestaurantMenusResp?, CallResult) -> Void) throws -> Apisvr_UserServiceGetFavouriteRestaurantMenusCall
+
+  /// Synchronous. Unary.
+  func addFavouriteItem(_ request: Apisvr_AddFavouriteItemReq, metadata customMetadata: Metadata) throws -> Apisvr_AddFavouriteItemResp
+  /// Asynchronous. Unary.
+  @discardableResult
+  func addFavouriteItem(_ request: Apisvr_AddFavouriteItemReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_AddFavouriteItemResp?, CallResult) -> Void) throws -> Apisvr_UserServiceAddFavouriteItemCall
 
   /// Synchronous. Unary.
   func removeFavouriteItem(_ request: Apisvr_RemoveFavouriteItemReq, metadata customMetadata: Metadata) throws -> Apisvr_RemoveUserFavouriteItemResp
@@ -99,6 +135,18 @@ internal protocol Apisvr_UserServiceService: ServiceClient {
   /// Asynchronous. Unary.
   @discardableResult
   func getGoalDetails(_ request: Apisvr_GetGoalDetailsReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_GetGoalDetailsResp?, CallResult) -> Void) throws -> Apisvr_UserServiceGetGoalDetailsCall
+
+  /// Synchronous. Unary.
+  func linkPersonalTrainer(_ request: Apisvr_LinkPersonalTrainerReq, metadata customMetadata: Metadata) throws -> Apisvr_LinkPersonalTrainerResp
+  /// Asynchronous. Unary.
+  @discardableResult
+  func linkPersonalTrainer(_ request: Apisvr_LinkPersonalTrainerReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_LinkPersonalTrainerResp?, CallResult) -> Void) throws -> Apisvr_UserServiceLinkPersonalTrainerCall
+
+  /// Synchronous. Unary.
+  func getTrainerInfo(_ request: Apisvr_GetTrainerInfoReq, metadata customMetadata: Metadata) throws -> Apisvr_GetTrainerInfoResp
+  /// Asynchronous. Unary.
+  @discardableResult
+  func getTrainerInfo(_ request: Apisvr_GetTrainerInfoReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_GetTrainerInfoResp?, CallResult) -> Void) throws -> Apisvr_UserServiceGetTrainerInfoCall
 
 }
 
@@ -124,23 +172,43 @@ internal extension Apisvr_UserServiceService {
   }
 
   /// Synchronous. Unary.
-  func getUserFavouriteItem(_ request: Apisvr_GetUserFavouriteItemReq) throws -> Apisvr_GetUserFavouriteItemResp {
-    return try self.getUserFavouriteItem(request, metadata: self.metadata)
+  func getFavouriteRecipes(_ request: Apisvr_GetFavouriteRecipesReq) throws -> Apisvr_GetFavouriteRecipesResp {
+    return try self.getFavouriteRecipes(request, metadata: self.metadata)
   }
   /// Asynchronous. Unary.
   @discardableResult
-  func getUserFavouriteItem(_ request: Apisvr_GetUserFavouriteItemReq, completion: @escaping (Apisvr_GetUserFavouriteItemResp?, CallResult) -> Void) throws -> Apisvr_UserServiceGetUserFavouriteItemCall {
-    return try self.getUserFavouriteItem(request, metadata: self.metadata, completion: completion)
+  func getFavouriteRecipes(_ request: Apisvr_GetFavouriteRecipesReq, completion: @escaping (Apisvr_GetFavouriteRecipesResp?, CallResult) -> Void) throws -> Apisvr_UserServiceGetFavouriteRecipesCall {
+    return try self.getFavouriteRecipes(request, metadata: self.metadata, completion: completion)
   }
 
   /// Synchronous. Unary.
-  func addUserFavouriteItem(_ request: Apisvr_AddUserFavouriteItemReq) throws -> Apisvr_AddUserFavouriteItemResp {
-    return try self.addUserFavouriteItem(request, metadata: self.metadata)
+  func getFavouriteRestaurants(_ request: Apisvr_GetFavouriteRestaurantsReq) throws -> Apisvr_GetFavouriteRestaurantsResp {
+    return try self.getFavouriteRestaurants(request, metadata: self.metadata)
   }
   /// Asynchronous. Unary.
   @discardableResult
-  func addUserFavouriteItem(_ request: Apisvr_AddUserFavouriteItemReq, completion: @escaping (Apisvr_AddUserFavouriteItemResp?, CallResult) -> Void) throws -> Apisvr_UserServiceAddUserFavouriteItemCall {
-    return try self.addUserFavouriteItem(request, metadata: self.metadata, completion: completion)
+  func getFavouriteRestaurants(_ request: Apisvr_GetFavouriteRestaurantsReq, completion: @escaping (Apisvr_GetFavouriteRestaurantsResp?, CallResult) -> Void) throws -> Apisvr_UserServiceGetFavouriteRestaurantsCall {
+    return try self.getFavouriteRestaurants(request, metadata: self.metadata, completion: completion)
+  }
+
+  /// Synchronous. Unary.
+  func getFavouriteRestaurantMenus(_ request: Apisvr_GetFavouriteRestaurantMenusReq) throws -> Apisvr_GetFavouriteRestaurantMenusResp {
+    return try self.getFavouriteRestaurantMenus(request, metadata: self.metadata)
+  }
+  /// Asynchronous. Unary.
+  @discardableResult
+  func getFavouriteRestaurantMenus(_ request: Apisvr_GetFavouriteRestaurantMenusReq, completion: @escaping (Apisvr_GetFavouriteRestaurantMenusResp?, CallResult) -> Void) throws -> Apisvr_UserServiceGetFavouriteRestaurantMenusCall {
+    return try self.getFavouriteRestaurantMenus(request, metadata: self.metadata, completion: completion)
+  }
+
+  /// Synchronous. Unary.
+  func addFavouriteItem(_ request: Apisvr_AddFavouriteItemReq) throws -> Apisvr_AddFavouriteItemResp {
+    return try self.addFavouriteItem(request, metadata: self.metadata)
+  }
+  /// Asynchronous. Unary.
+  @discardableResult
+  func addFavouriteItem(_ request: Apisvr_AddFavouriteItemReq, completion: @escaping (Apisvr_AddFavouriteItemResp?, CallResult) -> Void) throws -> Apisvr_UserServiceAddFavouriteItemCall {
+    return try self.addFavouriteItem(request, metadata: self.metadata, completion: completion)
   }
 
   /// Synchronous. Unary.
@@ -161,6 +229,26 @@ internal extension Apisvr_UserServiceService {
   @discardableResult
   func getGoalDetails(_ request: Apisvr_GetGoalDetailsReq, completion: @escaping (Apisvr_GetGoalDetailsResp?, CallResult) -> Void) throws -> Apisvr_UserServiceGetGoalDetailsCall {
     return try self.getGoalDetails(request, metadata: self.metadata, completion: completion)
+  }
+
+  /// Synchronous. Unary.
+  func linkPersonalTrainer(_ request: Apisvr_LinkPersonalTrainerReq) throws -> Apisvr_LinkPersonalTrainerResp {
+    return try self.linkPersonalTrainer(request, metadata: self.metadata)
+  }
+  /// Asynchronous. Unary.
+  @discardableResult
+  func linkPersonalTrainer(_ request: Apisvr_LinkPersonalTrainerReq, completion: @escaping (Apisvr_LinkPersonalTrainerResp?, CallResult) -> Void) throws -> Apisvr_UserServiceLinkPersonalTrainerCall {
+    return try self.linkPersonalTrainer(request, metadata: self.metadata, completion: completion)
+  }
+
+  /// Synchronous. Unary.
+  func getTrainerInfo(_ request: Apisvr_GetTrainerInfoReq) throws -> Apisvr_GetTrainerInfoResp {
+    return try self.getTrainerInfo(request, metadata: self.metadata)
+  }
+  /// Asynchronous. Unary.
+  @discardableResult
+  func getTrainerInfo(_ request: Apisvr_GetTrainerInfoReq, completion: @escaping (Apisvr_GetTrainerInfoResp?, CallResult) -> Void) throws -> Apisvr_UserServiceGetTrainerInfoCall {
+    return try self.getTrainerInfo(request, metadata: self.metadata, completion: completion)
   }
 
 }
@@ -191,26 +279,50 @@ internal final class Apisvr_UserServiceServiceClient: ServiceClientBase, Apisvr_
   }
 
   /// Synchronous. Unary.
-  internal func getUserFavouriteItem(_ request: Apisvr_GetUserFavouriteItemReq, metadata customMetadata: Metadata) throws -> Apisvr_GetUserFavouriteItemResp {
-    return try Apisvr_UserServiceGetUserFavouriteItemCallBase(channel)
+  internal func getFavouriteRecipes(_ request: Apisvr_GetFavouriteRecipesReq, metadata customMetadata: Metadata) throws -> Apisvr_GetFavouriteRecipesResp {
+    return try Apisvr_UserServiceGetFavouriteRecipesCallBase(channel)
       .run(request: request, metadata: customMetadata)
   }
   /// Asynchronous. Unary.
   @discardableResult
-  internal func getUserFavouriteItem(_ request: Apisvr_GetUserFavouriteItemReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_GetUserFavouriteItemResp?, CallResult) -> Void) throws -> Apisvr_UserServiceGetUserFavouriteItemCall {
-    return try Apisvr_UserServiceGetUserFavouriteItemCallBase(channel)
+  internal func getFavouriteRecipes(_ request: Apisvr_GetFavouriteRecipesReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_GetFavouriteRecipesResp?, CallResult) -> Void) throws -> Apisvr_UserServiceGetFavouriteRecipesCall {
+    return try Apisvr_UserServiceGetFavouriteRecipesCallBase(channel)
       .start(request: request, metadata: customMetadata, completion: completion)
   }
 
   /// Synchronous. Unary.
-  internal func addUserFavouriteItem(_ request: Apisvr_AddUserFavouriteItemReq, metadata customMetadata: Metadata) throws -> Apisvr_AddUserFavouriteItemResp {
-    return try Apisvr_UserServiceAddUserFavouriteItemCallBase(channel)
+  internal func getFavouriteRestaurants(_ request: Apisvr_GetFavouriteRestaurantsReq, metadata customMetadata: Metadata) throws -> Apisvr_GetFavouriteRestaurantsResp {
+    return try Apisvr_UserServiceGetFavouriteRestaurantsCallBase(channel)
       .run(request: request, metadata: customMetadata)
   }
   /// Asynchronous. Unary.
   @discardableResult
-  internal func addUserFavouriteItem(_ request: Apisvr_AddUserFavouriteItemReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_AddUserFavouriteItemResp?, CallResult) -> Void) throws -> Apisvr_UserServiceAddUserFavouriteItemCall {
-    return try Apisvr_UserServiceAddUserFavouriteItemCallBase(channel)
+  internal func getFavouriteRestaurants(_ request: Apisvr_GetFavouriteRestaurantsReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_GetFavouriteRestaurantsResp?, CallResult) -> Void) throws -> Apisvr_UserServiceGetFavouriteRestaurantsCall {
+    return try Apisvr_UserServiceGetFavouriteRestaurantsCallBase(channel)
+      .start(request: request, metadata: customMetadata, completion: completion)
+  }
+
+  /// Synchronous. Unary.
+  internal func getFavouriteRestaurantMenus(_ request: Apisvr_GetFavouriteRestaurantMenusReq, metadata customMetadata: Metadata) throws -> Apisvr_GetFavouriteRestaurantMenusResp {
+    return try Apisvr_UserServiceGetFavouriteRestaurantMenusCallBase(channel)
+      .run(request: request, metadata: customMetadata)
+  }
+  /// Asynchronous. Unary.
+  @discardableResult
+  internal func getFavouriteRestaurantMenus(_ request: Apisvr_GetFavouriteRestaurantMenusReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_GetFavouriteRestaurantMenusResp?, CallResult) -> Void) throws -> Apisvr_UserServiceGetFavouriteRestaurantMenusCall {
+    return try Apisvr_UserServiceGetFavouriteRestaurantMenusCallBase(channel)
+      .start(request: request, metadata: customMetadata, completion: completion)
+  }
+
+  /// Synchronous. Unary.
+  internal func addFavouriteItem(_ request: Apisvr_AddFavouriteItemReq, metadata customMetadata: Metadata) throws -> Apisvr_AddFavouriteItemResp {
+    return try Apisvr_UserServiceAddFavouriteItemCallBase(channel)
+      .run(request: request, metadata: customMetadata)
+  }
+  /// Asynchronous. Unary.
+  @discardableResult
+  internal func addFavouriteItem(_ request: Apisvr_AddFavouriteItemReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_AddFavouriteItemResp?, CallResult) -> Void) throws -> Apisvr_UserServiceAddFavouriteItemCall {
+    return try Apisvr_UserServiceAddFavouriteItemCallBase(channel)
       .start(request: request, metadata: customMetadata, completion: completion)
   }
 
@@ -238,6 +350,30 @@ internal final class Apisvr_UserServiceServiceClient: ServiceClientBase, Apisvr_
       .start(request: request, metadata: customMetadata, completion: completion)
   }
 
+  /// Synchronous. Unary.
+  internal func linkPersonalTrainer(_ request: Apisvr_LinkPersonalTrainerReq, metadata customMetadata: Metadata) throws -> Apisvr_LinkPersonalTrainerResp {
+    return try Apisvr_UserServiceLinkPersonalTrainerCallBase(channel)
+      .run(request: request, metadata: customMetadata)
+  }
+  /// Asynchronous. Unary.
+  @discardableResult
+  internal func linkPersonalTrainer(_ request: Apisvr_LinkPersonalTrainerReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_LinkPersonalTrainerResp?, CallResult) -> Void) throws -> Apisvr_UserServiceLinkPersonalTrainerCall {
+    return try Apisvr_UserServiceLinkPersonalTrainerCallBase(channel)
+      .start(request: request, metadata: customMetadata, completion: completion)
+  }
+
+  /// Synchronous. Unary.
+  internal func getTrainerInfo(_ request: Apisvr_GetTrainerInfoReq, metadata customMetadata: Metadata) throws -> Apisvr_GetTrainerInfoResp {
+    return try Apisvr_UserServiceGetTrainerInfoCallBase(channel)
+      .run(request: request, metadata: customMetadata)
+  }
+  /// Asynchronous. Unary.
+  @discardableResult
+  internal func getTrainerInfo(_ request: Apisvr_GetTrainerInfoReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_GetTrainerInfoResp?, CallResult) -> Void) throws -> Apisvr_UserServiceGetTrainerInfoCall {
+    return try Apisvr_UserServiceGetTrainerInfoCallBase(channel)
+      .start(request: request, metadata: customMetadata, completion: completion)
+  }
+
 }
 
 /// To build a server, implement a class that conforms to this protocol.
@@ -246,10 +382,14 @@ internal final class Apisvr_UserServiceServiceClient: ServiceClientBase, Apisvr_
 internal protocol Apisvr_UserServiceProvider: ServiceProvider {
   func getUserProfile(request: Apisvr_GetUserProfileReq, session: Apisvr_UserServiceGetUserProfileSession) throws -> Apisvr_GetUserProfileResp
   func updateUserProfile(request: Apisvr_UpdateUserProfileReq, session: Apisvr_UserServiceUpdateUserProfileSession) throws -> Apisvr_UpdateUserProfileResp
-  func getUserFavouriteItem(request: Apisvr_GetUserFavouriteItemReq, session: Apisvr_UserServiceGetUserFavouriteItemSession) throws -> Apisvr_GetUserFavouriteItemResp
-  func addUserFavouriteItem(request: Apisvr_AddUserFavouriteItemReq, session: Apisvr_UserServiceAddUserFavouriteItemSession) throws -> Apisvr_AddUserFavouriteItemResp
+  func getFavouriteRecipes(request: Apisvr_GetFavouriteRecipesReq, session: Apisvr_UserServiceGetFavouriteRecipesSession) throws -> Apisvr_GetFavouriteRecipesResp
+  func getFavouriteRestaurants(request: Apisvr_GetFavouriteRestaurantsReq, session: Apisvr_UserServiceGetFavouriteRestaurantsSession) throws -> Apisvr_GetFavouriteRestaurantsResp
+  func getFavouriteRestaurantMenus(request: Apisvr_GetFavouriteRestaurantMenusReq, session: Apisvr_UserServiceGetFavouriteRestaurantMenusSession) throws -> Apisvr_GetFavouriteRestaurantMenusResp
+  func addFavouriteItem(request: Apisvr_AddFavouriteItemReq, session: Apisvr_UserServiceAddFavouriteItemSession) throws -> Apisvr_AddFavouriteItemResp
   func removeFavouriteItem(request: Apisvr_RemoveFavouriteItemReq, session: Apisvr_UserServiceRemoveFavouriteItemSession) throws -> Apisvr_RemoveUserFavouriteItemResp
   func getGoalDetails(request: Apisvr_GetGoalDetailsReq, session: Apisvr_UserServiceGetGoalDetailsSession) throws -> Apisvr_GetGoalDetailsResp
+  func linkPersonalTrainer(request: Apisvr_LinkPersonalTrainerReq, session: Apisvr_UserServiceLinkPersonalTrainerSession) throws -> Apisvr_LinkPersonalTrainerResp
+  func getTrainerInfo(request: Apisvr_GetTrainerInfoReq, session: Apisvr_UserServiceGetTrainerInfoSession) throws -> Apisvr_GetTrainerInfoResp
 }
 
 extension Apisvr_UserServiceProvider {
@@ -269,15 +409,25 @@ extension Apisvr_UserServiceProvider {
         handler: handler,
         providerBlock: { try self.updateUserProfile(request: $0, session: $1 as! Apisvr_UserServiceUpdateUserProfileSessionBase) })
           .run()
-    case "/apisvr.UserService/GetUserFavouriteItem":
-      return try Apisvr_UserServiceGetUserFavouriteItemSessionBase(
+    case "/apisvr.UserService/GetFavouriteRecipes":
+      return try Apisvr_UserServiceGetFavouriteRecipesSessionBase(
         handler: handler,
-        providerBlock: { try self.getUserFavouriteItem(request: $0, session: $1 as! Apisvr_UserServiceGetUserFavouriteItemSessionBase) })
+        providerBlock: { try self.getFavouriteRecipes(request: $0, session: $1 as! Apisvr_UserServiceGetFavouriteRecipesSessionBase) })
           .run()
-    case "/apisvr.UserService/AddUserFavouriteItem":
-      return try Apisvr_UserServiceAddUserFavouriteItemSessionBase(
+    case "/apisvr.UserService/GetFavouriteRestaurants":
+      return try Apisvr_UserServiceGetFavouriteRestaurantsSessionBase(
         handler: handler,
-        providerBlock: { try self.addUserFavouriteItem(request: $0, session: $1 as! Apisvr_UserServiceAddUserFavouriteItemSessionBase) })
+        providerBlock: { try self.getFavouriteRestaurants(request: $0, session: $1 as! Apisvr_UserServiceGetFavouriteRestaurantsSessionBase) })
+          .run()
+    case "/apisvr.UserService/GetFavouriteRestaurantMenus":
+      return try Apisvr_UserServiceGetFavouriteRestaurantMenusSessionBase(
+        handler: handler,
+        providerBlock: { try self.getFavouriteRestaurantMenus(request: $0, session: $1 as! Apisvr_UserServiceGetFavouriteRestaurantMenusSessionBase) })
+          .run()
+    case "/apisvr.UserService/AddFavouriteItem":
+      return try Apisvr_UserServiceAddFavouriteItemSessionBase(
+        handler: handler,
+        providerBlock: { try self.addFavouriteItem(request: $0, session: $1 as! Apisvr_UserServiceAddFavouriteItemSessionBase) })
           .run()
     case "/apisvr.UserService/RemoveFavouriteItem":
       return try Apisvr_UserServiceRemoveFavouriteItemSessionBase(
@@ -288,6 +438,16 @@ extension Apisvr_UserServiceProvider {
       return try Apisvr_UserServiceGetGoalDetailsSessionBase(
         handler: handler,
         providerBlock: { try self.getGoalDetails(request: $0, session: $1 as! Apisvr_UserServiceGetGoalDetailsSessionBase) })
+          .run()
+    case "/apisvr.UserService/LinkPersonalTrainer":
+      return try Apisvr_UserServiceLinkPersonalTrainerSessionBase(
+        handler: handler,
+        providerBlock: { try self.linkPersonalTrainer(request: $0, session: $1 as! Apisvr_UserServiceLinkPersonalTrainerSessionBase) })
+          .run()
+    case "/apisvr.UserService/GetTrainerInfo":
+      return try Apisvr_UserServiceGetTrainerInfoSessionBase(
+        handler: handler,
+        providerBlock: { try self.getTrainerInfo(request: $0, session: $1 as! Apisvr_UserServiceGetTrainerInfoSessionBase) })
           .run()
     default:
       throw HandleMethodError.unknownMethod
@@ -303,13 +463,21 @@ internal protocol Apisvr_UserServiceUpdateUserProfileSession: ServerSessionUnary
 
 fileprivate final class Apisvr_UserServiceUpdateUserProfileSessionBase: ServerSessionUnaryBase<Apisvr_UpdateUserProfileReq, Apisvr_UpdateUserProfileResp>, Apisvr_UserServiceUpdateUserProfileSession {}
 
-internal protocol Apisvr_UserServiceGetUserFavouriteItemSession: ServerSessionUnary {}
+internal protocol Apisvr_UserServiceGetFavouriteRecipesSession: ServerSessionUnary {}
 
-fileprivate final class Apisvr_UserServiceGetUserFavouriteItemSessionBase: ServerSessionUnaryBase<Apisvr_GetUserFavouriteItemReq, Apisvr_GetUserFavouriteItemResp>, Apisvr_UserServiceGetUserFavouriteItemSession {}
+fileprivate final class Apisvr_UserServiceGetFavouriteRecipesSessionBase: ServerSessionUnaryBase<Apisvr_GetFavouriteRecipesReq, Apisvr_GetFavouriteRecipesResp>, Apisvr_UserServiceGetFavouriteRecipesSession {}
 
-internal protocol Apisvr_UserServiceAddUserFavouriteItemSession: ServerSessionUnary {}
+internal protocol Apisvr_UserServiceGetFavouriteRestaurantsSession: ServerSessionUnary {}
 
-fileprivate final class Apisvr_UserServiceAddUserFavouriteItemSessionBase: ServerSessionUnaryBase<Apisvr_AddUserFavouriteItemReq, Apisvr_AddUserFavouriteItemResp>, Apisvr_UserServiceAddUserFavouriteItemSession {}
+fileprivate final class Apisvr_UserServiceGetFavouriteRestaurantsSessionBase: ServerSessionUnaryBase<Apisvr_GetFavouriteRestaurantsReq, Apisvr_GetFavouriteRestaurantsResp>, Apisvr_UserServiceGetFavouriteRestaurantsSession {}
+
+internal protocol Apisvr_UserServiceGetFavouriteRestaurantMenusSession: ServerSessionUnary {}
+
+fileprivate final class Apisvr_UserServiceGetFavouriteRestaurantMenusSessionBase: ServerSessionUnaryBase<Apisvr_GetFavouriteRestaurantMenusReq, Apisvr_GetFavouriteRestaurantMenusResp>, Apisvr_UserServiceGetFavouriteRestaurantMenusSession {}
+
+internal protocol Apisvr_UserServiceAddFavouriteItemSession: ServerSessionUnary {}
+
+fileprivate final class Apisvr_UserServiceAddFavouriteItemSessionBase: ServerSessionUnaryBase<Apisvr_AddFavouriteItemReq, Apisvr_AddFavouriteItemResp>, Apisvr_UserServiceAddFavouriteItemSession {}
 
 internal protocol Apisvr_UserServiceRemoveFavouriteItemSession: ServerSessionUnary {}
 
@@ -318,4 +486,12 @@ fileprivate final class Apisvr_UserServiceRemoveFavouriteItemSessionBase: Server
 internal protocol Apisvr_UserServiceGetGoalDetailsSession: ServerSessionUnary {}
 
 fileprivate final class Apisvr_UserServiceGetGoalDetailsSessionBase: ServerSessionUnaryBase<Apisvr_GetGoalDetailsReq, Apisvr_GetGoalDetailsResp>, Apisvr_UserServiceGetGoalDetailsSession {}
+
+internal protocol Apisvr_UserServiceLinkPersonalTrainerSession: ServerSessionUnary {}
+
+fileprivate final class Apisvr_UserServiceLinkPersonalTrainerSessionBase: ServerSessionUnaryBase<Apisvr_LinkPersonalTrainerReq, Apisvr_LinkPersonalTrainerResp>, Apisvr_UserServiceLinkPersonalTrainerSession {}
+
+internal protocol Apisvr_UserServiceGetTrainerInfoSession: ServerSessionUnary {}
+
+fileprivate final class Apisvr_UserServiceGetTrainerInfoSessionBase: ServerSessionUnaryBase<Apisvr_GetTrainerInfoReq, Apisvr_GetTrainerInfoResp>, Apisvr_UserServiceGetTrainerInfoSession {}
 

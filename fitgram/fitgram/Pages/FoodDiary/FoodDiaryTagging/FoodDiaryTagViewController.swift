@@ -45,6 +45,10 @@ class FoodDiaryTagViewController:BaseViewController {
         self.navigationController?.popViewController(animated: true)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+    }
+    
     override func loadView() {
         rootView = FoodDiaryTagView()
         view = rootView

@@ -9,20 +9,20 @@
 import UIKit
 
 class HomeTabViewController: UITabBarController {
-    let recommendHomeVC = RecommendHomeViewController()
+    let homeVC = HomeViewController()
     let foodDiaryVC = FoodDiaryViewController()
     let progressVC = ProgressViewController()
     let moreVC = MoreViewController()
-    let profileVC = ProfileViewController()
+//    let profileVC = ProfileViewController()
     
     override func viewDidLoad() {
         UITabBar.appearance().tintColor = UIColor(red: 255/255, green: 189/255, blue: 0, alpha: 1)
-        recommendHomeVC.tabBarItem =  UITabBarItem(title: "", image: UIImage(named: "appBottomHome_unselected"), selectedImage: UIImage(named: "appBottomHome_selected"))
+        homeVC.tabBarItem =  UITabBarItem(title: "", image: UIImage(named: "appBottomHome_unselected"), selectedImage: UIImage(named: "appBottomHome_selected"))
         foodDiaryVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "appBottomDiary_unselected"), selectedImage: UIImage(named: "appBottomDiary_selected"))
         progressVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "appBottomProgress_unselected"), selectedImage: UIImage(named: "appBottomProgress_selected"))
-        profileVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "appBottomProfile_unselected"), selectedImage: UIImage(named: "appBottomProfile_selected"))
-        self.viewControllers = [recommendHomeVC, foodDiaryVC, progressVC, profileVC]
-        self.selectedViewController = recommendHomeVC
+        moreVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "appBottomProfile_unselected"), selectedImage: UIImage(named: "appBottomProfile_selected"))
+        self.viewControllers = [homeVC, foodDiaryVC, progressVC, moreVC]
+        self.selectedViewController = homeVC
         self.selectedIndex = 0
         self.delegate = self
     }
@@ -47,12 +47,12 @@ extension HomeTabViewController: UITabBarControllerDelegate {
     
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         let userType = Apisvr_UserType(rawValue: UserDefaults.standard.integer(forKey: Constants.userStatusKey))
-        if viewController != recommendHomeVC && userType == .unknownUserType {
+        if viewController != homeVC && userType == .unknownUserType {
             navigateToLoginPage()
             return false
         }
         //navigation bar hidden config
-        if viewController == foodDiaryVC {
+        if viewController == foodDiaryVC || viewController == moreVC {
             self.navigationController?.setNavigationBarHidden(true, animated: false)
         } else {
             self.navigationController?.setNavigationBarHidden(false, animated: false)

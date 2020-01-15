@@ -76,6 +76,7 @@ class RecommendHomeCollectionCell: UICollectionViewCell {
         likeButton.frame.size.width = 15
         likeButton.frame.size.height = 15
         likeButton.setImage(UIImage(named: "heartIcon_white"), for: .normal)
+        likeButton.setImage(UIImage(named: "heartIcon_red"), for: .selected)
         videoPlayView.addSubview(likeButton)
         videoPlayView.bringSubviewToFront(likeButton)
         //check button

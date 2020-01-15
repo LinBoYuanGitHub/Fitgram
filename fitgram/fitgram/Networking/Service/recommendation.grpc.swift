@@ -67,6 +67,18 @@ fileprivate final class Apisvr_RecommendationServiceAllIngredientCheckCallBase: 
   override class var method: String { return "/apisvr.RecommendationService/AllIngredientCheck" }
 }
 
+internal protocol Apisvr_RecommendationServiceGetRestaurantsCall: ClientCallUnary {}
+
+fileprivate final class Apisvr_RecommendationServiceGetRestaurantsCallBase: ClientCallUnaryBase<Apisvr_GetRestaurantsReq, Apisvr_GetRestaurantsResp>, Apisvr_RecommendationServiceGetRestaurantsCall {
+  override class var method: String { return "/apisvr.RecommendationService/GetRestaurants" }
+}
+
+internal protocol Apisvr_RecommendationServiceGetRestaurantMenusCall: ClientCallUnary {}
+
+fileprivate final class Apisvr_RecommendationServiceGetRestaurantMenusCallBase: ClientCallUnaryBase<Apisvr_GetRestaurantMenusReq, Apisvr_GetRestaurantMenusResp>, Apisvr_RecommendationServiceGetRestaurantMenusCall {
+  override class var method: String { return "/apisvr.RecommendationService/GetRestaurantMenus" }
+}
+
 
 /// Instantiate Apisvr_RecommendationServiceServiceClient, then call methods of this protocol to make API calls.
 internal protocol Apisvr_RecommendationServiceService: ServiceClient {
@@ -111,6 +123,18 @@ internal protocol Apisvr_RecommendationServiceService: ServiceClient {
   /// Asynchronous. Unary.
   @discardableResult
   func allIngredientCheck(_ request: Apisvr_AllIngredientCheckReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_ALLIngredientCheckResp?, CallResult) -> Void) throws -> Apisvr_RecommendationServiceAllIngredientCheckCall
+
+  /// Synchronous. Unary.
+  func getRestaurants(_ request: Apisvr_GetRestaurantsReq, metadata customMetadata: Metadata) throws -> Apisvr_GetRestaurantsResp
+  /// Asynchronous. Unary.
+  @discardableResult
+  func getRestaurants(_ request: Apisvr_GetRestaurantsReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_GetRestaurantsResp?, CallResult) -> Void) throws -> Apisvr_RecommendationServiceGetRestaurantsCall
+
+  /// Synchronous. Unary.
+  func getRestaurantMenus(_ request: Apisvr_GetRestaurantMenusReq, metadata customMetadata: Metadata) throws -> Apisvr_GetRestaurantMenusResp
+  /// Asynchronous. Unary.
+  @discardableResult
+  func getRestaurantMenus(_ request: Apisvr_GetRestaurantMenusReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_GetRestaurantMenusResp?, CallResult) -> Void) throws -> Apisvr_RecommendationServiceGetRestaurantMenusCall
 
 }
 
@@ -183,6 +207,26 @@ internal extension Apisvr_RecommendationServiceService {
   @discardableResult
   func allIngredientCheck(_ request: Apisvr_AllIngredientCheckReq, completion: @escaping (Apisvr_ALLIngredientCheckResp?, CallResult) -> Void) throws -> Apisvr_RecommendationServiceAllIngredientCheckCall {
     return try self.allIngredientCheck(request, metadata: self.metadata, completion: completion)
+  }
+
+  /// Synchronous. Unary.
+  func getRestaurants(_ request: Apisvr_GetRestaurantsReq) throws -> Apisvr_GetRestaurantsResp {
+    return try self.getRestaurants(request, metadata: self.metadata)
+  }
+  /// Asynchronous. Unary.
+  @discardableResult
+  func getRestaurants(_ request: Apisvr_GetRestaurantsReq, completion: @escaping (Apisvr_GetRestaurantsResp?, CallResult) -> Void) throws -> Apisvr_RecommendationServiceGetRestaurantsCall {
+    return try self.getRestaurants(request, metadata: self.metadata, completion: completion)
+  }
+
+  /// Synchronous. Unary.
+  func getRestaurantMenus(_ request: Apisvr_GetRestaurantMenusReq) throws -> Apisvr_GetRestaurantMenusResp {
+    return try self.getRestaurantMenus(request, metadata: self.metadata)
+  }
+  /// Asynchronous. Unary.
+  @discardableResult
+  func getRestaurantMenus(_ request: Apisvr_GetRestaurantMenusReq, completion: @escaping (Apisvr_GetRestaurantMenusResp?, CallResult) -> Void) throws -> Apisvr_RecommendationServiceGetRestaurantMenusCall {
+    return try self.getRestaurantMenus(request, metadata: self.metadata, completion: completion)
   }
 
 }
@@ -272,6 +316,30 @@ internal final class Apisvr_RecommendationServiceServiceClient: ServiceClientBas
       .start(request: request, metadata: customMetadata, completion: completion)
   }
 
+  /// Synchronous. Unary.
+  internal func getRestaurants(_ request: Apisvr_GetRestaurantsReq, metadata customMetadata: Metadata) throws -> Apisvr_GetRestaurantsResp {
+    return try Apisvr_RecommendationServiceGetRestaurantsCallBase(channel)
+      .run(request: request, metadata: customMetadata)
+  }
+  /// Asynchronous. Unary.
+  @discardableResult
+  internal func getRestaurants(_ request: Apisvr_GetRestaurantsReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_GetRestaurantsResp?, CallResult) -> Void) throws -> Apisvr_RecommendationServiceGetRestaurantsCall {
+    return try Apisvr_RecommendationServiceGetRestaurantsCallBase(channel)
+      .start(request: request, metadata: customMetadata, completion: completion)
+  }
+
+  /// Synchronous. Unary.
+  internal func getRestaurantMenus(_ request: Apisvr_GetRestaurantMenusReq, metadata customMetadata: Metadata) throws -> Apisvr_GetRestaurantMenusResp {
+    return try Apisvr_RecommendationServiceGetRestaurantMenusCallBase(channel)
+      .run(request: request, metadata: customMetadata)
+  }
+  /// Asynchronous. Unary.
+  @discardableResult
+  internal func getRestaurantMenus(_ request: Apisvr_GetRestaurantMenusReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_GetRestaurantMenusResp?, CallResult) -> Void) throws -> Apisvr_RecommendationServiceGetRestaurantMenusCall {
+    return try Apisvr_RecommendationServiceGetRestaurantMenusCallBase(channel)
+      .start(request: request, metadata: customMetadata, completion: completion)
+  }
+
 }
 
 /// To build a server, implement a class that conforms to this protocol.
@@ -285,6 +353,8 @@ internal protocol Apisvr_RecommendationServiceProvider: ServiceProvider {
   func ingredientCheck(request: Apisvr_IngredientCheckReq, session: Apisvr_RecommendationServiceIngredientCheckSession) throws -> Apisvr_IngredientCheckResp
   func getAllIngredients(request: Apisvr_GetAllIngredientsReq, session: Apisvr_RecommendationServiceGetAllIngredientsSession) throws -> Apisvr_GetAllIngredientsResp
   func allIngredientCheck(request: Apisvr_AllIngredientCheckReq, session: Apisvr_RecommendationServiceAllIngredientCheckSession) throws -> Apisvr_ALLIngredientCheckResp
+  func getRestaurants(request: Apisvr_GetRestaurantsReq, session: Apisvr_RecommendationServiceGetRestaurantsSession) throws -> Apisvr_GetRestaurantsResp
+  func getRestaurantMenus(request: Apisvr_GetRestaurantMenusReq, session: Apisvr_RecommendationServiceGetRestaurantMenusSession) throws -> Apisvr_GetRestaurantMenusResp
 }
 
 extension Apisvr_RecommendationServiceProvider {
@@ -329,6 +399,16 @@ extension Apisvr_RecommendationServiceProvider {
         handler: handler,
         providerBlock: { try self.allIngredientCheck(request: $0, session: $1 as! Apisvr_RecommendationServiceAllIngredientCheckSessionBase) })
           .run()
+    case "/apisvr.RecommendationService/GetRestaurants":
+      return try Apisvr_RecommendationServiceGetRestaurantsSessionBase(
+        handler: handler,
+        providerBlock: { try self.getRestaurants(request: $0, session: $1 as! Apisvr_RecommendationServiceGetRestaurantsSessionBase) })
+          .run()
+    case "/apisvr.RecommendationService/GetRestaurantMenus":
+      return try Apisvr_RecommendationServiceGetRestaurantMenusSessionBase(
+        handler: handler,
+        providerBlock: { try self.getRestaurantMenus(request: $0, session: $1 as! Apisvr_RecommendationServiceGetRestaurantMenusSessionBase) })
+          .run()
     default:
       throw HandleMethodError.unknownMethod
     }
@@ -362,4 +442,12 @@ fileprivate final class Apisvr_RecommendationServiceGetAllIngredientsSessionBase
 internal protocol Apisvr_RecommendationServiceAllIngredientCheckSession: ServerSessionUnary {}
 
 fileprivate final class Apisvr_RecommendationServiceAllIngredientCheckSessionBase: ServerSessionUnaryBase<Apisvr_AllIngredientCheckReq, Apisvr_ALLIngredientCheckResp>, Apisvr_RecommendationServiceAllIngredientCheckSession {}
+
+internal protocol Apisvr_RecommendationServiceGetRestaurantsSession: ServerSessionUnary {}
+
+fileprivate final class Apisvr_RecommendationServiceGetRestaurantsSessionBase: ServerSessionUnaryBase<Apisvr_GetRestaurantsReq, Apisvr_GetRestaurantsResp>, Apisvr_RecommendationServiceGetRestaurantsSession {}
+
+internal protocol Apisvr_RecommendationServiceGetRestaurantMenusSession: ServerSessionUnary {}
+
+fileprivate final class Apisvr_RecommendationServiceGetRestaurantMenusSessionBase: ServerSessionUnaryBase<Apisvr_GetRestaurantMenusReq, Apisvr_GetRestaurantMenusResp>, Apisvr_RecommendationServiceGetRestaurantMenusSession {}
 

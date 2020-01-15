@@ -51,6 +51,10 @@ class TextSearchViewController:UIViewController {
         self.rootView.foodRecognitionCollection.dataSource = self
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+    }
+    
     override func loadView() {
         rootView = TextSearchView()
         rootView.foodTextSearchTable.delegate = self
@@ -120,7 +124,11 @@ extension TextSearchViewController: UITableViewDelegate,UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "TextSearchTableViewCell", for: indexPath) as? TextSearchTableViewCell else {
             return UITableViewCell()
         }
-        cell.foodImage.kf.setImage(with: URL(string: textSearchItem.sampleImageURL))
+        if !textSearchItem.sampleImageURL.isEmpty {
+             cell.foodImage.kf.setImage(with: URL(string: textSearchItem.sampleImageURL))
+        } else {
+             cell.foodImage.image = UIImage(named: "fitgram_defaultIcon")
+        }
         cell.foodNameLabel.text = textSearchItem.searchItemName
         cell.foodDescLabel.text = "1 \(textSearchItem.searchItemUnit)(\(textSearchItem.searchItemWeight)克)"
         cell.calorieUnitLabel.text = "千卡"

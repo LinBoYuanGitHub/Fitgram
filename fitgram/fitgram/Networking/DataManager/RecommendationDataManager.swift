@@ -70,6 +70,7 @@ class RecommendationDataManager {
         recipe.videoCoverImageUrl = item.sampleImgURL
         recipe.recipeVideoUrl = item.videoURL
         recipe.nutrientData = item.nutrient
+        recipe.isLike = item.isFavourite
         return recipe
     }
     
@@ -91,6 +92,7 @@ class RecommendationDataManager {
                 recipe.videoCoverImageUrl = resp!.sampleImgURL
                 recipe.recipeVideoUrl = resp!.videoURL
                 recipe.nutrientData = resp!.nutrient
+                recipe.isLike = resp!.isFavourite
                 //ingrdient part
                 for ingredient in resp!.ingredient {
                     var ingredientModel = IngredientModel()

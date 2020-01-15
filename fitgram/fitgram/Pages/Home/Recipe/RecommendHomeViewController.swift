@@ -9,6 +9,7 @@
 import UIKit
 import AVKit
 import Stevia
+import SwiftGRPC
 
 class RecommendHomeViewController:UIViewController{
     
@@ -71,10 +72,6 @@ class RecommendHomeViewController:UIViewController{
                 let indexSet = IndexSet([0])
                 self.rootView.recommendationMainTableView.reloadSections(indexSet, with: .automatic)
             })
-//            DispatchQueue.main.async {
-//                self.refreshControl.endRefreshing()
-//                self.rootView.recommendationMainTableView.reloadData()
-//            }
         }
     }
 
@@ -111,7 +108,7 @@ class RecommendHomeViewController:UIViewController{
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.navigationController?.setNavigationBarHidden(false, animated: false)
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
         self.navigationController?.navigationBar.topItem?.title = ""
         self.navigationController?.navigationBar.isTranslucent = false
         self.navigationController?.navigationBar.alpha = 1
@@ -129,11 +126,13 @@ class RecommendHomeViewController:UIViewController{
         rootView.recommendationMainTableView.delegate = self
         rootView.recommendationMainTableView.dataSource = self
         view = rootView
+//        rootView.onDateSegmentSwitchAction = { index in
+//            //index for switch today and tomorrow
+//            self.retrieveRecommendationList()
+//        }
     }
     
-    
-    
-    func playVideo(videoUrl: URL, contentView:UIView){
+    func playVideo(videoUrl: URL, contentView:UIView) {
         let playerItem = AVPlayerItem(url: videoUrl)
         let player = AVPlayer(playerItem: playerItem)
         NotificationCenter.default.addObserver(self, selector: #selector(playerItemDidReachEndTime), name: .AVPlayerItemDidPlayToEndTime, object: player.currentItem)
@@ -150,11 +149,73 @@ class RecommendHomeViewController:UIViewController{
         vc.player?.seek(to: .zero)
         vc.player?.play()
     }
+    
+    func onFoodFav(mealIndex:Int,recipeIndex:Int) {
+        let foodId = recommendationList[mealIndex].recipeList[recipeIndex].recipeId
+        var req = Apisvr_AddFavouriteItemReq()
+        req.itemID = Int32(foodId)
+        guard let token = UserDefaults.standard.string(forKey: Constants.tokenKey) else {
+            return
+        }
+        let mealIndexPath = IndexPath(row: mealIndex, section: 0)
+        let mealCell = self.rootView.recommendationMainTableView.cellForRow(at: mealIndexPath) as! RecommendHomeTableCell
+        let recipeIndexPath = IndexPath(row: recipeIndex, section: 0)
+        let recipeCell = mealCell.recommendationCollectionView.cellForItem(at: recipeIndexPath) as! RecommendHomeCollectionCell
+        do{
+            let metaData = try Metadata(["authorization": "Token " + token])
+            recipeCell.likeButton.isEnabled = false
+            try ProfileDataManager.shared.client.addFavouriteItem(req, metadata: metaData) { (resp, result) in
+                DispatchQueue.main.async {
+                    recipeCell.likeButton.isEnabled = true
+                    if result.statusCode == .ok {
+                        self.recommendationList[mealIndex].recipeList[recipeIndex].isLike = true
+                        recipeCell.likeButton.isSelected = true
+                    }
+                }
+                
+            }
+        } catch {
+            recipeCell.likeButton.isEnabled = true
+            print(error)
+        }
+        
+    }
+    
+    func onFoodUnFav(mealIndex:Int,recipeIndex:Int) {
+        let foodId = recommendationList[mealIndex].recipeList[recipeIndex].recipeId
+        var req = Apisvr_RemoveFavouriteItemReq()
+        req.itemID = Int32(foodId)
+        guard let token = UserDefaults.standard.string(forKey: Constants.tokenKey) else {
+            return
+        }
+        let mealIndexPath = IndexPath(row: mealIndex, section: 0)
+        let mealCell = self.rootView.recommendationMainTableView.cellForRow(at: mealIndexPath) as! RecommendHomeTableCell
+        let recipeIndexPath = IndexPath(row: recipeIndex, section: 0)
+        let recipeCell = mealCell.recommendationCollectionView.cellForItem(at: recipeIndexPath) as! RecommendHomeCollectionCell
+        do{
+            let metaData = try Metadata(["authorization": "Token " + token])
+            recipeCell.likeButton.isEnabled = false
+            try ProfileDataManager.shared.client.removeFavouriteItem(req, metadata: metaData) { (resp, result) in
+                DispatchQueue.main.async {
+                    recipeCell.likeButton.isEnabled = true
+                    if result.statusCode == .ok {
+                        self.recommendationList[mealIndex].recipeList[recipeIndex].isLike = false
+                        recipeCell.likeButton.isSelected = false
+                    }
+                }
+            }
+        } catch {
+            recipeCell.likeButton.isEnabled = true
+            print(error)
+        }
+        
+    }
 
     
 }
 
 extension RecommendHomeViewController: UITableViewDelegate, UITableViewDataSource  {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return recommendationList.count
     }
@@ -171,8 +232,61 @@ extension RecommendHomeViewController: UITableViewDelegate, UITableViewDataSourc
         cell.didMoveAction = { movePositionIndex in
             self.recommendationList[indexPath.row].selected_Pos = movePositionIndex
         }
+        cell.didCollectionCheck = { collectionIndex in
+            let isLike = self.recommendationList[indexPath.row].recipeList[collectionIndex].isLike
+            if isLike {
+                self.onFoodUnFav(mealIndex: indexPath.row, recipeIndex: collectionIndex)
+            } else {
+                self.onFoodFav(mealIndex: indexPath.row, recipeIndex: collectionIndex)
+            }
+           
+        }
+        cell.didCheckAction = { index in
+            let recipe = self.recommendationList[indexPath.row].recipeList[index]
+            var mealType = Apisvr_MealType.unknownMealType
+            switch indexPath.row{
+            case 0: mealType = .breakfast
+            case 1: mealType = .lunch
+            case 2: mealType = .dinner
+            default: break
+            }
+            self.requestFoodDetail(recipe: recipe , mealType: mealType)
+        }
         return cell
     }
+    
+    func requestFoodDetail(recipe:RecipeModel , mealType: Apisvr_MealType){
+        if LoginDataManager.shared.getUserStatus() == .unknownUserType {
+            let targetVC = LoginViewController()
+            self.navigationController?.pushViewController(targetVC, animated: true)
+        } else {
+            do{
+                var req = Apisvr_GetFoodLogDetailReq()
+                var foodTag = Apisvr_FoodTag()
+                foodTag.foodID = Int32(recipe.recipeId)
+                req.foodTags = [foodTag]
+                guard let token = UserDefaults.standard.string(forKey: Constants.tokenKey) else {
+                    return
+                }
+                let metaData = try Metadata(["authorization": "Token " + token])
+                try FoodDiaryDataManager.shared.client.getFoodLogDetail(req, metadata: metaData) { (resp, result) in
+                    if result.statusCode == .ok {
+                        DispatchQueue.main.async {
+                            let targetVC = FoodDiaryDetailViewController()
+                            targetVC.imgUrl = recipe.videoCoverImageUrl
+                            targetVC.foodDiaryList = resp!.foodLogs
+                            targetVC.mealLogList = FoodDiaryDataManager.shared.convertFoodLogToInfo(foodDiaryList: resp!.foodLogs)
+                            targetVC.mealType = mealType
+                            self.navigationController?.pushViewController(targetVC, animated: true)
+                        }
+                    }
+                }
+            } catch {
+                print(error)
+            }
+        }
+    }
+    
     
     func displayTransistScaleAnimation(rowIndex:Int,columnIndex:Int,recipe:RecipeModel){
         let tableViewIndexPath = IndexPath(item: rowIndex, section: 0)

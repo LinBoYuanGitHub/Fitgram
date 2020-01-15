@@ -118,7 +118,6 @@ enum Apisvr_ActivityLevel: SwiftProtobuf.Enum {
   case sedentary // = 2
   case moderatelyActive // = 3
   case vigorouslyActive // = 4
-  case extremelyActive // = 5
   case UNRECOGNIZED(Int)
 
   init() {
@@ -132,7 +131,6 @@ enum Apisvr_ActivityLevel: SwiftProtobuf.Enum {
     case 2: self = .sedentary
     case 3: self = .moderatelyActive
     case 4: self = .vigorouslyActive
-    case 5: self = .extremelyActive
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -144,7 +142,6 @@ enum Apisvr_ActivityLevel: SwiftProtobuf.Enum {
     case .sedentary: return 2
     case .moderatelyActive: return 3
     case .vigorouslyActive: return 4
-    case .extremelyActive: return 5
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -161,7 +158,6 @@ extension Apisvr_ActivityLevel: CaseIterable {
     .sedentary,
     .moderatelyActive,
     .vigorouslyActive,
-    .extremelyActive,
   ]
 }
 
@@ -447,12 +443,10 @@ struct Apisvr_UpdateUserProfileResp {
   init() {}
 }
 
-struct Apisvr_GetUserFavouriteItemReq {
+struct Apisvr_GetFavouriteRecipesReq {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
-
-  var itemType: Int32 = 0
 
   var offset: Int32 = 0
 
@@ -466,11 +460,11 @@ struct Apisvr_FavouriteItem {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var itemMappingID: Int32 = 0
+  var foodID: Int32 = 0
 
   var imgURL: String = String()
 
-  var name: String = String()
+  var foodName: String = String()
 
   var energy: Float = 0
 
@@ -479,12 +473,12 @@ struct Apisvr_FavouriteItem {
   init() {}
 }
 
-struct Apisvr_GetUserFavouriteItemResp {
+struct Apisvr_GetFavouriteRecipesResp {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var items: [Apisvr_FavouriteItem] = []
+  var recipes: [Apisvr_FavouriteItem] = []
 
   var total: Int32 = 0
 
@@ -493,22 +487,87 @@ struct Apisvr_GetUserFavouriteItemResp {
   init() {}
 }
 
-/// mapping according to item_type, restaurant or recipe
-struct Apisvr_AddUserFavouriteItemReq {
+struct Apisvr_GetFavouriteRestaurantsReq {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var itemType: Int32 = 0
-
-  var itemMappingID: Int32 = 0
+  var offset: Int32 = 0
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
 }
 
-struct Apisvr_AddUserFavouriteItemResp {
+struct Apisvr_FavouriteRestaurant {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var restaurantID: Int32 = 0
+
+  var restaurantImgURL: String = String()
+
+  var restaurantName: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct Apisvr_GetFavouriteRestaurantsResp {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var restaurants: [Apisvr_FavouriteRestaurant] = []
+
+  var total: Int32 = 0
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct Apisvr_GetFavouriteRestaurantMenusReq {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var restaurantID: Int32 = 0
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct Apisvr_GetFavouriteRestaurantMenusResp {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var menus: [Apisvr_FavouriteItem] = []
+
+  var total: Int32 = 0
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct Apisvr_AddFavouriteItemReq {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var itemID: Int32 = 0
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct Apisvr_AddFavouriteItemResp {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
@@ -523,9 +582,7 @@ struct Apisvr_RemoveFavouriteItemReq {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var itemType: Int32 = 0
-
-  var itemMappingID: Int32 = 0
+  var itemID: Int32 = 0
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -568,6 +625,60 @@ struct Apisvr_GetGoalDetailsResp {
   init() {}
 }
 
+struct Apisvr_LinkPersonalTrainerReq {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var coachID: Int32 = 0
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct Apisvr_LinkPersonalTrainerResp {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct Apisvr_GetTrainerInfoReq {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var coachID: Int32 = 0
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct Apisvr_GetTrainerInfoResp {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var name: String = String()
+
+  var gymClubName: String = String()
+
+  var yearsOfExp: Float = 0
+
+  var qualifications: [String] = []
+
+  var avatarURL: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate let _protobuf_package = "apisvr"
@@ -596,7 +707,6 @@ extension Apisvr_ActivityLevel: SwiftProtobuf._ProtoNameProviding {
     2: .same(proto: "SEDENTARY"),
     3: .same(proto: "MODERATELY_ACTIVE"),
     4: .same(proto: "VIGOROUSLY_ACTIVE"),
-    5: .same(proto: "EXTREMELY_ACTIVE"),
   ]
 }
 
@@ -844,35 +954,29 @@ extension Apisvr_UpdateUserProfileResp: SwiftProtobuf.Message, SwiftProtobuf._Me
   }
 }
 
-extension Apisvr_GetUserFavouriteItemReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".GetUserFavouriteItemReq"
+extension Apisvr_GetFavouriteRecipesReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".GetFavouriteRecipesReq"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "item_type"),
-    2: .same(proto: "offset"),
+    1: .same(proto: "offset"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       switch fieldNumber {
-      case 1: try decoder.decodeSingularInt32Field(value: &self.itemType)
-      case 2: try decoder.decodeSingularInt32Field(value: &self.offset)
+      case 1: try decoder.decodeSingularInt32Field(value: &self.offset)
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if self.itemType != 0 {
-      try visitor.visitSingularInt32Field(value: self.itemType, fieldNumber: 1)
-    }
     if self.offset != 0 {
-      try visitor.visitSingularInt32Field(value: self.offset, fieldNumber: 2)
+      try visitor.visitSingularInt32Field(value: self.offset, fieldNumber: 1)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: Apisvr_GetUserFavouriteItemReq, rhs: Apisvr_GetUserFavouriteItemReq) -> Bool {
-    if lhs.itemType != rhs.itemType {return false}
+  static func ==(lhs: Apisvr_GetFavouriteRecipesReq, rhs: Apisvr_GetFavouriteRecipesReq) -> Bool {
     if lhs.offset != rhs.offset {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
@@ -882,18 +986,18 @@ extension Apisvr_GetUserFavouriteItemReq: SwiftProtobuf.Message, SwiftProtobuf._
 extension Apisvr_FavouriteItem: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".FavouriteItem"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "item_mapping_id"),
+    1: .standard(proto: "food_id"),
     2: .standard(proto: "img_url"),
-    3: .same(proto: "name"),
+    3: .standard(proto: "food_name"),
     4: .same(proto: "energy"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       switch fieldNumber {
-      case 1: try decoder.decodeSingularInt32Field(value: &self.itemMappingID)
+      case 1: try decoder.decodeSingularInt32Field(value: &self.foodID)
       case 2: try decoder.decodeSingularStringField(value: &self.imgURL)
-      case 3: try decoder.decodeSingularStringField(value: &self.name)
+      case 3: try decoder.decodeSingularStringField(value: &self.foodName)
       case 4: try decoder.decodeSingularFloatField(value: &self.energy)
       default: break
       }
@@ -901,14 +1005,14 @@ extension Apisvr_FavouriteItem: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if self.itemMappingID != 0 {
-      try visitor.visitSingularInt32Field(value: self.itemMappingID, fieldNumber: 1)
+    if self.foodID != 0 {
+      try visitor.visitSingularInt32Field(value: self.foodID, fieldNumber: 1)
     }
     if !self.imgURL.isEmpty {
       try visitor.visitSingularStringField(value: self.imgURL, fieldNumber: 2)
     }
-    if !self.name.isEmpty {
-      try visitor.visitSingularStringField(value: self.name, fieldNumber: 3)
+    if !self.foodName.isEmpty {
+      try visitor.visitSingularStringField(value: self.foodName, fieldNumber: 3)
     }
     if self.energy != 0 {
       try visitor.visitSingularFloatField(value: self.energy, fieldNumber: 4)
@@ -917,26 +1021,26 @@ extension Apisvr_FavouriteItem: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
   }
 
   static func ==(lhs: Apisvr_FavouriteItem, rhs: Apisvr_FavouriteItem) -> Bool {
-    if lhs.itemMappingID != rhs.itemMappingID {return false}
+    if lhs.foodID != rhs.foodID {return false}
     if lhs.imgURL != rhs.imgURL {return false}
-    if lhs.name != rhs.name {return false}
+    if lhs.foodName != rhs.foodName {return false}
     if lhs.energy != rhs.energy {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
-extension Apisvr_GetUserFavouriteItemResp: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".GetUserFavouriteItemResp"
+extension Apisvr_GetFavouriteRecipesResp: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".GetFavouriteRecipesResp"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .same(proto: "items"),
+    1: .same(proto: "recipes"),
     2: .same(proto: "total"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       switch fieldNumber {
-      case 1: try decoder.decodeRepeatedMessageField(value: &self.items)
+      case 1: try decoder.decodeRepeatedMessageField(value: &self.recipes)
       case 2: try decoder.decodeSingularInt32Field(value: &self.total)
       default: break
       }
@@ -944,8 +1048,8 @@ extension Apisvr_GetUserFavouriteItemResp: SwiftProtobuf.Message, SwiftProtobuf.
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.items.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.items, fieldNumber: 1)
+    if !self.recipes.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.recipes, fieldNumber: 1)
     }
     if self.total != 0 {
       try visitor.visitSingularInt32Field(value: self.total, fieldNumber: 2)
@@ -953,51 +1057,214 @@ extension Apisvr_GetUserFavouriteItemResp: SwiftProtobuf.Message, SwiftProtobuf.
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: Apisvr_GetUserFavouriteItemResp, rhs: Apisvr_GetUserFavouriteItemResp) -> Bool {
-    if lhs.items != rhs.items {return false}
+  static func ==(lhs: Apisvr_GetFavouriteRecipesResp, rhs: Apisvr_GetFavouriteRecipesResp) -> Bool {
+    if lhs.recipes != rhs.recipes {return false}
     if lhs.total != rhs.total {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
-extension Apisvr_AddUserFavouriteItemReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".AddUserFavouriteItemReq"
+extension Apisvr_GetFavouriteRestaurantsReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".GetFavouriteRestaurantsReq"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "item_type"),
-    2: .standard(proto: "item_mapping_id"),
+    1: .same(proto: "offset"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       switch fieldNumber {
-      case 1: try decoder.decodeSingularInt32Field(value: &self.itemType)
-      case 2: try decoder.decodeSingularInt32Field(value: &self.itemMappingID)
+      case 1: try decoder.decodeSingularInt32Field(value: &self.offset)
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if self.itemType != 0 {
-      try visitor.visitSingularInt32Field(value: self.itemType, fieldNumber: 1)
-    }
-    if self.itemMappingID != 0 {
-      try visitor.visitSingularInt32Field(value: self.itemMappingID, fieldNumber: 2)
+    if self.offset != 0 {
+      try visitor.visitSingularInt32Field(value: self.offset, fieldNumber: 1)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: Apisvr_AddUserFavouriteItemReq, rhs: Apisvr_AddUserFavouriteItemReq) -> Bool {
-    if lhs.itemType != rhs.itemType {return false}
-    if lhs.itemMappingID != rhs.itemMappingID {return false}
+  static func ==(lhs: Apisvr_GetFavouriteRestaurantsReq, rhs: Apisvr_GetFavouriteRestaurantsReq) -> Bool {
+    if lhs.offset != rhs.offset {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
 }
 
-extension Apisvr_AddUserFavouriteItemResp: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
-  static let protoMessageName: String = _protobuf_package + ".AddUserFavouriteItemResp"
+extension Apisvr_FavouriteRestaurant: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".FavouriteRestaurant"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "restaurant_id"),
+    2: .standard(proto: "restaurant_img_url"),
+    3: .standard(proto: "restaurant_name"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      switch fieldNumber {
+      case 1: try decoder.decodeSingularInt32Field(value: &self.restaurantID)
+      case 2: try decoder.decodeSingularStringField(value: &self.restaurantImgURL)
+      case 3: try decoder.decodeSingularStringField(value: &self.restaurantName)
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.restaurantID != 0 {
+      try visitor.visitSingularInt32Field(value: self.restaurantID, fieldNumber: 1)
+    }
+    if !self.restaurantImgURL.isEmpty {
+      try visitor.visitSingularStringField(value: self.restaurantImgURL, fieldNumber: 2)
+    }
+    if !self.restaurantName.isEmpty {
+      try visitor.visitSingularStringField(value: self.restaurantName, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Apisvr_FavouriteRestaurant, rhs: Apisvr_FavouriteRestaurant) -> Bool {
+    if lhs.restaurantID != rhs.restaurantID {return false}
+    if lhs.restaurantImgURL != rhs.restaurantImgURL {return false}
+    if lhs.restaurantName != rhs.restaurantName {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Apisvr_GetFavouriteRestaurantsResp: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".GetFavouriteRestaurantsResp"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "restaurants"),
+    2: .same(proto: "total"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      switch fieldNumber {
+      case 1: try decoder.decodeRepeatedMessageField(value: &self.restaurants)
+      case 2: try decoder.decodeSingularInt32Field(value: &self.total)
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.restaurants.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.restaurants, fieldNumber: 1)
+    }
+    if self.total != 0 {
+      try visitor.visitSingularInt32Field(value: self.total, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Apisvr_GetFavouriteRestaurantsResp, rhs: Apisvr_GetFavouriteRestaurantsResp) -> Bool {
+    if lhs.restaurants != rhs.restaurants {return false}
+    if lhs.total != rhs.total {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Apisvr_GetFavouriteRestaurantMenusReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".GetFavouriteRestaurantMenusReq"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "restaurant_id"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      switch fieldNumber {
+      case 1: try decoder.decodeSingularInt32Field(value: &self.restaurantID)
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.restaurantID != 0 {
+      try visitor.visitSingularInt32Field(value: self.restaurantID, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Apisvr_GetFavouriteRestaurantMenusReq, rhs: Apisvr_GetFavouriteRestaurantMenusReq) -> Bool {
+    if lhs.restaurantID != rhs.restaurantID {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Apisvr_GetFavouriteRestaurantMenusResp: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".GetFavouriteRestaurantMenusResp"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "menus"),
+    2: .same(proto: "total"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      switch fieldNumber {
+      case 1: try decoder.decodeRepeatedMessageField(value: &self.menus)
+      case 2: try decoder.decodeSingularInt32Field(value: &self.total)
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.menus.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.menus, fieldNumber: 1)
+    }
+    if self.total != 0 {
+      try visitor.visitSingularInt32Field(value: self.total, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Apisvr_GetFavouriteRestaurantMenusResp, rhs: Apisvr_GetFavouriteRestaurantMenusResp) -> Bool {
+    if lhs.menus != rhs.menus {return false}
+    if lhs.total != rhs.total {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Apisvr_AddFavouriteItemReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".AddFavouriteItemReq"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "item_id"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      switch fieldNumber {
+      case 1: try decoder.decodeSingularInt32Field(value: &self.itemID)
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.itemID != 0 {
+      try visitor.visitSingularInt32Field(value: self.itemID, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Apisvr_AddFavouriteItemReq, rhs: Apisvr_AddFavouriteItemReq) -> Bool {
+    if lhs.itemID != rhs.itemID {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Apisvr_AddFavouriteItemResp: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".AddFavouriteItemResp"
   static let _protobuf_nameMap = SwiftProtobuf._NameMap()
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1009,7 +1276,7 @@ extension Apisvr_AddUserFavouriteItemResp: SwiftProtobuf.Message, SwiftProtobuf.
     try unknownFields.traverse(visitor: &visitor)
   }
 
-  static func ==(lhs: Apisvr_AddUserFavouriteItemResp, rhs: Apisvr_AddUserFavouriteItemResp) -> Bool {
+  static func ==(lhs: Apisvr_AddFavouriteItemResp, rhs: Apisvr_AddFavouriteItemResp) -> Bool {
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -1018,33 +1285,27 @@ extension Apisvr_AddUserFavouriteItemResp: SwiftProtobuf.Message, SwiftProtobuf.
 extension Apisvr_RemoveFavouriteItemReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".RemoveFavouriteItemReq"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "item_type"),
-    2: .standard(proto: "item_mapping_id"),
+    1: .standard(proto: "item_id"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       switch fieldNumber {
-      case 1: try decoder.decodeSingularInt32Field(value: &self.itemType)
-      case 2: try decoder.decodeSingularInt32Field(value: &self.itemMappingID)
+      case 1: try decoder.decodeSingularInt32Field(value: &self.itemID)
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if self.itemType != 0 {
-      try visitor.visitSingularInt32Field(value: self.itemType, fieldNumber: 1)
-    }
-    if self.itemMappingID != 0 {
-      try visitor.visitSingularInt32Field(value: self.itemMappingID, fieldNumber: 2)
+    if self.itemID != 0 {
+      try visitor.visitSingularInt32Field(value: self.itemID, fieldNumber: 1)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: Apisvr_RemoveFavouriteItemReq, rhs: Apisvr_RemoveFavouriteItemReq) -> Bool {
-    if lhs.itemType != rhs.itemType {return false}
-    if lhs.itemMappingID != rhs.itemMappingID {return false}
+    if lhs.itemID != rhs.itemID {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -1124,6 +1385,136 @@ extension Apisvr_GetGoalDetailsResp: SwiftProtobuf.Message, SwiftProtobuf._Messa
     if lhs.recommendedEnergyInstake != rhs.recommendedEnergyInstake {return false}
     if lhs.recommendedWeightLoss != rhs.recommendedWeightLoss {return false}
     if lhs.days != rhs.days {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Apisvr_LinkPersonalTrainerReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".LinkPersonalTrainerReq"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "coach_id"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      switch fieldNumber {
+      case 1: try decoder.decodeSingularInt32Field(value: &self.coachID)
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.coachID != 0 {
+      try visitor.visitSingularInt32Field(value: self.coachID, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Apisvr_LinkPersonalTrainerReq, rhs: Apisvr_LinkPersonalTrainerReq) -> Bool {
+    if lhs.coachID != rhs.coachID {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Apisvr_LinkPersonalTrainerResp: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".LinkPersonalTrainerResp"
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let _ = try decoder.nextFieldNumber() {
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Apisvr_LinkPersonalTrainerResp, rhs: Apisvr_LinkPersonalTrainerResp) -> Bool {
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Apisvr_GetTrainerInfoReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".GetTrainerInfoReq"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "coach_id"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      switch fieldNumber {
+      case 1: try decoder.decodeSingularInt32Field(value: &self.coachID)
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.coachID != 0 {
+      try visitor.visitSingularInt32Field(value: self.coachID, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Apisvr_GetTrainerInfoReq, rhs: Apisvr_GetTrainerInfoReq) -> Bool {
+    if lhs.coachID != rhs.coachID {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Apisvr_GetTrainerInfoResp: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".GetTrainerInfoResp"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "name"),
+    2: .standard(proto: "gym_club_name"),
+    3: .standard(proto: "years_of_exp"),
+    4: .same(proto: "qualifications"),
+    5: .standard(proto: "avatar_url"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      switch fieldNumber {
+      case 1: try decoder.decodeSingularStringField(value: &self.name)
+      case 2: try decoder.decodeSingularStringField(value: &self.gymClubName)
+      case 3: try decoder.decodeSingularFloatField(value: &self.yearsOfExp)
+      case 4: try decoder.decodeRepeatedStringField(value: &self.qualifications)
+      case 5: try decoder.decodeSingularStringField(value: &self.avatarURL)
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.name.isEmpty {
+      try visitor.visitSingularStringField(value: self.name, fieldNumber: 1)
+    }
+    if !self.gymClubName.isEmpty {
+      try visitor.visitSingularStringField(value: self.gymClubName, fieldNumber: 2)
+    }
+    if self.yearsOfExp != 0 {
+      try visitor.visitSingularFloatField(value: self.yearsOfExp, fieldNumber: 3)
+    }
+    if !self.qualifications.isEmpty {
+      try visitor.visitRepeatedStringField(value: self.qualifications, fieldNumber: 4)
+    }
+    if !self.avatarURL.isEmpty {
+      try visitor.visitSingularStringField(value: self.avatarURL, fieldNumber: 5)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Apisvr_GetTrainerInfoResp, rhs: Apisvr_GetTrainerInfoResp) -> Bool {
+    if lhs.name != rhs.name {return false}
+    if lhs.gymClubName != rhs.gymClubName {return false}
+    if lhs.yearsOfExp != rhs.yearsOfExp {return false}
+    if lhs.qualifications != rhs.qualifications {return false}
+    if lhs.avatarURL != rhs.avatarURL {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

@@ -42,6 +42,7 @@ class RecipeDetailViewController:UIViewController{
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
         self.navigationController?.navigationBar.barStyle = .black
         self.rootView.naviCoverView.alpha = 0
         self.navigationController?.navigationBar.isTranslucent = true
@@ -149,7 +150,7 @@ class RecipeDetailViewController:UIViewController{
                             let targetVC = FoodDiaryDetailViewController()
                             targetVC.foodImage = self.rootView.headerImage.image!
                             targetVC.foodDiaryList = resp!.foodLogs
-                            targetVC.mealLogList = self.convertFoodLogToInfo(foodDiaryList: resp!.foodLogs)
+                            targetVC.mealLogList = FoodDiaryDataManager.shared.convertFoodLogToInfo(foodDiaryList: resp!.foodLogs)
                             targetVC.mealType = self.mealType//TODO modify latter
                             self.navigationController?.pushViewController(targetVC, animated: true)
                         }

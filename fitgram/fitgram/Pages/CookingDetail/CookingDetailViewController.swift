@@ -111,7 +111,7 @@ extension CookingDetailViewController: ViewPagerDataSource, ViewPagerDelegate{
                             targetVC.mealType = self.mealType //TODO modify latter
                             targetVC.foodImage = self.foodImage
                             targetVC.foodDiaryList = resp!.foodLogs
-                            targetVC.mealLogList = self.convertFoodLogToInfo(foodDiaryList:  resp!.foodLogs)
+                            targetVC.mealLogList = FoodDiaryDataManager.shared.convertFoodLogToInfo(foodDiaryList:  resp!.foodLogs)
                             self.navigationController?.pushViewController(targetVC, animated: true)
                         }
                     }
@@ -120,21 +120,6 @@ extension CookingDetailViewController: ViewPagerDataSource, ViewPagerDelegate{
                 print(error)
             }
         }
-    }
-    
-    func convertFoodLogToInfo(foodDiaryList:[Apisvr_FoodLog]) -> [Apisvr_FoodLogInfo]{
-        var foodLogInfos = [Apisvr_FoodLogInfo]()
-        for index in 0...foodDiaryList.count - 1 {
-            var foodInfo = Apisvr_FoodLogInfo()
-            //set up initial value for logs
-            foodInfo.amount = 1
-            foodInfo.foodID = foodDiaryList[index].foodID
-            foodInfo.selectedUnitID = foodDiaryList[index].selectedUnitID
-            foodInfo.tagX = 0
-            foodInfo.tagY = 0
-            foodLogInfos.append(foodInfo)
-        }
-        return foodLogInfos
     }
     
     

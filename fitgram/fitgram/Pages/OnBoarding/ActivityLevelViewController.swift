@@ -75,7 +75,7 @@ class ActivityLevelViewController: BaseViewController{
                 case 1: ProfileDataManager.shared.profile.activityLevel = .extremelyInactive
                 case 2: ProfileDataManager.shared.profile.activityLevel = .sedentary
                 case 3: ProfileDataManager.shared.profile.activityLevel = .moderatelyActive
-                case 4: ProfileDataManager.shared.profile.activityLevel = .extremelyActive
+                case 4: ProfileDataManager.shared.profile.activityLevel = .extremelyInactive
                 case 5: ProfileDataManager.shared.profile.activityLevel = .vigorouslyActive
                 default: ProfileDataManager.shared.profile.activityLevel = .unknownLevel
                 }

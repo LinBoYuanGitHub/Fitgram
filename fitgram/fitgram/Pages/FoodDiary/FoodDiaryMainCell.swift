@@ -20,6 +20,7 @@ class FoodDiaryMainCell: UITableViewCell {
     public var mealList = [Apisvr_FoodDiaryMealLog]()
     
     var didSelectMealAction: (Int) -> Void = {_ in }
+    var viewMealAction: (Int) -> Void = {mealItemIndex in }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -29,7 +30,7 @@ class FoodDiaryMainCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.backgroundColor = UIColor.white
         //calculate cell height
-        let collectionViewHeight = (mealList.count+1)%4 * 70
+        let collectionViewHeight = ((mealList.count)/4 + 1) * 75
         shadowContainer = UIView(frame: CGRect(x: 8, y: 8, width: UIScreen.main.bounds.width - 32, height: CGFloat(100 + collectionViewHeight)))
         shadowContainer.layer.shadowOffset = CGSize(width: 0, height: 0) //no shadow direction
         shadowContainer.layer.cornerRadius = 10
@@ -69,7 +70,7 @@ class FoodDiaryMainCell: UITableViewCell {
     
     public func setUpMealData(mealList:[Apisvr_FoodDiaryMealLog]){
         self.mealList = mealList
-        let collectionViewHeight = ((mealList.count+1)/4 + 1) * 70
+        let collectionViewHeight = ((mealList.count)/4 + 1) * 75
         let tableviewHeight = getRecipeNum() * 52
         shadowContainer.frame = CGRect(x: 8, y: 8, width: UIScreen.main.bounds.width - 32, height: CGFloat(100 + collectionViewHeight + tableviewHeight))
         foodListTableView.frame = CGRect(x: 16, y: 90+collectionViewHeight, width: Int(UIScreen.main.bounds.width-64), height: tableviewHeight)
@@ -140,6 +141,9 @@ extension FoodDiaryMainCell: UICollectionViewDelegate, UICollectionViewDataSourc
         //go to foodDiary detail view
         if indexPath.row == mealList.count {
             self.didSelectMealAction(indexPath.row)
+        } else {
+            let mealItemIndex = indexPath.row
+            self.viewMealAction(mealItemIndex)
         }
     }
     

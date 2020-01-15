@@ -483,6 +483,108 @@ struct Apisvr_ALLIngredientCheckResp {
   init() {}
 }
 
+struct Apisvr_GetRestaurantsReq {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var lat: Float = 0
+
+  var lng: Float = 0
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct Apisvr_Restaurant {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var restaurantID: Int32 = 0
+
+  var restaurantImgURL: String = String()
+
+  var restaurantName: String = String()
+
+  var rating: Float = 0
+
+  var address: String = String()
+
+  var distance: Float = 0
+
+  var lat: Float = 0
+
+  var lng: Float = 0
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct Apisvr_GetRestaurantsResp {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var restaurants: [Apisvr_Restaurant] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct Apisvr_GetRestaurantMenusReq {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var restaurantID: Int32 = 0
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct Apisvr_Menu {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var foodID: Int32 = 0
+
+  var foodName: String = String()
+
+  var foodImgURL: String = String()
+
+  var price: Float = 0
+
+  var energy: Float = 0
+
+  var favouriteNum: Int32 = 0
+
+  var isFavourite: Bool = false
+
+  var isChecked: Bool = false
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct Apisvr_GetRestaurantMenusResp {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var menus: [Apisvr_Menu] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate let _protobuf_package = "apisvr"
@@ -1457,6 +1559,270 @@ extension Apisvr_ALLIngredientCheckResp: SwiftProtobuf.Message, SwiftProtobuf._M
   }
 
   static func ==(lhs: Apisvr_ALLIngredientCheckResp, rhs: Apisvr_ALLIngredientCheckResp) -> Bool {
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Apisvr_GetRestaurantsReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".GetRestaurantsReq"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "lat"),
+    2: .same(proto: "lng"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      switch fieldNumber {
+      case 1: try decoder.decodeSingularFloatField(value: &self.lat)
+      case 2: try decoder.decodeSingularFloatField(value: &self.lng)
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.lat != 0 {
+      try visitor.visitSingularFloatField(value: self.lat, fieldNumber: 1)
+    }
+    if self.lng != 0 {
+      try visitor.visitSingularFloatField(value: self.lng, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Apisvr_GetRestaurantsReq, rhs: Apisvr_GetRestaurantsReq) -> Bool {
+    if lhs.lat != rhs.lat {return false}
+    if lhs.lng != rhs.lng {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Apisvr_Restaurant: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".Restaurant"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "restaurant_id"),
+    2: .standard(proto: "restaurant_img_url"),
+    3: .standard(proto: "restaurant_name"),
+    4: .same(proto: "rating"),
+    5: .same(proto: "address"),
+    6: .same(proto: "distance"),
+    7: .same(proto: "lat"),
+    8: .same(proto: "lng"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      switch fieldNumber {
+      case 1: try decoder.decodeSingularInt32Field(value: &self.restaurantID)
+      case 2: try decoder.decodeSingularStringField(value: &self.restaurantImgURL)
+      case 3: try decoder.decodeSingularStringField(value: &self.restaurantName)
+      case 4: try decoder.decodeSingularFloatField(value: &self.rating)
+      case 5: try decoder.decodeSingularStringField(value: &self.address)
+      case 6: try decoder.decodeSingularFloatField(value: &self.distance)
+      case 7: try decoder.decodeSingularFloatField(value: &self.lat)
+      case 8: try decoder.decodeSingularFloatField(value: &self.lng)
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.restaurantID != 0 {
+      try visitor.visitSingularInt32Field(value: self.restaurantID, fieldNumber: 1)
+    }
+    if !self.restaurantImgURL.isEmpty {
+      try visitor.visitSingularStringField(value: self.restaurantImgURL, fieldNumber: 2)
+    }
+    if !self.restaurantName.isEmpty {
+      try visitor.visitSingularStringField(value: self.restaurantName, fieldNumber: 3)
+    }
+    if self.rating != 0 {
+      try visitor.visitSingularFloatField(value: self.rating, fieldNumber: 4)
+    }
+    if !self.address.isEmpty {
+      try visitor.visitSingularStringField(value: self.address, fieldNumber: 5)
+    }
+    if self.distance != 0 {
+      try visitor.visitSingularFloatField(value: self.distance, fieldNumber: 6)
+    }
+    if self.lat != 0 {
+      try visitor.visitSingularFloatField(value: self.lat, fieldNumber: 7)
+    }
+    if self.lng != 0 {
+      try visitor.visitSingularFloatField(value: self.lng, fieldNumber: 8)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Apisvr_Restaurant, rhs: Apisvr_Restaurant) -> Bool {
+    if lhs.restaurantID != rhs.restaurantID {return false}
+    if lhs.restaurantImgURL != rhs.restaurantImgURL {return false}
+    if lhs.restaurantName != rhs.restaurantName {return false}
+    if lhs.rating != rhs.rating {return false}
+    if lhs.address != rhs.address {return false}
+    if lhs.distance != rhs.distance {return false}
+    if lhs.lat != rhs.lat {return false}
+    if lhs.lng != rhs.lng {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Apisvr_GetRestaurantsResp: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".GetRestaurantsResp"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "restaurants"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      switch fieldNumber {
+      case 1: try decoder.decodeRepeatedMessageField(value: &self.restaurants)
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.restaurants.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.restaurants, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Apisvr_GetRestaurantsResp, rhs: Apisvr_GetRestaurantsResp) -> Bool {
+    if lhs.restaurants != rhs.restaurants {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Apisvr_GetRestaurantMenusReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".GetRestaurantMenusReq"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "restaurant_id"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      switch fieldNumber {
+      case 1: try decoder.decodeSingularInt32Field(value: &self.restaurantID)
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.restaurantID != 0 {
+      try visitor.visitSingularInt32Field(value: self.restaurantID, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Apisvr_GetRestaurantMenusReq, rhs: Apisvr_GetRestaurantMenusReq) -> Bool {
+    if lhs.restaurantID != rhs.restaurantID {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Apisvr_Menu: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".Menu"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "food_id"),
+    2: .standard(proto: "food_name"),
+    3: .standard(proto: "food_img_url"),
+    4: .same(proto: "price"),
+    5: .same(proto: "energy"),
+    6: .standard(proto: "favourite_num"),
+    7: .standard(proto: "is_favourite"),
+    8: .standard(proto: "is_checked"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      switch fieldNumber {
+      case 1: try decoder.decodeSingularInt32Field(value: &self.foodID)
+      case 2: try decoder.decodeSingularStringField(value: &self.foodName)
+      case 3: try decoder.decodeSingularStringField(value: &self.foodImgURL)
+      case 4: try decoder.decodeSingularFloatField(value: &self.price)
+      case 5: try decoder.decodeSingularFloatField(value: &self.energy)
+      case 6: try decoder.decodeSingularInt32Field(value: &self.favouriteNum)
+      case 7: try decoder.decodeSingularBoolField(value: &self.isFavourite)
+      case 8: try decoder.decodeSingularBoolField(value: &self.isChecked)
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.foodID != 0 {
+      try visitor.visitSingularInt32Field(value: self.foodID, fieldNumber: 1)
+    }
+    if !self.foodName.isEmpty {
+      try visitor.visitSingularStringField(value: self.foodName, fieldNumber: 2)
+    }
+    if !self.foodImgURL.isEmpty {
+      try visitor.visitSingularStringField(value: self.foodImgURL, fieldNumber: 3)
+    }
+    if self.price != 0 {
+      try visitor.visitSingularFloatField(value: self.price, fieldNumber: 4)
+    }
+    if self.energy != 0 {
+      try visitor.visitSingularFloatField(value: self.energy, fieldNumber: 5)
+    }
+    if self.favouriteNum != 0 {
+      try visitor.visitSingularInt32Field(value: self.favouriteNum, fieldNumber: 6)
+    }
+    if self.isFavourite != false {
+      try visitor.visitSingularBoolField(value: self.isFavourite, fieldNumber: 7)
+    }
+    if self.isChecked != false {
+      try visitor.visitSingularBoolField(value: self.isChecked, fieldNumber: 8)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Apisvr_Menu, rhs: Apisvr_Menu) -> Bool {
+    if lhs.foodID != rhs.foodID {return false}
+    if lhs.foodName != rhs.foodName {return false}
+    if lhs.foodImgURL != rhs.foodImgURL {return false}
+    if lhs.price != rhs.price {return false}
+    if lhs.energy != rhs.energy {return false}
+    if lhs.favouriteNum != rhs.favouriteNum {return false}
+    if lhs.isFavourite != rhs.isFavourite {return false}
+    if lhs.isChecked != rhs.isChecked {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Apisvr_GetRestaurantMenusResp: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".GetRestaurantMenusResp"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "menus"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      switch fieldNumber {
+      case 1: try decoder.decodeRepeatedMessageField(value: &self.menus)
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.menus.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.menus, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Apisvr_GetRestaurantMenusResp, rhs: Apisvr_GetRestaurantMenusResp) -> Bool {
+    if lhs.menus != rhs.menus {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

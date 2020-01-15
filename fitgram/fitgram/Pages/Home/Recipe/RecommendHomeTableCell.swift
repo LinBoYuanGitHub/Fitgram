@@ -19,6 +19,8 @@ class RecommendHomeTableCell: UITableViewCell {
     //on collection item select listener
     var didSelectAction: (RecipeModel,Int) -> Void = {_,_ in }
     var didMoveAction: (Int) -> Void = {_ in }
+    var didCollectionCheck: (Int) -> Void = {_ in }
+    var didCheckAction: (Int) -> Void = {_ in }
     
     
     required init?(coder aDecoder: NSCoder) {
@@ -33,8 +35,7 @@ class RecommendHomeTableCell: UITableViewCell {
         )
         layout(
             8,
-            |-10-mealText| ~ 40,
-            8,
+            |-16-mealText| ~ 40,
             |recommendationCollectionView| ~  UIScreen.main.bounds.width,
             0
         )
@@ -77,6 +78,22 @@ extension RecommendHomeTableCell: UICollectionViewDelegate, UICollectionViewData
         cell.videoCalorieLabel.text = recommendationDishes[indexPath.row].recipeCalorie
         cell.videoDurationBtn.setTitle("烹饪时间约\(recommendationDishes[indexPath.row].recipeCookingDuration)分钟", for: .normal)
         cell.checkedButton.setTitle("打卡", for: .normal)
+        
+        cell.likeButton.tag = indexPath.row
+        cell.likeButton.isUserInteractionEnabled = true
+        let likeBtnTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(onLikeBtnPressed))
+        cell.likeButton.addGestureRecognizer(likeBtnTapRecognizer)
+        cell.likeButton.isSelected = recommendationDishes[indexPath.row].isLike
+        
+        cell.checkedButton.tag = indexPath.row
+        cell.checkedButton.isUserInteractionEnabled = true
+        let checkBtnTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(onCheckBtnPressed))
+        cell.checkedButton.addGestureRecognizer(checkBtnTapRecognizer)
+//        cell.checkedButton.addTarget(self, action: #selector(onCheckBtnPressed), for: .touchUpInside)
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(onViewPressed))
+        tapRecognizer.numberOfTapsRequired = 1
+        cell.videoPlayView.addGestureRecognizer(tapRecognizer)
+        cell.videoPlayView.isUserInteractionEnabled = true
         return cell
     }
     
@@ -84,10 +101,21 @@ extension RecommendHomeTableCell: UICollectionViewDelegate, UICollectionViewData
          return CGSize(width: UIScreen.main.bounds.width-40, height: UIScreen.main.bounds.width-40) //set the collectionViewCell size
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let recipeItem = recommendationDishes[indexPath.row]
-        didSelectAction(recipeItem,indexPath.row)
+    @objc func onViewPressed(sender:UITapGestureRecognizer){
+        let index = sender.view!.tag
+        let recipeItem = recommendationDishes[index]
+        didSelectAction(recipeItem,index)
     }
+    
+    @objc func onCheckBtnPressed(sender:UITapGestureRecognizer){
+        let index = sender.view!.tag
+        didCheckAction(index)
+    }
+    
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        let recipeItem = recommendationDishes[indexPath.row]
+//        didSelectAction(recipeItem,indexPath.row)
+//    }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let centerPoint = CGPoint(x: self.recommendationCollectionView.center.x + self.recommendationCollectionView.contentOffset.x, y: self.recommendationCollectionView.center.y + self.recommendationCollectionView.contentOffset.y)
@@ -95,6 +123,11 @@ extension RecommendHomeTableCell: UICollectionViewDelegate, UICollectionViewData
             return
         }
         didMoveAction(indexPath.row)
+    }
+    
+    @objc func onLikeBtnPressed(sender:UITapGestureRecognizer){
+        let index = sender.view!.tag
+        didCollectionCheck(index)
     }
     
 }

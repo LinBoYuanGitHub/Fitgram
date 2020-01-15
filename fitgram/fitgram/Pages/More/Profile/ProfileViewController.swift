@@ -61,7 +61,7 @@ class ProfileViewController: BaseViewController{
         self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
-    func requestProfileData(){
+    func requestProfileData() {
         guard let token = UserDefaults.standard.string(forKey: Constants.tokenKey) else {
             return
         }
@@ -143,8 +143,6 @@ extension ProfileViewController: UITextFieldDelegate {
         self.updateProfileToStorage()
         self.updateProfileData()
     }
-    
-
     
     
 }

@@ -23,4 +23,6 @@ class FoodDiaryMeaCollectionCell:UICollectionViewCell {
         mealImage.contentMode = .scaleAspectFill
     }
     
+    
+    
 }

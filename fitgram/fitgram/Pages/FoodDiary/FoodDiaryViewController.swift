@@ -34,6 +34,7 @@ class FoodDiaryViewController:BaseViewController {
                 calendarPicker.scrollToMonthForDate(self.diaryDate)
             }
         }
+        
         rootView.onLeftArrowPressedEvent = {
             self.diaryDate = Calendar.current.date(byAdding: .day,value: -1, to: self.diaryDate)!
             let dateFormatter = DateFormatter()
@@ -57,6 +58,7 @@ class FoodDiaryViewController:BaseViewController {
         self.requestForFoodDiary()
         //navigatation bar setting
         self.navigationController?.view.backgroundColor = .white
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     override func loadView() {
@@ -176,6 +178,37 @@ class FoodDiaryViewController:BaseViewController {
         }
     }
     
+    func requestFoodItemDetail(mealLog:Apisvr_FoodDiaryMealLog){
+        var req = Apisvr_GetMealLogReq()
+        req.mealLogID = mealLog.mealLogID
+        do {
+            guard let token = UserDefaults.standard.string(forKey: Constants.tokenKey) else {
+                return
+            }
+            let metaData = try Metadata(["authorization": "Token " + token])
+            try FoodDiaryDataManager.shared.client.getMealLog(req, metadata: metaData) { (resp, result) in
+                DispatchQueue.main.async {
+                    if result.statusCode == .ok {
+                        let targetVC = FoodDiaryDetailViewController()
+                        targetVC.imgUrl = resp!.imgURL
+                        targetVC.foodDiaryList = resp!.foodLogs
+                        targetVC.mealLogList = FoodDiaryDataManager.shared.convertFoodLogToInfo(foodDiaryList: resp!.foodLogs)
+                        targetVC.mealLogId = mealLog.mealLogID
+                        targetVC.isUpdate = true
+                        self.navigationController?.pushViewController(targetVC, animated: true)
+                    } else {
+                        self.showAlertMessage(msg: result.statusMessage!)
+                    }
+                }
+            }
+        } catch {
+            DispatchQueue.main.async {
+                self.showAlertMessage(msg: error.localizedDescription)
+            }
+        }
+        
+    }
+    
 }
 
 extension FoodDiaryViewController: UITableViewDelegate, UITableViewDataSource {
@@ -195,8 +228,8 @@ extension FoodDiaryViewController: UITableViewDelegate, UITableViewDataSource {
             cell.suggestionIntakenLabel.text = "推荐:占每日摄入量的\(mealEntity.nutrientByMeal.breakfastPercentage)(大约\(Int(mealEntity.nutrient.energyRecommend*mealEntity.nutrientByMeal.breakfastPercentage))千卡)"
             cell.setUpMealData(mealList: mealEntity.mealLogs[0].mealLogByType)   //Apisvr_FoodDiaryMealLog
             cell.didSelectMealAction = { index in
-                self.showRecordActionSheet()
                 self.currentMealType = .breakfast
+                self.showRecordActionSheet()
             }
             break;
         case 1://lunch
@@ -205,8 +238,8 @@ extension FoodDiaryViewController: UITableViewDelegate, UITableViewDataSource {
              cell.suggestionIntakenLabel.text = "推荐:占每日摄入量的\(mealEntity.nutrientByMeal.lunchPercentage)(大约\(Int(mealEntity.nutrient.energyRecommend*mealEntity.nutrientByMeal.lunchPercentage))千卡)"
              cell.setUpMealData(mealList: mealEntity.mealLogs[1].mealLogByType)
              cell.didSelectMealAction = { index in
-                self.showRecordActionSheet()
                 self.currentMealType = .lunch
+                self.showRecordActionSheet()
              }
             break;
         case 2://dinner
@@ -218,8 +251,12 @@ extension FoodDiaryViewController: UITableViewDelegate, UITableViewDataSource {
                 self.showRecordActionSheet()
                 self.currentMealType = .dinner
              }
-            break;
+             break;
         default: break;
+        }
+        cell.viewMealAction = { mealItemIndex in
+            let mealLog = self.mealEntity.mealLogs[indexPath.row].mealLogByType[mealItemIndex]
+            self.requestFoodItemDetail(mealLog: mealLog)
         }
         return cell
     }
@@ -237,7 +274,7 @@ extension FoodDiaryViewController: UITableViewDelegate, UITableViewDataSource {
             let count = meal.foodLog.count
             recipeNum += count
         }
-        let collectionViewHeight =  ((mealLogs.count+1)/4 + 1) * 70
+        let collectionViewHeight =  ((mealLogs.count+1)/4 + 1) * 75
         let tableviewHeight = recipeNum * 52
         return CGFloat(110 + collectionViewHeight + tableviewHeight)
     }
@@ -313,7 +350,7 @@ extension FoodDiaryViewController: TextSearchDelegate {
                         let targetVC = FoodDiaryDetailViewController()
                         targetVC.diaryDate = self.diaryDate
                         targetVC.foodDiaryList = resp!.foodLogs
-                        targetVC.mealLogList = self.convertFoodLogToInfo(foodDiaryList: resp!.foodLogs)
+                        targetVC.mealLogList = FoodDiaryDataManager.shared.convertFoodLogToInfo(foodDiaryList: resp!.foodLogs)
                         targetVC.mealType = self.currentMealType
                         self.navigationController?.pushViewController(targetVC, animated: true)
                     }
@@ -323,21 +360,6 @@ extension FoodDiaryViewController: TextSearchDelegate {
         }catch {
             print(error)
         }
-    }
-    
-    func convertFoodLogToInfo(foodDiaryList:[Apisvr_FoodLog]) -> [Apisvr_FoodLogInfo]{
-        var foodLogInfos = [Apisvr_FoodLogInfo]()
-        for index in 0...foodDiaryList.count - 1 {
-            var foodInfo = Apisvr_FoodLogInfo()
-            //set up initial value for logs
-            foodInfo.amount = 1
-            foodInfo.foodID = foodDiaryList[index].foodID
-            foodInfo.selectedUnitID = foodDiaryList[index].selectedUnitID
-            foodInfo.tagX = 0
-            foodInfo.tagY = 0
-            foodLogInfos.append(foodInfo)
-        }
-        return foodLogInfos
     }
     
     func onCancelTextSearchAction() {

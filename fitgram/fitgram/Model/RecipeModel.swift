@@ -16,6 +16,7 @@ struct RecipeModel {
     public var difficulity:Apisvr_Difficulty = .easy
     public var recipeVideoUrl: String = ""
     public var videoCoverImageUrl: String = ""
+    public var isLike = false
     public var ingredientList = [IngredientModel]()
     public var stepList = [StepModel]()
     public var nutrientData = Apisvr_Nutrient()
