@@ -1,5 +1,5 @@
 //
-//  CoachDetailView.swift
+//  CoachDetailViewController.swift
 //  fitgram
 //
 //  Created by boyuan lin on 17/1/20.

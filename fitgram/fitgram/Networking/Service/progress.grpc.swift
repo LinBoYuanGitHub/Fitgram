@@ -55,10 +55,22 @@ fileprivate final class Apisvr_ProgressServiceGetBodyMeasurementLogCallBase: Cli
   override class var method: String { return "/apisvr.ProgressService/GetBodyMeasurementLog" }
 }
 
+internal protocol Apisvr_ProgressServiceAddBodyMeasurementLogCall: ClientCallUnary {}
+
+fileprivate final class Apisvr_ProgressServiceAddBodyMeasurementLogCallBase: ClientCallUnaryBase<Apisvr_AddBodyMeasurementLogReq, Apisvr_AddBodyMeasurementLogResp>, Apisvr_ProgressServiceAddBodyMeasurementLogCall {
+  override class var method: String { return "/apisvr.ProgressService/AddBodyMeasurementLog" }
+}
+
 internal protocol Apisvr_ProgressServiceGetBodyShapeCall: ClientCallUnary {}
 
 fileprivate final class Apisvr_ProgressServiceGetBodyShapeCallBase: ClientCallUnaryBase<Apisvr_GetBodyShapeReq, Apisvr_GetBodyShapeResp>, Apisvr_ProgressServiceGetBodyShapeCall {
   override class var method: String { return "/apisvr.ProgressService/GetBodyShape" }
+}
+
+internal protocol Apisvr_ProgressServiceAddBodyShapeCall: ClientCallUnary {}
+
+fileprivate final class Apisvr_ProgressServiceAddBodyShapeCallBase: ClientCallUnaryBase<Apisvr_AddBodyShapeReq, Apisvr_AddBodyShapeResp>, Apisvr_ProgressServiceAddBodyShapeCall {
+  override class var method: String { return "/apisvr.ProgressService/AddBodyShape" }
 }
 
 
@@ -95,10 +107,22 @@ internal protocol Apisvr_ProgressServiceService: ServiceClient {
   func getBodyMeasurementLog(_ request: Apisvr_GetBodyMeasurementLogReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_GetBodyMeasurementLogResp?, CallResult) -> Void) throws -> Apisvr_ProgressServiceGetBodyMeasurementLogCall
 
   /// Synchronous. Unary.
+  func addBodyMeasurementLog(_ request: Apisvr_AddBodyMeasurementLogReq, metadata customMetadata: Metadata) throws -> Apisvr_AddBodyMeasurementLogResp
+  /// Asynchronous. Unary.
+  @discardableResult
+  func addBodyMeasurementLog(_ request: Apisvr_AddBodyMeasurementLogReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_AddBodyMeasurementLogResp?, CallResult) -> Void) throws -> Apisvr_ProgressServiceAddBodyMeasurementLogCall
+
+  /// Synchronous. Unary.
   func getBodyShape(_ request: Apisvr_GetBodyShapeReq, metadata customMetadata: Metadata) throws -> Apisvr_GetBodyShapeResp
   /// Asynchronous. Unary.
   @discardableResult
   func getBodyShape(_ request: Apisvr_GetBodyShapeReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_GetBodyShapeResp?, CallResult) -> Void) throws -> Apisvr_ProgressServiceGetBodyShapeCall
+
+  /// Synchronous. Unary.
+  func addBodyShape(_ request: Apisvr_AddBodyShapeReq, metadata customMetadata: Metadata) throws -> Apisvr_AddBodyShapeResp
+  /// Asynchronous. Unary.
+  @discardableResult
+  func addBodyShape(_ request: Apisvr_AddBodyShapeReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_AddBodyShapeResp?, CallResult) -> Void) throws -> Apisvr_ProgressServiceAddBodyShapeCall
 
 }
 
@@ -154,6 +178,16 @@ internal extension Apisvr_ProgressServiceService {
   }
 
   /// Synchronous. Unary.
+  func addBodyMeasurementLog(_ request: Apisvr_AddBodyMeasurementLogReq) throws -> Apisvr_AddBodyMeasurementLogResp {
+    return try self.addBodyMeasurementLog(request, metadata: self.metadata)
+  }
+  /// Asynchronous. Unary.
+  @discardableResult
+  func addBodyMeasurementLog(_ request: Apisvr_AddBodyMeasurementLogReq, completion: @escaping (Apisvr_AddBodyMeasurementLogResp?, CallResult) -> Void) throws -> Apisvr_ProgressServiceAddBodyMeasurementLogCall {
+    return try self.addBodyMeasurementLog(request, metadata: self.metadata, completion: completion)
+  }
+
+  /// Synchronous. Unary.
   func getBodyShape(_ request: Apisvr_GetBodyShapeReq) throws -> Apisvr_GetBodyShapeResp {
     return try self.getBodyShape(request, metadata: self.metadata)
   }
@@ -161,6 +195,16 @@ internal extension Apisvr_ProgressServiceService {
   @discardableResult
   func getBodyShape(_ request: Apisvr_GetBodyShapeReq, completion: @escaping (Apisvr_GetBodyShapeResp?, CallResult) -> Void) throws -> Apisvr_ProgressServiceGetBodyShapeCall {
     return try self.getBodyShape(request, metadata: self.metadata, completion: completion)
+  }
+
+  /// Synchronous. Unary.
+  func addBodyShape(_ request: Apisvr_AddBodyShapeReq) throws -> Apisvr_AddBodyShapeResp {
+    return try self.addBodyShape(request, metadata: self.metadata)
+  }
+  /// Asynchronous. Unary.
+  @discardableResult
+  func addBodyShape(_ request: Apisvr_AddBodyShapeReq, completion: @escaping (Apisvr_AddBodyShapeResp?, CallResult) -> Void) throws -> Apisvr_ProgressServiceAddBodyShapeCall {
+    return try self.addBodyShape(request, metadata: self.metadata, completion: completion)
   }
 
 }
@@ -227,6 +271,18 @@ internal final class Apisvr_ProgressServiceServiceClient: ServiceClientBase, Api
   }
 
   /// Synchronous. Unary.
+  internal func addBodyMeasurementLog(_ request: Apisvr_AddBodyMeasurementLogReq, metadata customMetadata: Metadata) throws -> Apisvr_AddBodyMeasurementLogResp {
+    return try Apisvr_ProgressServiceAddBodyMeasurementLogCallBase(channel)
+      .run(request: request, metadata: customMetadata)
+  }
+  /// Asynchronous. Unary.
+  @discardableResult
+  internal func addBodyMeasurementLog(_ request: Apisvr_AddBodyMeasurementLogReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_AddBodyMeasurementLogResp?, CallResult) -> Void) throws -> Apisvr_ProgressServiceAddBodyMeasurementLogCall {
+    return try Apisvr_ProgressServiceAddBodyMeasurementLogCallBase(channel)
+      .start(request: request, metadata: customMetadata, completion: completion)
+  }
+
+  /// Synchronous. Unary.
   internal func getBodyShape(_ request: Apisvr_GetBodyShapeReq, metadata customMetadata: Metadata) throws -> Apisvr_GetBodyShapeResp {
     return try Apisvr_ProgressServiceGetBodyShapeCallBase(channel)
       .run(request: request, metadata: customMetadata)
@@ -235,6 +291,18 @@ internal final class Apisvr_ProgressServiceServiceClient: ServiceClientBase, Api
   @discardableResult
   internal func getBodyShape(_ request: Apisvr_GetBodyShapeReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_GetBodyShapeResp?, CallResult) -> Void) throws -> Apisvr_ProgressServiceGetBodyShapeCall {
     return try Apisvr_ProgressServiceGetBodyShapeCallBase(channel)
+      .start(request: request, metadata: customMetadata, completion: completion)
+  }
+
+  /// Synchronous. Unary.
+  internal func addBodyShape(_ request: Apisvr_AddBodyShapeReq, metadata customMetadata: Metadata) throws -> Apisvr_AddBodyShapeResp {
+    return try Apisvr_ProgressServiceAddBodyShapeCallBase(channel)
+      .run(request: request, metadata: customMetadata)
+  }
+  /// Asynchronous. Unary.
+  @discardableResult
+  internal func addBodyShape(_ request: Apisvr_AddBodyShapeReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_AddBodyShapeResp?, CallResult) -> Void) throws -> Apisvr_ProgressServiceAddBodyShapeCall {
+    return try Apisvr_ProgressServiceAddBodyShapeCallBase(channel)
       .start(request: request, metadata: customMetadata, completion: completion)
   }
 
@@ -249,7 +317,9 @@ internal protocol Apisvr_ProgressServiceProvider: ServiceProvider {
   func getWeightLogs(request: Apisvr_GetWeightLogsReq, session: Apisvr_ProgressServiceGetWeightLogsSession) throws -> Apisvr_GetWeightLogsResp
   func getWeeklyReport(request: Apisvr_GetWeeklyReportReq, session: Apisvr_ProgressServiceGetWeeklyReportSession) throws -> Apisvr_GetWeeklyReportResp
   func getBodyMeasurementLog(request: Apisvr_GetBodyMeasurementLogReq, session: Apisvr_ProgressServiceGetBodyMeasurementLogSession) throws -> Apisvr_GetBodyMeasurementLogResp
+  func addBodyMeasurementLog(request: Apisvr_AddBodyMeasurementLogReq, session: Apisvr_ProgressServiceAddBodyMeasurementLogSession) throws -> Apisvr_AddBodyMeasurementLogResp
   func getBodyShape(request: Apisvr_GetBodyShapeReq, session: Apisvr_ProgressServiceGetBodyShapeSession) throws -> Apisvr_GetBodyShapeResp
+  func addBodyShape(request: Apisvr_AddBodyShapeReq, session: Apisvr_ProgressServiceAddBodyShapeSession) throws -> Apisvr_AddBodyShapeResp
 }
 
 extension Apisvr_ProgressServiceProvider {
@@ -284,10 +354,20 @@ extension Apisvr_ProgressServiceProvider {
         handler: handler,
         providerBlock: { try self.getBodyMeasurementLog(request: $0, session: $1 as! Apisvr_ProgressServiceGetBodyMeasurementLogSessionBase) })
           .run()
+    case "/apisvr.ProgressService/AddBodyMeasurementLog":
+      return try Apisvr_ProgressServiceAddBodyMeasurementLogSessionBase(
+        handler: handler,
+        providerBlock: { try self.addBodyMeasurementLog(request: $0, session: $1 as! Apisvr_ProgressServiceAddBodyMeasurementLogSessionBase) })
+          .run()
     case "/apisvr.ProgressService/GetBodyShape":
       return try Apisvr_ProgressServiceGetBodyShapeSessionBase(
         handler: handler,
         providerBlock: { try self.getBodyShape(request: $0, session: $1 as! Apisvr_ProgressServiceGetBodyShapeSessionBase) })
+          .run()
+    case "/apisvr.ProgressService/AddBodyShape":
+      return try Apisvr_ProgressServiceAddBodyShapeSessionBase(
+        handler: handler,
+        providerBlock: { try self.addBodyShape(request: $0, session: $1 as! Apisvr_ProgressServiceAddBodyShapeSessionBase) })
           .run()
     default:
       throw HandleMethodError.unknownMethod
@@ -315,7 +395,15 @@ internal protocol Apisvr_ProgressServiceGetBodyMeasurementLogSession: ServerSess
 
 fileprivate final class Apisvr_ProgressServiceGetBodyMeasurementLogSessionBase: ServerSessionUnaryBase<Apisvr_GetBodyMeasurementLogReq, Apisvr_GetBodyMeasurementLogResp>, Apisvr_ProgressServiceGetBodyMeasurementLogSession {}
 
+internal protocol Apisvr_ProgressServiceAddBodyMeasurementLogSession: ServerSessionUnary {}
+
+fileprivate final class Apisvr_ProgressServiceAddBodyMeasurementLogSessionBase: ServerSessionUnaryBase<Apisvr_AddBodyMeasurementLogReq, Apisvr_AddBodyMeasurementLogResp>, Apisvr_ProgressServiceAddBodyMeasurementLogSession {}
+
 internal protocol Apisvr_ProgressServiceGetBodyShapeSession: ServerSessionUnary {}
 
 fileprivate final class Apisvr_ProgressServiceGetBodyShapeSessionBase: ServerSessionUnaryBase<Apisvr_GetBodyShapeReq, Apisvr_GetBodyShapeResp>, Apisvr_ProgressServiceGetBodyShapeSession {}
+
+internal protocol Apisvr_ProgressServiceAddBodyShapeSession: ServerSessionUnary {}
+
+fileprivate final class Apisvr_ProgressServiceAddBodyShapeSessionBase: ServerSessionUnaryBase<Apisvr_AddBodyShapeReq, Apisvr_AddBodyShapeResp>, Apisvr_ProgressServiceAddBodyShapeSession {}
 

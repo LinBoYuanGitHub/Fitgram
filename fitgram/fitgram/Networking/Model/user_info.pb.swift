@@ -679,6 +679,127 @@ struct Apisvr_GetTrainerInfoResp {
   init() {}
 }
 
+struct Apisvr_GetMyTrainersReq {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct Apisvr_TrainerInfo {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var coachID: Int32 = 0
+
+  var name: String = String()
+
+  var gymClubName: String = String()
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct Apisvr_GetMyTrainersResp {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var trainers: [Apisvr_TrainerInfo] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct Apisvr_GetMyExercisePlansReq {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var date: Int64 = 0
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct Apisvr_Plan {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var planID: Int32 {
+    get {return _storage._planID}
+    set {_uniqueStorage()._planID = newValue}
+  }
+
+  var date: Int64 {
+    get {return _storage._date}
+    set {_uniqueStorage()._date = newValue}
+  }
+
+  var planCover: Apisvr_Exercise {
+    get {return _storage._planCover ?? Apisvr_Exercise()}
+    set {_uniqueStorage()._planCover = newValue}
+  }
+  /// Returns true if `planCover` has been explicitly set.
+  var hasPlanCover: Bool {return _storage._planCover != nil}
+  /// Clears the value of `planCover`. Subsequent reads from it will return its default value.
+  mutating func clearPlanCover() {_uniqueStorage()._planCover = nil}
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+
+  fileprivate var _storage = _StorageClass.defaultInstance
+}
+
+struct Apisvr_Exercise {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var exerciseName: String = String()
+
+  var imageKey: String = String()
+
+  var type: Int32 = 0
+
+  var metValue: Float = 0
+
+  var weight: Float = 0
+
+  var sets: Int32 = 0
+
+  var reps: Int32 = 0
+
+  var rest: Int32 = 0
+
+  var duration: Int32 = 0
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
+struct Apisvr_GetMyExercisePlansResp {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var plans: [Apisvr_Plan] = []
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 // MARK: - Code below here is support for the SwiftProtobuf runtime.
 
 fileprivate let _protobuf_package = "apisvr"
@@ -1515,6 +1636,307 @@ extension Apisvr_GetTrainerInfoResp: SwiftProtobuf.Message, SwiftProtobuf._Messa
     if lhs.yearsOfExp != rhs.yearsOfExp {return false}
     if lhs.qualifications != rhs.qualifications {return false}
     if lhs.avatarURL != rhs.avatarURL {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Apisvr_GetMyTrainersReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".GetMyTrainersReq"
+  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let _ = try decoder.nextFieldNumber() {
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Apisvr_GetMyTrainersReq, rhs: Apisvr_GetMyTrainersReq) -> Bool {
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Apisvr_TrainerInfo: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".TrainerInfo"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "coach_id"),
+    2: .same(proto: "name"),
+    3: .standard(proto: "gym_club_name"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      switch fieldNumber {
+      case 1: try decoder.decodeSingularInt32Field(value: &self.coachID)
+      case 2: try decoder.decodeSingularStringField(value: &self.name)
+      case 3: try decoder.decodeSingularStringField(value: &self.gymClubName)
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.coachID != 0 {
+      try visitor.visitSingularInt32Field(value: self.coachID, fieldNumber: 1)
+    }
+    if !self.name.isEmpty {
+      try visitor.visitSingularStringField(value: self.name, fieldNumber: 2)
+    }
+    if !self.gymClubName.isEmpty {
+      try visitor.visitSingularStringField(value: self.gymClubName, fieldNumber: 3)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Apisvr_TrainerInfo, rhs: Apisvr_TrainerInfo) -> Bool {
+    if lhs.coachID != rhs.coachID {return false}
+    if lhs.name != rhs.name {return false}
+    if lhs.gymClubName != rhs.gymClubName {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Apisvr_GetMyTrainersResp: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".GetMyTrainersResp"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "trainers"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      switch fieldNumber {
+      case 1: try decoder.decodeRepeatedMessageField(value: &self.trainers)
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.trainers.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.trainers, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Apisvr_GetMyTrainersResp, rhs: Apisvr_GetMyTrainersResp) -> Bool {
+    if lhs.trainers != rhs.trainers {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Apisvr_GetMyExercisePlansReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".GetMyExercisePlansReq"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "date"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      switch fieldNumber {
+      case 1: try decoder.decodeSingularInt64Field(value: &self.date)
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.date != 0 {
+      try visitor.visitSingularInt64Field(value: self.date, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Apisvr_GetMyExercisePlansReq, rhs: Apisvr_GetMyExercisePlansReq) -> Bool {
+    if lhs.date != rhs.date {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Apisvr_Plan: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".Plan"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "plan_id"),
+    2: .same(proto: "date"),
+    4: .standard(proto: "plan_cover"),
+  ]
+
+  fileprivate class _StorageClass {
+    var _planID: Int32 = 0
+    var _date: Int64 = 0
+    var _planCover: Apisvr_Exercise? = nil
+
+    static let defaultInstance = _StorageClass()
+
+    private init() {}
+
+    init(copying source: _StorageClass) {
+      _planID = source._planID
+      _date = source._date
+      _planCover = source._planCover
+    }
+  }
+
+  fileprivate mutating func _uniqueStorage() -> _StorageClass {
+    if !isKnownUniquelyReferenced(&_storage) {
+      _storage = _StorageClass(copying: _storage)
+    }
+    return _storage
+  }
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    _ = _uniqueStorage()
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      while let fieldNumber = try decoder.nextFieldNumber() {
+        switch fieldNumber {
+        case 1: try decoder.decodeSingularInt32Field(value: &_storage._planID)
+        case 2: try decoder.decodeSingularInt64Field(value: &_storage._date)
+        case 4: try decoder.decodeSingularMessageField(value: &_storage._planCover)
+        default: break
+        }
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    try withExtendedLifetime(_storage) { (_storage: _StorageClass) in
+      if _storage._planID != 0 {
+        try visitor.visitSingularInt32Field(value: _storage._planID, fieldNumber: 1)
+      }
+      if _storage._date != 0 {
+        try visitor.visitSingularInt64Field(value: _storage._date, fieldNumber: 2)
+      }
+      if let v = _storage._planCover {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
+      }
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Apisvr_Plan, rhs: Apisvr_Plan) -> Bool {
+    if lhs._storage !== rhs._storage {
+      let storagesAreEqual: Bool = withExtendedLifetime((lhs._storage, rhs._storage)) { (_args: (_StorageClass, _StorageClass)) in
+        let _storage = _args.0
+        let rhs_storage = _args.1
+        if _storage._planID != rhs_storage._planID {return false}
+        if _storage._date != rhs_storage._date {return false}
+        if _storage._planCover != rhs_storage._planCover {return false}
+        return true
+      }
+      if !storagesAreEqual {return false}
+    }
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Apisvr_Exercise: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".Exercise"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "exercise_name"),
+    2: .standard(proto: "image_key"),
+    3: .same(proto: "type"),
+    4: .standard(proto: "met_value"),
+    5: .same(proto: "weight"),
+    6: .same(proto: "sets"),
+    7: .same(proto: "reps"),
+    8: .same(proto: "rest"),
+    9: .same(proto: "duration"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      switch fieldNumber {
+      case 1: try decoder.decodeSingularStringField(value: &self.exerciseName)
+      case 2: try decoder.decodeSingularStringField(value: &self.imageKey)
+      case 3: try decoder.decodeSingularInt32Field(value: &self.type)
+      case 4: try decoder.decodeSingularFloatField(value: &self.metValue)
+      case 5: try decoder.decodeSingularFloatField(value: &self.weight)
+      case 6: try decoder.decodeSingularInt32Field(value: &self.sets)
+      case 7: try decoder.decodeSingularInt32Field(value: &self.reps)
+      case 8: try decoder.decodeSingularInt32Field(value: &self.rest)
+      case 9: try decoder.decodeSingularInt32Field(value: &self.duration)
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.exerciseName.isEmpty {
+      try visitor.visitSingularStringField(value: self.exerciseName, fieldNumber: 1)
+    }
+    if !self.imageKey.isEmpty {
+      try visitor.visitSingularStringField(value: self.imageKey, fieldNumber: 2)
+    }
+    if self.type != 0 {
+      try visitor.visitSingularInt32Field(value: self.type, fieldNumber: 3)
+    }
+    if self.metValue != 0 {
+      try visitor.visitSingularFloatField(value: self.metValue, fieldNumber: 4)
+    }
+    if self.weight != 0 {
+      try visitor.visitSingularFloatField(value: self.weight, fieldNumber: 5)
+    }
+    if self.sets != 0 {
+      try visitor.visitSingularInt32Field(value: self.sets, fieldNumber: 6)
+    }
+    if self.reps != 0 {
+      try visitor.visitSingularInt32Field(value: self.reps, fieldNumber: 7)
+    }
+    if self.rest != 0 {
+      try visitor.visitSingularInt32Field(value: self.rest, fieldNumber: 8)
+    }
+    if self.duration != 0 {
+      try visitor.visitSingularInt32Field(value: self.duration, fieldNumber: 9)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Apisvr_Exercise, rhs: Apisvr_Exercise) -> Bool {
+    if lhs.exerciseName != rhs.exerciseName {return false}
+    if lhs.imageKey != rhs.imageKey {return false}
+    if lhs.type != rhs.type {return false}
+    if lhs.metValue != rhs.metValue {return false}
+    if lhs.weight != rhs.weight {return false}
+    if lhs.sets != rhs.sets {return false}
+    if lhs.reps != rhs.reps {return false}
+    if lhs.rest != rhs.rest {return false}
+    if lhs.duration != rhs.duration {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
+extension Apisvr_GetMyExercisePlansResp: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".GetMyExercisePlansResp"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "plans"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      switch fieldNumber {
+      case 1: try decoder.decodeRepeatedMessageField(value: &self.plans)
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if !self.plans.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.plans, fieldNumber: 1)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Apisvr_GetMyExercisePlansResp, rhs: Apisvr_GetMyExercisePlansResp) -> Bool {
+    if lhs.plans != rhs.plans {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
