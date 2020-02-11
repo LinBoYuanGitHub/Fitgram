@@ -43,6 +43,7 @@ class CodeVerficationViewController: UIViewController {
                     self.navigationController?.pushViewController(targetVC, animated: true)
                 } else {
                     let naviVC = UINavigationController()
+                    naviVC.modalPresentationStyle = .fullScreen
                     naviVC.viewControllers = [HomeTabViewController()]
                     self.present(naviVC, animated: true, completion: nil)
                 }

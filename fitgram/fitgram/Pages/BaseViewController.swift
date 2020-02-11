@@ -53,7 +53,15 @@ class BaseViewController: UIViewController {
     func showAlertMessage(msg:String){
         let alertView = UIAlertController(title: "", message: msg, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "ok", style: .default) { (_) in
-            self.dismiss(animated: true, completion: nil)
+            alertView.dismiss(animated: true, completion: nil)
+        }
+        alertView.addAction(okAction)
+        self.present(alertView, animated: true, completion: nil)
+    }
+    
+    func showAlertNoDissmissMessage(msg:String){
+        let alertView = UIAlertController(title: "", message: msg, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "ok", style: .default) { (_) in
         }
         alertView.addAction(okAction)
         self.present(alertView, animated: true, completion: nil)

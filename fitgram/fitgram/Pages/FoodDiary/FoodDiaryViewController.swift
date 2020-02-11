@@ -295,7 +295,7 @@ extension FoodDiaryViewController: UIImagePickerControllerDelegate,UINavigationC
         }
         let timeStamp = String(Int(Date().timeIntervalSince1970 * 1000))
         let objectKey = userId + "_" + timeStamp
-        self.showLoadingDialog(targetController: self, loadingText: "上传图片中...")
+//        self.showLoadingDialog(targetController: self, loadingText: "上传图片中...")
         UploaderManager.shared.asyncPutImage(objectKey: objectKey, image: selectedImage) { (objectKey) in
             do{
                 var req = Apisvr_RecognitionReq()
@@ -307,9 +307,9 @@ extension FoodDiaryViewController: UIImagePickerControllerDelegate,UINavigationC
                 }
                 let metaData = try Metadata(["authorization": "Token " + token])
 //                self.modifyLoadingDialogText(loadingText: "识别中...")
+//                self.hideLoadingDialog()
                 try FoodDiaryDataManager.shared.client.recognition(req, metadata: metaData, completion: { (resp, result) in
-                     DispatchQueue.main.asyncAfter(deadline:  .now() + 0.5, execute: {
-                        self.hideLoadingDialog()
+                    DispatchQueue.main.asyncAfter(deadline:  .now() + 0.5, execute: {
                         if result.statusCode == .ok {
                             guard let taskId = resp?.taskID else {
                                 return

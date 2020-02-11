@@ -47,6 +47,7 @@ class FoodDiaryTagViewController:BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(false, animated: false)
+        self.navigationController?.navigationBar.isTranslucent = false
     }
     
     override func loadView() {
@@ -83,6 +84,10 @@ class FoodDiaryTagViewController:BaseViewController {
     }
     
     @objc func requestForFoodDetail() {
+        if foodTagList.count == 0 {
+            showAlertMessage(msg: "请先标记您的食物～")
+            return
+        }
         do{
             guard let token = UserDefaults.standard.string(forKey: Constants.tokenKey) else {
                 return
@@ -92,16 +97,19 @@ class FoodDiaryTagViewController:BaseViewController {
             req.foodTags = foodTagList
             try FoodDiaryDataManager.shared.client.getFoodLogDetail(req, metadata: metaData) { (resp, result) in
                 if result.statusCode == .ok {
-                    let targetVC = FoodDiaryDetailViewController()
-                    targetVC.foodImage = self.selectedImage
-                    targetVC.imgUrl = self.imageKey
-                    targetVC.foodDiaryList = resp!.foodLogs
-                    targetVC.mealType = self.mealType
-                    targetVC.diaryDate = self.diaryDate
-                    targetVC.mealLogList = self.convertFoodLogToInfo(foodDiaryList: resp!.foodLogs, foodTagList: self.foodTagList)
-                    DispatchQueue.main.async {
-                        self.navigationController?.pushViewController(targetVC, animated: true)
+                    DispatchQueue.main.async{
+                        let targetVC = FoodDiaryDetailViewController()
+                        targetVC.foodImage = self.selectedImage
+                        targetVC.imgUrl = self.imageKey
+                        targetVC.foodDiaryList = resp!.foodLogs
+                        targetVC.mealType = self.mealType
+                        targetVC.diaryDate = self.diaryDate
+                        targetVC.mealLogList = self.convertFoodLogToInfo(foodDiaryList: resp!.foodLogs, foodTagList: self.foodTagList)
+                        DispatchQueue.main.async {
+                            self.navigationController?.pushViewController(targetVC, animated: true)
+                        }
                     }
+                    
                 }
             }
         } catch {

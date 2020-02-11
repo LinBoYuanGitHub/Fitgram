@@ -29,7 +29,7 @@ class FoodDiaryDetailViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         sv(
             foodNameLabel,
-            foodFavButton,
+//            foodFavButton,
             foodDelButton,
             calorieLabel,
             weightLabel,
@@ -41,7 +41,7 @@ class FoodDiaryDetailViewCell: UITableViewCell {
         )
         layout(
             8,
-            |-36-foodNameLabel.width(60%)-10-foodFavButton.width(10%)-2-foodDelButton.width(10%)-36-| ~ 60,
+            |-36-foodNameLabel.width(60%)-30-foodDelButton.width(10%)-36-| ~ 60,
             8,
             |-36-calorieLabel-weightLabel-36-| ~ 25,
             5,
@@ -68,8 +68,8 @@ class FoodDiaryDetailViewCell: UITableViewCell {
         foodNameLabel.textAlignment = .left
         foodNameLabel.textColor = UIColor(red: 53/255, green: 53/255, blue: 53/255, alpha: 1.0)
         foodNameLabel.numberOfLines = 2
-        foodFavButton.setTitle("", for: .normal)
-        foodFavButton.setImage(UIImage(named: "favButton_gray"), for: .normal)
+//        foodFavButton.setTitle("", for: .normal)
+//        foodFavButton.setImage(UIImage(named: "favButton_gray"), for: .normal)
         foodDelButton.setImage(UIImage(named: "delBin_gray"), for: .normal)
         calorieLabel.font = UIFont(name: "PingFangSC-Regular", size: 14)
         weightLabel.font = UIFont(name: "PingFangSC-Regular", size: 14)

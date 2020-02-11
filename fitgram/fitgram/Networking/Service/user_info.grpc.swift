@@ -91,6 +91,12 @@ fileprivate final class Apisvr_UserServiceGetMyTrainersCallBase: ClientCallUnary
   override class var method: String { return "/apisvr.UserService/GetMyTrainers" }
 }
 
+internal protocol Apisvr_UserServiceGetTrainerDetailsCall: ClientCallUnary {}
+
+fileprivate final class Apisvr_UserServiceGetTrainerDetailsCallBase: ClientCallUnaryBase<Apisvr_GetTrainerDetailsReq, Apisvr_GetTrainerDetailsResp>, Apisvr_UserServiceGetTrainerDetailsCall {
+  override class var method: String { return "/apisvr.UserService/GetTrainerDetails" }
+}
+
 internal protocol Apisvr_UserServiceGetMyExercisePlansCall: ClientCallUnary {}
 
 fileprivate final class Apisvr_UserServiceGetMyExercisePlansCallBase: ClientCallUnaryBase<Apisvr_GetMyExercisePlansReq, Apisvr_GetMyExercisePlansResp>, Apisvr_UserServiceGetMyExercisePlansCall {
@@ -165,6 +171,12 @@ internal protocol Apisvr_UserServiceService: ServiceClient {
   /// Asynchronous. Unary.
   @discardableResult
   func getMyTrainers(_ request: Apisvr_GetMyTrainersReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_GetMyTrainersResp?, CallResult) -> Void) throws -> Apisvr_UserServiceGetMyTrainersCall
+
+  /// Synchronous. Unary.
+  func getTrainerDetails(_ request: Apisvr_GetTrainerDetailsReq, metadata customMetadata: Metadata) throws -> Apisvr_GetTrainerDetailsResp
+  /// Asynchronous. Unary.
+  @discardableResult
+  func getTrainerDetails(_ request: Apisvr_GetTrainerDetailsReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_GetTrainerDetailsResp?, CallResult) -> Void) throws -> Apisvr_UserServiceGetTrainerDetailsCall
 
   /// Synchronous. Unary.
   func getMyExercisePlans(_ request: Apisvr_GetMyExercisePlansReq, metadata customMetadata: Metadata) throws -> Apisvr_GetMyExercisePlansResp
@@ -283,6 +295,16 @@ internal extension Apisvr_UserServiceService {
   @discardableResult
   func getMyTrainers(_ request: Apisvr_GetMyTrainersReq, completion: @escaping (Apisvr_GetMyTrainersResp?, CallResult) -> Void) throws -> Apisvr_UserServiceGetMyTrainersCall {
     return try self.getMyTrainers(request, metadata: self.metadata, completion: completion)
+  }
+
+  /// Synchronous. Unary.
+  func getTrainerDetails(_ request: Apisvr_GetTrainerDetailsReq) throws -> Apisvr_GetTrainerDetailsResp {
+    return try self.getTrainerDetails(request, metadata: self.metadata)
+  }
+  /// Asynchronous. Unary.
+  @discardableResult
+  func getTrainerDetails(_ request: Apisvr_GetTrainerDetailsReq, completion: @escaping (Apisvr_GetTrainerDetailsResp?, CallResult) -> Void) throws -> Apisvr_UserServiceGetTrainerDetailsCall {
+    return try self.getTrainerDetails(request, metadata: self.metadata, completion: completion)
   }
 
   /// Synchronous. Unary.
@@ -431,6 +453,18 @@ internal final class Apisvr_UserServiceServiceClient: ServiceClientBase, Apisvr_
   }
 
   /// Synchronous. Unary.
+  internal func getTrainerDetails(_ request: Apisvr_GetTrainerDetailsReq, metadata customMetadata: Metadata) throws -> Apisvr_GetTrainerDetailsResp {
+    return try Apisvr_UserServiceGetTrainerDetailsCallBase(channel)
+      .run(request: request, metadata: customMetadata)
+  }
+  /// Asynchronous. Unary.
+  @discardableResult
+  internal func getTrainerDetails(_ request: Apisvr_GetTrainerDetailsReq, metadata customMetadata: Metadata, completion: @escaping (Apisvr_GetTrainerDetailsResp?, CallResult) -> Void) throws -> Apisvr_UserServiceGetTrainerDetailsCall {
+    return try Apisvr_UserServiceGetTrainerDetailsCallBase(channel)
+      .start(request: request, metadata: customMetadata, completion: completion)
+  }
+
+  /// Synchronous. Unary.
   internal func getMyExercisePlans(_ request: Apisvr_GetMyExercisePlansReq, metadata customMetadata: Metadata) throws -> Apisvr_GetMyExercisePlansResp {
     return try Apisvr_UserServiceGetMyExercisePlansCallBase(channel)
       .run(request: request, metadata: customMetadata)
@@ -459,6 +493,7 @@ internal protocol Apisvr_UserServiceProvider: ServiceProvider {
   func linkPersonalTrainer(request: Apisvr_LinkPersonalTrainerReq, session: Apisvr_UserServiceLinkPersonalTrainerSession) throws -> Apisvr_LinkPersonalTrainerResp
   func getTrainerInfo(request: Apisvr_GetTrainerInfoReq, session: Apisvr_UserServiceGetTrainerInfoSession) throws -> Apisvr_GetTrainerInfoResp
   func getMyTrainers(request: Apisvr_GetMyTrainersReq, session: Apisvr_UserServiceGetMyTrainersSession) throws -> Apisvr_GetMyTrainersResp
+  func getTrainerDetails(request: Apisvr_GetTrainerDetailsReq, session: Apisvr_UserServiceGetTrainerDetailsSession) throws -> Apisvr_GetTrainerDetailsResp
   func getMyExercisePlans(request: Apisvr_GetMyExercisePlansReq, session: Apisvr_UserServiceGetMyExercisePlansSession) throws -> Apisvr_GetMyExercisePlansResp
 }
 
@@ -524,6 +559,11 @@ extension Apisvr_UserServiceProvider {
         handler: handler,
         providerBlock: { try self.getMyTrainers(request: $0, session: $1 as! Apisvr_UserServiceGetMyTrainersSessionBase) })
           .run()
+    case "/apisvr.UserService/GetTrainerDetails":
+      return try Apisvr_UserServiceGetTrainerDetailsSessionBase(
+        handler: handler,
+        providerBlock: { try self.getTrainerDetails(request: $0, session: $1 as! Apisvr_UserServiceGetTrainerDetailsSessionBase) })
+          .run()
     case "/apisvr.UserService/GetMyExercisePlans":
       return try Apisvr_UserServiceGetMyExercisePlansSessionBase(
         handler: handler,
@@ -578,6 +618,10 @@ fileprivate final class Apisvr_UserServiceGetTrainerInfoSessionBase: ServerSessi
 internal protocol Apisvr_UserServiceGetMyTrainersSession: ServerSessionUnary {}
 
 fileprivate final class Apisvr_UserServiceGetMyTrainersSessionBase: ServerSessionUnaryBase<Apisvr_GetMyTrainersReq, Apisvr_GetMyTrainersResp>, Apisvr_UserServiceGetMyTrainersSession {}
+
+internal protocol Apisvr_UserServiceGetTrainerDetailsSession: ServerSessionUnary {}
+
+fileprivate final class Apisvr_UserServiceGetTrainerDetailsSessionBase: ServerSessionUnaryBase<Apisvr_GetTrainerDetailsReq, Apisvr_GetTrainerDetailsResp>, Apisvr_UserServiceGetTrainerDetailsSession {}
 
 internal protocol Apisvr_UserServiceGetMyExercisePlansSession: ServerSessionUnary {}
 

@@ -161,6 +161,24 @@ class FoodDiaryDetailViewController: BaseViewController{
     }
     
     @objc func onMealLogUpdate(){
+        //update all the inputing field when press update
+        for index in 0...mealLogList.count - 1{
+            let indexPath = IndexPath(row: index, section: 0)
+            let cell = self.rootView.recipeTable.cellForRow(at: indexPath) as! FoodDiaryDetailViewCell
+            mealLogList[index].amount = Float(cell.amountInputField.text!)!
+        }
+        self.updateMealLog { (isSuccess) in
+            if isSuccess {
+                guard let rootview = self.navigationController?.viewControllers[0] as? HomeTabViewController else {
+                    return
+                }
+                self.navigationController?.popToRootViewController(animated: true)
+                rootview.selectedIndex = 1
+            }
+        }
+    }
+    
+    func updateMealLog(callback: @escaping(_ result: Bool) -> ()){
         do {
             var req = Apisvr_UpdateMealLogReq()
             guard let token = UserDefaults.standard.string(forKey: Constants.tokenKey) else {
@@ -170,18 +188,8 @@ class FoodDiaryDetailViewController: BaseViewController{
             req.mealLogID = self.mealLogId
             req.foodLogs = self.mealLogList
             try FoodDiaryDataManager.shared.client.updateMealLog(req, metadata: metaData, completion: { (resp, result) in
-                if result.statusCode == .ok {
-                    guard let rootview = self.navigationController?.viewControllers[0] as? HomeTabViewController else {
-                        return
-                    }
-                    DispatchQueue.main.async {
-                        self.navigationController?.popToRootViewController(animated: true)
-                        rootview.selectedIndex = 1
-                    }
-                } else {
-                    DispatchQueue.main.async {
-                        self.showAlertMessage(msg: result.statusMessage!)
-                    }
+                DispatchQueue.main.async {
+                    callback(result.statusCode == .ok )
                 }
             })
         } catch {
@@ -214,34 +222,36 @@ class FoodDiaryDetailViewController: BaseViewController{
         let foodName = foodDiaryList[index].foodName
         let alert = UIAlertController(title: "", message: "确定要删除"+foodName+"吗?", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "确定", style: .default, handler: { (_) in
+            //update meal log when delete
             self.mealLogList.remove(at: index)
             self.foodDiaryList.remove(at: index)
             self.rootView.recipeTable.reloadData()
+            self.updateMealLog { (_) in }
         }))
         alert.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
     
-    @objc func onFoodFav(sender:UIButton) {
-        let index = sender.tag
-        let foodId = foodDiaryList[index].foodID
-        var req = Apisvr_AddFavouriteItemReq()
-        req.itemID = foodId
-        guard let token = UserDefaults.standard.string(forKey: Constants.tokenKey) else {
-            return
-        }
-        do{
-            let metaData = try Metadata(["authorization": "Token " + token])
-            try ProfileDataManager.shared.client.addFavouriteItem(req, metadata: metaData) { (resp, result) in
-                if result.statusCode == .ok {
-                    //TODO check the favItem
-                }
-            }
-        } catch {
-            print(error)
-        }
-       
-    }
+//    @objc func onFoodFav(sender:UIButton) {
+//        let index = sender.tag
+//        let foodId = foodDiaryList[index].foodID
+//        var req = Apisvr_AddFavouriteItemReq()
+//        req.itemID = foodId
+//        guard let token = UserDefaults.standard.string(forKey: Constants.tokenKey) else {
+//            return
+//        }
+//        do{
+//            let metaData = try Metadata(["authorization": "Token " + token])
+//            try ProfileDataManager.shared.client.addFavouriteItem(req, metadata: metaData) { (resp, result) in
+//                if result.statusCode == .ok {
+//                    //TODO check the favItem
+//                }
+//            }
+//        } catch {
+//            print(error)
+//        }
+//
+//    }
     
     
 }
@@ -260,7 +270,7 @@ extension FoodDiaryDetailViewController: UITableViewDelegate, UITableViewDataSou
         let entity = foodDiaryList[indexPath.row]
         cell.foodNameLabel.text = entity.foodName
         cell.weightLabel.text = "共100克"
-        cell.amountInputField.text = String(Int(entity.amount))
+        cell.amountInputField.text = String(Float(entity.amount))
         cell.amountInputField.tag = indexPath.row
         cell.amountInputField.delegate = self
         for unit in entity.unitOption where unit.unitID == entity.selectedUnitID {
@@ -279,7 +289,7 @@ extension FoodDiaryDetailViewController: UITableViewDelegate, UITableViewDataSou
         //delete & like event
         cell.foodDelButton.tag = indexPath.row
         cell.foodDelButton.addTarget(self, action: #selector(onFoodLogDelete), for: .touchUpInside)
-        cell.foodFavButton.tag = indexPath.row
+//        cell.foodFavButton.tag = indexPath.row
 //        cell.foodFavButton.addTarget(self, action: #selector(onFoodFav), for: .touchUpInside)
         return cell
     }

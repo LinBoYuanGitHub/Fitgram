@@ -34,7 +34,7 @@ class FoodDiaryDataManager {
         for index in 0...foodDiaryList.count - 1 {
             var foodInfo = Apisvr_FoodLogInfo()
             //set up initial value for logs
-            foodInfo.amount = 1
+            foodInfo.amount = foodDiaryList[index].amount
             foodInfo.foodID = foodDiaryList[index].foodID
             foodInfo.selectedUnitID = foodDiaryList[index].selectedUnitID
             foodInfo.tagX = 0

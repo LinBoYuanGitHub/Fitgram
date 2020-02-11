@@ -92,6 +92,7 @@ extension RecommendHomeTableCell: UICollectionViewDelegate, UICollectionViewData
 //        cell.checkedButton.addTarget(self, action: #selector(onCheckBtnPressed), for: .touchUpInside)
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(onViewPressed))
         tapRecognizer.numberOfTapsRequired = 1
+        cell.videoPlayView.tag = indexPath.row
         cell.videoPlayView.addGestureRecognizer(tapRecognizer)
         cell.videoPlayView.isUserInteractionEnabled = true
         return cell

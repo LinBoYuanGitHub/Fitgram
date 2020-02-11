@@ -6,8 +6,8 @@
 //  Copyright © 2019 boyuan lin. All rights reserved.
 //
 
-import Foundation
 import UIKit
+import SwiftGRPC
 
 class ReportListViewController: UIViewController {
     var reportDataList = [Apisvr_WeeklyReport]()
@@ -22,17 +22,41 @@ class ReportListViewController: UIViewController {
         reportTableView.separatorStyle = .none
         reportTableView.delegate = self
         reportTableView.dataSource = self
+        self.requestReports()
     }
     
     func initMockUpReportData(){
         for _ in 0...3 {
             var report = Apisvr_WeeklyReport()
             report.coachName = "lucy"
-            report.dateDuration = "2019年11月30日至2020年1月30日"
             report.reportURL = ""
             reportDataList.append(report)
         }
     }
+    
+    func requestReports(){
+        let req = Apisvr_GetWeeklyReportReq()
+        guard let token = UserDefaults.standard.string(forKey: Constants.tokenKey) else {
+            return
+        }
+        do{
+            let metadata = try Metadata(["authorization": "Token " + token])
+            try ProgressDataManager.shared.client.getWeeklyReport(req, metadata: metadata) { (resp, result) in
+                if result.statusCode == .ok {
+                    DispatchQueue.main.async {
+                        self.reportDataList = resp!.weeklyReport
+                        self.reportTableView.reloadData()
+                    }
+                }
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
+    
+    
+    
     
 }
 
@@ -46,13 +70,23 @@ extension ReportListViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ReportListCell", for: indexPath) as? ReportListCell else{
             return UITableViewCell()
         }
-        cell.coachWeeklyLabel.text = "教练"+reportDataList[indexPath.row].coachName+"本周的总结报告"
-        cell.dateLabel.text = reportDataList[indexPath.row].dateDuration
+        let report = reportDataList[indexPath.row]
+        cell.coachWeeklyLabel.text = "教练"+report.coachName+"本周的总结报告"
+        let startDateStr = DateUtil.CNDateFormatter(date: Date(timeIntervalSince1970: TimeInterval(report.startDate)))
+        let endDateStr = DateUtil.CNDateFormatter(date: Date(timeIntervalSince1970: TimeInterval(report.endDate)))
+        cell.dateLabel.text = startDateStr + "至" + endDateStr
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 90
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let targetUrl = reportDataList[indexPath.row].reportURL
+        let targetVC = WebViewController()
+        targetVC.urlString = targetUrl
+        self.navigationController?.pushViewController(targetVC, animated: true)
     }
     
 }

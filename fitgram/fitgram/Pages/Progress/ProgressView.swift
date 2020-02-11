@@ -59,6 +59,8 @@ class ProgressView:UIView {
         lineChartView.xAxis.axisLineColor = .white
         lineChartView.xAxis.labelTextColor = .white
         lineChartView.xAxis.labelPosition = .bottom
+        lineChartView.xAxis.labelCount = 5
+        lineChartView.xAxis.valueFormatter = DateXAxisFormatter()
 //        lineChartView.xAxis.axisMinimum = 5
 //        lineChartView.xAxis.axisMaximum = 5
         lineChartView.leftAxis.gridColor = .white

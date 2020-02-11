@@ -23,8 +23,8 @@ enum Apisvr_TimeType: SwiftProtobuf.Enum {
   typealias RawValue = Int
   case unknownTimeType // = 0
   case day // = 1
-  case month // = 2
-  case year // = 3
+  case week // = 2
+  case month // = 3
   case UNRECOGNIZED(Int)
 
   init() {
@@ -35,8 +35,8 @@ enum Apisvr_TimeType: SwiftProtobuf.Enum {
     switch rawValue {
     case 0: self = .unknownTimeType
     case 1: self = .day
-    case 2: self = .month
-    case 3: self = .year
+    case 2: self = .week
+    case 3: self = .month
     default: self = .UNRECOGNIZED(rawValue)
     }
   }
@@ -45,8 +45,8 @@ enum Apisvr_TimeType: SwiftProtobuf.Enum {
     switch self {
     case .unknownTimeType: return 0
     case .day: return 1
-    case .month: return 2
-    case .year: return 3
+    case .week: return 2
+    case .month: return 3
     case .UNRECOGNIZED(let i): return i
     }
   }
@@ -60,8 +60,8 @@ extension Apisvr_TimeType: CaseIterable {
   static var allCases: [Apisvr_TimeType] = [
     .unknownTimeType,
     .day,
+    .week,
     .month,
-    .year,
   ]
 }
 
@@ -222,11 +222,9 @@ struct Apisvr_GetWeightLogsReq {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  var date: Int64 = 0
+
   var timeType: Apisvr_TimeType = .unknownTimeType
-
-  var offset: Int32 = 0
-
-  var limit: Int32 = 0
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -239,7 +237,7 @@ struct Apisvr_WeightDataPoint {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
-  var xAxis: String = String()
+  var time: Int64 = 0
 
   var value: Float = 0
 
@@ -327,6 +325,8 @@ struct Apisvr_MeasurementChart {
 
   var title: String = String()
 
+  var bodyMeasurementType: Apisvr_BodyMeasurementType = .unknownBodyMeasurementType
+
   var logs: [Apisvr_Log] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -346,6 +346,20 @@ struct Apisvr_GetBodyMeasurementLogResp {
   init() {}
 }
 
+struct Apisvr_BodyMeasurement {
+  // SwiftProtobuf.Message conformance is added in an extension below. See the
+  // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
+  // methods supported on all messages.
+
+  var bodyMeasurementType: Apisvr_BodyMeasurementType = .unknownBodyMeasurementType
+
+  var value: Float = 0
+
+  var unknownFields = SwiftProtobuf.UnknownStorage()
+
+  init() {}
+}
+
 struct Apisvr_AddBodyMeasurementLogReq {
   // SwiftProtobuf.Message conformance is added in an extension below. See the
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
@@ -353,9 +367,7 @@ struct Apisvr_AddBodyMeasurementLogReq {
 
   var date: Int64 = 0
 
-  var value: Float = 0
-
-  var bodyMeasurementType: Apisvr_BodyMeasurementType = .unknownBodyMeasurementType
+  var bodyMeasurements: [Apisvr_BodyMeasurement] = []
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -377,6 +389,10 @@ struct Apisvr_GetBodyShapeReq {
   // `Message` and `Message+*Additions` files in the SwiftProtobuf library for
   // methods supported on all messages.
 
+  var date: Int64 = 0
+
+  var timeType: Apisvr_TimeType = .unknownTimeType
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -389,11 +405,7 @@ struct Apisvr_BodyShape {
 
   var photoURL: String = String()
 
-  var value: Float = 0
-
   var date: Int64 = 0
-
-  var unit: String = String()
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
@@ -418,8 +430,6 @@ struct Apisvr_AddBodyShapeReq {
   // methods supported on all messages.
 
   var date: Int64 = 0
-
-  var weight: Float = 0
 
   var photoURL: String = String()
 
@@ -446,8 +456,8 @@ extension Apisvr_TimeType: SwiftProtobuf._ProtoNameProviding {
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     0: .same(proto: "UNKNOWN_TIME_TYPE"),
     1: .same(proto: "DAY"),
-    2: .same(proto: "MONTH"),
-    3: .same(proto: "YEAR"),
+    2: .same(proto: "WEEK"),
+    3: .same(proto: "MONTH"),
   ]
 }
 
@@ -684,39 +694,33 @@ extension Apisvr_AddWeightLogResp: SwiftProtobuf.Message, SwiftProtobuf._Message
 extension Apisvr_GetWeightLogsReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".GetWeightLogsReq"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "time_type"),
-    2: .same(proto: "offset"),
-    3: .same(proto: "limit"),
+    1: .same(proto: "date"),
+    2: .standard(proto: "time_type"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       switch fieldNumber {
-      case 1: try decoder.decodeSingularEnumField(value: &self.timeType)
-      case 2: try decoder.decodeSingularInt32Field(value: &self.offset)
-      case 3: try decoder.decodeSingularInt32Field(value: &self.limit)
+      case 1: try decoder.decodeSingularInt64Field(value: &self.date)
+      case 2: try decoder.decodeSingularEnumField(value: &self.timeType)
       default: break
       }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.date != 0 {
+      try visitor.visitSingularInt64Field(value: self.date, fieldNumber: 1)
+    }
     if self.timeType != .unknownTimeType {
-      try visitor.visitSingularEnumField(value: self.timeType, fieldNumber: 1)
-    }
-    if self.offset != 0 {
-      try visitor.visitSingularInt32Field(value: self.offset, fieldNumber: 2)
-    }
-    if self.limit != 0 {
-      try visitor.visitSingularInt32Field(value: self.limit, fieldNumber: 3)
+      try visitor.visitSingularEnumField(value: self.timeType, fieldNumber: 2)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: Apisvr_GetWeightLogsReq, rhs: Apisvr_GetWeightLogsReq) -> Bool {
+    if lhs.date != rhs.date {return false}
     if lhs.timeType != rhs.timeType {return false}
-    if lhs.offset != rhs.offset {return false}
-    if lhs.limit != rhs.limit {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -725,14 +729,14 @@ extension Apisvr_GetWeightLogsReq: SwiftProtobuf.Message, SwiftProtobuf._Message
 extension Apisvr_WeightDataPoint: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".WeightDataPoint"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
-    1: .standard(proto: "x_axis"),
+    1: .same(proto: "time"),
     2: .same(proto: "value"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       switch fieldNumber {
-      case 1: try decoder.decodeSingularStringField(value: &self.xAxis)
+      case 1: try decoder.decodeSingularInt64Field(value: &self.time)
       case 2: try decoder.decodeSingularFloatField(value: &self.value)
       default: break
       }
@@ -740,8 +744,8 @@ extension Apisvr_WeightDataPoint: SwiftProtobuf.Message, SwiftProtobuf._MessageI
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
-    if !self.xAxis.isEmpty {
-      try visitor.visitSingularStringField(value: self.xAxis, fieldNumber: 1)
+    if self.time != 0 {
+      try visitor.visitSingularInt64Field(value: self.time, fieldNumber: 1)
     }
     if self.value != 0 {
       try visitor.visitSingularFloatField(value: self.value, fieldNumber: 2)
@@ -750,7 +754,7 @@ extension Apisvr_WeightDataPoint: SwiftProtobuf.Message, SwiftProtobuf._MessageI
   }
 
   static func ==(lhs: Apisvr_WeightDataPoint, rhs: Apisvr_WeightDataPoint) -> Bool {
-    if lhs.xAxis != rhs.xAxis {return false}
+    if lhs.time != rhs.time {return false}
     if lhs.value != rhs.value {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
@@ -942,14 +946,16 @@ extension Apisvr_MeasurementChart: SwiftProtobuf.Message, SwiftProtobuf._Message
   static let protoMessageName: String = _protobuf_package + ".MeasurementChart"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "title"),
-    2: .same(proto: "logs"),
+    2: .standard(proto: "body_measurement_type"),
+    3: .same(proto: "logs"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       switch fieldNumber {
       case 1: try decoder.decodeSingularStringField(value: &self.title)
-      case 2: try decoder.decodeRepeatedMessageField(value: &self.logs)
+      case 2: try decoder.decodeSingularEnumField(value: &self.bodyMeasurementType)
+      case 3: try decoder.decodeRepeatedMessageField(value: &self.logs)
       default: break
       }
     }
@@ -959,14 +965,18 @@ extension Apisvr_MeasurementChart: SwiftProtobuf.Message, SwiftProtobuf._Message
     if !self.title.isEmpty {
       try visitor.visitSingularStringField(value: self.title, fieldNumber: 1)
     }
+    if self.bodyMeasurementType != .unknownBodyMeasurementType {
+      try visitor.visitSingularEnumField(value: self.bodyMeasurementType, fieldNumber: 2)
+    }
     if !self.logs.isEmpty {
-      try visitor.visitRepeatedMessageField(value: self.logs, fieldNumber: 2)
+      try visitor.visitRepeatedMessageField(value: self.logs, fieldNumber: 3)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: Apisvr_MeasurementChart, rhs: Apisvr_MeasurementChart) -> Bool {
     if lhs.title != rhs.title {return false}
+    if lhs.bodyMeasurementType != rhs.bodyMeasurementType {return false}
     if lhs.logs != rhs.logs {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
@@ -1002,20 +1012,53 @@ extension Apisvr_GetBodyMeasurementLogResp: SwiftProtobuf.Message, SwiftProtobuf
   }
 }
 
+extension Apisvr_BodyMeasurement: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
+  static let protoMessageName: String = _protobuf_package + ".BodyMeasurement"
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .standard(proto: "body_measurement_type"),
+    2: .same(proto: "value"),
+  ]
+
+  mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      switch fieldNumber {
+      case 1: try decoder.decodeSingularEnumField(value: &self.bodyMeasurementType)
+      case 2: try decoder.decodeSingularFloatField(value: &self.value)
+      default: break
+      }
+    }
+  }
+
+  func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.bodyMeasurementType != .unknownBodyMeasurementType {
+      try visitor.visitSingularEnumField(value: self.bodyMeasurementType, fieldNumber: 1)
+    }
+    if self.value != 0 {
+      try visitor.visitSingularFloatField(value: self.value, fieldNumber: 2)
+    }
+    try unknownFields.traverse(visitor: &visitor)
+  }
+
+  static func ==(lhs: Apisvr_BodyMeasurement, rhs: Apisvr_BodyMeasurement) -> Bool {
+    if lhs.bodyMeasurementType != rhs.bodyMeasurementType {return false}
+    if lhs.value != rhs.value {return false}
+    if lhs.unknownFields != rhs.unknownFields {return false}
+    return true
+  }
+}
+
 extension Apisvr_AddBodyMeasurementLogReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".AddBodyMeasurementLogReq"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "date"),
-    2: .same(proto: "value"),
-    3: .standard(proto: "body_measurement_type"),
+    2: .standard(proto: "body_measurements"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       switch fieldNumber {
       case 1: try decoder.decodeSingularInt64Field(value: &self.date)
-      case 2: try decoder.decodeSingularFloatField(value: &self.value)
-      case 3: try decoder.decodeSingularEnumField(value: &self.bodyMeasurementType)
+      case 2: try decoder.decodeRepeatedMessageField(value: &self.bodyMeasurements)
       default: break
       }
     }
@@ -1025,19 +1068,15 @@ extension Apisvr_AddBodyMeasurementLogReq: SwiftProtobuf.Message, SwiftProtobuf.
     if self.date != 0 {
       try visitor.visitSingularInt64Field(value: self.date, fieldNumber: 1)
     }
-    if self.value != 0 {
-      try visitor.visitSingularFloatField(value: self.value, fieldNumber: 2)
-    }
-    if self.bodyMeasurementType != .unknownBodyMeasurementType {
-      try visitor.visitSingularEnumField(value: self.bodyMeasurementType, fieldNumber: 3)
+    if !self.bodyMeasurements.isEmpty {
+      try visitor.visitRepeatedMessageField(value: self.bodyMeasurements, fieldNumber: 2)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: Apisvr_AddBodyMeasurementLogReq, rhs: Apisvr_AddBodyMeasurementLogReq) -> Bool {
     if lhs.date != rhs.date {return false}
-    if lhs.value != rhs.value {return false}
-    if lhs.bodyMeasurementType != rhs.bodyMeasurementType {return false}
+    if lhs.bodyMeasurements != rhs.bodyMeasurements {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -1064,18 +1103,34 @@ extension Apisvr_AddBodyMeasurementLogResp: SwiftProtobuf.Message, SwiftProtobuf
 
 extension Apisvr_GetBodyShapeReq: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementationBase, SwiftProtobuf._ProtoNameProviding {
   static let protoMessageName: String = _protobuf_package + ".GetBodyShapeReq"
-  static let _protobuf_nameMap = SwiftProtobuf._NameMap()
+  static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
+    1: .same(proto: "date"),
+    2: .standard(proto: "time_type"),
+  ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
-    while let _ = try decoder.nextFieldNumber() {
+    while let fieldNumber = try decoder.nextFieldNumber() {
+      switch fieldNumber {
+      case 1: try decoder.decodeSingularInt64Field(value: &self.date)
+      case 2: try decoder.decodeSingularEnumField(value: &self.timeType)
+      default: break
+      }
     }
   }
 
   func traverse<V: SwiftProtobuf.Visitor>(visitor: inout V) throws {
+    if self.date != 0 {
+      try visitor.visitSingularInt64Field(value: self.date, fieldNumber: 1)
+    }
+    if self.timeType != .unknownTimeType {
+      try visitor.visitSingularEnumField(value: self.timeType, fieldNumber: 2)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: Apisvr_GetBodyShapeReq, rhs: Apisvr_GetBodyShapeReq) -> Bool {
+    if lhs.date != rhs.date {return false}
+    if lhs.timeType != rhs.timeType {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -1085,18 +1140,14 @@ extension Apisvr_BodyShape: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
   static let protoMessageName: String = _protobuf_package + ".BodyShape"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "photo_url"),
-    2: .same(proto: "value"),
-    3: .same(proto: "date"),
-    4: .same(proto: "unit"),
+    2: .same(proto: "date"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       switch fieldNumber {
       case 1: try decoder.decodeSingularStringField(value: &self.photoURL)
-      case 2: try decoder.decodeSingularFloatField(value: &self.value)
-      case 3: try decoder.decodeSingularInt64Field(value: &self.date)
-      case 4: try decoder.decodeSingularStringField(value: &self.unit)
+      case 2: try decoder.decodeSingularInt64Field(value: &self.date)
       default: break
       }
     }
@@ -1106,23 +1157,15 @@ extension Apisvr_BodyShape: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     if !self.photoURL.isEmpty {
       try visitor.visitSingularStringField(value: self.photoURL, fieldNumber: 1)
     }
-    if self.value != 0 {
-      try visitor.visitSingularFloatField(value: self.value, fieldNumber: 2)
-    }
     if self.date != 0 {
-      try visitor.visitSingularInt64Field(value: self.date, fieldNumber: 3)
-    }
-    if !self.unit.isEmpty {
-      try visitor.visitSingularStringField(value: self.unit, fieldNumber: 4)
+      try visitor.visitSingularInt64Field(value: self.date, fieldNumber: 2)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: Apisvr_BodyShape, rhs: Apisvr_BodyShape) -> Bool {
     if lhs.photoURL != rhs.photoURL {return false}
-    if lhs.value != rhs.value {return false}
     if lhs.date != rhs.date {return false}
-    if lhs.unit != rhs.unit {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }
@@ -1161,16 +1204,14 @@ extension Apisvr_AddBodyShapeReq: SwiftProtobuf.Message, SwiftProtobuf._MessageI
   static let protoMessageName: String = _protobuf_package + ".AddBodyShapeReq"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "date"),
-    2: .same(proto: "weight"),
-    3: .standard(proto: "photo_url"),
+    2: .standard(proto: "photo_url"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       switch fieldNumber {
       case 1: try decoder.decodeSingularInt64Field(value: &self.date)
-      case 2: try decoder.decodeSingularFloatField(value: &self.weight)
-      case 3: try decoder.decodeSingularStringField(value: &self.photoURL)
+      case 2: try decoder.decodeSingularStringField(value: &self.photoURL)
       default: break
       }
     }
@@ -1180,18 +1221,14 @@ extension Apisvr_AddBodyShapeReq: SwiftProtobuf.Message, SwiftProtobuf._MessageI
     if self.date != 0 {
       try visitor.visitSingularInt64Field(value: self.date, fieldNumber: 1)
     }
-    if self.weight != 0 {
-      try visitor.visitSingularFloatField(value: self.weight, fieldNumber: 2)
-    }
     if !self.photoURL.isEmpty {
-      try visitor.visitSingularStringField(value: self.photoURL, fieldNumber: 3)
+      try visitor.visitSingularStringField(value: self.photoURL, fieldNumber: 2)
     }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: Apisvr_AddBodyShapeReq, rhs: Apisvr_AddBodyShapeReq) -> Bool {
     if lhs.date != rhs.date {return false}
-    if lhs.weight != rhs.weight {return false}
     if lhs.photoURL != rhs.photoURL {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true

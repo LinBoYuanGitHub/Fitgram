@@ -11,7 +11,7 @@ import Stevia
 import SwiftGRPC
 
 class CoachContractViewController: UIViewController{
-    public var rootView: CoachDetailView!
+    public var rootView: CoachContractView!
     public var coachId = 0
     
     override func viewDidLoad() {
@@ -27,7 +27,7 @@ class CoachContractViewController: UIViewController{
     }
     
     override func loadView() {
-        rootView = CoachDetailView()
+        rootView = CoachContractView()
         view = rootView
         rootView.expTextLabel.text = "行业经验"
         rootView.certificationLabel.text = "资质"
@@ -81,10 +81,9 @@ class CoachContractViewController: UIViewController{
             var req = Apisvr_LinkPersonalTrainerReq()
             req.coachID = Int32(self.coachId)
             try ProfileDataManager.shared.client.linkPersonalTrainer(req, metadata: metaData, completion: { (resp, result) in
-                if result.statusCode == .ok{
-                    //TODO go to detail page
-                    
-//                    self.navigationController?.pushViewController(<#T##viewController: UIViewController##UIViewController#>, animated: <#T##Bool#>)
+                if result.statusCode == .ok {
+//                    self.navigationController?.pushViewController(targetVC, animated: true)
+                    self.navigationController?.popViewController(animated: true)
                 }
             })
         } catch {

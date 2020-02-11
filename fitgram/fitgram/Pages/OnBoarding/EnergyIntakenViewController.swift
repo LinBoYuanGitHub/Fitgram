@@ -112,6 +112,7 @@ class EnergyIntakenViewController: BaseViewController {
                 DispatchQueue.main.async {
                     let naviVC = UINavigationController()
                     naviVC.viewControllers = [HomeTabViewController()]
+                    naviVC.modalPresentationStyle = .fullScreen
                     self.present(naviVC, animated: true, completion: nil)
                 }
             }

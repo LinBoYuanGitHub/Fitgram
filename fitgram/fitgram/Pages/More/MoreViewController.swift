@@ -68,8 +68,8 @@ class MoreViewController: BaseViewController {
     }
     
     @objc func onCoachBtnPressed(){
-        let targetVC = ScannerViewController()
-        targetVC.delegate = self
+        let targetVC = CoachDetailViewController()
+//        targetVC.delegate = self
         self.navigationController?.pushViewController(targetVC, animated: true)
     }
     
@@ -132,8 +132,16 @@ extension MoreViewController: BarcodeScannerDelegate {
         //TODO: request coach info by coach id
         let alertView = UIAlertController(title: "", message: barcode, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "确定", style: .default) { (_) in
-            let targetVC = CoachDetailViewController()
-            self.navigationController?.pushViewController(targetVC, animated: true)
+            print( barcode.components(separatedBy: "coach_id=").count)
+            if barcode.components(separatedBy: "coach_id=").count > 1{
+                DispatchQueue.main.async {
+                    let coachId = Int(barcode.components(separatedBy: "coach_id=")[1])
+                    let targetVC = CoachContractViewController()
+                    targetVC.coachId = coachId!
+                    self.navigationController?.pushViewController(targetVC, animated: true)
+                }
+               
+            }
         }
         alertView.addAction(okAction)
         self.present(alertView, animated: true, completion: nil)
@@ -195,15 +203,23 @@ extension MoreViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "RestaurantCell", for: indexPath) as? RestaurantCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "LikeTableViewCell", for: indexPath) as? LikeTableViewCell else {
             return UITableViewCell()
         }
         cell.restaurantNameLabel.text = restaurantFavItems[indexPath.row].restaurantName
         cell.restaurantImageView.kf.setImage(with: URL(string: restaurantFavItems[indexPath.row].restaurantImgURL))
         cell.restaurantImageView.contentMode = .scaleAspectFill
-        cell.restaurantImageView.frame.size = CGSize(width: UIScreen.main.bounds.width, height: 200)
-        cell.infoShadow.frame.size = CGSize(width: UIScreen.main.bounds.width, height: 100)
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 200
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let targetVC = RestaurantFavViewController()
+        targetVC.restaurantId = restaurantFavItems[indexPath.row].restaurantID
+        self.navigationController?.pushViewController(targetVC, animated: true)
     }
     
     

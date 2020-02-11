@@ -118,11 +118,17 @@ class CoachContractView:UIView {
         termsConditionTextView.numberOfLines = 3
         termsConditionTextView.font = UIFont(name: "PingFangSC-Regular", size: 13)
         checkBtn.setImage(UIImage(named: "checkBtnBox"), for: .normal)
+        checkBtn.setImage(UIImage(named: "tickbox_blue"), for: .selected)
+        checkBtn.addTarget(self, action: #selector(onCheckBtnPressed), for: .touchUpInside)
         align(tops: [checkBtn,termsConditionTextView])
         //bottom confirm button
         confirmBtn.centerHorizontally()
         confirmBtn.backgroundColor = UIColor(red: 33/255, green: 43/255, blue: 54/255, alpha: 1)
         confirmBtn.layer.cornerRadius = 20
         confirmBtn.setTitle("确认", for: .normal)
+    }
+    
+    @objc func onCheckBtnPressed(){
+        checkBtn.isSelected = !checkBtn.isSelected
     }
 }

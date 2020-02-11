@@ -7,3 +7,18 @@
 //
 
 import Foundation
+
+class DateUtil {
+    
+    static func CNDateFormatter(date:Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy年MM月dd日"
+        return dateFormatter.string(from: date)
+    }
+    
+    static func EnDateFormatter(date:Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter.string(from: date)
+    }
+}

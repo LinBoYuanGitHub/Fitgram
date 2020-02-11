@@ -39,9 +39,17 @@ class RestaurantDetailViewController:BaseViewController {
     }
     
     @objc func naviToMap(){
-        let url = URL(string: "https://www.google.com/maps/@42.585444,13.007813,6z")
-        if UIApplication.shared.canOpenURL(url!) {
-            UIApplication.shared.open(url!, options: [:], completionHandler: nil)
+        let lat = restaurant.lat
+        let lng = restaurant.lng
+        let restaurantName = restaurant.restaurantName.replacingOccurrences(of: " ", with: "+").replacingOccurrences(of: "&", with: "")
+//        let trafficMode = "traffic"
+//        let zoom = 17
+//        let url = URL(string: "http://maps.google.com/maps/?q=\(lat),\(lng)&zoom=\(zoom)")
+        guard let url = URL(string: "comgooglemaps://?q=\(restaurantName)&center=\(lat),\(lng)/") else {
+            return
+        }
+        if UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
     
@@ -71,7 +79,9 @@ class RestaurantDetailViewController:BaseViewController {
                 menuCell.likeBtn.isEnabled = true
                 if result.statusCode == .ok {
                     self.menus[index].isFavourite = true
+                    self.menus[index].favouriteNum += 1
                     menuCell.likeBtn.isSelected = true
+                    menuCell.likeBtn.setTitle(String(Int(self.menus[index].favouriteNum)), for: .normal)
                 }
              }
            }
@@ -98,7 +108,9 @@ class RestaurantDetailViewController:BaseViewController {
                     menuCell.likeBtn.isEnabled = true
                     if result.statusCode == .ok {
                         self.menus[index].isFavourite = false
+                        self.menus[index].favouriteNum -= 1
                         menuCell.likeBtn.isSelected = false
+                        menuCell.likeBtn.setTitle(String(Int(self.menus[index].favouriteNum)), for: .normal)
                     }
                 }
             }
