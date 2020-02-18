@@ -18,7 +18,7 @@ class HeightViewController: UIViewController {
     override func viewDidLoad() {
         setUpProgressView()
         self.view.backgroundColor = .white
-        self.titleLabel.text = "你的身高"
+        self.titleLabel.text = "How tall are you?"
         self.titleLabel.font  = UIFont(name: "PingFangSC-Medium", size: 20)
         self.titleLabel.textAlignment = .center
         
@@ -29,7 +29,7 @@ class HeightViewController: UIViewController {
         heightTextField.keyboardType = .decimalPad
         self.addBottomLine(targetTextField: heightTextField)
         
-        confirmBtn.setTitle("下一步", for: .normal)
+        confirmBtn.setTitle("Next", for: .normal)
         confirmBtn.layer.cornerRadius = 10
         confirmBtn.layer.masksToBounds = true
         confirmBtn.backgroundColor = UIColor(red: 252/255, green: 200/255, blue: 45/255, alpha: 1)

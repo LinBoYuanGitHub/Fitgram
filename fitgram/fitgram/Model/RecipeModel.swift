@@ -17,6 +17,7 @@ struct RecipeModel {
     public var recipeVideoUrl: String = ""
     public var videoCoverImageUrl: String = ""
     public var isLike = false
+    public var isChecked = false
     public var ingredientList = [IngredientModel]()
     public var stepList = [StepModel]()
     public var nutrientData = Apisvr_Nutrient()

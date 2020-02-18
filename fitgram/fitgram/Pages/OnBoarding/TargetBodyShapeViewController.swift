@@ -32,12 +32,12 @@ class TargetBodyShapeViewController: UIViewController {
     override func viewDidLoad() {
         setUpProgressView()
         self.view.backgroundColor = .white
-        self.titleLabel.text = "目标体型"
+        self.titleLabel.text = "What’s your body fat target?"
         self.titleLabel.font  = UIFont(name: "PingFangSC-Medium", size: 20)
         self.titleLabel.textAlignment = .center
         
         currentCursorLabel.textAlignment = .center
-        currentCursorLabel.text = "目标"
+        currentCursorLabel.text = "My Goal"
         currentCursorLabel.textColor = .black
         currentCursorLabel.backgroundColor = .clear
         currentCursorLabel.font = UIFont(name: "PingFangSC-Medium", size: 18)
@@ -47,7 +47,7 @@ class TargetBodyShapeViewController: UIViewController {
         currentCursorCover.addSubview(currentCursorIcon)
         currentCursorIcon.image = UIImage(named: "award_icon")
         
-        confirmBtn.setTitle("下一步", for: .normal)
+        confirmBtn.setTitle("Next", for: .normal)
         confirmBtn.layer.cornerRadius = 10
         confirmBtn.layer.masksToBounds = true
         confirmBtn.backgroundColor = UIColor(red: 252/255, green: 200/255, blue: 45/255, alpha: 1)

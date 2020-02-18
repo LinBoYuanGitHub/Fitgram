@@ -22,8 +22,8 @@ class HomeViewController: BaseViewController {
         self.view.addSubview(segmentControl)
         self.view.addSubview(contentView)
         //config view
-        segmentControl.insertSegment(withTitle: "健身食谱", at: 0, animated: false)
-        segmentControl.insertSegment(withTitle: "轻食餐厅", at: 1, animated: false)
+        segmentControl.insertSegment(withTitle: "Fitness Recipes", at: 0, animated: false)
+        segmentControl.insertSegment(withTitle: "Restaurants", at: 1, animated: false)
         segmentControl.addTarget(self, action: #selector(onSwitchTab), for: .valueChanged)
         segmentControl.selectedSegmentIndex = 0
         segmentControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.black,

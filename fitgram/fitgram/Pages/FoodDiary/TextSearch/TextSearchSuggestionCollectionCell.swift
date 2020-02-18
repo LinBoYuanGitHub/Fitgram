@@ -31,7 +31,7 @@ class TextSearchSuggestionCollectionCell:UICollectionViewCell {
             foodTagBtn
         )
         layout(
-            |-foodTagBtn-| ~ 40
+            |-foodTagBtn-| ~ 30
         )
     }
     

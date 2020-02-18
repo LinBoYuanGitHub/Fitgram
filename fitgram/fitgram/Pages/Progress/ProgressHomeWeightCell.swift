@@ -18,7 +18,7 @@ class ProgressHomeWeightCell: UITableViewCell {
     public var weightRecordBtn = UIButton()
     
     public var onWeightRecordBtnPressed: () -> Void = { }
-    private let defaultRecordTimeText = "2019年10月28日"
+    private let defaultRecordTimeText = "28 Oct 2019"
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -46,7 +46,7 @@ class ProgressHomeWeightCell: UITableViewCell {
             20
         )
         titleLabel.font = UIFont(name: Constants.Dimension.RegularFont, size: 14)
-        titleLabel.text = "体重"
+        titleLabel.text = "Weight"
         arrowImage.image = UIImage(named: "rightArrow_black")
         arrowImage.width(10)
         arrowImage.height(15)
@@ -60,16 +60,18 @@ class ProgressHomeWeightCell: UITableViewCell {
         weightLabel.font = UIFont(name: "PingFangSC-semibold", size: 48)
         weightLabel.width(30%)
         weightLabel.centerHorizontally()
-        unitLabel.text = "公斤"
+        unitLabel.text = "kg"
         unitLabel.textAlignment = .left
         unitLabel.width(20%)
         unitLabel.centerHorizontally(15)
         unitLabel.font = UIFont(name: "PingFangSC-Regular", size: 16)
         align(lastBaselines: [weightLabel,unitLabel])
-        weightRecordBtn.setTitle("记录体重", for: .normal)
+        weightRecordBtn.setTitle("Record Weight", for: .normal)
+        weightRecordBtn.titleLabel?.font = UIFont(name: "PingFangSC-Regular", size: 16)
+        weightRecordBtn.setTitleColor(.white, for: .normal)
         weightRecordBtn.width(125)
         weightRecordBtn.centerHorizontally()
-        weightRecordBtn.backgroundColor = .black
+        weightRecordBtn.backgroundColor = UIColor(red: 252/255, green: 200/255, blue: 45/255, alpha: 1)
         weightRecordBtn.layer.cornerRadius = 15
         weightRecordBtn.layer.masksToBounds = true
         weightRecordBtn.addTarget(self, action: #selector(naviToWeightRecordPage), for: .touchUpInside)

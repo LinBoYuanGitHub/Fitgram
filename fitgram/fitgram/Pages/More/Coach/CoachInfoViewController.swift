@@ -36,19 +36,19 @@ class CoachInfoViewController: BaseViewController {
             try ProfileDataManager.shared.client.getTrainerDetails(req, metadata: metaData, completion: { (resp, result) in
                 if result.statusCode == .ok {
                     DispatchQueue.main.async {
-                        self.rootView.expTextLabel.text = "行业经验"
-                        self.rootView.certificationLabel.text = "资质"
+                        self.rootView.expTextLabel.text = "Years of experience"
+                        self.rootView.certificationLabel.text = "Job qualification"
                         self.rootView.coachPortraitImageView.kf.setImage(with: URL(string: resp!.avatarURL))
                         self.rootView.coachNameLabel.text = resp!.name
                         self.rootView.gymInfoLabel.text = resp!.gymClubName
-                        self.rootView.expYearLabel.text = "\(resp!.yearsOfExp)年"
+                        self.rootView.expYearLabel.text = "\(resp!.yearsOfExp) year"
                         var qualificationText = ""
                         for qualification in resp!.qualifications{
                             qualificationText += qualification + "\n"
                         }
                         self.rootView.certificationCourseLabel.text = qualificationText
-                        self.rootView.startDateLabel.text = DateUtil.CNDateFormatter(date: Date(timeIntervalSince1970: TimeInterval(resp!.startServiceDate)))
-                        self.rootView.endDateLabel.text = DateUtil.CNDateFormatter(date: Date(timeIntervalSince1970: TimeInterval(resp!.endServiceDate)))
+                        self.rootView.startDateLabel.text = DateUtil.EnDateFormatter(date: Date(timeIntervalSince1970: TimeInterval(resp!.startServiceDate)))
+                        self.rootView.endDateLabel.text = DateUtil.EnDateFormatter(date: Date(timeIntervalSince1970: TimeInterval(resp!.endServiceDate)))
                     }
                   }
               })

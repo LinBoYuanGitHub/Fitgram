@@ -10,7 +10,7 @@ import UIKit
 import SwiftGRPC
 import Charts
 
-class BodyMeasurementViewController: UIViewController {
+class BodyMeasurementViewController: BaseViewController {
     public var rootView:BodyMeasurementView!
     private var bodyMeasurementList = [Apisvr_MeasurementChart]()
     
@@ -22,6 +22,8 @@ class BodyMeasurementViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
         self.requestFotBodyMeasurementData()
     }
     
@@ -40,7 +42,7 @@ class BodyMeasurementViewController: UIViewController {
     func mockUpBodyMeasurementData(){
         for _ in 0...5 {
             var chart = Apisvr_MeasurementChart()
-            chart.title = "围度"
+            chart.title = "Body Measurement"
             chart.logs = []
             bodyMeasurementList.append(chart)
         }
@@ -102,11 +104,11 @@ extension BodyMeasurementViewController: UITableViewDelegate,UITableViewDataSour
         let values = (0..<logs.count).map { (i) -> ChartDataEntry in
             let val = logs[i].value
             let date = logs[i].date
-            let dayFormatter = DateFormatter()
-            dayFormatter.dateFormat = "dd"
-            let day = dayFormatter.string(from: Date(timeIntervalSince1970: TimeInterval(date)))
+//            let dayFormatter = DateFormatter()
+//            dayFormatter.dateFormat = "dd"
+//            let day = dayFormatter.string(from: Date(timeIntervalSince1970: TimeInterval(date)))
             valueColors.append(.white)
-            return ChartDataEntry(x: Double(day)!, y: Double(val))
+            return ChartDataEntry(x: Double(date), y: Double(val))
         }
         let chartDataSet = LineChartDataSet(entries: values, label: "")
         chartDataSet.setColor(.black)

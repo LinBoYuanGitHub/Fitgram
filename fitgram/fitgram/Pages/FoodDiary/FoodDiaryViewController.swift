@@ -38,7 +38,7 @@ class FoodDiaryViewController:BaseViewController {
         rootView.onLeftArrowPressedEvent = {
             self.diaryDate = Calendar.current.date(byAdding: .day,value: -1, to: self.diaryDate)!
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MM-dd"
+            dateFormatter.dateFormat = "dd/MM"
             let title = dateFormatter.string(from: self.diaryDate)
             self.rootView.dateBtn.setTitle(title, for: .normal)
             self.requestForFoodDiary()
@@ -47,7 +47,7 @@ class FoodDiaryViewController:BaseViewController {
         rootView.onRightArrowPressedEvent = {
             self.diaryDate = Calendar.current.date(byAdding: .day,value: 1, to: self.diaryDate)!
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "MM-dd"
+            dateFormatter.dateFormat = "dd/MM"
             let title = dateFormatter.string(from: self.diaryDate)
             self.rootView.dateBtn.setTitle(title, for: .normal)
             self.requestForFoodDiary()
@@ -119,16 +119,16 @@ class FoodDiaryViewController:BaseViewController {
     
     
     func showRecordActionSheet(){
-        let optionMenu = UIAlertController(title: nil, message: "选择记录方式", preferredStyle: .actionSheet)
-        let cameraOption  = UIAlertAction(title: "拍照记录", style: .default) { (alertAction) in
+        let optionMenu = UIAlertController(title: nil, message: "Option", preferredStyle: .actionSheet)
+        let cameraOption  = UIAlertAction(title: "Camera", style: .default) { (alertAction) in
             self.openCamera()
             optionMenu.dismiss(animated: true, completion: nil)
         }
-        let galleryOption  = UIAlertAction(title: "从相册选择", style: .default) { (alertAction) in
+        let galleryOption  = UIAlertAction(title: "Album", style: .default) { (alertAction) in
             self.openAlbum()
             optionMenu.dismiss(animated: true, completion: nil)
         }
-        let textOption  = UIAlertAction(title: "文字记录", style: .default) { (alertAction) in
+        let textOption  = UIAlertAction(title: "Text Search", style: .default) { (alertAction) in
             let targetVC = TextSearchViewController()
             targetVC.textSearchDelegate = self
             targetVC.isKeepSearchPage = true
@@ -136,7 +136,7 @@ class FoodDiaryViewController:BaseViewController {
             optionMenu.dismiss(animated: true, completion: nil)
             self.navigationController?.pushViewController(targetVC, animated: true)
         }
-        let cancelOption  = UIAlertAction(title: "取消", style: .cancel) { (alertAction) in
+        let cancelOption  = UIAlertAction(title: "Cancel", style: .cancel) { (alertAction) in
             optionMenu.dismiss(animated: true, completion: nil)
         }
         optionMenu.addAction(cameraOption)
@@ -155,8 +155,8 @@ class FoodDiaryViewController:BaseViewController {
             self.present(picker, animated: true, completion: nil)
         } else {
             //TODO show modal native camera not available
-            let alert = UIAlertController.init(title: "提示", message: "没有检测到摄像头", preferredStyle: .alert)
-            let cancel = UIAlertAction.init(title: "确定", style: .cancel, handler: nil)
+            let alert = UIAlertController.init(title: "Message", message: "No Camera Dectected", preferredStyle: .alert)
+            let cancel = UIAlertAction.init(title: "Confirm", style: .cancel, handler: nil)
             alert.addAction(cancel)
             self.show(alert, sender: nil)
         }
@@ -171,8 +171,8 @@ class FoodDiaryViewController:BaseViewController {
             self.present(picker, animated: true, completion: nil)
         } else {
             //TODO show modal native camera not available
-            let alert = UIAlertController.init(title: "提示", message: "不能打开相册", preferredStyle: .alert)
-            let cancel = UIAlertAction.init(title: "确定", style: .cancel, handler: nil)
+            let alert = UIAlertController.init(title: "Message", message: "Cannot Open Album", preferredStyle: .alert)
+            let cancel = UIAlertAction.init(title: "Confirm", style: .cancel, handler: nil)
             alert.addAction(cancel)
             self.show(alert, sender: nil)
         }
@@ -223,9 +223,9 @@ extension FoodDiaryViewController: UITableViewDelegate, UITableViewDataSource {
         }
         switch indexPath.row{
         case 0://breakfast
-            cell.mealTItle.text = "早餐"
-            cell.calorieTitle.text = String(Int(mealEntity.nutrientByMeal.breakfastEnergy)) + "千卡"
-            cell.suggestionIntakenLabel.text = "推荐:占每日摄入量的\(mealEntity.nutrientByMeal.breakfastPercentage)(大约\(Int(mealEntity.nutrient.energyRecommend*mealEntity.nutrientByMeal.breakfastPercentage))千卡)"
+            cell.mealTItle.text = "Breakfast"
+            cell.calorieTitle.text = String(Int(mealEntity.nutrientByMeal.breakfastEnergy)) + "kCal"
+            cell.suggestionIntakenLabel.text = "Recommended:\(Int(mealEntity.nutrientByMeal.breakfastPercentage*100))% (approx \(Int(mealEntity.nutrient.energyRecommend*mealEntity.nutrientByMeal.breakfastPercentage))kCal)"
             cell.setUpMealData(mealList: mealEntity.mealLogs[0].mealLogByType)   //Apisvr_FoodDiaryMealLog
             cell.didSelectMealAction = { index in
                 self.currentMealType = .breakfast
@@ -233,9 +233,9 @@ extension FoodDiaryViewController: UITableViewDelegate, UITableViewDataSource {
             }
             break;
         case 1://lunch
-             cell.mealTItle.text = "午餐"
-             cell.calorieTitle.text = String(Int(mealEntity.nutrientByMeal.lunchEnergy)) + "千卡"
-             cell.suggestionIntakenLabel.text = "推荐:占每日摄入量的\(mealEntity.nutrientByMeal.lunchPercentage)(大约\(Int(mealEntity.nutrient.energyRecommend*mealEntity.nutrientByMeal.lunchPercentage))千卡)"
+             cell.mealTItle.text = "Lunch"
+             cell.calorieTitle.text = String(Int(mealEntity.nutrientByMeal.lunchEnergy)) + "kCal"
+             cell.suggestionIntakenLabel.text = "Recommend:\(Int(mealEntity.nutrientByMeal.lunchPercentage*100))% (approx \(Int(mealEntity.nutrient.energyRecommend*mealEntity.nutrientByMeal.lunchPercentage))kCal)"
              cell.setUpMealData(mealList: mealEntity.mealLogs[1].mealLogByType)
              cell.didSelectMealAction = { index in
                 self.currentMealType = .lunch
@@ -243,9 +243,9 @@ extension FoodDiaryViewController: UITableViewDelegate, UITableViewDataSource {
              }
             break;
         case 2://dinner
-             cell.mealTItle.text = "晚餐"
-             cell.calorieTitle.text = String(Int(mealEntity.nutrientByMeal.dinnerEnergy)) + "千卡"
-             cell.suggestionIntakenLabel.text = "推荐:占每日摄入量的\(mealEntity.nutrientByMeal.dinnerPercentage)(大约\(Int(mealEntity.nutrient.energyRecommend*mealEntity.nutrientByMeal.dinnerPercentage))千卡)"
+             cell.mealTItle.text = "Dinner"
+             cell.calorieTitle.text = String(Int(mealEntity.nutrientByMeal.dinnerEnergy)) + "kCal"
+             cell.suggestionIntakenLabel.text = "Recomended:\(Int(mealEntity.nutrientByMeal.dinnerPercentage*100))% (approx \(Int(mealEntity.nutrient.energyRecommend*mealEntity.nutrientByMeal.dinnerPercentage))kCal)"
              cell.setUpMealData(mealList: mealEntity.mealLogs[2].mealLogByType)
              cell.didSelectMealAction = { index in
                 self.showRecordActionSheet()
@@ -296,7 +296,7 @@ extension FoodDiaryViewController: UIImagePickerControllerDelegate,UINavigationC
         let timeStamp = String(Int(Date().timeIntervalSince1970 * 1000))
         let objectKey = userId + "_" + timeStamp
 //        self.showLoadingDialog(targetController: self, loadingText: "上传图片中...")
-        UploaderManager.shared.asyncPutImage(objectKey: objectKey, image: selectedImage) { (objectKey) in
+        UploaderManager.shared.asyncPutFoodDiaryImage(objectKey: objectKey, image: selectedImage) { (objectKey) in
             do{
                 var req = Apisvr_RecognitionReq()
                 req.imgURL = objectKey
@@ -373,7 +373,7 @@ extension FoodDiaryViewController: EPCalendarPickerDelegate {
     func epCalendarPicker(_: EPCalendarPicker, didSelectDate date: Date) {
         self.diaryDate = date
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM-dd"
+        dateFormatter.dateFormat = "dd/MM"
         let title = dateFormatter.string(from: self.diaryDate)
         self.rootView.dateBtn.setTitle(title, for: .normal)
         self.requestForFoodDiary()

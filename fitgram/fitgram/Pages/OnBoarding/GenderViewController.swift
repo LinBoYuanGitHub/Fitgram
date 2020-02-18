@@ -18,7 +18,7 @@ class GenderViewController: UIViewController {
     
     override func viewDidLoad() {
         self.view.backgroundColor = .white
-        titleLabel.text = "你的性别?"
+        titleLabel.text = "What’s your gender？"
         titleLabel.font  = UIFont(name: "PingFangSC-Medium", size: 20)
         titleLabel.textAlignment = .center
         

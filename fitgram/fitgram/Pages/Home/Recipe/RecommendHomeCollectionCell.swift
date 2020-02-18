@@ -38,6 +38,12 @@ class RecommendHomeCollectionCell: UICollectionViewCell {
         videoPlayView.centerHorizontally()
         videoPlayView.layer.cornerRadius = 10.0
         videoPlayView.layer.masksToBounds = true
+        //add black alpha cover
+        let coverView = UIView(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height))
+        coverView.alpha = 0.2
+        coverView.backgroundColor = .black
+        videoPlayView.addSubview(coverView)
+        videoPlayView.bringSubviewToFront(coverView)
         //calorie value
         videoCalorieLabel.frame.origin.x = 16
         videoCalorieLabel.frame.origin.y = 16
@@ -80,7 +86,7 @@ class RecommendHomeCollectionCell: UICollectionViewCell {
         videoPlayView.addSubview(likeButton)
         videoPlayView.bringSubviewToFront(likeButton)
         //check button
-        checkedButton.frame.origin.x = self.frame.size.width - 64
+        checkedButton.frame.origin.x = self.frame.size.width - 60
         checkedButton.frame.origin.y = self.frame.size.height - 33
         checkedButton.frame.size.width = 58
         checkedButton.frame.size.height = 20

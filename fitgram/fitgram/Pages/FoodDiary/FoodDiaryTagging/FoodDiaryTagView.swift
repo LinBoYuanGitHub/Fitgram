@@ -30,7 +30,7 @@ class FoodDiaryTagView: UIView {
         self.addSubview(respectedView)
         self.backgroundColor = .white
         instructionLabel.numberOfLines = 2
-        instructionLabel.text = "长按给图中食物添加标签"
+        instructionLabel.text = "Long press to tag food"
         instructionLabel.textColor = .gray
         instructionLabel.textAlignment = .center
         instructionLabel.font = UIFont(name: "PingFangSC-Regular", size: 17)
@@ -59,7 +59,7 @@ class FoodDiaryTagView: UIView {
         let foodTag = AADraggableView(frame: CGRect(origin: point, size: tagSize))
         foodTag.backgroundColor = .clear
         let foodLabel = UILabel(frame: CGRect(x: 0, y: 40, width: 90, height: 35))
-        foodLabel.text = "这是什么?" // initial text label
+        foodLabel.text = "food item" // initial text label
         foodLabel.textColor = .white
         foodLabel.textAlignment = .center
         foodLabel.layer.cornerRadius = 10

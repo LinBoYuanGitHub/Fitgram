@@ -13,7 +13,7 @@ class RDAGoalViewController: UIViewController {
     var rootView: RDAGoalView!
     
     override func viewDidLoad() {
-        self.title = "目标"
+        self.title = "Goal"
         on("INJECTION_BUNDLE_NOTIFICATION") {
             self.loadView()
         }
@@ -41,15 +41,15 @@ extension RDAGoalViewController: UITableViewDelegate, UITableViewDataSource {
         }
         switch indexPath.row {
         case 0:
-            cell.titleLabel.text = "目标"
+            cell.titleLabel.text = "Goal"
         case 1:
-            cell.titleLabel.text = "目标体重"
+            cell.titleLabel.text = "Target Weight"
         case 2:
-            cell.titleLabel.text = "目标日期"
+            cell.titleLabel.text = "Target Date"
         case 3:
-            cell.titleLabel.text = "当前体型"
+            cell.titleLabel.text = "Current BodyShape"
         case 4:
-            cell.titleLabel.text = "目标体型"
+            cell.titleLabel.text = "Target BodyShape"
         default:break
         }
         return cell

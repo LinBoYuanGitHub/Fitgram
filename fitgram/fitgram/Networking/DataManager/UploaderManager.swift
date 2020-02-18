@@ -24,11 +24,28 @@ class UploaderManager {
     var client:OSSClient!
     
     static let shared = UploaderManager()
-    private let folderPrefix = "foodDiaryImages/"
+    private let foodDiaryFolderPrefix = "foodDiaryImages/"
+    private let bodyShapeFolderPrefix = "bodyShapeImages/"
+    private let portraitFolderPrefix = "portraitImages/"
     
     
     init(){
         client = OSSClient(endpoint: OSSEndPoint, credentialProvider: OSSCredentialProvider)
+    }
+    
+    func asyncPutFoodDiaryImage(objectKey:String, image:UIImage,uploadSuccessCallBack:@escaping (String) -> Void){
+        let key = foodDiaryFolderPrefix + objectKey
+        asyncPutImage(objectKey: key,  image:image, uploadSuccessCallBack: uploadSuccessCallBack)
+    }
+    
+    func asyncPutBodyShapeImage(objectKey:String,image:UIImage,uploadSuccessCallBack:@escaping (String) -> Void){
+        let key = bodyShapeFolderPrefix + objectKey
+        asyncPutImage(objectKey: key, image:image, uploadSuccessCallBack: uploadSuccessCallBack)
+    }
+    
+    func asyncPutPortraitImage(objectKey:String,image:UIImage,uploadSuccessCallBack:@escaping (String) -> Void){
+        let key = portraitFolderPrefix + objectKey
+        asyncPutImage(objectKey: key, image:image, uploadSuccessCallBack: uploadSuccessCallBack)
     }
     
     func asyncPutImage(objectKey:String,filepath:String,uploadSuccessCallBack:@escaping (String) -> Void){
@@ -37,7 +54,7 @@ class UploaderManager {
         }
         let putRequest = OSSPutObjectRequest()
         putRequest.bucketName = OSSBucketName
-        putRequest.objectKey = folderPrefix + objectKey
+        putRequest.objectKey = objectKey
         putRequest.uploadingFileURL = URL(string: filepath)!
 //        let textContent = "Hello OSS!"
 //        putRequest.uploadingData = String(textContent).data(using: .utf8)!
@@ -63,7 +80,7 @@ class UploaderManager {
         }
         let putRequest = OSSPutObjectRequest()
         putRequest.bucketName = OSSBucketName
-        putRequest.objectKey =  folderPrefix + objectKey
+        putRequest.objectKey =  objectKey
         guard let uploadingData = image.jpegData(compressionQuality: 0.8) else {
             return
         }

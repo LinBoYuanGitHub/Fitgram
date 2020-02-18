@@ -34,19 +34,22 @@ class WeightChartView: UIView {
             20,
             |-16-weightChart-16-| ~ 230,
             20,
-            |-weightRecordBtn-| ~ 180,
-            20,
-            |-weightCollectionView-|
+            |-weightRecordBtn-| ~ 50,
+            30,
+            |-weightCollectionView-| ~ 170
         )
         dateTab.centerHorizontally()
-        dateTab.insertSegment(withTitle: "月", at: 0, animated: false)
-        dateTab.insertSegment(withTitle: "周", at: 0, animated: false)
-        dateTab.insertSegment(withTitle: "日", at: 0, animated: false)
+        dateTab.insertSegment(withTitle: "Month", at: 0, animated: false)
+        dateTab.insertSegment(withTitle: "Week", at: 0, animated: false)
+        dateTab.insertSegment(withTitle: "Day", at: 0, animated: false)
         dateTab.selectedSegmentIndex = 0
         dateTab.tintColor = .black
         dateTab.backgroundColor = .white
         weightChart.xAxis.labelPosition = .bottom
-        weightRecordBtn.setTitle("记录体重", for: .normal)
+        weightChart.xAxis.valueFormatter = DateXAxisFormatter()//NoStyleFormatter
+        weightChart.leftAxis.valueFormatter = NoZeroValueFormatter()
+        weightChart.rightAxis.valueFormatter = NoZeroValueFormatter()
+        weightRecordBtn.setTitle("Record Weight", for: .normal)
         weightRecordBtn.width(125)
         weightRecordBtn.centerHorizontally()
         weightRecordBtn.backgroundColor = .black
@@ -55,6 +58,7 @@ class WeightChartView: UIView {
         weightRecordBtn.addTarget(self, action: #selector(onRecordWeightBtnPressed), for: .touchUpInside)
         weightCollectionView.backgroundColor = .white
         weightCollectionView.register(PicCollectionCell.self, forCellWithReuseIdentifier: "PicCollectionCell")
+        weightCollectionView.showsHorizontalScrollIndicator = false
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 150, height: 170)
         layout.scrollDirection = .horizontal

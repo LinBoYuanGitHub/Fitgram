@@ -26,6 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         gRPC.initialize()
         window = UIWindow(frame: UIScreen.main.bounds)
         let firstVC = LaunchPageViewController()
+        let naviVC = UINavigationController()
+        naviVC.viewControllers = [HomeTabViewController()]
         window?.rootViewController = firstVC
         window?.makeKeyAndVisible()
         return true

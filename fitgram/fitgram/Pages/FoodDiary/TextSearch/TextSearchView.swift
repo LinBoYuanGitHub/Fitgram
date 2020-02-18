@@ -14,14 +14,14 @@ class TextSearchView: UIView {
     public var textSearchViewContainer = UIView(frame: CGRect(x: 16, y: 8, width: UIScreen.main.bounds.width - 32 , height: 40))
     
     public var foodTextSearchTable = UITableView.init(frame: CGRect(x: 16, y: 60, width: UIScreen.main.bounds.width - 32, height: UIScreen.main.bounds.height - 80), style: .plain)
-    public var foodTextLabel = UILabel(frame: CGRect(x: 16, y: 58, width: 100 , height: 30))
-    public var foodRecognitionCollection = UICollectionView.init(frame: CGRect(x: 16, y: 100, width: UIScreen.main.bounds.width - 32, height: 100),collectionViewLayout: UICollectionViewFlowLayout())
+    public var foodTextLabel = UILabel(frame: CGRect(x: 16, y: 58, width: 150 , height: 30))
+    public var foodRecognitionCollection = UICollectionView.init(frame: CGRect(x: 16, y: 100, width: UIScreen.main.bounds.width - 32, height: 150),collectionViewLayout: UICollectionViewFlowLayout())
     
     
     convenience init(){
         self.init(frame:.zero)
         self.backgroundColor = .white
-        textSearchInput.placeholder =  "请输入食物名称"
+        textSearchInput.placeholder =  "Please enter the food name"
         textSearchInput.leftView = UIImageView(image: UIImage(named: "searchIcon_gray"))
         textSearchInput.leftViewMode = .always
         textSearchInput.font = UIFont(name: "PingFangSC-Regular", size: 16)
@@ -35,7 +35,7 @@ class TextSearchView: UIView {
         foodTextSearchTable.backgroundColor = .clear
         foodTextSearchTable.showsVerticalScrollIndicator = false
         foodTextSearchTable.isHidden = true
-        foodTextLabel.text = "食物推荐"
+        foodTextLabel.text = "Food Recommendation"
         foodTextLabel.textColor = .lightGray
         foodTextLabel.font = UIFont(name: "PingFangSC-Regualr", size: 14)
         //collecton init
@@ -49,7 +49,8 @@ class TextSearchView: UIView {
         foodRecognitionCollection.backgroundColor = .white
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.minimumInteritemSpacing = 10
+        layout.minimumInteritemSpacing = 5
+        layout.minimumLineSpacing = 5
         foodRecognitionCollection.collectionViewLayout = layout
         foodRecognitionCollection.showsVerticalScrollIndicator = false
         foodRecognitionCollection.showsHorizontalScrollIndicator = false

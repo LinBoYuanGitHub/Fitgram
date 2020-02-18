@@ -26,9 +26,9 @@ class NutritionCardView: UIView {
         self.calculateDataSource()
         let circleView = createCircleGraph()
         //mock up data for card
-        let fatDataView = createNutriDataSet(dataSetFrame:CGRect(x: 120, y: 24, width: 66, height: 60),percentageText: String(dataSource.items[0]) + "%", percentageTextColor: UIColor.black, gramText:  String(Int(nutrientData.fat)) + "克", gramTextColor: UIColor.black, nutriNameText: "脂肪", nutriNameTextColor:  UIColor.fatNutriPurple)
-        let carbDataView = createNutriDataSet(dataSetFrame:CGRect(x: 200, y: 24, width: 66, height: 60),percentageText:  String(dataSource.items[1]) + "%", percentageTextColor: UIColor.black, gramText: String(Int(nutrientData.carbohydrate)) + "克", gramTextColor: UIColor.black, nutriNameText: "碳水化合物", nutriNameTextColor:  UIColor.carbNutriEmerald)
-        let proteinDataView = createNutriDataSet(dataSetFrame:CGRect(x: 273, y: 24, width: 66, height: 60),percentageText:  String(dataSource.items[2]) + "%", percentageTextColor: UIColor.black, gramText: String(Int(nutrientData.protein)) + "克", gramTextColor: UIColor.black, nutriNameText: "蛋白质", nutriNameTextColor: UIColor.proteinNutriIndigo)
+        let fatDataView = createNutriDataSet(dataSetFrame:CGRect(x: 120, y: 24, width: 66, height: 60),percentageText: String(dataSource.items[0]) + "%", percentageTextColor: UIColor.black, gramText:  String(Int(nutrientData.fat)) + "g", gramTextColor: UIColor.black, nutriNameText: "Fat", nutriNameTextColor:  UIColor.fatNutriPurple)
+        let carbDataView = createNutriDataSet(dataSetFrame:CGRect(x: 200, y: 24, width: 66, height: 60),percentageText:  String(dataSource.items[1]) + "%", percentageTextColor: UIColor.black, gramText: String(Int(nutrientData.carbohydrate)) + "g", gramTextColor: UIColor.black, nutriNameText: "CARBS", nutriNameTextColor:  UIColor.carbNutriEmerald)
+        let proteinDataView = createNutriDataSet(dataSetFrame:CGRect(x: 273, y: 24, width: 66, height: 60),percentageText:  String(dataSource.items[2]) + "%", percentageTextColor: UIColor.black, gramText: String(Int(nutrientData.protein)) + "g", gramTextColor: UIColor.black, nutriNameText: "PROTEIN", nutriNameTextColor: UIColor.proteinNutriIndigo)
         //shadow setting
         shadowContainer.layer.shadowOffset = CGSize(width: 0, height: 0) //no shadow direction
         shadowContainer.layer.cornerRadius = 4
@@ -84,7 +84,7 @@ class NutritionCardView: UIView {
         calorieLabel.textAlignment = .center
         cicleContainer.addSubview(circleChart)
         let unitLabel = UILabel(frame: CGRect(x: 0, y: 40, width: 76, height: 18))
-        unitLabel.text = "千卡"
+        unitLabel.text = "kCal"
         unitLabel.textAlignment = .center
         unitLabel.font = UIFont(name: "PingFangSC-Regular", size: 13)
         unitLabel.textColor = UIColor.lightGray

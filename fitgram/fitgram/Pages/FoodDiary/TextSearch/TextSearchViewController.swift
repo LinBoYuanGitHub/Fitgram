@@ -37,9 +37,10 @@ class TextSearchViewController:UIViewController {
     
     
     override func viewDidLoad() {
-        self.title = "搜索"
+        self.title = "Text Search"
         self.navigationItem.hidesBackButton = true
         self.navigationItem.leftBarButtonItem  = UIBarButtonItem(image: UIImage(imageLiteralResourceName: "backbutton_black"), style: .plain, target: self, action: #selector(onBackPressed))
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
         on("INJECTION_BUNDLE_NOTIFICATION") {
             self.loadView()
         }
@@ -52,9 +53,9 @@ class TextSearchViewController:UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        DispatchQueue.main.async {
-            self.navigationController?.setNavigationBarHidden(false, animated: false)
-        }
+//        DispatchQueue.main.async {
+//            self.navigationController?.setNavigationBarHidden(false, animated: false)
+//        }
     }
     
     override func loadView() {
@@ -132,8 +133,8 @@ extension TextSearchViewController: UITableViewDelegate,UITableViewDataSource {
              cell.foodImage.image = UIImage(named: "fitgram_defaultIcon")
         }
         cell.foodNameLabel.text = textSearchItem.searchItemName
-        cell.foodDescLabel.text = "1 \(textSearchItem.searchItemUnit)(\(textSearchItem.searchItemWeight)克)"
-        cell.calorieUnitLabel.text = "千卡"
+        cell.foodDescLabel.text = "1 \(textSearchItem.searchItemUnit)(\(textSearchItem.searchItemWeight)g)"
+        cell.calorieUnitLabel.text = "kCal"
         cell.calorieValueLabel.text = String(Int(textSearchItem.energy))
         return cell
     }
@@ -191,7 +192,7 @@ extension TextSearchViewController: UICollectionViewDelegate, UICollectionViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width:textSearchSuggestedResult[indexPath.row].foodName.count * 15 + 20 , height: 40)
+        return CGSize(width:textSearchSuggestedResult[indexPath.row].foodName.count * 10 + 20 , height: 40)
     }
     
     

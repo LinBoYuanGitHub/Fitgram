@@ -15,7 +15,7 @@ class CoachContractViewController: UIViewController{
     public var coachId = 0
     
     override func viewDidLoad() {
-        self.title = "教练"
+        self.title = "Coach"
         on("INJECTION_BUNDLE_NOTIFICATION") {
             self.loadView()
         }
@@ -29,9 +29,9 @@ class CoachContractViewController: UIViewController{
     override func loadView() {
         rootView = CoachContractView()
         view = rootView
-        rootView.expTextLabel.text = "行业经验"
-        rootView.certificationLabel.text = "资质"
-        rootView.termsConditionTextView.text = "您的教练会对您的饮食和健身情况进行管理，添加教练意味着您同意将身体数据、饮食数据及健身数据权限开放给您的教练。"
+        rootView.expTextLabel.text = "Years of experience"
+        rootView.certificationLabel.text = "Job qualification"
+        rootView.termsConditionTextView.text = "Your coach will manage your diet and fitness. Adding a coach means that you agree to disclose your bodily makeup data, diet data and fitness data to your coach."
         rootView.confirmBtn.addTarget(self, action: #selector(confirmContract), for: .touchUpInside)
         mockUpCoachData()
     }
@@ -39,10 +39,10 @@ class CoachContractViewController: UIViewController{
     func mockUpCoachData(){
         rootView.coachPortraitImageView.image = UIImage(named: "coachSamplePortrait")
         rootView.coachNameLabel.text = "Sophia May"
-        rootView.locationNameLabel.text = "新加坡"
-        rootView.gymInfoLabel.text = "裕廊随时健身俱乐部的私人教练"
-        rootView.expYearLabel.text = "1年"
-        rootView.certificationCourseLabel.text = "ISA认证的私人教练课程"
+        rootView.locationNameLabel.text = "Singapore"
+        rootView.gymInfoLabel.text = "West Coast Anytime Fitness, 154 West Coast Rd, Singapore 127371"
+        rootView.expYearLabel.text = "1 year"
+        rootView.certificationCourseLabel.text = "Personal Training Course Options (including Level 2 Gym)"
     }
     
     

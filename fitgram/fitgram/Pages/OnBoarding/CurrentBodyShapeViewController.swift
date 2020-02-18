@@ -30,12 +30,12 @@ class CurrentBodyShapeViewController: UIViewController{
     override func viewDidLoad() {
         self.setUpProgressView()
         self.view.backgroundColor = .white
-        self.titleLabel.text = "当前体型"
+        self.titleLabel.text = "Estimate your current body fat"
         self.titleLabel.font  = UIFont(name: "PingFangSC-Medium", size: 20)
         self.titleLabel.textAlignment = .center
         
         currentCursorLabel.textAlignment = .center
-        currentCursorLabel.text = "我"
+        currentCursorLabel.text = "Me"
         currentCursorLabel.textColor = .white
         currentCursorLabel.backgroundColor = .clear
         currentCursorCover.contentMode = .scaleAspectFit
@@ -43,7 +43,7 @@ class CurrentBodyShapeViewController: UIViewController{
 //        currentCursorLabel.layer.cornerRadius = 10
 //        currentCursorLabel.layer.masksToBounds = true
         
-        confirmBtn.setTitle("下一步", for: .normal)
+        confirmBtn.setTitle("Next", for: .normal)
         confirmBtn.layer.cornerRadius = 10
         confirmBtn.layer.masksToBounds = true
         confirmBtn.backgroundColor = UIColor(red: 252/255, green: 200/255, blue: 45/255, alpha: 1)

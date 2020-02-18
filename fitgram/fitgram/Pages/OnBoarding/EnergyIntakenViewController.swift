@@ -33,7 +33,7 @@ class EnergyIntakenViewController: BaseViewController {
     
     override func viewDidLoad() {
         self.view.backgroundColor = .white
-        titleLabel.text = "每日膳食能量推荐摄入量:"
+        titleLabel.text = "Your daily recommended calories requirement is::"
         titleLabel.textAlignment = .center
         titleLabel.textColor = UIColor(red: 136/255, green: 136/255, blue: 136/255, alpha: 1)
         titleLabel.font = UIFont(name: "PingFangSC-Light", size: 14)
@@ -44,7 +44,7 @@ class EnergyIntakenViewController: BaseViewController {
         descLabel.font = UIFont(name: "PingFangSC-Regular", size: 18)
         descLabel.textAlignment = .center
         
-        confirmBtn.setTitle("开始", for: .normal)
+        confirmBtn.setTitle("START", for: .normal)
         confirmBtn.titleLabel?.textColor = .white
         confirmBtn.backgroundColor = UIColor(red: 252/255, green: 200/255, blue: 45/255, alpha: 1)
         confirmBtn.titleLabel?.font = UIFont(name: "PingFangSC-Regular", size: 17)
@@ -76,7 +76,7 @@ class EnergyIntakenViewController: BaseViewController {
             //mock up part
             initialWeight.setTitle("\(ProfileDataManager.shared.profile.weight) kg", for: .normal)
             targetWeight.setTitle("\(Int(ProfileDataManager.shared.profile.weight) - self.weightLoss) kg", for: .normal)
-            descLabel.text = "坚持\(days)天，您可减脂\(weightLoss)公斤"
+            descLabel.text = "After \(days) days, you will lose \(weightLoss)kg of fat"
             break
         case .keepFit:
             graphImageView.image = UIImage(named: "weight_neutral")
@@ -85,7 +85,7 @@ class EnergyIntakenViewController: BaseViewController {
             //mock up part
             initialWeight.setTitle("\(ProfileDataManager.shared.profile.weight) kg", for: .normal)
             targetWeight.setTitle("\(ProfileDataManager.shared.profile.weight) kg", for: .normal)
-            descLabel.text = "按照推荐能量摄入，保持体型"
+            descLabel.text = "you will be fitter and your body will be toned."
             break
         case .gainMuscle:
             graphImageView.image = UIImage(named: "weight_increase")
@@ -94,7 +94,7 @@ class EnergyIntakenViewController: BaseViewController {
             //mock up part
             initialWeight.setTitle("\(ProfileDataManager.shared.profile.weight) kg", for: .normal)
             targetWeight.setTitle("\(Int(ProfileDataManager.shared.profile.weight) + self.weightLoss) kg", for: .normal)
-            descLabel.text = "坚持\(days)天，您可增肌\(weightLoss)公斤"
+            descLabel.text = "After \(days) days， you will gain \(weightLoss)kg of muscle"
             break
         default:
             break

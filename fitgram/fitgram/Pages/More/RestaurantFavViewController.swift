@@ -75,7 +75,7 @@ extension RestaurantFavViewController:UICollectionViewDataSource,UICollectionVie
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LikeCollectionViewCell", for: indexPath) as? LikeCollectionViewCell else {
             return UICollectionViewCell()
         }
-        cell.calorieLabel.text = String(Int(favItems[indexPath.row].energy)) + "千卡"
+        cell.calorieLabel.text = String(Int(favItems[indexPath.row].energy)) + "kCal"
         cell.foodNameLabel.text = favItems[indexPath.row].foodName
         cell.foodImageView.image = UIImage(named: "fitgram_defaultIcon")
         cell.foodImageView.kf.setImage(with: URL(string: favItems[indexPath.row].imgURL))

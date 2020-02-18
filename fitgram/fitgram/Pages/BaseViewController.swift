@@ -18,8 +18,18 @@ class BaseViewController: UIViewController {
     
     var alertController: UIAlertController?
     
+    override func viewWillAppear(_ animated: Bool) {
+//        self.navigationItem.hidesBackButton = true
+        self.navigationItem.leftBarButtonItem  = UIBarButtonItem(image: UIImage(imageLiteralResourceName: "backbutton_black"), style: .plain, target: self, action: #selector(onBackPressed))
+        self.navigationItem.leftBarButtonItem?.tintColor = UIColor.black
+    }
+    
+    @objc func onBackPressed(){
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     func showLoadingDialog(targetController: UIViewController) {
-      self.showLoadingDialog(targetController: targetController, loadingText: "加载中...")
+      self.showLoadingDialog(targetController: targetController, loadingText: "Loading...")
     }
     
     func showLoadingDialog(targetController: UIViewController, loadingText:String) {

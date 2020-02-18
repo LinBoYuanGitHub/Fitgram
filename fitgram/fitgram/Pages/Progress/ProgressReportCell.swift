@@ -36,7 +36,7 @@ class ProgressReportCell:UITableViewCell {
         seperatorLine.backgroundColor = UIColor(red: 230/255, green: 230/255, blue: 230/255, alpha: 1)
         reportIcon.setImage(UIImage(named: "reportIcon"), for: .normal)
         reportIcon.imageEdgeInsets = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 5)
-        reportIcon.setTitle("全部报告", for: .normal)
+        reportIcon.setTitle("Health Report", for: .normal)
         reportIcon.setTitleColor(.black, for: .normal)
         reportIcon.contentHorizontalAlignment = .left
         reportIcon.titleLabel?.font = UIFont(name: "PingFangSC-Regular", size: 14)

@@ -30,7 +30,7 @@ class FoodDiaryDetailView:UIView {
         //add footer view
         deleteBtn.frame.size = CGSize(width: UIScreen.main.bounds.width - 32, height: 40)
         deleteBtn.backgroundColor = UIColor(red: 180/255, green: 21/255, blue: 28/255, alpha: 1)
-        deleteBtn.setTitle("删除", for: .normal)
+        deleteBtn.setTitle("Delete", for: .normal)
         deleteBtn.layer.cornerRadius = 10
         deleteBtn.layer.masksToBounds = true
         footerView.addSubview(deleteBtn)

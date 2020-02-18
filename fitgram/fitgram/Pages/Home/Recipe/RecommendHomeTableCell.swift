@@ -76,8 +76,14 @@ extension RecommendHomeTableCell: UICollectionViewDelegate, UICollectionViewData
         cell.videoPlayView.kf.setImage(with: URL(string: recommendationDishes[indexPath.row].videoCoverImageUrl))
         cell.videoTitleLabel.text = recommendationDishes[indexPath.row].recipeTitle
         cell.videoCalorieLabel.text = recommendationDishes[indexPath.row].recipeCalorie
-        cell.videoDurationBtn.setTitle("烹饪时间约\(recommendationDishes[indexPath.row].recipeCookingDuration)分钟", for: .normal)
-        cell.checkedButton.setTitle("打卡", for: .normal)
+        cell.videoDurationBtn.setTitle("\(recommendationDishes[indexPath.row].recipeCookingDuration)min", for: .normal)
+        cell.checkedButton.setTitle("Log", for: .normal)
+        cell.checkedButton.setImage(UIImage(named: "plusIcon_white"), for: .normal)
+        cell.checkedButton.setTitle("Eaten", for: .selected)
+        cell.checkedButton.setImage(UIImage(named: "smile_white"), for: .selected)
+        cell.checkedButton.isSelected = recommendationDishes[indexPath.row].isChecked
+        cell.checkedButton.isEnabled = !recommendationDishes[indexPath.row].isChecked
+        
         
         cell.likeButton.tag = indexPath.row
         cell.likeButton.isUserInteractionEnabled = true

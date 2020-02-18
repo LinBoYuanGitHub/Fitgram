@@ -30,7 +30,7 @@ class BodyMeasurementView: UIView {
             |-16-bodyMeasurementTableView-16-|,
             0
         )
-        inputBtn.setTitle("输入全部", for: .normal)
+        inputBtn.setTitle("Record All", for: .normal)
         inputBtn.backgroundColor = .black
         inputBtn.setTitleColor(.white, for: .normal)
         inputBtn.layer.cornerRadius = 15

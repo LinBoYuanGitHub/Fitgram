@@ -50,10 +50,11 @@ class ProgressHomeGoalCell:UITableViewCell {
             20
         )
         titleLabel.font = UIFont(name: Constants.Dimension.RegularFont, size: 14)
-        titleLabel.text = "目标:减脂"
+        titleLabel.text = "Goal:Lose Weight"
         arrowImage.image = UIImage(named: "rightArrow_black")
         arrowImage.width(10)
         arrowImage.height(15)
+        arrowImage.isHidden = true
         arrowImage.isUserInteractionEnabled = true
         let tapGesture = UITapGestureRecognizer()
         tapGesture.addTarget(self, action: #selector(onArrowPressed))
@@ -61,11 +62,11 @@ class ProgressHomeGoalCell:UITableViewCell {
         
         goalLabel.width(50%)
         goalLabel.textAlignment = .center
-        goalLabel.text = "已减去1.2公斤"
+        goalLabel.text = "Currently Lost 1.2 kg"
         goalLabel.font = UIFont(name: Constants.Dimension.RegularFont, size: 18)
         goalLabel.centerHorizontally()
         
-        expctedDateLable.text = "预计30天可以达到目标"
+        expctedDateLable.text = "30 days left to reach goal"
         expctedDateLable.textAlignment = .center
         expctedDateLable.font = UIFont(name: "PingFangSC-Regular", size: 13)
         expctedDateLable.centerHorizontally()
@@ -78,10 +79,10 @@ class ProgressHomeGoalCell:UITableViewCell {
         goalProgressBar.layer.cornerRadius = 5
         goalProgressBar.layer.masksToBounds = true
         
-        initialWeightLabel.text = "初始 53公斤"
+        initialWeightLabel.text = "Initial Weight  53kg"
         initialWeightLabel.textAlignment = .left
         initialWeightLabel.font = UIFont(name: "PingFangSC-Light", size: 13)
-        targetWeightLabel.text = "目标 45公斤"
+        targetWeightLabel.text = "Target Weight 45kg"
         targetWeightLabel.textAlignment = .right
         targetWeightLabel.font = UIFont(name: "PingFangSC-Light", size: 13)
     }

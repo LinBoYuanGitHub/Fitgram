@@ -41,13 +41,13 @@ class ForgetPwdView:UIView {
         //attribute setting
         forgetPwdLabel.font = UIFont(name: "PingFangSC-Regular", size: 36)
         forgetPwdLabel.textColor = .black
-        forgetPwdLabel.text = "忘记密码"
+        forgetPwdLabel.text = "Forget Password"
         forgetPwdContainer.backgroundColor = .lightGray
         forgetPwdContainer.layer.cornerRadius = 20
         forgetPwdContainer.layer.masksToBounds = true
         forgetPwdContainer.alpha = 0.35
         //phone num textfield
-        phoneNumTextField.attributedPlaceholder =  NSAttributedString(string: "输入手机号码", attributes: [NSAttributedString.Key.foregroundColor : UIColor.white])
+        phoneNumTextField.attributedPlaceholder =  NSAttributedString(string: "Phone number", attributes: [NSAttributedString.Key.foregroundColor : UIColor.white])
         phoneNumTextField.textAlignment = .left
         phoneNumTextField.textColor = .white
         phoneNumTextField.keyboardType = .decimalPad
@@ -56,7 +56,7 @@ class ForgetPwdView:UIView {
         phonePrefixTextField.textColor = .white
         phonePrefixTextField.rightView = UIImageView(image: UIImage(named: ""))
         //button setup
-        nextStepBtn.setTitle("下一步", for: .normal)
+        nextStepBtn.setTitle("Next", for: .normal)
         nextStepBtn.backgroundColor = UIColor(red: 252/255, green: 200/255, blue: 45/255, alpha: 1)
         nextStepBtn.layer.cornerRadius = 20
         nextStepBtn.layer.masksToBounds = true

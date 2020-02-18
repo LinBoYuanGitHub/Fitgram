@@ -56,13 +56,13 @@ class GoalViewController: UIViewController {
     }
     
     func setUpView() {
-        goalTitleLabel.text = "您的健身目标"
+        goalTitleLabel.text = "Your Fitness goal"
         goalTitleLabel.textAlignment = .center
         goalTitleLabel.font = textFont
         
-        setUpButtonAttribute(targetBtn: targetBtn_1, title: "减脂", tag: 1)
-        setUpButtonAttribute(targetBtn: targetBtn_2, title: "塑形", tag: 2)
-        setUpButtonAttribute(targetBtn: targetBtn_3, title: "增肌", tag: 3)
+        setUpButtonAttribute(targetBtn: targetBtn_1, title: "Lose weight", tag: 1)
+        setUpButtonAttribute(targetBtn: targetBtn_2, title: "Stay fit", tag: 2)
+        setUpButtonAttribute(targetBtn: targetBtn_3, title: "Gain muscle", tag: 3)
     }
     
     func setUpButtonAttribute(targetBtn:UIButton, title:String, tag:Int) {

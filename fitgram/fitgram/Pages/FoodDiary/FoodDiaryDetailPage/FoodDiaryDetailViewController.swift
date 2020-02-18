@@ -33,15 +33,15 @@ class FoodDiaryDetailViewController: BaseViewController{
         }
 //        self.navigationItem.hidesBackButton = true
         self.navigationController?.setNavigationBarHidden(false, animated: false)
-        self.navigationItem.leftBarButtonItem  = UIBarButtonItem(image: UIImage(imageLiteralResourceName: "backbutton_black"), style: .plain, target: self, action: #selector(onBackPressed))
+//        self.navigationItem.leftBarButtonItem  = UIBarButtonItem(image: UIImage(imageLiteralResourceName: "backbutton_black"), style: .plain, target: self, action: #selector(onBackPressed))
         self.navigationItem.leftBarButtonItem?.tintColor = .black
         if isUpdate {
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "更新", style: .plain, target: self, action: #selector(onMealLogUpdate))
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Update", style: .plain, target: self, action: #selector(onMealLogUpdate))
             self.navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 80/255, green: 184/255, blue: 60/255, alpha: 1)
             rootView.addFooterDeleteView()
             rootView.deleteBtn.addTarget(self, action: #selector(onMealLogDeleteBtnPressed), for: .touchUpInside)
         } else {
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "确认", style: .plain, target: self, action: #selector(onFoodRecordFinish))
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(onFoodRecordFinish))
             self.navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 80/255, green: 184/255, blue: 60/255, alpha: 1)
         }
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(notification:)), name:  UIResponder.keyboardWillShowNotification, object: nil)
@@ -72,6 +72,7 @@ class FoodDiaryDetailViewController: BaseViewController{
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: false)
         self.navigationController?.navigationBar.isTranslucent = false
         self.navigationController?.navigationBar.backgroundColor = .white
@@ -91,11 +92,11 @@ class FoodDiaryDetailViewController: BaseViewController{
     }
     
     @objc func onMealLogDeleteBtnPressed() {
-        let alert = UIAlertController(title: "", message: "确定删除?" , preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "确定", style: .default, handler: { (_) in
+        let alert = UIAlertController(title: "", message: "Delete the whole food log?" , preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { (_) in
             self.onMealLogDelete()
         }))
-        alert.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
     
@@ -197,9 +198,9 @@ class FoodDiaryDetailViewController: BaseViewController{
         }
     }
     
-    @objc func onBackPressed(){
-        self.navigationController?.popViewController(animated: true)
-    }
+//    @objc func onBackPressed(){
+//        self.navigationController?.popViewController(animated: true)
+//    }
     
     func initMockUpData(){
         var foodLog = Apisvr_FoodLog()
@@ -220,15 +221,15 @@ class FoodDiaryDetailViewController: BaseViewController{
     @objc func onFoodLogDelete(sender:UIButton) {
         let index = sender.tag
         let foodName = foodDiaryList[index].foodName
-        let alert = UIAlertController(title: "", message: "确定要删除"+foodName+"吗?", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "确定", style: .default, handler: { (_) in
+        let alert = UIAlertController(title: "", message: "Delete "+foodName+"?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Confirm", style: .default, handler: { (_) in
             //update meal log when delete
             self.mealLogList.remove(at: index)
             self.foodDiaryList.remove(at: index)
             self.rootView.recipeTable.reloadData()
             self.updateMealLog { (_) in }
         }))
-        alert.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
     
@@ -269,19 +270,19 @@ extension FoodDiaryDetailViewController: UITableViewDelegate, UITableViewDataSou
         }
         let entity = foodDiaryList[indexPath.row]
         cell.foodNameLabel.text = entity.foodName
-        cell.weightLabel.text = "共100克"
         cell.amountInputField.text = String(Float(entity.amount))
         cell.amountInputField.tag = indexPath.row
         cell.amountInputField.delegate = self
         for unit in entity.unitOption where unit.unitID == entity.selectedUnitID {
-             cell.unitInputField.text = unit.name
+            cell.unitInputField.text = unit.name
+            cell.weightLabel.text = "total \(Int(entity.amount*unit.weight))g"
         }
         let portionPicker = UIPickerView()
         portionPicker.tag = indexPath.row
         portionPicker.delegate = self
         portionPicker.dataSource = self
         cell.unitInputField.inputView = portionPicker
-        let attributedText = NSAttributedString(string: String(Int(entity.energy)) + "千卡")
+        let attributedText = NSAttributedString(string: String(Int(entity.energy)) + " kCal")
         let range = NSRange(location: 0, length: (String(Int(entity.energy))).count)
         let mutableAttributedText = NSMutableAttributedString(attributedString: attributedText)
         mutableAttributedText.addAttribute(.foregroundColor, value: calorieColor, range: range)
@@ -289,8 +290,6 @@ extension FoodDiaryDetailViewController: UITableViewDelegate, UITableViewDataSou
         //delete & like event
         cell.foodDelButton.tag = indexPath.row
         cell.foodDelButton.addTarget(self, action: #selector(onFoodLogDelete), for: .touchUpInside)
-//        cell.foodFavButton.tag = indexPath.row
-//        cell.foodFavButton.addTarget(self, action: #selector(onFoodFav), for: .touchUpInside)
         return cell
     }
     

@@ -33,7 +33,7 @@ class ProgressViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         requestForProgressHomeData()
         initMockUpData()
-        self.navigationController?.setNavigationBarHidden(false, animated: false)
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     func initMockUpData(){
@@ -47,12 +47,12 @@ class ProgressViewController: UIViewController {
         }
         for i in 0...3 {
             var log = Apisvr_BodyMeasurementLog()
-            log.title = "围度"
-            log.unit = "厘米"
+            log.title = "bodyMeasurement"
+            log.unit = "cm"
             log.value = Float(50 - i)
             self.progressData.bodyMeasurementLog.append(log)
         }
-        self.progressData.goal = "减脂"
+        self.progressData.goal = "Lose Weight"
         self.updateData()
     }
     
@@ -93,7 +93,7 @@ class ProgressViewController: UIViewController {
 //            return ChartDataEntry(x: Double(day)!, y: Double(val))
 //        }
         var values = [ChartDataEntry]()
-        for i in 0...4 {
+        for i in 0...6 {
             if progressData.weightLogs.count == 0 {
                 return
             }
@@ -105,8 +105,8 @@ class ProgressViewController: UIViewController {
             } else {
                 let val = progressData.weightLogs[i].value
                 let calendar = Calendar(identifier: .chinese)
-                var components = calendar.dateComponents([.year,.month,.day],from: Date(timeIntervalSince1970:TimeInterval(progressData.weightLogs[i].date)))
-                components.timeZone = TimeZone(abbreviation: "UTC")
+                let components = calendar.dateComponents([.year,.month,.day],from: Date(timeIntervalSince1970:TimeInterval(progressData.weightLogs[i].date)))
+//                components.timeZone = TimeZone(abbreviation: "UTC")
                 let date = Double(calendar.date(from: components)!.timeIntervalSince1970)
                 let data = ChartDataEntry(x: date, y: Double(val))
                 values.append(data)
@@ -142,7 +142,7 @@ extension ProgressViewController: UITableViewDelegate, UITableViewDataSource {
             }
             let last = self.progressData.weightLogs.count
             cell.weightLabel.text = String(self.progressData.weightLogs[last-1].value)
-            cell.recordTimeLabel.text = "上次记录\(DateUtil.CNDateFormatter(date: Date(timeIntervalSince1970: TimeInterval(self.progressData.weightLogs[last-1].date))))"
+            cell.recordTimeLabel.text = "Last Record \(DateUtil.EnDateFormatter(date: Date(timeIntervalSince1970: TimeInterval(self.progressData.weightLogs[last-1].date))))"
             cell.onWeightRecordBtnPressed = {
                 let targetVC = WeightInputAlertViewController()
                 targetVC.modalPresentationStyle = .overCurrentContext
@@ -164,18 +164,21 @@ extension ProgressViewController: UITableViewDelegate, UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "ProgressHomeGoalCell", for: indexPath) as? ProgressHomeGoalCell else {
                 return UITableViewCell()
             }
-            let currentWeight = self.progressData.weightLogs[0].value
-            cell.titleLabel.text = "目标: \(self.progressData.goal)"
-            cell.initialWeightLabel.text = "初始 \(self.progressData.initialWeight)公斤"
-            cell.targetWeightLabel.text = "目标 \(self.progressData.targetWeight)公斤"
-            cell.expctedDateLable.text = "预计\(self.progressData.remainingDays)天达到目标"
+            let count = self.progressData.weightLogs.count - 1
+            let currentWeight = self.progressData.weightLogs[count].value
+            cell.titleLabel.text = "goal: \(self.progressData.goal)"
+            let initialWeightStr = String(format: "%.1f", self.progressData.initialWeight)
+            let targetWeightStr = String(format: "%.1f", self.progressData.targetWeight)
+            cell.initialWeightLabel.text = "Initial Weight:\(initialWeightStr)kg"
+            cell.targetWeightLabel.text = "Target Goal: \(targetWeightStr)kg"
+            cell.expctedDateLable.text = "\(self.progressData.remainingDays) days left to reach goal"
             switch self.progressData.goal {
-            case "减脂":
-                cell.goalLabel.text = "已减脂\(self.progressData.initialWeight-currentWeight)公斤"
-            case "增肌":
-                cell.goalLabel.text = "已增肌\(currentWeight-self.progressData.initialWeight)公斤"
-            case "塑形":
-                cell.goalLabel.text = "维持体型中"
+            case "LOSE WEIGHT":
+                cell.goalLabel.text = "Currently lost \(self.progressData.initialWeight-currentWeight)kg"
+            case "GAIN MUSCLE":
+                cell.goalLabel.text = "Currently gain \(currentWeight-self.progressData.initialWeight)kg"
+            case "STAY FIT":
+                cell.goalLabel.text = "Keep Exercise, Stay fit"
             default: break
             }
             cell.goalProgressBar.progress = (currentWeight - progressData.initialWeight)/(progressData.targetWeight - progressData.initialWeight)
@@ -225,7 +228,10 @@ extension ProgressViewController: UITableViewDelegate, UITableViewDataSource {
     func requestAddWeight(weight:Float){
         var req = Apisvr_AddWeightLogReq()
         req.weight = weight
-        req.date = Int64(Date().timeIntervalSince1970)
+        let calendar = Calendar(identifier: .chinese)
+        let components = calendar.dateComponents([.year,.month,.day],from: Date())
+//        let timezoneOffset =  TimeZone.current.secondsFromGMT()
+        req.date = Int64(calendar.date(from: components)!.timeIntervalSince1970)
         do{
             guard let token = UserDefaults.standard.string(forKey: Constants.tokenKey) else {
                 return

@@ -28,6 +28,7 @@ class LoginViewController: BaseViewController{
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: false)
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
@@ -36,30 +37,33 @@ class LoginViewController: BaseViewController{
     }
     
     override func loadView() {
-        if loginType == .Password {
-            rootView = LoginView(isPasswordShow: true)
-            let rightView = UIBarButtonItem(title: "验证码登陆", style: .plain, target: self, action: #selector(toggleLoginType))
-            rightView.tintColor = .black
-            let font = UIFont(name: "PingFangSC-Regular", size: 14)
-            let attribute = [NSAttributedString.Key.font: font]
-            rightView.setTitleTextAttributes(attribute as [NSAttributedString.Key : Any], for: .normal)
-            self.navigationItem.rightBarButtonItem = rightView
-            rootView?.loginBtn.addTarget(self, action: #selector(onPasswordLoginPressed), for: .touchUpInside)
-        } else {
-            rootView = LoginView(isPasswordShow: false)
-            let rightView = UIBarButtonItem(title: "账号登陆", style: .plain, target: self, action: #selector(toggleLoginType))
-            rightView.tintColor = .black
-            let font = UIFont(name: "PingFangSC-Regular", size: 14)
-            let attribute = [NSAttributedString.Key.font: font]
-            rightView.setTitleTextAttributes(attribute as [NSAttributedString.Key : Any], for: .normal)
-            self.navigationItem.rightBarButtonItem = rightView
-            rootView?.loginBtn.addTarget(self, action: #selector(onSMSLoginBtnPressed), for: .touchUpInside)
-        }
+        rootView = LoginView(isPasswordShow: false)
+        rootView?.loginBtn.addTarget(self, action: #selector(onSMSLoginBtnPressed), for: .touchUpInside)
+//        if loginType == .Password {
+//            rootView = LoginView(isPasswordShow: true)
+//            let rightView = UIBarButtonItem(title: "验证码登陆", style: .plain, target: self, action: #selector(toggleLoginType))
+//            rightView.tintColor = .black
+//            let font = UIFont(name: "PingFangSC-Regular", size: 14)
+//            let attribute = [NSAttributedString.Key.font: font]
+//            rightView.setTitleTextAttributes(attribute as [NSAttributedString.Key : Any], for: .normal)
+//            self.navigationItem.rightBarButtonItem = rightView
+//            rootView?.loginBtn.addTarget(self, action: #selector(onPasswordLoginPressed), for: .touchUpInside)
+//        } else {
+//            rootView = LoginView(isPasswordShow: false)
+//            let rightView = UIBarButtonItem(title: "账号登陆", style: .plain, target: self, action: #selector(toggleLoginType))
+//            rightView.tintColor = .black
+//            let font = UIFont(name: "PingFangSC-Regular", size: 14)
+//            let attribute = [NSAttributedString.Key.font: font]
+//            rightView.setTitleTextAttributes(attribute as [NSAttributedString.Key : Any], for: .normal)
+//            self.navigationItem.rightBarButtonItem = rightView
+//            rootView?.loginBtn.addTarget(self, action: #selector(onSMSLoginBtnPressed), for: .touchUpInside)
+//        }
         view = rootView
-        self.rootView?.onForgetPwdBtnPressedEvent = {
-            let targetVC = ForgetPwdViewController()
-            self.navigationController?.pushViewController(targetVC, animated: true)
-        }
+        self.rootView?.forgetPwdBtn.isHidden = true
+//        self.rootView?.onForgetPwdBtnPressedEvent = {
+//            let targetVC = ForgetPwdViewController()
+//            self.navigationController?.pushViewController(targetVC, animated: true)
+//        }
     }
     
     @objc func toggleLoginType(){

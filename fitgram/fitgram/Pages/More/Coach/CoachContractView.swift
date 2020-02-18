@@ -125,7 +125,7 @@ class CoachContractView:UIView {
         confirmBtn.centerHorizontally()
         confirmBtn.backgroundColor = UIColor(red: 33/255, green: 43/255, blue: 54/255, alpha: 1)
         confirmBtn.layer.cornerRadius = 20
-        confirmBtn.setTitle("确认", for: .normal)
+        confirmBtn.setTitle("Confirm", for: .normal)
     }
     
     @objc func onCheckBtnPressed(){

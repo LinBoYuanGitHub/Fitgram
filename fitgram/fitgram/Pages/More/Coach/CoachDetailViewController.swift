@@ -10,21 +10,24 @@ import UIKit
 import Stevia
 import SwiftGRPC
 
-class CoachDetailViewController: UIViewController {
+class CoachDetailViewController: BaseViewController {
     public var planList = [Apisvr_Plan]()
     public var coach = Apisvr_TrainerInfo()
     
     public var rootView:CoachDetailView!
     
     override func viewDidLoad() {
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Scan", style: .plain, target: self, action: #selector(naviToScannerView))
+        self.navigationItem.rightBarButtonItem?.tintColor = .black
         on("INJECTION_BUNDLE_NOTIFICATION") {
             self.loadView()
         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: false)
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "扫描", style: .plain, target: self, action: #selector(naviToScannerView))
         self.requestMyCoach()
         self.requestMyExercise()
     }
@@ -109,12 +112,12 @@ extension CoachDetailViewController:UICollectionViewDataSource, UICollectionView
             return UICollectionViewCell()
         }
         let plan = self.planList[indexPath.row]
-        cell.dateLabel.text = DateUtil.CNDateFormatter(date: Date(timeIntervalSince1970: TimeInterval(plan.date)))
+        cell.dateLabel.text = DateUtil.EnDateFormatter(date: Date(timeIntervalSince1970: TimeInterval(plan.date)))
         cell.exerciseImage.kf.setImage(with: URL(string: plan.planCover.imageKey),placeholder: UIImage(named: "exerciseSample_image"))
         if plan.hasPlanCover{
             cell.exerciseNameLabel.text =  plan.planCover.exerciseName
-            cell.exerciseTimesLabel.text = String(plan.planCover.sets) + "组"
-            cell.exerciseDesLabel.text = "耗时\(plan.planCover.duration)分钟"
+            cell.exerciseTimesLabel.text = String(plan.planCover.sets) + "Set"
+            cell.exerciseDesLabel.text = "Duration \(plan.planCover.duration)min"
         }
         return cell
     }
@@ -132,7 +135,7 @@ extension CoachDetailViewController: BarcodeScannerDelegate {
     
     func onDectect(barcode: String) {
         let alertView = UIAlertController(title: "", message: barcode, preferredStyle: .alert)
-               let okAction = UIAlertAction(title: "确定", style: .default) { (_) in
+               let okAction = UIAlertAction(title: "Confirm", style: .default) { (_) in
                     print( barcode.components(separatedBy: "coach_id=").count)
                     if barcode.components(separatedBy: "coach_id=").count > 1{
                        DispatchQueue.main.async {

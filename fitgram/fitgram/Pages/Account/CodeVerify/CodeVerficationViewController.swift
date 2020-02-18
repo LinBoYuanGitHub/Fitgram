@@ -29,7 +29,7 @@ class CodeVerficationViewController: UIViewController {
     override func loadView() {
         rootView = CodeVerificationView()
         if !phoneNum.isEmpty && !phonePrefix.isEmpty {
-            self.rootView.DescLabel.text = "已发送 4 位验证码至 \(phonePrefix) \(phoneNum)"
+            self.rootView.DescLabel.text = "Please enter the verification code via \(phonePrefix) \(phoneNum)"
         }
         view = rootView
         self.rootView.confirmBtn.addTarget(self, action: #selector(sendToVerification), for: .touchUpInside)

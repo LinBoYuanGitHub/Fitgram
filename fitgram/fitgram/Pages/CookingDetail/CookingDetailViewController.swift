@@ -14,10 +14,12 @@ class CookingDetailViewController: UIViewController {
     var stepList = [StepModel]()
     var viewPager:ViewPager? //have to set the viewpager as a global virable
     //dismiss button
-    var closeBtn = UIButton(frame: CGRect(x: 0, y: 42, width: 64, height: 64))
+    var closeBtn = UIButton(frame: CGRect(x: 0, y: 12, width: 64, height: 64))
     var recipeId = 0
     var mealType:Apisvr_MealType = .breakfast
     var foodImage = UIImage()
+    
+    public var onFoodLogCallBack:(UIViewController) -> () = { vc in }
     
     override func loadView() {
         let newView = UIView()
@@ -74,16 +76,16 @@ extension CookingDetailViewController: ViewPagerDataSource, ViewPagerDelegate{
     func viewControllerAtPosition(position: Int) -> UIViewController {
         let pageController  = CookingStepViewController()
         if position == stepList.count {
-            let stepText = "真棒！您又向健身目标靠近了一步，开始打卡记录您的饮食吧。"
-            let stepImageUrl = stepList[0].stepImageUrl
+            let stepText = "Fantastic! You are a step closer to your fitness goal. Start logging your food to improve your eating haits."
+//            let stepImageUrl = stepList[0].stepImageUrl
             pageController.isLast  = true
-            pageController.imageUrl = stepImageUrl
+            pageController.image = foodImage
             pageController.stepText = stepText
             pageController.checkBtn.addTarget(self, action: #selector(saveToFoodDiary), for: .touchUpInside)
         } else {
             let stepText = stepList[position].stepText
-            let stepImageUrl = stepList[position].stepImageUrl
-            pageController.imageUrl = stepImageUrl
+//            let stepImageUrl = stepList[position].stepImageUrl
+//            pageController.imageUrl = stepImageUrl
             pageController.stepText = stepText
         }
         return pageController
@@ -91,9 +93,12 @@ extension CookingDetailViewController: ViewPagerDataSource, ViewPagerDelegate{
     
     
     @objc func saveToFoodDiary() {
+        //dimiss self
+        self.dismiss(animated: true, completion: nil)
         if LoginDataManager.shared.getUserStatus() == .unknownUserType {
             let targetVC = LoginViewController()
-            self.navigationController?.pushViewController(targetVC, animated: true)
+            self.onFoodLogCallBack(targetVC)
+//            parentVC.navigationController?.pushViewController(targetVC, animated: true)
         } else {
             do{
                 var req = Apisvr_GetFoodLogDetailReq()
@@ -112,7 +117,7 @@ extension CookingDetailViewController: ViewPagerDataSource, ViewPagerDelegate{
                             targetVC.foodImage = self.foodImage
                             targetVC.foodDiaryList = resp!.foodLogs
                             targetVC.mealLogList = FoodDiaryDataManager.shared.convertFoodLogToInfo(foodDiaryList:  resp!.foodLogs)
-                            self.navigationController?.pushViewController(targetVC, animated: true)
+                            self.onFoodLogCallBack(targetVC)
                         }
                     }
                 }
@@ -128,7 +133,7 @@ extension CookingDetailViewController: ViewPagerDataSource, ViewPagerDelegate{
         for index in 0...(stepList.count) { // include last page
             var tab:ViewPagerTab? = nil
             if (index == stepList.count){
-                tab = ViewPagerTab(title: "完成", image: UIImage(named: "tinyLike_white"))
+                tab = ViewPagerTab(title: "Done", image: UIImage(named: "tinyLike_white"))
             } else {
                 tab = ViewPagerTab(title: "0"+String(index+1), image: nil)
             }

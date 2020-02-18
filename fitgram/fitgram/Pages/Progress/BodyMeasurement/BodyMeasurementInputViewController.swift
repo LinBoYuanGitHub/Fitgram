@@ -20,8 +20,8 @@ class BodyMeasurementInputViewController: BaseViewController {
         inputTableView.delegate = self
         inputTableView.dataSource = self
         inputTableView.tableFooterView = UIView()
-        self.title = "围度记录"
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "确认", style: .plain, target: self, action: #selector(onMeasurementBatchRecord))
+        self.title = "BodyMeasurement Record"
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Confirm", style: .plain, target: self, action: #selector(onMeasurementBatchRecord))
     }
     
     @objc func onMeasurementBatchRecord(){

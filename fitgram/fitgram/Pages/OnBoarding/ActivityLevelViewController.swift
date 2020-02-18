@@ -25,20 +25,20 @@ class ActivityLevelViewController: BaseViewController{
         self.view.backgroundColor = .white
         self.setUpProgressView()
         buttons = [activityBtn_1,activityBtn_2,activityBtn_3,activityBtn_4]
-        self.titleLabel.text = "你的日常运动量"
+        self.titleLabel.text = "What’s your daily activity level?"
         self.titleLabel.font  = UIFont(name: "PingFangSC-Medium", size: 20)
         self.titleLabel.textAlignment = .center
         //confirm button
-        confirmBtn.setTitle("下一步", for: .normal)
+        confirmBtn.setTitle("Next", for: .normal)
         confirmBtn.layer.cornerRadius = 10
         confirmBtn.layer.masksToBounds = true
         confirmBtn.backgroundColor = UIColor(red: 252/255, green: 200/255, blue: 45/255, alpha: 1)
         confirmBtn.addTarget(self, action: #selector(nextStep), for: .touchUpInside)
         
-        setUpActButtons(targetBtn: activityBtn_1, titleText: "卧床休息", tag:1)
-        setUpActButtons(targetBtn: activityBtn_2, titleText: "轻度,静坐少动", tag:2)
-        setUpActButtons(targetBtn: activityBtn_3, titleText: "中度,常常走动", tag:3)
-        setUpActButtons(targetBtn: activityBtn_4, titleText: "重度,负重", tag:4)
+        setUpActButtons(targetBtn: activityBtn_1, titleText: "Sedentary", tag:1)
+        setUpActButtons(targetBtn: activityBtn_2, titleText: "Light activity", tag:2)
+        setUpActButtons(targetBtn: activityBtn_3, titleText: "Moderate activity", tag:3)
+        setUpActButtons(targetBtn: activityBtn_4, titleText: "Extremely active", tag:4)
         self.view.addSubview(titleLabel)
         self.view.addSubview(confirmBtn)
     }

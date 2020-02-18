@@ -120,12 +120,12 @@ class CoachInfoView:UIView {
         bottomLineView.backgroundColor = .lightGray
         bottomLineView.height(1)
         //service duration
-        serviceDurationLabel.text = "服务期限"
+        serviceDurationLabel.text = "Service Term"
         serviceDurationLabel.font = UIFont(name: "PingFangSC-Regular", size: 17)
-        startTitleLabel.text = "开始日期"
+        startTitleLabel.text = "Service Start Date"
         startTitleLabel.font = UIFont(name: "PingFangSC-Regular", size: 14)
         endTitleLabel.font =  UIFont(name: "PingFangSC-Regular", size: 14)
-        endTitleLabel.text = "结束日期"
+        endTitleLabel.text = "Service End Date"
         startDateLabel.font = UIFont(name: "PingFangSC-Regular", size: 14)
         startDateLabel.textColor = .lightGray
         endDateLabel.font = UIFont(name: "PingFangSC-Regular", size: 14)

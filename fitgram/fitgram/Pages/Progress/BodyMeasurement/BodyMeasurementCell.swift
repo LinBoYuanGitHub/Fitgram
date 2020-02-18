@@ -36,9 +36,10 @@ class BodyMeasurementCell:UITableViewCell {
         )
         bodyMeasurementTitle.font = UIFont(name: "PingFangSC-semibold", size: 14)
         bodyWeightChart.xAxis.labelPosition = .bottom
+        bodyWeightChart.xAxis.valueFormatter = DateXAxisFormatter()
         recordWeightBtn.centerHorizontally()
         recordWeightBtn.width(125)
-        recordWeightBtn.setTitle("记录", for: .normal)
+        recordWeightBtn.setTitle("Record", for: .normal)
         recordWeightBtn.backgroundColor = .black
         recordWeightBtn.setTitleColor(.white, for: .normal)
         recordWeightBtn.layer.cornerRadius = 15

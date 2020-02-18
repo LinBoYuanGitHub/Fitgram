@@ -43,13 +43,16 @@ class ProgressView:UIView {
             progressHomeTableView
         )
         layout(
-            0,
+            -48,
             |progressHomeTableView|,
             0
         )
-        self.backgroundColor = .white
+        self.backgroundColor = chartBottomColor
+        progressHomeTableView.backgroundColor = chartBottomColor
         progressHomeTableView.tableHeaderView = chartContainer
-        progressHomeTableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 20))
+        let footerView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 20))
+        footerView.backgroundColor = .white
+        progressHomeTableView.tableFooterView = footerView
         //line chart config
         lineChartView.gridBackgroundColor = .white
         lineChartView.setVisibleXRangeMaximum(5)
@@ -60,15 +63,19 @@ class ProgressView:UIView {
         lineChartView.xAxis.labelTextColor = .white
         lineChartView.xAxis.labelPosition = .bottom
         lineChartView.xAxis.labelCount = 5
-        lineChartView.xAxis.valueFormatter = DateXAxisFormatter()
+        lineChartView.xAxis.valueFormatter = DateXAxisFormatter()//NoStyleFormatter
+        lineChartView.leftAxis.valueFormatter = NoZeroValueFormatter()
+        lineChartView.rightAxis.valueFormatter = NoZeroValueFormatter()
 //        lineChartView.xAxis.axisMinimum = 5
 //        lineChartView.xAxis.axisMaximum = 5
         lineChartView.leftAxis.gridColor = .white
         lineChartView.leftAxis.axisLineColor = .clear
         lineChartView.leftAxis.labelTextColor = .white
+        lineChartView.leftAxis.axisMinimum = 5
         lineChartView.rightAxis.gridColor = .white
         lineChartView.rightAxis.axisLineColor = .clear
         lineChartView.rightAxis.labelTextColor = .white
+        lineChartView.rightAxis.axisMinimum = 5
         lineChartView.legend.textColor = .white
         chartContainer.addSubview(lineChartView)
 //        let gardientColor = CAGradientLayer()

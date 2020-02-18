@@ -53,10 +53,10 @@ class CodeVerificationView: UIView{
         verficationCodeTextField.focus()
         verficationLabel.font = UIFont(name: "PingFangSC-Medium", size: 30)
         verficationLabel.textColor = .black
-        verficationLabel.text = "输入验证码"
+        verficationLabel.text = "2-Step Verification"
         DescLabel.font = UIFont(name: "PingFangSC-Medium", size: 14)
         DescLabel.textColor = .black
-        confirmBtn.setTitle("确认", for: .normal)
+        confirmBtn.setTitle("CONFIRM", for: .normal)
         confirmBtn.backgroundColor  = UIColor(red: 252/255, green: 200/255, blue: 45/255, alpha: 1)
         confirmBtn.setBackgroundColor(color: UIColor(red: 252/255, green: 200/255, blue: 45/255, alpha: 1), forState: .normal)
         confirmBtn.setBackgroundColor(color: UIColor(red: 252/255, green: 200/255, blue: 45/255, alpha: 0.5), forState: .disabled)

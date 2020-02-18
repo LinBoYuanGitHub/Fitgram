@@ -15,7 +15,7 @@ class RecipeDetailView:UIView, UITableViewDelegate {
     var headerView:RecipeHeaderView! //container inside the UIView
     let footerView = RecipeFooterView()
     let headerImage = UIImageView()
-    let recipeTitle = UILabel(frame: CGRect(x:0,y:300,width:UIScreen.main.bounds.size.width,height:50))
+    let recipeTitle = UILabel(frame: CGRect(x:16,y:300,width:UIScreen.main.bounds.size.width-32,height:60))
     let recipeTitleShadowContainer = UIView(frame: CGRect(x:0,y:138,width:UIScreen.main.bounds.size.width,height:100))
     let playButton = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
     let recipeDetailTable = UITableView.init(frame: CGRect.zero, style: .plain)
@@ -73,6 +73,7 @@ class RecipeDetailView:UIView, UITableViewDelegate {
         recipeTitle.font = UIFont(name: "ArialRoundedMTBold", size: 25)
         recipeTitle.textAlignment = .center
         recipeTitle.textColor = UIColor.white
+        recipeTitle.numberOfLines = 2
         headerView.emptyViewHead.addSubview(recipeTitle)
         //play button
         let playImage = UIImage(named: "playbutton_white")?.resizeImageWith(newSize: CGSize(width: 100, height: 100))

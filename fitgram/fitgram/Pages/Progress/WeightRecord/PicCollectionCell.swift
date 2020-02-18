@@ -23,23 +23,27 @@ class PicCollectionCell: UICollectionViewCell{
         super.init(frame: frame)
         sv(
             bodyShapePicImageView,
-            weightLabel,
+//            weightLabel,
             dateLabel
         )
         layout(
-            |-bodyShapePicImageView-|,
-            2,
-            |-0-weightLabel-dateLabel-0-|
+            0,
+            |-0-bodyShapePicImageView-0-| ~ 150,
+            10,
+            |-0-dateLabel-0-| ~ 10
         )
         bodyShapePicImageView.contentMode = .scaleAspectFill
         bodyShapePicImageView.width(150)
         bodyShapePicImageView.height(150)
         bodyShapePicImageView.layer.cornerRadius = 10
         bodyShapePicImageView.layer.masksToBounds = true
-        weightLabel.textColor = .black
-        weightLabel.font = UIFont(name: "PingFangSC-Light", size: 11)
+//        weightLabel.textColor = .black
+//        weightLabel.font = UIFont(name: "PingFangSC-Light", size: 11)
+//        weightLabel.textAlignment = .right
         dateLabel.font = UIFont(name: "PingFangSC-Light", size: 11)
+        dateLabel.centerHorizontally()
         dateLabel.textColor = .lightGray
+        dateLabel.textAlignment = .center
     }
     
     

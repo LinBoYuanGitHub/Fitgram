@@ -78,7 +78,7 @@ class LoginView:UIView {
         //attribute setting
         titleLabel.font = UIFont(name: "PingFangSC-Regular", size: 36)
         titleLabel.textColor = .black
-        titleLabel.text = "手机登录"
+        titleLabel.text = "Login"
         
         phoneContainer.backgroundColor = .lightGray
         phoneContainer.layer.cornerRadius = 20
@@ -91,7 +91,7 @@ class LoginView:UIView {
         passwordContainer.alpha = 0.35
 //        passwordContainer.isHidden = true
         
-        loginBtn.setTitle("登陆", for: .normal)
+        loginBtn.setTitle("LOGIN", for: .normal)
         loginBtn.backgroundColor  =  UIColor(red: 252/255, green: 200/255, blue: 45/255, alpha: 1)
         loginBtn.layer.cornerRadius = 20
         loginBtn.layer.masksToBounds = true
@@ -101,7 +101,7 @@ class LoginView:UIView {
         loginBtn.isEnabled = true
         
         phoneNumTextField.font = UIFont(name: "PingFangSC-Regular", size: 17)
-        phoneNumTextField.attributedPlaceholder =  NSAttributedString(string: "输入手机号码", attributes: [NSAttributedString.Key.foregroundColor : UIColor.white])
+        phoneNumTextField.attributedPlaceholder =  NSAttributedString(string: "Phone Number", attributes: [NSAttributedString.Key.foregroundColor : UIColor.white])
         phoneNumTextField.textAlignment = .left
         phoneNumTextField.textColor = .white
         phoneNumTextField.keyboardType = .decimalPad
@@ -113,18 +113,18 @@ class LoginView:UIView {
         phonePrefixTextField.rightView = rightView
         phonePrefixTextField.rightViewMode = .always
         
-        phonePwdTextField.font = UIFont(name: "PingFangSC-Regular", size: 17)
-        phonePwdTextField.attributedPlaceholder =  NSAttributedString(string: "输入密码", attributes: [NSAttributedString.Key.foregroundColor : UIColor.white])
-        phonePwdTextField.isSecureTextEntry = true
-        phonePwdTextField.textAlignment = .left
-        phonePwdTextField.textColor = .white
+//        phonePwdTextField.font = UIFont(name: "PingFangSC-Regular", size: 17)
+//        phonePwdTextField.attributedPlaceholder =  NSAttributedString(string: "输入密码", attributes: [NSAttributedString.Key.foregroundColor : UIColor.white])
+//        phonePwdTextField.isSecureTextEntry = true
+//        phonePwdTextField.textAlignment = .left
+//        phonePwdTextField.textColor = .white
         
         forgetPwdBtn.centerHorizontally()
-        let titleString = NSMutableAttributedString(string: "忘记密码")
+        let titleString = NSMutableAttributedString(string: "forget password")
         titleString.addAttribute(.underlineStyle, value: NSUnderlineStyle.single.rawValue, range: NSRange(location: 0, length: 4))
         titleString.addAttribute(.foregroundColor, value: UIColor.black, range: NSRange(location: 0, length: 4))
         forgetPwdBtn.setAttributedTitle(titleString, for: .normal)
-        forgetPwdBtn.setTitle("忘记密码", for: .normal)
+        forgetPwdBtn.setTitle("forget password", for: .normal)
         forgetPwdBtn.titleLabel?.font = UIFont(name: "PingFangSC-Medium", size: 14)
         forgetPwdBtn.addTarget(self, action: #selector(onForgetPwdBtnPressed), for: .touchUpInside)
     }

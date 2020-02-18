@@ -48,8 +48,8 @@ extension NutritionPanelView: UICollectionViewDataSource,UICollectionViewDelegat
         }
         switch indexPath.row {
         case 0:
-            cell.nutriTextLabel.text = "能量"
-            cell.statsLabel.text = String(Int(nutrientObj.energyIntake))+"/"+String(Int(nutrientObj.energyRecommend)) + "千卡"
+            cell.nutriTextLabel.text = "Energy"
+            cell.statsLabel.text = String(Int(nutrientObj.energyIntake))+"/"+String(Int(nutrientObj.energyRecommend)) + "kCal"
             if nutrientObj.energyRecommend == 0{
                  cell.percentageLabel.text = "0%"
             } else {
@@ -57,8 +57,8 @@ extension NutritionPanelView: UICollectionViewDataSource,UICollectionViewDelegat
             }
             break;
         case 1:
-            cell.nutriTextLabel.text = "脂肪"
-            cell.statsLabel.text = String(Int(nutrientObj.fatIntake))+"/"+String(Int(nutrientObj.fatRecommend)) + "克"
+            cell.nutriTextLabel.text = "Fat"
+            cell.statsLabel.text = String(Int(nutrientObj.fatIntake))+"/"+String(Int(nutrientObj.fatRecommend)) + "g"
             if nutrientObj.fatRecommend == 0{
                 cell.percentageLabel.text = "0%"
             } else {
@@ -66,8 +66,8 @@ extension NutritionPanelView: UICollectionViewDataSource,UICollectionViewDelegat
             }
             break;
         case 2:
-            cell.nutriTextLabel.text = "碳水化合物"
-            cell.statsLabel.text = String(Int(nutrientObj.carbohydrateIntake))+"/"+String(Int(nutrientObj.carbohydrateRecommend)) + "克"
+            cell.nutriTextLabel.text = "Carbs"
+            cell.statsLabel.text = String(Int(nutrientObj.carbohydrateIntake))+"/"+String(Int(nutrientObj.carbohydrateRecommend)) + "g"
             if nutrientObj.carbohydrateRecommend == 0{
                 cell.percentageLabel.text = "0%"
             } else {
@@ -75,8 +75,8 @@ extension NutritionPanelView: UICollectionViewDataSource,UICollectionViewDelegat
             }
             break;
         case 3:
-            cell.nutriTextLabel.text = "蛋白质"
-            cell.statsLabel.text = String(Int(nutrientObj.proteinIntake))+"/"+String(Int(nutrientObj.proteinRecommend)) + "克"
+            cell.nutriTextLabel.text = "Protein"
+            cell.statsLabel.text = String(Int(nutrientObj.proteinIntake))+"/"+String(Int(nutrientObj.proteinRecommend)) + "g"
             if nutrientObj.proteinRecommend == 0{
                 cell.percentageLabel.text = "0%"
             } else {
@@ -89,7 +89,7 @@ extension NutritionPanelView: UICollectionViewDataSource,UICollectionViewDelegat
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 84, height: 100)
+        return CGSize(width: 84, height: 105)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

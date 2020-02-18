@@ -19,7 +19,7 @@ class WeightViewController: UIViewController {
     override func viewDidLoad() {
         self.setUpProgressView()
         self.view.backgroundColor = .white
-        self.titleLabel.text = "你的体重"
+        self.titleLabel.text = "How much do you weigh?"
         self.titleLabel.font  = UIFont(name: "PingFangSC-Medium", size: 20)
         self.titleLabel.textAlignment = .center
         

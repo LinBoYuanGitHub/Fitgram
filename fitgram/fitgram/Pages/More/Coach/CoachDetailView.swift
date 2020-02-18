@@ -69,8 +69,8 @@ class CoachDetailView: UIView {
         coachViewContainer.layer.shadowOpacity = 0.2
         coachViewContainer.layer.shadowRadius = 10
         coachViewContainer.backgroundColor = UIColor.white
-        coachTitleLabel.text = "我的教练"
-        exerciseTitleLabel.text = "我的运动"
+        coachTitleLabel.text = "My Coach"
+        exerciseTitleLabel.text = "My Exercise"
         coachPortraitImageView.width(65)
         coachPortraitImageView.height(65)
         coachPortraitImageView.image = UIImage(named: "coachDefault_icon")

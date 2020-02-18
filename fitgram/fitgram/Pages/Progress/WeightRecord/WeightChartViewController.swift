@@ -20,7 +20,7 @@ class WeightChartViewController: BaseViewController {
         on("INJECTION_BUNDLE_NOTIFICATION") {
             self.loadView()
         }
-        self.title = "体重"
+        self.title = "Weight"
         self.requestForWeightChartData()
         self.requestForBodyShapePhoto()
     }
@@ -32,6 +32,11 @@ class WeightChartViewController: BaseViewController {
         self.rootView.dateTab.addTarget(self, action: #selector(onTimeTabChange), for: .valueChanged)
         self.rootView.weightCollectionView.delegate = self
         self.rootView.weightCollectionView.dataSource = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     @objc func onTimeTabChange(sender:UISegmentedControl){
@@ -59,7 +64,9 @@ class WeightChartViewController: BaseViewController {
             if !imageKey.isEmpty{
                 self.sendBodyShapeImage(imageKey:imageKey)
             }
-            self.requestAddWeight(weight: weight)
+            if weight != 0 {
+                self.requestAddWeight(weight: weight)
+            }
         }
         self.present(targetVC, animated: true, completion: nil)
     }
@@ -140,12 +147,12 @@ class WeightChartViewController: BaseViewController {
         for data in weightDatas {
             if data.value != 0 {
                 let val = Int(data.value)
-                let date = data.time
-                let dayFormatter = DateFormatter()
-                dayFormatter.dateFormat = "dd"
-                let day = dayFormatter.string(from: Date(timeIntervalSince1970: TimeInterval(date)))
+//                let date = data.time
+//                let dayFormatter = DateFormatter()
+//                dayFormatter.dateFormat = "dd"
+//                let day = dayFormatter.string(from: Date(timeIntervalSince1970: TimeInterval(date)))
                 valueColors.append(.white)
-                values.append(ChartDataEntry(x: Double(day)!, y: Double(val)))
+                values.append(ChartDataEntry(x: Double(data.time), y: Double(val)))
             }
         }
 //        let values = (0..<weightDatas.count).map { (i) -> ChartDataEntry in
@@ -182,6 +189,9 @@ class WeightChartViewController: BaseViewController {
             try ProgressDataManager.shared.client.getBodyShape(req, metadata: metadata) { (resp, result) in
                 if result.statusCode == .ok{
                     self.bodyShapes = resp!.bodyShapes
+                    DispatchQueue.main.async {
+                         self.rootView.weightCollectionView.reloadData()
+                    }
                 }
             }
         } catch {
@@ -201,7 +211,7 @@ extension WeightChartViewController: UICollectionViewDelegate,UICollectionViewDa
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PicCollectionCell", for: indexPath) as? PicCollectionCell else {
             return UICollectionViewCell()
         }
-        cell.bodyShapePicImageView.kf.setImage(with: URL(string: bodyShapes[indexPath.row].photoURL))
+        cell.bodyShapePicImageView.kf.setImage(with: URL(string: bodyShapes[indexPath.row].photoURL), placeholder: UIImage(named: "coachSamplePortrait"))
         let dateStr = DateUtil.EnDateFormatter(date: Date(timeIntervalSince1970: TimeInterval(bodyShapes[indexPath.row].date)))
         cell.dateLabel.text = String(dateStr)
         return cell

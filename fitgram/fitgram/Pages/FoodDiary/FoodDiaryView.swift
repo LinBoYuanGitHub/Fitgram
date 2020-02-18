@@ -40,7 +40,7 @@ class FoodDiaryView: UIView{
         rightDateArrow.addTarget(self, action: #selector(onRightArrowPressed), for: .touchUpInside)
         //get today
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MM-dd"
+        dateFormatter.dateFormat = "dd/MM"
         let title = dateFormatter.string(from: Date())
         dateBtn.setTitle(title, for: .normal)
         leftDateArrow.setImage(UIImage(named: "backbutton_black"), for: .normal)

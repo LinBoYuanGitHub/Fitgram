@@ -40,17 +40,17 @@ class RecommendationDataManager {
                     for item in mealPlan.breakfast{
                         breakFastRecipeList.append(self.mealPlanItem2RecipeItem(item:item))
                     }
-                    let breakfastEntity = RecommendationModel(mealTitle: "早餐", recipeList: breakFastRecipeList, selected_Pos: 0)
+                    let breakfastEntity = RecommendationModel(mealTitle: "Breakfast", recipeList: breakFastRecipeList, selected_Pos: 0)
                     var lunchRecipeList = [RecipeModel]()
                     for item in mealPlan.lunch {
                         lunchRecipeList.append(self.mealPlanItem2RecipeItem(item:item))
                     }
-                    let lunchEntity = RecommendationModel(mealTitle: "午餐", recipeList: lunchRecipeList, selected_Pos: 0)
+                    let lunchEntity = RecommendationModel(mealTitle: "Lunch", recipeList: lunchRecipeList, selected_Pos: 0)
                     var dinnerRecipeList = [RecipeModel]()
                     for item in mealPlan.dinner {
                         dinnerRecipeList.append(self.mealPlanItem2RecipeItem(item:item))
                     }
-                    let dinnerEntity = RecommendationModel(mealTitle: "晚餐", recipeList: dinnerRecipeList, selected_Pos: 0)
+                    let dinnerEntity = RecommendationModel(mealTitle: "Dinner", recipeList: dinnerRecipeList, selected_Pos: 0)
                     completition([breakfastEntity,lunchEntity,dinnerEntity])
                 } else {
                     //return error message
@@ -65,12 +65,13 @@ class RecommendationDataManager {
         var recipe = RecipeModel()
         recipe.recipeId = Int(item.recipeID)
         recipe.recipeCookingDuration =  Int(item.cookingTime)
-        recipe.recipeCalorie = "\(Int(item.nutrient.energy))千卡"
+        recipe.recipeCalorie = "\(Int(item.nutrient.energy)) kCal"
         recipe.recipeTitle = item.recipeName
         recipe.videoCoverImageUrl = item.sampleImgURL
         recipe.recipeVideoUrl = item.videoURL
         recipe.nutrientData = item.nutrient
         recipe.isLike = item.isFavourite
+        recipe.isChecked = item.isChecked
         return recipe
     }
     
@@ -93,6 +94,7 @@ class RecommendationDataManager {
                 recipe.recipeVideoUrl = resp!.videoURL
                 recipe.nutrientData = resp!.nutrient
                 recipe.isLike = resp!.isFavourite
+                recipe.isChecked = resp!.isChecked
                 //ingrdient part
                 for ingredient in resp!.ingredient {
                     var ingredientModel = IngredientModel()

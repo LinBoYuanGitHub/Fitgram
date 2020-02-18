@@ -11,7 +11,7 @@ import Stevia
 
 class RecipeDetailTableCell:UITableViewCell{
     public let recipeStepLabel = UILabel()
-    public let recipeStepImage = UIImageView()
+//    public let recipeStepImage = UIImageView()
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -20,12 +20,10 @@ class RecipeDetailTableCell:UITableViewCell{
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         sv(
-            recipeStepImage,
+//            recipeStepImage,
             recipeStepLabel
         )
         layout(
-            0,
-            |recipeStepImage| ~ UIScreen.main.bounds.width,
             8,
             |-16-recipeStepLabel-16-|,
             0
@@ -35,7 +33,7 @@ class RecipeDetailTableCell:UITableViewCell{
         recipeStepLabel.centerVertically()
         recipeStepLabel.centerHorizontally()
         //image setting
-        recipeStepImage.contentMode = .scaleAspectFit
+//        recipeStepImage.contentMode = .scaleAspectFit
     }
 }
 

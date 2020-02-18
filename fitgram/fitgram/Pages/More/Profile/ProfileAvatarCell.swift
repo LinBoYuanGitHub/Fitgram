@@ -35,7 +35,10 @@ class ProfileAvatarCell:UITableViewCell {
         profileAvatarView.width(77)
         profileAvatarView.height(77)
         profileAvatarView.contentMode = .scaleAspectFit
+//        profileAvatarView.layer.cornerRadius =  profileAvatarView.frame.width/2
+//        profileAvatarView.clipsToBounds = true
         profileAvatarView.image = UIImage(named: "profile_avatar")
+        self.clipsToBounds = true
     }
     
 }

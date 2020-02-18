@@ -48,7 +48,8 @@ class RecommendHomeView:UIView {
 //        }
         toGroceryListButton.backgroundColor = .black
         toGroceryListButton.layer.cornerRadius = 20
-        toGroceryListButton.setTitle("食材清单", for: .normal)
+        toGroceryListButton.setTitle("Shopping List", for: .normal)
+        toGroceryListButton.isHidden = true
         footerContainer.addSubview(toGroceryListButton)
         recommendationMainTableView.tableFooterView = footerContainer
     }

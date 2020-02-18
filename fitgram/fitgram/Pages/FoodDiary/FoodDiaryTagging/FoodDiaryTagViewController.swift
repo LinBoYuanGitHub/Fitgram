@@ -29,8 +29,8 @@ class FoodDiaryTagViewController:BaseViewController {
             self.loadView()
         }
         self.navigationItem.hidesBackButton = true
-        self.navigationItem.leftBarButtonItem  = UIBarButtonItem(image: UIImage(imageLiteralResourceName: "backbutton_black"), style: .plain, target: self, action: #selector(onBackPressed))
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "下一步", style: .plain, target: self, action:  #selector(requestForFoodDetail))
+//        self.navigationItem.leftBarButtonItem  = UIBarButtonItem(image: UIImage(imageLiteralResourceName: "backbutton_black"), style: .plain, target: self, action: #selector(onBackPressed))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", style: .plain, target: self, action:  #selector(requestForFoodDetail))
         rootView.didAddTag = { tagX,tagY in
             self.getRecognitionResult(tagX: tagX, tagY: tagY)
             //navigate page to text search
@@ -39,10 +39,6 @@ class FoodDiaryTagViewController:BaseViewController {
 //            targetVC.textSearchSuggestedResult = self.textSearchSuggestedResult
 //            self.navigationController?.pushViewController(targetVC, animated: true)
         }
-    }
-    
-    @objc func onBackPressed() {
-        self.navigationController?.popViewController(animated: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -85,7 +81,7 @@ class FoodDiaryTagViewController:BaseViewController {
     
     @objc func requestForFoodDetail() {
         if foodTagList.count == 0 {
-            showAlertMessage(msg: "请先标记您的食物～")
+            showAlertMessage(msg: "Please tag your food item before next step～")
             return
         }
         do{
@@ -146,9 +142,10 @@ extension FoodDiaryTagViewController: TextSearchDelegate {
         let targetCircleImage = self.rootView.foodTagImageList.last
         let targetView = self.rootView.foodTagList.last
         targetLabel?.text = item.searchItemName
-        targetView?.frame.size = CGSize(width: 20*item.searchItemName.count + 10, height: 75)
-        targetLabel?.frame.size = CGSize(width: 20*item.searchItemName.count + 10, height: 35)
-        targetCircleImage?.frame.origin.x = CGFloat(10*item.searchItemName.count - 12) //put the circle in the center of the view
+        let singleFontWidth = 10
+        targetView?.frame.size = CGSize(width: singleFontWidth*item.searchItemName.count + 10, height: 75)
+        targetLabel?.frame.size = CGSize(width: singleFontWidth*item.searchItemName.count + 10, height: 35)
+        targetCircleImage?.frame.origin.x = CGFloat(singleFontWidth*item.searchItemName.count/2 - 12) //put the circle in the center of the view
     }
     
     func onCancelTextSearchAction() {

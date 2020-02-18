@@ -106,10 +106,10 @@ class MoreView: UIView {
         coachMemberIcon.centerVertically()
         coachMemberIcon.image = UIImage(named: "more_cardIcon")
         
-        coachMemberLabel.text = "会员"
+        coachMemberLabel.text = "Member"
         coachMemberLabel.font = UIFont(name: "PingFangSC-Regular", size: 14)
         coachMemberLabel.centerHorizontally()
-//        coachMemberLabel.width(30)
+        coachMemberLabel.width(100)
 //        coachMemberLabel.height(20)
         
 //        nutriContainer.height(80)
@@ -138,8 +138,8 @@ class MoreView: UIView {
 //        let nutriTapAction = UITapGestureRecognizer(target: self, action: #selector(onNutriViewTap))
 //        nutriContainer.addGestureRecognizer(nutriTapAction)
         //like part
-        likeSegmentedControl.insertSegment(withTitle: "收藏", at: 0, animated: false)
-        likeSegmentedControl.insertSegment(withTitle: "餐厅", at: 1, animated: false)
+        likeSegmentedControl.insertSegment(withTitle: "Favourite", at: 0, animated: false)
+        likeSegmentedControl.insertSegment(withTitle: "Restaurant", at: 1, animated: false)
         likeSegmentedControl.selectedSegmentIndex = 0
 //        let yellowLineColor = UIColor(red: 252/255, green: 200/255, blue: 45/255, alpha: 1)
         likeSegmentedControl.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.lightGray,

@@ -13,12 +13,12 @@ import SwiftGRPC
 class ProfileViewController: BaseViewController{
     var rootView = ProfileView()
 //    var profile = ProfileModel()
-    let profileFieldList = ["性别","出生年份","身高","体重","日常运动量"]
-    let fixSectionFieldList = ["头像","昵称"]
-    let genderValueList = ["女","男"]
+    let profileFieldList = ["Gender","Birth Year","Height","Weight","Daily activity level"]
+    let fixSectionFieldList = ["Avatar","Nickname"]
+    let genderValueList = ["Female","Male"]
     let birthyearValueList = [Int]()
-    let activityLevelValueList = ["卧床休息","轻度,静坐少动","中度,常常站立走动","重度,负重"]
-    let sectionTitle = "个人信息"
+    let activityLevelValueList = ["Sedentary","Light activity","Moderate activity","Extremely active"]
+    let sectionTitle = "Personal Infomation"
     
     let genderPicker = UIPickerView()
     let birthdayPicker = UIPickerView()
@@ -43,7 +43,7 @@ class ProfileViewController: BaseViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.topItem?.title = "我的"
+        self.navigationController?.navigationBar.topItem?.title = "My Profile"
         genderPicker.delegate = self
         genderPicker.dataSource = self
         birthdayPicker.delegate = self
@@ -54,10 +54,11 @@ class ProfileViewController: BaseViewController{
         on("INJECTION_BUNDLE_NOTIFICATION") {
             self.loadView()
         }
-        self.requestProfileData()
+//        self.requestProfileData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
@@ -91,6 +92,9 @@ class ProfileViewController: BaseViewController{
         do{
             let metaData = try Metadata(["authorization": "Token " + token])
             var request = Apisvr_UpdateUserProfileReq()
+            if let nickNameCell = self.rootView.profileTableView.cellForRow(at: IndexPath(row: 1, section: 0)) as? ProfileTableCell {
+                request.nickname = nickNameCell.profileInfoTextField.text!
+            }
             request.activityLevel =  ProfileDataManager.shared.profile.activityLevel
             request.avatarURL =  ProfileDataManager.shared.profile.avatarURL
             request.birthYear =  ProfileDataManager.shared.profile.birthYear
@@ -191,15 +195,22 @@ extension ProfileViewController: UITableViewDelegate,UITableViewDataSource {
                     return UITableViewCell()
                 }
                 cell.profileInfoLabel.text = fixSectionFieldList[indexPath.row]
-                cell.profileAvatarView.image = UIImage(named: "profile_avatar")
+                cell.profileAvatarView.kf.setImage(with: URL(string: profileDataSvr.profile.avatarURL),placeholder: UIImage(named: "profile_avatar"))
+                cell.profileAvatarView.layer.cornerRadius = 77/2
+                cell.profileAvatarView.clipsToBounds = true
+                let imageTapRecognizer =  UITapGestureRecognizer(target: self, action: #selector(showImagePickerSelection))
+                cell.profileAvatarView.isUserInteractionEnabled = true
+                cell.profileAvatarView.addGestureRecognizer(imageTapRecognizer)
+                cell.clipsToBounds = true
                 return cell
             case 1:
                 guard let cell = self.rootView.profileTableView.dequeueReusableCell(withIdentifier: "ProfileTableCell") as? ProfileTableCell else {
                     return UITableViewCell()
                 }
                 cell.profileInfoLabel.text = fixSectionFieldList[indexPath.row]
-                cell.profileInfoTextField.text = "AAA"
-                cell.profileInfoTextField.isEnabled = false
+                cell.profileInfoTextField.text = profileDataSvr.profile.nickname
+                cell.profileInfoTextField.delegate = self
+//                cell.profileInfoTextField.isEnabled = false
                 return cell
             default:
                 return UITableViewCell()
@@ -257,7 +268,88 @@ extension ProfileViewController: UITableViewDelegate,UITableViewDataSource {
         }
     }
     
+    @objc func showImagePickerSelection(){
+        let optionMenu = UIAlertController(title: nil, message: "Option", preferredStyle: .actionSheet)
+        let cameraOption  = UIAlertAction(title: "Camera", style: .default) { (alertAction) in
+            self.openCamera()
+            optionMenu.dismiss(animated: true, completion: nil)
+        }
+        let galleryOption  = UIAlertAction(title: "Album", style: .default) { (alertAction) in
+            self.openAlbum()
+            optionMenu.dismiss(animated: true, completion: nil)
+        }
+        let cancelOption  = UIAlertAction(title: "Cancel", style: .cancel) { (alertAction) in
+            optionMenu.dismiss(animated: true, completion: nil)
+        }
+        optionMenu.addAction(cameraOption)
+        optionMenu.addAction(galleryOption)
+        optionMenu.addAction(cancelOption)
+        self.present(optionMenu, animated: true, completion: nil)
+    }
     
+    func openCamera(){
+        if UIImagePickerController.isSourceTypeAvailable(.camera){
+            let picker = UIImagePickerController()
+            picker.sourceType = .camera
+            picker.delegate = self
+            picker.allowsEditing = true
+            self.present(picker, animated: true, completion: nil)
+        } else {
+            //TODO show modal native camera not available
+            let alert = UIAlertController.init(title: "Message", message: "No Camera Dectected", preferredStyle: .alert)
+            let cancel = UIAlertAction.init(title: "Confirm", style: .cancel, handler: nil)
+            alert.addAction(cancel)
+            self.show(alert, sender: nil)
+        }
+    }
+    
+    func openAlbum(){
+           if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
+               let picker = UIImagePickerController()
+               picker.sourceType = .photoLibrary
+               picker.delegate = self
+               picker.allowsEditing = true
+               self.present(picker, animated: true, completion: nil)
+           } else {
+               //TODO show modal native camera not available
+               let alert = UIAlertController.init(title: "Message", message: "Cannot open album", preferredStyle: .alert)
+               let cancel = UIAlertAction.init(title: "Confirm", style: .cancel, handler: nil)
+               alert.addAction(cancel)
+               self.show(alert, sender: nil)
+           }
+       }
+    
+}
+
+extension ProfileViewController: UIImagePickerControllerDelegate,UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let selectedImage = info[.editedImage] as? UIImage else {
+            return
+        }
+        let compressedImage = selectedImage.resized(withPercentage: 0.2)!
+         DispatchQueue.main.async {
+            guard let userId = UserDefaults.standard.string(forKey: Constants.userIdKey) else {
+                       return
+            }
+            picker.dismiss(animated: true, completion: nil)
+            let timeStamp = String(Int(Date().timeIntervalSince1970 * 1000))
+            let objectKey = "portrait_" + userId + "_" + timeStamp
+            UploaderManager.shared.asyncPutPortraitImage(objectKey: objectKey, image: compressedImage) { (objectKey) in
+                self.profileDataSvr.profile.avatarURL = objectKey
+                DispatchQueue.main.async {
+                    guard let cell = self.rootView.profileTableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? ProfileAvatarCell else {
+                        return
+                    }
+                    self.updateProfileData()
+                    cell.profileAvatarView.layer.cornerRadius =  cell.profileAvatarView.frame.width/2
+                    cell.profileAvatarView.clipsToBounds = true
+                    cell.profileAvatarView.image = selectedImage
+                }
+            }
+        }
+        
+    }
 }
 
 extension ProfileViewController: UIPickerViewDelegate, UIPickerViewDataSource {

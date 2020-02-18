@@ -37,8 +37,8 @@ class PhotoRecordHomeViewController: UIViewController {
             self.present(picker, animated: true, completion: nil)
         } else {
             //TODO show modal native camera not available
-            let alert = UIAlertController.init(title: "提示", message: "没有检测到摄像头", preferredStyle: .alert)
-            let cancel = UIAlertAction.init(title: "确定", style: .cancel, handler: nil)
+            let alert = UIAlertController.init(title: "Message", message: "No Camera detected", preferredStyle: .alert)
+            let cancel = UIAlertAction.init(title: "Confirm", style: .cancel, handler: nil)
             alert.addAction(cancel)
             self.show(alert, sender: nil)
         }
@@ -57,7 +57,7 @@ extension PhotoRecordHomeViewController:  UIImagePickerControllerDelegate,UINavi
         }
         let timeStamp = String(Int(Date().timeIntervalSince1970 * 1000))
         let objectKey = userId + "_" + timeStamp
-        UploaderManager.shared.asyncPutImage(objectKey: objectKey, image: selectedImage) { (objectKey) in
+        UploaderManager.shared.asyncPutBodyShapeImage(objectKey: objectKey, image: selectedImage) { (objectKey) in
             
         }
     }

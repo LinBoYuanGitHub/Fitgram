@@ -9,12 +9,13 @@
 import UIKit
 import SwiftGRPC
 
-class ReportListViewController: UIViewController {
+class ReportListViewController: BaseViewController {
     var reportDataList = [Apisvr_WeeklyReport]()
     var reportTableView = UITableView.init(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height), style: .plain)
     
     override func viewDidLoad() {
-        self.title = "全部报告"
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+        self.title = "All Report"
         self.view.backgroundColor = .white
         self.view.addSubview(reportTableView)
         initMockUpReportData()
@@ -23,6 +24,10 @@ class ReportListViewController: UIViewController {
         reportTableView.delegate = self
         reportTableView.dataSource = self
         self.requestReports()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
     
     func initMockUpReportData(){
@@ -71,10 +76,10 @@ extension ReportListViewController: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
         let report = reportDataList[indexPath.row]
-        cell.coachWeeklyLabel.text = "教练"+report.coachName+"本周的总结报告"
-        let startDateStr = DateUtil.CNDateFormatter(date: Date(timeIntervalSince1970: TimeInterval(report.startDate)))
-        let endDateStr = DateUtil.CNDateFormatter(date: Date(timeIntervalSince1970: TimeInterval(report.endDate)))
-        cell.dateLabel.text = startDateStr + "至" + endDateStr
+        cell.coachWeeklyLabel.text = "Coach "+report.coachName+" weekly report"
+        let startDateStr = DateUtil.EnDateFormatter(date: Date(timeIntervalSince1970: TimeInterval(report.startDate)))
+        let endDateStr = DateUtil.EnDateFormatter(date: Date(timeIntervalSince1970: TimeInterval(report.endDate)))
+        cell.dateLabel.text = startDateStr + "to" + endDateStr
         return cell
     }
     

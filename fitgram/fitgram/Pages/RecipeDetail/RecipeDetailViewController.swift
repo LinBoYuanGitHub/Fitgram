@@ -91,6 +91,9 @@ class RecipeDetailViewController:UIViewController{
         cookingVC.recipeId = recipe.recipeId
         cookingVC.mealType = self.mealType
         cookingVC.foodImage = self.rootView.headerImage.image!
+        cookingVC.onFoodLogCallBack = { vc in
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
         let naviVC = UINavigationController()
         naviVC.viewControllers = [cookingVC]
         self.present(naviVC, animated: true)
@@ -175,7 +178,7 @@ extension RecipeDetailViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        let title = "步骤 "+String(section + 1) + "/" + String(recipe.stepList.count)
+        let title = "Step "+String(section + 1) + "/" + String(recipe.stepList.count)
         return title
     }
     
@@ -186,13 +189,13 @@ extension RecipeDetailViewController: UITableViewDelegate, UITableViewDataSource
         }
         cell.recipeStepLabel.text = recipe.stepList[indexPath.section].stepText
 //        cell.recipeStepImage.kf.setImage(with: URL(string: recipe.stepList[indexPath.section].stepImageUrl))
-        cell.recipeStepImage.kf.setImage(with: URL(string: "https://picsum.photos/500/500"))
+//        cell.recipeStepImage.kf.setImage(with: URL(string: "https://picsum.photos/500/500"))
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let numOfLines = recipe.stepList[indexPath.section].stepText.count/20 + 1
-        return CGFloat(Int(UIScreen.main.bounds.width) + numOfLines * 30 + 16)
+        return CGFloat(numOfLines * 10 + 32)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

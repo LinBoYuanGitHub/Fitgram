@@ -10,7 +10,7 @@ import UIKit
 import Stevia
 
 class FoodDiaryMainCell: UITableViewCell {
-    public var mealTItle = UILabel(frame: CGRect(x: 16, y: 16, width: 40, height: 25))
+    public var mealTItle = UILabel(frame: CGRect(x: 16, y: 16, width: 100, height: 25))
     public var calorieTitle = UILabel(frame: CGRect(x: 100, y: 16, width: UIScreen.main.bounds.width - 164, height: 25))
     public var suggestionIntakenLabel = UILabel(frame: CGRect(x: 16, y: 45, width: UIScreen.main.bounds.width - 64, height: 25))
     public var foodImagecCollectionView:UICollectionView!
@@ -107,7 +107,7 @@ extension FoodDiaryMainCell: UITableViewDelegate, UITableViewDataSource {
             }
         }
         cell.foodNameLabel.text = foodItems[indexPath.row].foodName
-        cell.calorieLabel.text = String(Int(foodItems[indexPath.row].energy)) + "千卡"
+        cell.calorieLabel.text = String(Int(foodItems[indexPath.row].energy)) + " kCal"
         cell.portionLabel.text = String(foodItems[indexPath.row].amount) + " " + foodItems[indexPath.row].unit
         return cell
     }

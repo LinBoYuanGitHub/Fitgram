@@ -33,16 +33,18 @@ class WeightInputAlertViewController: UIViewController {
     override func loadView() {
         view = rootView
         rootView.confirmBtn.addTarget(self, action: #selector(onConfirm), for: .touchUpInside)
-        rootView.titleLabel.text = "今天"
-        rootView.confirmBtn.setTitle("确认", for: .normal)
+        rootView.titleLabel.text = "Today"
+        rootView.confirmBtn.setTitle("Confirm", for: .normal)
         rootView.photoImgView.image = UIImage(named: "roundCamera_yellow")
-        rootView.photoText.text = "用照片记录改变"
-        rootView.weightNameLabel.text = "你的体重"
+        rootView.photoText.text = "Photo Record"
+        rootView.weightNameLabel.text = "Your Weight"
         rootView.unitLabel.text = "kg"
     }
     
     @objc func onConfirm(){
         guard let weightValue = Float(rootView.weightValueTextField.text!) else {
+            self.confirmInputEvent(0,imageKey)
+            self.dismiss(animated: true, completion: nil)
             return
         }
         self.confirmInputEvent(weightValue,imageKey)
@@ -54,16 +56,16 @@ class WeightInputAlertViewController: UIViewController {
     }
     
     @objc func showImagePickerSelection(){
-        let optionMenu = UIAlertController(title: nil, message: "选择记录方式", preferredStyle: .actionSheet)
-        let cameraOption  = UIAlertAction(title: "拍照记录", style: .default) { (alertAction) in
+        let optionMenu = UIAlertController(title: nil, message: "Option", preferredStyle: .actionSheet)
+        let cameraOption  = UIAlertAction(title: "Camera", style: .default) { (alertAction) in
             self.openCamera()
             optionMenu.dismiss(animated: true, completion: nil)
         }
-        let galleryOption  = UIAlertAction(title: "从相册选择", style: .default) { (alertAction) in
+        let galleryOption  = UIAlertAction(title: "Album", style: .default) { (alertAction) in
             self.openAlbum()
             optionMenu.dismiss(animated: true, completion: nil)
         }
-        let cancelOption  = UIAlertAction(title: "取消", style: .cancel) { (alertAction) in
+        let cancelOption  = UIAlertAction(title: "Cancel", style: .cancel) { (alertAction) in
             optionMenu.dismiss(animated: true, completion: nil)
         }
         optionMenu.addAction(cameraOption)
@@ -81,8 +83,8 @@ class WeightInputAlertViewController: UIViewController {
             self.present(picker, animated: true, completion: nil)
         } else {
             //TODO show modal native camera not available
-            let alert = UIAlertController.init(title: "提示", message: "没有检测到摄像头", preferredStyle: .alert)
-            let cancel = UIAlertAction.init(title: "确定", style: .cancel, handler: nil)
+            let alert = UIAlertController.init(title: "Message", message: "No Camera Dectected", preferredStyle: .alert)
+            let cancel = UIAlertAction.init(title: "Confirm", style: .cancel, handler: nil)
             alert.addAction(cancel)
             self.show(alert, sender: nil)
         }
@@ -97,8 +99,8 @@ class WeightInputAlertViewController: UIViewController {
                self.present(picker, animated: true, completion: nil)
            } else {
                //TODO show modal native camera not available
-               let alert = UIAlertController.init(title: "提示", message: "不能打开相册", preferredStyle: .alert)
-               let cancel = UIAlertAction.init(title: "确定", style: .cancel, handler: nil)
+               let alert = UIAlertController.init(title: "Message", message: "Cannot open album", preferredStyle: .alert)
+               let cancel = UIAlertAction.init(title: "Confirm", style: .cancel, handler: nil)
                alert.addAction(cancel)
                self.show(alert, sender: nil)
            }
@@ -128,7 +130,7 @@ extension WeightInputAlertViewController: UIImagePickerControllerDelegate,UINavi
             picker.dismiss(animated: true, completion: nil)
             let timeStamp = String(Int(Date().timeIntervalSince1970 * 1000))
             let objectKey = "bodyShape_" + userId + "_" + timeStamp
-            UploaderManager.shared.asyncPutImage(objectKey: objectKey, image: compressedImage) { (objectKey) in
+            UploaderManager.shared.asyncPutBodyShapeImage(objectKey: objectKey, image: compressedImage) { (objectKey) in
                 self.imageKey = objectKey
                 DispatchQueue.main.async {
                     self.rootView.photoImgView.layer.cornerRadius = self.rootView.photoImgView.frame.width/2
@@ -213,8 +215,8 @@ class weightInputAlertView: UIView {
             |-0-underlineView-0-| ~ 1
         )
         containerView.centerHorizontally()
-        titleLabel.font = UIFont(name: "PingFangSC-Regular", size: 20)
-        titleLabel.width(45)
+        titleLabel.font = UIFont(name: "PingFangSC-Regular", size: 16)
+        titleLabel.width(55)
         titleLabel.centerHorizontally()
         confirmBtn.titleLabel!.font = UIFont(name: "PingFangSC-Regular", size: 18)
         confirmBtn.contentHorizontalAlignment = .right

@@ -39,7 +39,7 @@ class ProgressHomeMeasureCell:UITableViewCell {
         measurementBtn.titleLabel?.textAlignment = .left
         measurementBtn.titleLabel?.font = UIFont(name: "PingFangSC-Regular", size: 14)
         measurementBtn.imageEdgeInsets = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 5)
-        measurementBtn.setTitle("围度记录", for: .normal)
+        measurementBtn.setTitle("Body Measurement", for: .normal)
         measurementBtn.setImage(UIImage(named: "measurementIcon"), for: .normal)
         measurementBtn.setTitleColor(.black, for: .normal)
         

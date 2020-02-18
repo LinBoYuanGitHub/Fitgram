@@ -31,7 +31,7 @@ class MoreViewController: BaseViewController {
             self.navigationController?.pushViewController(targetVC, animated: true)
         }
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(onCoachBtnPressed))
-        rootView.coachContainer.addGestureRecognizer(tapRecognizer)
+        rootView.horizontalContainer.addGestureRecognizer(tapRecognizer)
         rootView.recipeLikeCollectionView.delegate = self
         rootView.recipeLikeCollectionView.dataSource = self
         rootView.restaurantLikeTableView.delegate = self
@@ -42,6 +42,7 @@ class MoreViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         self.requestFavItem()
+        self.requestProfileData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -71,6 +72,32 @@ class MoreViewController: BaseViewController {
         let targetVC = CoachDetailViewController()
 //        targetVC.delegate = self
         self.navigationController?.pushViewController(targetVC, animated: true)
+    }
+    
+    func requestProfileData() {
+        guard let token = UserDefaults.standard.string(forKey: Constants.tokenKey) else {
+            return
+        }
+        do{
+            let metaData = try Metadata(["authorization": "Token " + token])
+            let request = Apisvr_GetUserProfileReq()
+            try ProfileDataManager.shared.client.getUserProfile(request, metadata: metaData) { (resp, result) in
+                if(result.statusCode == .ok){
+                    ProfileDataManager.shared.profile = resp!
+                    DispatchQueue.main.async {
+                        self.rootView.portraitTitleLabel.text = ProfileDataManager.shared.profile.nickname
+                        self.rootView.portraitImageView.layer.cornerRadius = self.rootView.portraitImageView.frame.size.width/2
+                        self.rootView.portraitImageView.clipsToBounds = true
+                        self.rootView.portraitImageView.kf.setImage(with: URL(string: ProfileDataManager.shared.profile.avatarURL),placeholder: UIImage(named: "profile_avatar"))
+                    }
+                }
+            }
+        } catch {
+            print(error)
+            DispatchQueue.main.async {
+                self.showAlertMessage(msg: error.localizedDescription)
+            }
+        }
     }
     
     func requestFavItem(){
@@ -131,7 +158,7 @@ extension MoreViewController: BarcodeScannerDelegate {
     func onDectect(barcode: String) {
         //TODO: request coach info by coach id
         let alertView = UIAlertController(title: "", message: barcode, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "确定", style: .default) { (_) in
+        let okAction = UIAlertAction(title: "Confirm", style: .default) { (_) in
             print( barcode.components(separatedBy: "coach_id=").count)
             if barcode.components(separatedBy: "coach_id=").count > 1{
                 DispatchQueue.main.async {
@@ -158,7 +185,7 @@ extension MoreViewController: UICollectionViewDelegate,UICollectionViewDataSourc
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LikeCollectionViewCell", for: indexPath) as? LikeCollectionViewCell else {
             return UICollectionViewCell()
         }
-        cell.calorieLabel.text = String(Int(recipeFavItems[indexPath.row].energy)) + "千卡"
+        cell.calorieLabel.text = String(Int(recipeFavItems[indexPath.row].energy)) + "kCal"
         cell.foodNameLabel.text = recipeFavItems[indexPath.row].foodName
         cell.foodImageView.image = UIImage(named: "fitgram_defaultIcon")
         cell.foodImageView.kf.setImage(with: URL(string: recipeFavItems[indexPath.row].imgURL))
@@ -207,8 +234,9 @@ extension MoreViewController: UITableViewDataSource, UITableViewDelegate {
             return UITableViewCell()
         }
         cell.restaurantNameLabel.text = restaurantFavItems[indexPath.row].restaurantName
+        cell.restaurantImageView.frame.size.height = 200
+        cell.restaurantImageView.contentMode = .scaleAspectFit
         cell.restaurantImageView.kf.setImage(with: URL(string: restaurantFavItems[indexPath.row].restaurantImgURL))
-        cell.restaurantImageView.contentMode = .scaleAspectFill
         return cell
     }
     

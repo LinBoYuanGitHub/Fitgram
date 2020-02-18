@@ -17,7 +17,7 @@ class RecommendHomeViewController:UIViewController{
     var rootView:RecommendHomeView! = nil
     
     var recommendationList = [RecommendationModel]()
-    let mealList = ["早餐","午餐","晚餐"]
+    let mealList = ["Breakfast","Lunch","Dinner"]
 
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
@@ -239,7 +239,6 @@ extension RecommendHomeViewController: UITableViewDelegate, UITableViewDataSourc
             } else {
                 self.onFoodFav(mealIndex: indexPath.row, recipeIndex: collectionIndex)
             }
-           
         }
         cell.didCheckAction = { index in
             let recipe = self.recommendationList[indexPath.row].recipeList[index]

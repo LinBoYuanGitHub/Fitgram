@@ -52,11 +52,12 @@ extension HomeTabViewController: UITabBarControllerDelegate {
             return false
         }
         //navigation bar hidden config
-        if viewController == foodDiaryVC || viewController == moreVC {
-            self.navigationController?.setNavigationBarHidden(true, animated: false)
-        } else {
-            self.navigationController?.setNavigationBarHidden(false, animated: false)
-        }
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+//        if viewController == foodDiaryVC || viewController == moreVC {
+//            self.navigationController?.setNavigationBarHidden(true, animated: false)
+//        } else {
+//            self.navigationController?.setNavigationBarHidden(false, animated: false)
+//        }
         return true
     }
 }

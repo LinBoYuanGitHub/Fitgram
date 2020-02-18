@@ -35,7 +35,7 @@ class RestaurantDetailViewController:BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(false, animated: true)
-        self.title = "轻食餐厅"
+        self.title = "Restaurant"
     }
     
     @objc func naviToMap(){
@@ -173,8 +173,8 @@ extension RestaurantDetailViewController: UICollectionViewDataSource,UICollectio
         let entity = menus[indexPath.row]
         cell.menuImageView.kf.setImage(with: URL(string: entity.foodImgURL),placeholder:UIImage(named: "fitgram_restaurant_defaultIcon"))
         cell.menuNameLabel.text = entity.foodName
-        cell.menuPriceLabel.text = "\(Int(entity.price))元"
-        cell.menuCalorieLabel.text = "\(Int(entity.energy))千卡"
+        cell.menuPriceLabel.text = "S$\(Int(entity.price))"
+        cell.menuCalorieLabel.text = "\(Int(entity.energy))kCal"
         cell.likeBtn.setTitle("\(entity.favouriteNum)", for: .normal)
         cell.likeBtn.isSelected = entity.isFavourite
         cell.likeBtn.tag = indexPath.row

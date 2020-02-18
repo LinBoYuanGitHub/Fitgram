@@ -15,7 +15,7 @@ class RecipeFooterView: UIView {
         self.init(frame:CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 100))
         checkButton.backgroundColor = UIColor(red: 252/255, green: 200/255, blue: 45/255, alpha: 1)
         checkButton.tintColor = UIColor.white
-        checkButton.setTitle("打卡", for: .normal)
+        checkButton.setTitle("Log Food", for: .normal)
         checkButton.layer.cornerRadius = 20
         checkButton.setImage(UIImage(named: "camera_checkedIcon_white"), for: .normal)
         checkButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)

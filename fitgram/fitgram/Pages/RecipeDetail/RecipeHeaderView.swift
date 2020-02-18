@@ -51,12 +51,13 @@ class RecipeHeaderView: UIView {
     func createDescLabelsContainer(descIcon:UIImage, descTitle:String, descContent: String) -> UIView {
         let descRow = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height:  20))
         let iconView = UIImageView(frame: CGRect(x: 16, y: 0, width: 16, height: 16))
-        let titleText = UILabel(frame: CGRect(x: 40, y: 0, width: 28, height: 20))
-        let contentText = UILabel(frame: CGRect(x: 75, y: 0, width: UIScreen.main.bounds.width - 100, height: 20))
+        let titleText = UILabel(frame: CGRect(x: 40, y: 0, width: 60, height: 20))
+        let contentText = UILabel(frame: CGRect(x: 105, y: 0, width: UIScreen.main.bounds.width - 105, height: 20))
         iconView.image = descIcon
         titleText.text = descTitle
         titleText.font = UIFont(name: "PingFangSC-Medium", size: 14)
         contentText.text = descContent
+        contentText.textAlignment = .left
         contentText.font = UIFont(name: "PingFangSC-Light", size: 14)
         descRow.addSubview(iconView)
         descRow.addSubview(titleText)
@@ -68,7 +69,7 @@ class RecipeHeaderView: UIView {
     func assembleIngredientList(ingredientDataList:[IngredientModel]) {
         //ingredient title
         let ingredientsLabel = UILabel(frame: CGRect(x: 32, y: 220, width: CGFloat(UIScreen.main.bounds.width-32), height: 25))
-        ingredientsLabel.text = "用料～一人份"
+        ingredientsLabel.text = "Ingredients ～ 1  serving"
         ingredientsLabel.font = UIFont(name: ":PingFangSC-Medium", size: 18)
         //ingredient list part
         let ingredientViewContainer = UIView(frame: CGRect(x: 0, y: 270, width: CGFloat(UIScreen.main.bounds.width), height:  CGFloat(ingredientDataList.count * heightFactor)))
@@ -89,17 +90,17 @@ class RecipeHeaderView: UIView {
     }
     
     func assembleCookingInfoLabels(duration:Int,difficulity:Apisvr_Difficulty) {
-        let timeInfo = createDescLabelsContainer(descIcon: UIImage(named: "clockIcon_gray")!, descTitle: "时间", descContent: "约\(duration)分钟")
+        let timeInfo = createDescLabelsContainer(descIcon: UIImage(named: "clockIcon_gray")!, descTitle: "Duration", descContent: " \(duration)min")
         var difficulityLvl:UIView!
         switch difficulity {
         case .easy:
-            difficulityLvl = createDescLabelsContainer(descIcon: UIImage(named: "difficulityIcon_gray")!, descTitle: "难度", descContent: "容易做")
+            difficulityLvl = createDescLabelsContainer(descIcon: UIImage(named: "difficulityIcon_gray")!, descTitle: "Difficulty", descContent: "Easy")
         case .hard:
-            difficulityLvl = createDescLabelsContainer(descIcon: UIImage(named: "difficulityIcon_gray")!, descTitle: "难度", descContent: "困难")
+            difficulityLvl = createDescLabelsContainer(descIcon: UIImage(named: "difficulityIcon_gray")!, descTitle: "Difficulty", descContent: "Hard")
         case .normal:
-            difficulityLvl = createDescLabelsContainer(descIcon: UIImage(named: "difficulityIcon_gray")!, descTitle: "难度", descContent: "一般")
+            difficulityLvl = createDescLabelsContainer(descIcon: UIImage(named: "difficulityIcon_gray")!, descTitle: "Difficulty", descContent: "Normal")
         case .noneDifficulty:
-            difficulityLvl = createDescLabelsContainer(descIcon: UIImage(named: "difficulityIcon_gray")!, descTitle: "难度", descContent: "十分容易")
+            difficulityLvl = createDescLabelsContainer(descIcon: UIImage(named: "difficulityIcon_gray")!, descTitle: "Difficulty", descContent: "Very Easy")
         case .UNRECOGNIZED(_):
             break
         }
@@ -136,7 +137,7 @@ class RecipeHeaderView: UIView {
         //create start cook btn at the bottom
         startCookBtn.backgroundColor = UIColor(red: 252/255, green: 200/255, blue: 45/255, alpha: 1)
         startCookBtn.tintColor = UIColor.white
-        startCookBtn.setTitle("开始烹饪", for: .normal)
+        startCookBtn.setTitle("Start Cooking!", for: .normal)
         startCookBtn.layer.cornerRadius = 20
         startCookBtn.layer.shadowOffset = CGSize(width: 0, height: 0) //no shadow direction
         startCookBtn.layer.shadowColor = UIColor.black.cgColor
