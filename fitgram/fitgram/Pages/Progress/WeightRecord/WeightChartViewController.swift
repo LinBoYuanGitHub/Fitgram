@@ -151,7 +151,7 @@ class WeightChartViewController: BaseViewController {
 //                let dayFormatter = DateFormatter()
 //                dayFormatter.dateFormat = "dd"
 //                let day = dayFormatter.string(from: Date(timeIntervalSince1970: TimeInterval(date)))
-                valueColors.append(.white)
+                valueColors.append(.black)
                 values.append(ChartDataEntry(x: Double(data.time), y: Double(val)))
             }
         }

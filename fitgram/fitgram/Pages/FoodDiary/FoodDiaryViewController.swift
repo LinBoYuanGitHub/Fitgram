@@ -274,7 +274,7 @@ extension FoodDiaryViewController: UITableViewDelegate, UITableViewDataSource {
             let count = meal.foodLog.count
             recipeNum += count
         }
-        let collectionViewHeight =  ((mealLogs.count+1)/4 + 1) * 75
+        let collectionViewHeight =  ((mealLogs.count)/4 + 1) * 75
         let tableviewHeight = recipeNum * 52
         return CGFloat(110 + collectionViewHeight + tableviewHeight)
     }

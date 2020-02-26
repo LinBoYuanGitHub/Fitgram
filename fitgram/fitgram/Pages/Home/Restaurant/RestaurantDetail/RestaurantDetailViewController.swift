@@ -34,6 +34,7 @@ class RestaurantDetailViewController:BaseViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         self.title = "Restaurant"
     }
@@ -146,7 +147,18 @@ class RestaurantDetailViewController:BaseViewController {
                             targetVC.imgUrl = menu.foodImgURL
                             targetVC.foodDiaryList = resp!.foodLogs
                             targetVC.mealLogList = FoodDiaryDataManager.shared.convertFoodLogToInfo(foodDiaryList: resp!.foodLogs)
-                            targetVC.mealType = .breakfast//TODO modify latter
+                            //mealTime calculation
+                            let date = Date()
+                            let calendar = Calendar.current
+                            let hour = calendar.component(.hour, from: date)
+                            //get mealType according to current time
+                            if hour>Constants.Config.BreakfastStartTime && hour<Constants.Config.BreakfastEndTime{
+                                 targetVC.mealType = .breakfast
+                            } else if hour>Constants.Config.LunchStartTime && hour<Constants.Config.LunchEndTime {
+                                targetVC.mealType = .lunch
+                            } else {
+                                targetVC.mealType = .dinner
+                            }
                             self.navigationController?.pushViewController(targetVC, animated: true)
                         }
                     }
@@ -173,7 +185,7 @@ extension RestaurantDetailViewController: UICollectionViewDataSource,UICollectio
         let entity = menus[indexPath.row]
         cell.menuImageView.kf.setImage(with: URL(string: entity.foodImgURL),placeholder:UIImage(named: "fitgram_restaurant_defaultIcon"))
         cell.menuNameLabel.text = entity.foodName
-        cell.menuPriceLabel.text = "S$\(Int(entity.price))"
+//        cell.menuPriceLabel.text = "S$\(Int(entity.price))"
         cell.menuCalorieLabel.text = "\(Int(entity.energy))kCal"
         cell.likeBtn.setTitle("\(entity.favouriteNum)", for: .normal)
         cell.likeBtn.isSelected = entity.isFavourite

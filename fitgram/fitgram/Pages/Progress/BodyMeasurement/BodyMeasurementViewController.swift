@@ -107,7 +107,7 @@ extension BodyMeasurementViewController: UITableViewDelegate,UITableViewDataSour
 //            let dayFormatter = DateFormatter()
 //            dayFormatter.dateFormat = "dd"
 //            let day = dayFormatter.string(from: Date(timeIntervalSince1970: TimeInterval(date)))
-            valueColors.append(.white)
+            valueColors.append(.black)
             return ChartDataEntry(x: Double(date), y: Double(val))
         }
         let chartDataSet = LineChartDataSet(entries: values, label: "")

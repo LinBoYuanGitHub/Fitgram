@@ -14,7 +14,7 @@ class MenuCell: UICollectionViewCell {
     
     public var menuImageView = UIImageView()
     public var menuNameLabel = UILabel()
-    public var menuPriceLabel = UILabel()
+//    public var menuPriceLabel = UILabel()
     public var menuCalorieLabel = UILabel()
     public var likeBtn = UIButton()
     public var checkBtn = UIButton()
@@ -29,7 +29,6 @@ class MenuCell: UICollectionViewCell {
             cellFrameView.sv(
                 menuImageView,
                 menuNameLabel,
-                menuPriceLabel,
                 menuCalorieLabel,
                 likeBtn,
                 checkBtn
@@ -46,14 +45,14 @@ class MenuCell: UICollectionViewCell {
             10,
             |-10-menuNameLabel-|,
             10,
-            |-8-menuPriceLabel-menuCalorieLabel-8-|,
+            |-8-menuCalorieLabel-|,
             10,
             |-12-likeBtn-checkBtn-8-|,
             5
         )
         menuNameLabel.font = UIFont(name: "PingFangSC-Regular", size: 17)
-        menuPriceLabel.font = UIFont(name: "PingFangSC-Regular", size: 13)
-        menuPriceLabel.textColor = .lightGray
+//        menuPriceLabel.font = UIFont(name: "PingFangSC-Regular", size: 13)
+//        menuPriceLabel.textColor = .lightGray
         menuCalorieLabel.font = UIFont(name: "PingFangSC-Regular", size: 13)
         menuCalorieLabel.textColor = .lightGray
         likeBtn.setImage(UIImage(named: "restaurant_heartIcon_gray"), for: .normal)

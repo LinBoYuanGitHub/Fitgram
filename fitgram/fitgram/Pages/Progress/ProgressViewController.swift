@@ -32,7 +32,7 @@ class ProgressViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         requestForProgressHomeData()
-        initMockUpData()
+//        initMockUpData()
         self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
@@ -117,7 +117,7 @@ class ProgressViewController: UIViewController {
         chartDataSet.valueColors = valueColors
         chartDataSet.valueFont = UIFont(name: "PingFangSC-Light", size: 10)!
         chartDataSet.setCircleColor(.white)
-        chartDataSet.mode = .cubicBezier
+//        chartDataSet.mode = .cubicBezier
         chartDataSet.lineDashLengths = []
         let data = LineChartData(dataSet: chartDataSet)
         rootView.lineChartView.data = data
@@ -141,8 +141,14 @@ extension ProgressViewController: UITableViewDelegate, UITableViewDataSource {
                 return UITableViewCell()
             }
             let last = self.progressData.weightLogs.count
-            cell.weightLabel.text = String(self.progressData.weightLogs[last-1].value)
-            cell.recordTimeLabel.text = "Last Record \(DateUtil.EnDateFormatter(date: Date(timeIntervalSince1970: TimeInterval(self.progressData.weightLogs[last-1].date))))"
+            if self.progressData.weightLogs.count > 0 {
+                cell.weightLabel.text = String(self.progressData.weightLogs[last-1].value)
+                cell.recordTimeLabel.text = "Last Record \(DateUtil.EnDateFormatter(date: Date(timeIntervalSince1970: TimeInterval(self.progressData.weightLogs[last-1].date))))"
+            } else {
+                cell.weightLabel.text = "0"
+                cell.recordTimeLabel.text = "Last Record "
+            }
+            
             cell.onWeightRecordBtnPressed = {
                 let targetVC = WeightInputAlertViewController()
                 targetVC.modalPresentationStyle = .overCurrentContext
@@ -165,7 +171,7 @@ extension ProgressViewController: UITableViewDelegate, UITableViewDataSource {
                 return UITableViewCell()
             }
             let count = self.progressData.weightLogs.count - 1
-            let currentWeight = self.progressData.weightLogs[count].value
+            let currentWeight = count >= 0 ?self.progressData.weightLogs[count].value:0
             cell.titleLabel.text = "goal: \(self.progressData.goal)"
             let initialWeightStr = String(format: "%.1f", self.progressData.initialWeight)
             let targetWeightStr = String(format: "%.1f", self.progressData.targetWeight)

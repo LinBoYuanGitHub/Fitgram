@@ -29,4 +29,13 @@ struct Constants {
         public static let RegularFont = "PingFangSC-Regular"
     }
     
+    struct Config {
+        public static let BreakfastStartTime = 05
+        public static let BreakfastEndTime = 10
+        public static let LunchStartTime = 11
+        public static let LunchEndTime = 15
+        public static let DinnerStartTime = 16
+        public static let DinnerEndTime = 24
+    }
+    
 }

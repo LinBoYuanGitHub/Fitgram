@@ -55,6 +55,7 @@ class ProgressView:UIView {
         progressHomeTableView.tableFooterView = footerView
         //line chart config
         lineChartView.gridBackgroundColor = .white
+        lineChartView.isUserInteractionEnabled = false
         lineChartView.setVisibleXRangeMaximum(5)
         lineChartView.setVisibleYRange(minYRange: 2, maxYRange: 5, axis: .left)
         lineChartView.setVisibleYRange(minYRange: 2, maxYRange: 5, axis: .right)
@@ -62,8 +63,11 @@ class ProgressView:UIView {
         lineChartView.xAxis.axisLineColor = .white
         lineChartView.xAxis.labelTextColor = .white
         lineChartView.xAxis.labelPosition = .bottom
-        lineChartView.xAxis.labelCount = 5
+        lineChartView.xAxis.labelCount = 7
+        lineChartView.xAxis.forceLabelsEnabled = true
+        lineChartView.xAxis.centerAxisLabelsEnabled = false
         lineChartView.xAxis.valueFormatter = DateXAxisFormatter()//NoStyleFormatter
+        lineChartView.xAxis.avoidFirstLastClippingEnabled = false
         lineChartView.leftAxis.valueFormatter = NoZeroValueFormatter()
         lineChartView.rightAxis.valueFormatter = NoZeroValueFormatter()
 //        lineChartView.xAxis.axisMinimum = 5
@@ -71,11 +75,11 @@ class ProgressView:UIView {
         lineChartView.leftAxis.gridColor = .white
         lineChartView.leftAxis.axisLineColor = .clear
         lineChartView.leftAxis.labelTextColor = .white
-        lineChartView.leftAxis.axisMinimum = 5
+//        lineChartView.leftAxis.axisMinimum = 5
         lineChartView.rightAxis.gridColor = .white
         lineChartView.rightAxis.axisLineColor = .clear
         lineChartView.rightAxis.labelTextColor = .white
-        lineChartView.rightAxis.axisMinimum = 5
+//        lineChartView.rightAxis.axisMinimum = 5
         lineChartView.legend.textColor = .white
         chartContainer.addSubview(lineChartView)
 //        let gardientColor = CAGradientLayer()

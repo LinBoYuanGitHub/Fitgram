@@ -12,12 +12,13 @@ class LaunchPageViewController: UIViewController {
     //set it as launch screen
     
     override func viewDidLoad() {
-        let token = UserDefaults.standard.string(forKey: Constants.tokenKey)
-        if (token == nil || token!.isEmpty) {
-            self.loginForTokenRequest()
-        } else {
-            self.naviToHomeTabPage()
-        }
+//        let token = UserDefaults.standard.string(forKey: Constants.tokenKey)
+//        if (token == nil || token!.isEmpty) {
+//            self.loginForTokenRequest()
+//        } else {
+//            self.naviToHomeTabPage()
+//        }
+        self.loginForTokenRequest()
         self.view.backgroundColor = .white
         let logoView = UIImageView(image: UIImage(named: "AppIcon"))
         logoView.frame.size = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)

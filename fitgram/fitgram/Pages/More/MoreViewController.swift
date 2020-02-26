@@ -84,11 +84,13 @@ class MoreViewController: BaseViewController {
             try ProfileDataManager.shared.client.getUserProfile(request, metadata: metaData) { (resp, result) in
                 if(result.statusCode == .ok){
                     ProfileDataManager.shared.profile = resp!
+                    let splitStrs = ProfileDataManager.shared.profile.avatarURL.split(separator: "/")
+                    ProfileDataManager.shared.profile.avatarURL = "portraitImages/" + splitStrs.last!
                     DispatchQueue.main.async {
                         self.rootView.portraitTitleLabel.text = ProfileDataManager.shared.profile.nickname
                         self.rootView.portraitImageView.layer.cornerRadius = self.rootView.portraitImageView.frame.size.width/2
                         self.rootView.portraitImageView.clipsToBounds = true
-                        self.rootView.portraitImageView.kf.setImage(with: URL(string: ProfileDataManager.shared.profile.avatarURL),placeholder: UIImage(named: "profile_avatar"))
+                        self.rootView.portraitImageView.kf.setImage(with: URL(string: "https://fitgramer.oss-ap-southeast-1.aliyuncs.com/"+ProfileDataManager.shared.profile.avatarURL),placeholder: UIImage(named: "profile_avatar"))
                     }
                 }
             }

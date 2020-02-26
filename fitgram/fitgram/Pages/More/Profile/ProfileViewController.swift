@@ -195,7 +195,7 @@ extension ProfileViewController: UITableViewDelegate,UITableViewDataSource {
                     return UITableViewCell()
                 }
                 cell.profileInfoLabel.text = fixSectionFieldList[indexPath.row]
-                cell.profileAvatarView.kf.setImage(with: URL(string: profileDataSvr.profile.avatarURL),placeholder: UIImage(named: "profile_avatar"))
+                cell.profileAvatarView.kf.setImage(with: URL(string: "https://fitgramer.oss-ap-southeast-1.aliyuncs.com/" + profileDataSvr.profile.avatarURL),placeholder: UIImage(named: "profile_avatar"))
                 cell.profileAvatarView.layer.cornerRadius = 77/2
                 cell.profileAvatarView.clipsToBounds = true
                 let imageTapRecognizer =  UITapGestureRecognizer(target: self, action: #selector(showImagePickerSelection))
