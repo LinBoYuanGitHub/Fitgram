@@ -97,7 +97,7 @@ extension RestaurantListViewController: UITableViewDelegate, UITableViewDataSour
         cell.restaurantNameLabel.text = restaurant.restaurantName
         cell.setRatingStar(rating: Int(restaurant.rating))
         //TODO hardcode distance value
-        cell.distanceLabel.text = "999m"
+        cell.distanceLabel.text = ""
         return cell
     }
     

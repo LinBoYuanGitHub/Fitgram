@@ -85,7 +85,9 @@ class MoreViewController: BaseViewController {
                 if(result.statusCode == .ok){
                     ProfileDataManager.shared.profile = resp!
                     let splitStrs = ProfileDataManager.shared.profile.avatarURL.split(separator: "/")
-                    ProfileDataManager.shared.profile.avatarURL = "portraitImages/" + splitStrs.last!
+                    if splitStrs.count > 0{
+                          ProfileDataManager.shared.profile.avatarURL = "portraitImages/" + splitStrs.last!
+                    }
                     DispatchQueue.main.async {
                         self.rootView.portraitTitleLabel.text = ProfileDataManager.shared.profile.nickname
                         self.rootView.portraitImageView.layer.cornerRadius = self.rootView.portraitImageView.frame.size.width/2
@@ -144,10 +146,10 @@ class MoreViewController: BaseViewController {
         }
     }
     
-    func displayTransistScaleAnimation(index:Int, recipe:RecipeModel) {
+    func displayTransistScaleAnimation(index:Int, recipe:RecipeModel,mealType:Apisvr_MealType) {
         let targetVC = RecipeDetailViewController()
         targetVC.recipe = recipe
-        targetVC.mealType = .breakfast
+        targetVC.mealType = mealType
         self.navigationController?.pushViewController(targetVC, animated: true)
     }
     
@@ -209,10 +211,11 @@ extension MoreViewController: UICollectionViewDelegate,UICollectionViewDataSourc
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let foodId = self.recipeFavItems[indexPath.row].foodID
+        let mealType =  Apisvr_MealType(rawValue: Int(self.recipeFavItems[indexPath.row].dishType))!
         do{
             try RecommendationDataManager.shared.retrieveRecipeDetail(recipeId: Int(foodId)) { (recipe) in
                 DispatchQueue.main.async {
-                    self.displayTransistScaleAnimation(index: indexPath.row, recipe: recipe)
+                    self.displayTransistScaleAnimation(index: indexPath.row, recipe: recipe, mealType: mealType)
                 }
             }
         } catch {

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TargetBodyShapeViewController: UIViewController {
+class TargetBodyShapeViewController: BaseViewController {
     
     var progressBar = UIProgressView(progressViewStyle: .bar)
     var titleLabel = UILabel(frame: CGRect(x: 0, y: UIScreen.main.bounds.height/5, width: UIScreen.main.bounds.width, height: 30))
@@ -27,7 +27,8 @@ class TargetBodyShapeViewController: UIViewController {
     let maleBodyFatImageStrings = ["maleBF_tier1","maleBF_tier2","maleBF_tier3","maleBF_tier4","maleBF_tier5","maleBF_tier6","maleBF_tier7","maleBF_tier8"]
     let femaleBodyFatImagesStrings = ["femaleBF_tier1","femaleBF_tier2","femaleBF_tier3","femaleBF_tier4","femaleBF_tier5","femaleBF_tier6","femaleBF_tier7","femaleBF_tier8"]
     
-    var currentIndex = 0
+    var targetIndex = 0
+    var currentIndex  = 0
     
     override func viewDidLoad() {
         setUpProgressView()
@@ -55,10 +56,10 @@ class TargetBodyShapeViewController: UIViewController {
         
         bodyFatLabel.font = UIFont(name: "PingFangSC-Regualr", size: 13)
         if ProfileDataManager.shared.profile.gender == .female{
-            bodyFatLabel.text = "BODY FAT:" + femaleBodyFatRangeArr[currentIndex]
+            bodyFatLabel.text = "BODY FAT:" + femaleBodyFatRangeArr[targetIndex]
             ProfileDataManager.shared.profile.targetBodyType = Int32(1)
         } else {
-            bodyFatLabel.text = "BODY FAT:" + maleBodyFatRangeArr[currentIndex]
+            bodyFatLabel.text = "BODY FAT:" + maleBodyFatRangeArr[targetIndex]
             ProfileDataManager.shared.profile.targetBodyType = Int32(9)
         }
         bodyFatLabel.textAlignment = .center
@@ -99,8 +100,12 @@ class TargetBodyShapeViewController: UIViewController {
     }
     
     @objc func nextStep(){
-        let targetVC = ActivityLevelViewController()
-        self.navigationController?.pushViewController(targetVC, animated: true)
+        if (targetIndex > currentIndex){
+            showAlertMessage(msg: "Please select a lower body fat target")
+        } else {
+            let targetVC = ActivityLevelViewController()
+            self.navigationController?.pushViewController(targetVC, animated: true)
+        }
     }
 }
 
@@ -136,13 +141,13 @@ extension TargetBodyShapeViewController: UICollectionViewDelegate, UICollectionV
         guard let indexPath = self.collectionView.indexPathForItem(at: centerPoint) else {
             return
         }
-        currentIndex = indexPath.row
+        targetIndex = indexPath.row
         if ProfileDataManager.shared.profile.gender == .female{
-            bodyFatLabel.text = "BODY FAT:" + femaleBodyFatRangeArr[currentIndex]
-            ProfileDataManager.shared.profile.targetBodyType = Int32(currentIndex + 1)
+            bodyFatLabel.text = "BODY FAT:" + femaleBodyFatRangeArr[targetIndex]
+            ProfileDataManager.shared.profile.targetBodyType = Int32(targetIndex + 1)
         } else {
-            bodyFatLabel.text = "BODY FAT:" + maleBodyFatRangeArr[currentIndex]
-            ProfileDataManager.shared.profile.targetBodyType = Int32(currentIndex + 9)
+            bodyFatLabel.text = "BODY FAT:" + maleBodyFatRangeArr[targetIndex]
+            ProfileDataManager.shared.profile.targetBodyType = Int32(targetIndex + 9)
         }
        
     }

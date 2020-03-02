@@ -14,8 +14,8 @@ class TextSearchView: UIView {
     public var textSearchViewContainer = UIView(frame: CGRect(x: 16, y: 8, width: UIScreen.main.bounds.width - 32 , height: 40))
     
     public var foodTextSearchTable = UITableView.init(frame: CGRect(x: 16, y: 60, width: UIScreen.main.bounds.width - 32, height: UIScreen.main.bounds.height - 80), style: .plain)
-    public var foodTextLabel = UILabel(frame: CGRect(x: 16, y: 58, width: 150 , height: 30))
-    public var foodRecognitionCollection = UICollectionView.init(frame: CGRect(x: 16, y: 100, width: UIScreen.main.bounds.width - 32, height: 150),collectionViewLayout: UICollectionViewFlowLayout())
+    public var foodTextLabel = UILabel(frame: CGRect(x: 16, y: 58, width: 200 , height: 30))
+    public var foodRecognitionCollection = UICollectionView.init(frame: CGRect(x: 16, y: 100, width: UIScreen.main.bounds.width - 32, height: 300),collectionViewLayout: UICollectionViewFlowLayout())
     
     
     convenience init(){
@@ -48,9 +48,10 @@ class TextSearchView: UIView {
         foodTextLabel.isHidden = true
         foodRecognitionCollection.backgroundColor = .white
         let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
+        layout.scrollDirection = .vertical
         layout.minimumInteritemSpacing = 5
         layout.minimumLineSpacing = 5
+//        layout.estimatedItemSize = CGSize(width: 100, height: 35)
         foodRecognitionCollection.collectionViewLayout = layout
         foodRecognitionCollection.showsVerticalScrollIndicator = false
         foodRecognitionCollection.showsHorizontalScrollIndicator = false

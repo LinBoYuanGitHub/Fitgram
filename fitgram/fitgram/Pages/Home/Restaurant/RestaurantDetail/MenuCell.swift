@@ -50,7 +50,8 @@ class MenuCell: UICollectionViewCell {
             |-12-likeBtn-checkBtn-8-|,
             5
         )
-        menuNameLabel.font = UIFont(name: "PingFangSC-Regular", size: 17)
+        menuNameLabel.font = UIFont(name: "PingFangSC-Regular", size: 14)
+        menuNameLabel.numberOfLines = 2
 //        menuPriceLabel.font = UIFont(name: "PingFangSC-Regular", size: 13)
 //        menuPriceLabel.textColor = .lightGray
         menuCalorieLabel.font = UIFont(name: "PingFangSC-Regular", size: 13)
@@ -62,7 +63,7 @@ class MenuCell: UICollectionViewCell {
         likeBtn.imageEdgeInsets = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 5)
         likeBtn.contentHorizontalAlignment = .left
         checkBtn.setImage(UIImage(named: "plusIcon_yellow"), for: .normal)
-        checkBtn.setTitle("打卡", for: .normal)
+        checkBtn.setTitle("Log", for: .normal)
         checkBtn.setTitleColor(.black, for: .normal)
         checkBtn.titleLabel?.font = UIFont(name: "PingFangSC-Regular", size: 13)
         checkBtn.imageEdgeInsets = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 5)

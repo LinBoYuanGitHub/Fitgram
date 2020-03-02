@@ -25,7 +25,9 @@ class RecommendationDataManager {
     
     func retrieveRecommendationList (dateStr:String, completition: @escaping ([RecommendationModel]) -> Void){
         var request = Apisvr_GetRecommendedMealPlanReq()
-        request.date = 0
+        let calendar = Calendar(identifier: .chinese)
+        let components = calendar.dateComponents([.year,.month,.day],from: Date())
+        request.date = Int64(calendar.date(from: components)!.timeIntervalSince1970)
         do{
             guard let token = UserDefaults.standard.string(forKey: Constants.tokenKey) else {
                 return
@@ -78,6 +80,9 @@ class RecommendationDataManager {
     func retrieveRecipeDetail(recipeId: Int, completition: @escaping (RecipeModel) -> Void) throws {
         var request = Apisvr_GetRecipeDetailReq()
         request.recipeID = Int32(recipeId)
+        let calendar = Calendar(identifier: .chinese)
+        let components = calendar.dateComponents([.year,.month,.day],from: Date())
+        request.date = Int64(calendar.date(from: components)!.timeIntervalSince1970)
         guard let token = UserDefaults.standard.string(forKey: Constants.tokenKey) else {
             return
         }
@@ -99,7 +104,11 @@ class RecommendationDataManager {
                 for ingredient in resp!.ingredient {
                     var ingredientModel = IngredientModel()
                     ingredientModel.ingredientName = ingredient.name
-                    ingredientModel.portionDesc = String(ingredient.amount) + ingredient.unit
+                    if ingredient.amount == 0 {
+                        ingredientModel.portionDesc = "To Taste"
+                    } else {
+                        ingredientModel.portionDesc = String(format: "%.1f",ingredient.amount) + ingredient.unit
+                    }
                     recipe.ingredientList.append(ingredientModel)
                 }
                 //step convertsion

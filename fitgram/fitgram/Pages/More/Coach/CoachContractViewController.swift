@@ -10,7 +10,7 @@ import UIKit
 import Stevia
 import SwiftGRPC
 
-class CoachContractViewController: UIViewController{
+class CoachContractViewController: BaseViewController{
     public var rootView: CoachContractView!
     public var coachId = 0
     
@@ -23,6 +23,7 @@ class CoachContractViewController: UIViewController{
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
@@ -83,7 +84,9 @@ class CoachContractViewController: UIViewController{
             try ProfileDataManager.shared.client.linkPersonalTrainer(req, metadata: metaData, completion: { (resp, result) in
                 if result.statusCode == .ok {
 //                    self.navigationController?.pushViewController(targetVC, animated: true)
-                    self.navigationController?.popViewController(animated: true)
+                    DispatchQueue.main.async {
+                        self.navigationController?.popViewController(animated: true)
+                    }
                 }
             })
         } catch {

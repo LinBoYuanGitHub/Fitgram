@@ -468,6 +468,8 @@ struct Apisvr_FavouriteItem {
 
   var energy: Float = 0
 
+  var dishType: Int32 = 0
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -1154,6 +1156,7 @@ extension Apisvr_FavouriteItem: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     2: .standard(proto: "img_url"),
     3: .standard(proto: "food_name"),
     4: .same(proto: "energy"),
+    5: .standard(proto: "dish_type"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -1163,6 +1166,7 @@ extension Apisvr_FavouriteItem: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
       case 2: try decoder.decodeSingularStringField(value: &self.imgURL)
       case 3: try decoder.decodeSingularStringField(value: &self.foodName)
       case 4: try decoder.decodeSingularFloatField(value: &self.energy)
+      case 5: try decoder.decodeSingularInt32Field(value: &self.dishType)
       default: break
       }
     }
@@ -1181,6 +1185,9 @@ extension Apisvr_FavouriteItem: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     if self.energy != 0 {
       try visitor.visitSingularFloatField(value: self.energy, fieldNumber: 4)
     }
+    if self.dishType != 0 {
+      try visitor.visitSingularInt32Field(value: self.dishType, fieldNumber: 5)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -1189,6 +1196,7 @@ extension Apisvr_FavouriteItem: SwiftProtobuf.Message, SwiftProtobuf._MessageImp
     if lhs.imgURL != rhs.imgURL {return false}
     if lhs.foodName != rhs.foodName {return false}
     if lhs.energy != rhs.energy {return false}
+    if lhs.dishType != rhs.dishType {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

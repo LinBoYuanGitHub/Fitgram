@@ -42,6 +42,7 @@ class FoodDiaryTagViewController:BaseViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         self.navigationController?.setNavigationBarHidden(false, animated: false)
         self.navigationController?.navigationBar.isTranslucent = false
     }
@@ -142,14 +143,21 @@ extension FoodDiaryTagViewController: TextSearchDelegate {
         let targetCircleImage = self.rootView.foodTagImageList.last
         let targetView = self.rootView.foodTagList.last
         targetLabel?.text = item.searchItemName
-        let singleFontWidth = 10
-        targetView?.frame.size = CGSize(width: singleFontWidth*item.searchItemName.count + 10, height: 75)
-        targetLabel?.frame.size = CGSize(width: singleFontWidth*item.searchItemName.count + 10, height: 35)
-        targetCircleImage?.frame.origin.x = CGFloat(singleFontWidth*item.searchItemName.count/2 - 12) //put the circle in the center of the view
+        let estWidth = 10*item.searchItemName.count + 10
+        if estWidth > 100{
+            targetView?.frame.size = CGSize(width: 100, height: 100)
+            targetLabel?.frame.size = CGSize(width: 100, height: 60)
+            targetCircleImage?.frame.origin.x = CGFloat(28) //put the circle in the center of the view
+        } else {
+            targetView?.frame.size = CGSize(width: estWidth, height: 75)
+            targetLabel?.frame.size = CGSize(width:estWidth, height: 35)
+            targetCircleImage?.frame.origin.x = CGFloat((estWidth-10)/2 - 12)
+        }
+       
     }
     
     func onCancelTextSearchAction() {
-         let removedView = self.rootView.foodTagList.removeLast()
+        let removedView = self.rootView.foodTagList.removeLast()
         removedView.removeFromSuperview()
     }
     

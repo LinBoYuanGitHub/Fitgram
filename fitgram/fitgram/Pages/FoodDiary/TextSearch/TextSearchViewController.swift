@@ -176,6 +176,7 @@ extension TextSearchViewController: UICollectionViewDelegate, UICollectionViewDa
             return UICollectionViewCell()
         }
         cell.foodTagBtn.setTitle(textSearchSuggestedResult[indexPath.row].foodName, for: .normal)
+        cell.foodTagBtn.frame.size = CGSize(width: textSearchSuggestedResult[indexPath.row].foodName.count * 8 + 40, height: 40)
         cell.backgroundColor = .white
         return cell
     }
@@ -192,7 +193,7 @@ extension TextSearchViewController: UICollectionViewDelegate, UICollectionViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width:textSearchSuggestedResult[indexPath.row].foodName.count * 10 + 20 , height: 40)
+        return CGSize(width:textSearchSuggestedResult[indexPath.row].foodName.count * 8 + 40 , height: 40)
     }
     
     

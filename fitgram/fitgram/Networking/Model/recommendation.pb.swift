@@ -74,6 +74,8 @@ struct Apisvr_GetRecipeDetailReq {
 
   var recipeID: Int32 = 0
 
+  var date: Int64 = 0
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -602,12 +604,14 @@ extension Apisvr_GetRecipeDetailReq: SwiftProtobuf.Message, SwiftProtobuf._Messa
   static let protoMessageName: String = _protobuf_package + ".GetRecipeDetailReq"
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .standard(proto: "recipe_id"),
+    2: .same(proto: "date"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
     while let fieldNumber = try decoder.nextFieldNumber() {
       switch fieldNumber {
       case 1: try decoder.decodeSingularInt32Field(value: &self.recipeID)
+      case 2: try decoder.decodeSingularInt64Field(value: &self.date)
       default: break
       }
     }
@@ -617,11 +621,15 @@ extension Apisvr_GetRecipeDetailReq: SwiftProtobuf.Message, SwiftProtobuf._Messa
     if self.recipeID != 0 {
       try visitor.visitSingularInt32Field(value: self.recipeID, fieldNumber: 1)
     }
+    if self.date != 0 {
+      try visitor.visitSingularInt64Field(value: self.date, fieldNumber: 2)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   static func ==(lhs: Apisvr_GetRecipeDetailReq, rhs: Apisvr_GetRecipeDetailReq) -> Bool {
     if lhs.recipeID != rhs.recipeID {return false}
+    if lhs.date != rhs.date {return false}
     if lhs.unknownFields != rhs.unknownFields {return false}
     return true
   }

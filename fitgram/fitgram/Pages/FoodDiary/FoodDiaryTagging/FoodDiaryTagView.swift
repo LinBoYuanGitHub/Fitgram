@@ -58,13 +58,15 @@ class FoodDiaryTagView: UIView {
         point.y -= tagSize.height/2
         let foodTag = AADraggableView(frame: CGRect(origin: point, size: tagSize))
         foodTag.backgroundColor = .clear
-        let foodLabel = UILabel(frame: CGRect(x: 0, y: 40, width: 90, height: 35))
+        let foodLabel = UILabel(frame: CGRect(x: 0, y: 40, width: 100, height: 60))
+        foodLabel.font = UIFont(name: "PingFangSC-Light", size: 14)
         foodLabel.text = "food item" // initial text label
         foodLabel.textColor = .white
         foodLabel.textAlignment = .center
         foodLabel.layer.cornerRadius = 10
         foodLabel.backgroundColor = .black
         foodLabel.clipsToBounds = true
+        foodLabel.numberOfLines = 3
         foodLabel.addGestureRecognizer(showDeleteBtnGestureRecognizer)
         
         let tagCircleImage = UIImageView(frame: CGRect(origin: CGPoint(x: tagSize.width/2-tagImageSize.width/2, y: 0), size: tagImageSize))

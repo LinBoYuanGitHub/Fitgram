@@ -134,21 +134,29 @@ extension CoachDetailViewController:UICollectionViewDataSource, UICollectionView
 extension CoachDetailViewController: BarcodeScannerDelegate {
     
     func onDectect(barcode: String) {
-        let alertView = UIAlertController(title: "", message: barcode, preferredStyle: .alert)
-               let okAction = UIAlertAction(title: "Confirm", style: .default) { (_) in
-                    print( barcode.components(separatedBy: "coach_id=").count)
-                    if barcode.components(separatedBy: "coach_id=").count > 1{
-                       DispatchQueue.main.async {
-                            let coachId = Int(barcode.components(separatedBy: "coach_id=")[1])
-                            let targetVC = CoachContractViewController()
-                            targetVC.coachId = coachId!
-                            self.navigationController?.pushViewController(targetVC, animated: true)
-                       }
-                      
+        if barcode.components(separatedBy: "coach_id=").count > 1{
+            DispatchQueue.main.async {
+                let coachId = Int(barcode.components(separatedBy: "coach_id=")[1])
+                let targetVC = CoachContractViewController()
+                targetVC.coachId = coachId!
+                self.navigationController?.pushViewController(targetVC, animated: true)
             }
         }
-        alertView.addAction(okAction)
-        self.present(alertView, animated: true, completion: nil)
+//        let alertView = UIAlertController(title: "", message: barcode, preferredStyle: .alert)
+//               let okAction = UIAlertAction(title: "Confirm", style: .default) { (_) in
+//                    print( barcode.components(separatedBy: "coach_id=").count)
+//                    if barcode.components(separatedBy: "coach_id=").count > 1{
+//                       DispatchQueue.main.async {
+//                            let coachId = Int(barcode.components(separatedBy: "coach_id=")[1])
+//                            let targetVC = CoachContractViewController()
+//                            targetVC.coachId = coachId!
+//                            self.navigationController?.pushViewController(targetVC, animated: true)
+//                       }
+//
+//            }
+//        }
+//        alertView.addAction(okAction)
+//        self.present(alertView, animated: true, completion: nil)
     }
     
 }
