@@ -8,7 +8,7 @@ figram is a food recommendation app that help user to build a good eating Virtuo
 - [x] weight tracing and bio data record.
 - [x] user onBoarding questionaire.
 
-## installation
+## Installation
 
 After downloading the project, please install all the dependency by
 ```bash
